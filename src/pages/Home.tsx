@@ -6,29 +6,29 @@ import { LogoGrid } from "@/components/ui/logo-grid";
 import { SectionHeader, Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { PortfolioDashboard } from "@/components/home/PortfolioDashboard";
-import { insights, portfolioCompanies } from "@/data/mockData";
+import { ServicesDashboard } from "@/components/home/ServicesDashboard";
+import { blogPosts, services } from "@/data/mockData";
 import { ArrowRight } from "lucide-react";
 
 const Home = () => {
   const { trackCTAClick } = useAnalytics();
 
   const kpis = [
-    { label: "Assets Under Management", value: "$2.5B" },
-    { label: "Portfolio Investments", value: "45+" },
-    { label: "Successful Exits", value: "18" },
-    { label: "Countries", value: "12" },
+    { label: "Años de Experiencia", value: "25+" },
+    { label: "Clientes Activos", value: "500+" },
+    { label: "Operaciones Anuales", value: "2.000+" },
+    { label: "Satisfacción", value: "98%" },
   ];
 
-  const portfolioLogos = portfolioCompanies.slice(0, 8).map((c) => ({ name: c.name }));
-  const featuredInsights = insights.slice(0, 3);
+  const serviceLogos = services.slice(0, 4).map((s) => ({ name: s.name }));
+  const featuredPosts = blogPosts.slice(0, 3);
 
   return (
     <>
       <Meta
-        title="Home"
-        description="Ethos Ventures is a growth equity firm investing in exceptional companies across technology, consumer, education, and services sectors"
-        keywords="venture capital, growth equity, private equity, technology investment"
+        title="NRRO - Asesoría Fiscal, Contable y Legal en Barcelona"
+        description="Soluciones integrales de asesoría fiscal, contable, legal y laboral para empresas y autónomos en Barcelona. Más de 25 años de experiencia."
+        keywords="asesoría fiscal Barcelona, gestoría Barcelona, abogados Barcelona, asesor contable"
         canonicalUrl={window.location.origin}
       />
 
@@ -40,31 +40,31 @@ const Home = () => {
               {/* Left: Text */}
               <div>
                 <h1 className="hero-title mb-6">
-                  Investing in exceptional companies at inflection points
+                  Soluciones fiscales, contables y legales para tu empresa en Barcelona
                 </h1>
               <p className="text-lead mb-8">
-                We partner with ambitious founders and management teams to build
-                category-defining businesses across technology, consumer, education,
-                and services.
+                Asesoría integral con más de 25 años de experiencia. Servicios personalizados 
+                en fiscalidad, contabilidad, derecho mercantil y gestión laboral para empresas 
+                y autónomos.
               </p>
               <div className="flex gap-4">
                 <Button
                   asChild
                   size="lg"
                   variant="secondary"
-                  onClick={() => trackCTAClick("View Portfolio", "Hero")}
+                  onClick={() => trackCTAClick("Ver Servicios", "Hero")}
                 >
-                  <Link to="/portfolio">View Portfolio</Link>
+                  <Link to="/servicios">Nuestros Servicios</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white/20 bg-white/10 text-white hover:bg-white/20">
-                  <Link to="/strategy">Our Strategy</Link>
+                  <Link to="/contacto">Contactar</Link>
                 </Button>
               </div>
             </div>
             
             {/* Right: Interactive Dashboard */}
             <div>
-              <PortfolioDashboard />
+              <ServicesDashboard />
             </div>
             </div>
           </div>
@@ -81,47 +81,47 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Portfolio Companies */}
+        {/* Servicios Destacados */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <SectionHeader
-            overline="Portfolio"
-            title="Portfolio Companies"
-            description="We're proud to partner with innovative companies shaping the future of their industries"
+            overline="Servicios"
+            title="Nuestras Áreas de Especialización"
+            description="Servicios integrales en todas las áreas clave para el éxito de tu negocio"
           />
-          <LogoGrid logos={portfolioLogos} />
+          <LogoGrid logos={serviceLogos} />
           <div className="text-center mt-12">
             <Button asChild variant="outline" size="lg">
-              <Link to="/portfolio">View All Companies</Link>
+              <Link to="/servicios">Ver Todos los Servicios</Link>
             </Button>
           </div>
         </section>
 
-        {/* Insights Preview */}
+        {/* Blog Preview */}
         <section className="bg-neutral-100 py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader
-              overline="Insights"
-              title="Latest Insights"
-              description="Perspectives on investing, building, and scaling exceptional businesses"
+              overline="Blog"
+              title="Últimas Publicaciones"
+              description="Artículos y novedades sobre fiscalidad, contabilidad y derecho empresarial"
             />
 
             <div className="grid md:grid-cols-3 gap-8">
-              {featuredInsights.map((insight) => (
-                <Card key={insight.slug} className="p-6">
-                  <Overline className="mb-3">{insight.category}</Overline>
-                  <h3 className="text-2xl mb-3 font-serif">{insight.title}</h3>
+              {featuredPosts.map((post) => (
+                <Card key={post.slug} className="p-6">
+                  <Overline className="mb-3">{post.category}</Overline>
+                  <h3 className="text-2xl mb-3 font-serif">{post.title}</h3>
                   <p className="text-sm text-body mb-6 leading-relaxed">
-                    {insight.excerpt}
+                    {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between text-sm text-subtle mb-4 pb-4 border-b border-border">
-                    <span>{insight.author}</span>
-                    <span>{insight.readTime}</span>
+                    <span>{post.author}</span>
+                    <span>{post.readTime}</span>
                   </div>
                   <Link
-                    to={`/insights/${insight.slug}`}
+                    to={`/blog/${post.slug}`}
                     className="text-sm font-medium text-primary hover:text-accent inline-flex items-center transition-smooth group"
                   >
-                    Read article 
+                    Leer artículo 
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-smooth" />
                   </Link>
                 </Card>
@@ -130,7 +130,7 @@ const Home = () => {
 
             <div className="text-center mt-12">
               <Button asChild variant="outline" size="lg">
-                <Link to="/insights">View All Insights</Link>
+                <Link to="/blog">Ver Todos los Artículos</Link>
               </Button>
             </div>
           </div>
