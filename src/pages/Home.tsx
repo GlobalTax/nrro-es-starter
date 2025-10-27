@@ -6,7 +6,6 @@ import { LogoGrid } from "@/components/ui/logo-grid";
 import { SectionHeader, Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { ServicesDashboard } from "@/components/home/ServicesDashboard";
 import { blogPosts, services } from "@/data/mockData";
 import { ArrowRight } from "lucide-react";
 
@@ -33,21 +32,19 @@ const Home = () => {
       />
 
       <div className="min-h-screen">
-        {/* Hero Section - Editorial Two Column */}
+        {/* Hero Section */}
         <section className="bg-primary text-primary-foreground py-24 md:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Left: Text */}
-              <div>
-                <h1 className="hero-title mb-6">
-                  Soluciones fiscales, contables y legales para tu empresa en Barcelona
-                </h1>
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="hero-title mb-6">
+                Soluciones fiscales, contables y legales para tu empresa en Barcelona
+              </h1>
               <p className="text-lead mb-8">
                 Asesoría integral con más de 25 años de experiencia. Servicios personalizados 
                 en fiscalidad, contabilidad, derecho mercantil y gestión laboral para empresas 
                 y autónomos.
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 justify-center">
                 <Button
                   asChild
                   size="lg"
@@ -60,12 +57,6 @@ const Home = () => {
                   <Link to="/contacto">Contactar</Link>
                 </Button>
               </div>
-            </div>
-            
-            {/* Right: Interactive Dashboard */}
-            <div>
-              <ServicesDashboard />
-            </div>
             </div>
           </div>
         </section>
