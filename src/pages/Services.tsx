@@ -99,7 +99,7 @@ const Services = () => {
               {/* Area filters */}
               <div className="flex flex-wrap gap-2 items-center">
                 <span className="text-sm font-medium text-subtle">Área:</span>
-                {areas.map((area) => (
+                {areas.map((area: string) => (
                   <BadgeFilter
                     key={area}
                     label={area}
@@ -148,7 +148,7 @@ const Services = () => {
                   ? "grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                   : "space-y-4"
               )}>
-                {services.map((service) => (
+                {services.map((service: any) => (
                   <ServiceCard
                     key={service.id}
                     service={service}

@@ -19,7 +19,8 @@ const ServiceDetail = () => {
     queryFn: async () => {
       if (!slug) return null;
       // @ts-ignore - New tables not in types yet
-      const response = await supabase
+      const supabaseAny = supabase as any;
+      const response = await supabaseAny
         .from('services')
         .select('*')
         .eq('slug', slug)

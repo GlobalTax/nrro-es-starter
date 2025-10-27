@@ -10,13 +10,11 @@ export const ServicesDashboard = () => {
     queryKey: ['services-stats'],
     queryFn: async () => {
       // @ts-ignore - New tables not in types yet
+      const supabaseAny = supabase as any;
       const [servicesResult, featuredResult, areasResult] = await Promise.all([
-        // @ts-ignore
-        supabase.from('services').select('id', { count: 'exact', head: true }),
-        // @ts-ignore
-        supabase.from('services').select('id', { count: 'exact', head: true }).eq('is_featured', true),
-        // @ts-ignore
-        supabase.from('services').select('area').eq('is_active', true),
+        supabaseAny.from('services').select('id', { count: 'exact', head: true }),
+        supabaseAny.from('services').select('id', { count: 'exact', head: true }).eq('is_featured', true),
+        supabaseAny.from('services').select('area').eq('is_active', true),
       ]);
 
       // Get unique areas

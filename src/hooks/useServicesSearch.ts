@@ -13,7 +13,8 @@ export const useServicesSearch = (params: ServicesSearchParams) => {
     queryKey: ["services-search", params],
     queryFn: async () => {
       // @ts-ignore - New tables not in types yet
-      let query = supabase
+      const supabaseAny = supabase as any;
+      let query = supabaseAny
         .from('services')
         .select('*')
         .eq('is_active', true);
@@ -55,7 +56,8 @@ export const useServicesFilterOptions = () => {
     queryKey: ["services-filter-options"],
     queryFn: async () => {
       // @ts-ignore - New tables not in types yet
-      const { data, error } = await supabase
+      const supabaseAny = supabase as any;
+      const { data, error } = await supabaseAny
         .from('services')
         .select('area')
         .eq('is_active', true);
