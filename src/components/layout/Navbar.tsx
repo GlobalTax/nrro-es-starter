@@ -6,9 +6,11 @@ import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { name: "Servicios", href: "/#services" },
-  { name: "Nosotros", href: "/about" },
+  { name: "Servicios", href: "/servicios" },
+  { name: "Casos de Éxito", href: "/portfolio" },
+  { name: "Sobre Nosotros", href: "/nosotros" },
   { name: "Blog", href: "/blog" },
+  { name: "Talento", href: "/equipo" },
 ];
 
 export const Navbar = () => {
@@ -16,7 +18,14 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    // Para rutas dinámicas, verificar si empieza con el path base
+    if (path === '/portfolio' || path === '/servicios' || path === '/blog') {
+      return location.pathname.startsWith(path);
+    }
+    // Comparación exacta para otras rutas
+    return location.pathname === path;
+  };
 
   useEffect(() => {
     const handleScroll = () => {

@@ -11,6 +11,9 @@ import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import Methodology from "./pages/Methodology";
 import Team from "./pages/Team";
+import Portfolio from "./pages/Portfolio";
+import PortfolioDetail from "./pages/PortfolioDetail";
+import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,9 +29,12 @@ const App = () => (
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/servicios" element={<Layout><Services /></Layout>} />
           <Route path="/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
-          <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
-          <Route path="/equipo" element={<Layout><Team /></Layout>} />
+          <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
+          <Route path="/portfolio/:id" element={<Layout><PortfolioDetail /></Layout>} />
           <Route path="/nosotros" element={<Layout><About /></Layout>} />
+          <Route path="/blog" element={<Layout><Blog /></Layout>} />
+          <Route path="/equipo" element={<Layout><Team /></Layout>} />
+          <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
           <Route path="/contacto" element={<Layout><Contact /></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
