@@ -146,9 +146,9 @@ const Home = () => {
               
               {/* Servicio 1: Asesoramiento Fiscal */}
               <div className="bg-neutral-50 rounded-lg p-8 lg:p-10">
-                <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
-                  Asesoramiento Fiscal
-                </h3>
+        <h3 className="text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
+          Asesoramiento Fiscal
+        </h3>
                 <p className="text-base text-foreground/80 mb-6 leading-relaxed">
                   Asesoramos a empresas y socios en todas sus obligaciones fiscales, 
                   con visión estratégica y anticipación
@@ -178,9 +178,9 @@ const Home = () => {
 
               {/* Servicio 2: Mercantil */}
               <div className="bg-neutral-50 rounded-lg p-8 lg:p-10">
-                <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
-                  Mercantil
-                </h3>
+        <h3 className="text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
+          Mercantil
+        </h3>
                 <p className="text-base text-foreground/80 mb-6 leading-relaxed">
                   Asesoramiento jurídico-societario para estructuras empresariales con 
                   visión de estabilidad y seguridad en la gestión
@@ -210,9 +210,9 @@ const Home = () => {
 
               {/* Servicio 3: Laboral & Contabilidad */}
               <div className="bg-neutral-50 rounded-lg p-8 lg:p-10">
-                <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
-                  Laboral & Contabilidad
-                </h3>
+        <h3 className="text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
+          Laboral & Contabilidad
+        </h3>
                 <p className="text-base text-foreground/80 mb-6 leading-relaxed">
                   Externalización revisión contable y servicios de asesoramiento laboral, 
                   con enfoque de cumplimiento normativo
@@ -242,9 +242,9 @@ const Home = () => {
 
               {/* Servicio 4: Operaciones M&A */}
               <div className="bg-neutral-50 rounded-lg p-8 lg:p-10">
-                <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
-                  Operaciones M&A
-                </h3>
+        <h3 className="text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
+          Operaciones M&A
+        </h3>
                 <p className="text-base text-foreground/80 mb-6 leading-relaxed">
                   Acompañamos a empresarios que quieren vender o comprar una empresa. 
                   Nuestro enfoque se basa en el servicios completo
