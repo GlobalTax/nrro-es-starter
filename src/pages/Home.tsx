@@ -75,16 +75,26 @@ const Home = () => {
         {/* About Section */}
         <section className="bg-background py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-5 gap-12 lg:gap-16">
-              {/* Título - 2 columnas */}
-              <div className="md:col-span-2">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight">
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+              {/* Columna 1: Nosotros navarro con línea */}
+              <div className="relative pl-6">
+                {/* Línea vertical a la izquierda */}
+                <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border"></div>
+                
+                <h3 className="font-mono text-sm md:text-base tracking-tight text-foreground/70">
+                  Nosotros navarro
+                </h3>
+              </div>
+              
+              {/* Columna 2: Título principal */}
+              <div>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
                   Asesoramiento estratégico y legal para empresas y grupos.
                 </h2>
               </div>
               
-              {/* Contenido - 3 columnas */}
-              <div className="md:col-span-3 space-y-6">
+              {/* Columna 3: Contenido */}
+              <div className="space-y-6">
                 <p className="text-lg font-medium text-foreground leading-relaxed">
                   En navarro ofrecemos asesoramiento legal, fiscal y estratégico 
                   especializado en empresas familiares y estructuras empresariales 

@@ -17,6 +17,7 @@ export default {
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         display: ['"General Sans"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"Roboto Mono"', 'Courier New', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
