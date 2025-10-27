@@ -48,77 +48,77 @@
 
 @layer base {
   :root {
-    /* Dark teal/cyan professional palette */
+    /* NRRO Color Palette - Professional Legal/Fiscal */
     --background: 0 0% 100%;
-    --foreground: 192 95% 8%;
+    --foreground: 190 63% 6%;
     
     --card: 0 0% 100%;
-    --card-foreground: 192 95% 8%;
+    --card-foreground: 190 63% 6%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 192 95% 8%;
+    --popover-foreground: 190 63% 6%;
     
-    /* Primary: Dark teal (professional, trustworthy) */
-    --primary: 192 95% 12%;
-    --primary-foreground: 180 100% 98%;
-    --primary-hover: 192 90% 16%;
+    /* Primary: Dark blue from NRRO logo */
+    --primary: 190 63% 6%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 190 48% 9%;
     
-    /* Secondary: Medium teal */
-    --secondary: 186 45% 88%;
-    --secondary-foreground: 192 95% 12%;
+    /* Secondary: Light gray */
+    --secondary: 180 7% 92%;
+    --secondary-foreground: 190 63% 6%;
     
-    /* Accent: Vibrant emerald/cyan */
-    --accent: 174 65% 42%;
+    /* Accent: Blue-green */
+    --accent: 172 60% 15%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 174 70% 36%;
+    --accent-hover: 172 65% 18%;
     
-    /* Muted: Light neutral grays */
-    --muted: 210 20% 96%;
-    --muted-foreground: 192 15% 45%;
+    /* Muted: Soft neutral grays */
+    --muted: 180 20% 97%;
+    --muted-foreground: 195 3% 62%;
     
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 214.3 20% 90%;
-    --input: 214.3 20% 90%;
-    --ring: 174 65% 42%;
+    --border: 180 7% 92%;
+    --input: 180 7% 92%;
+    --ring: 172 60% 15%;
     
     /* Success color for positive elements */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     
-    /* Chart colors - teal themed */
-    --chart-1: 174 65% 42%;
-    --chart-2: 192 95% 12%;
-    --chart-3: 186 45% 65%;
-    --chart-4: 200 80% 45%;
-    --chart-5: 160 50% 50%;
+    /* Chart colors - NRRO themed */
+    --chart-1: 172 60% 15%;
+    --chart-2: 190 63% 6%;
+    --chart-3: 195 3% 62%;
+    --chart-4: 190 48% 9%;
+    --chart-5: 180 20% 97%;
     
     --radius: 0.75rem;
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(192 95% 12%), hsl(186 75% 18%));
-    --gradient-accent: linear-gradient(135deg, hsl(174 65% 42%), hsl(186 75% 38%));
-    --gradient-hero: linear-gradient(135deg, hsl(192 95% 8%) 0%, hsl(192 85% 14%) 50%, hsl(186 70% 20%) 100%);
+    /* Gradients with NRRO palette */
+    --gradient-primary: linear-gradient(135deg, hsl(190 63% 6%), hsl(190 48% 9%));
+    --gradient-accent: linear-gradient(135deg, hsl(172 60% 15%), hsl(172 65% 20%));
+    --gradient-hero: linear-gradient(135deg, hsl(190 63% 6%) 0%, hsl(190 48% 9%) 50%, hsl(172 60% 15%) 100%);
     
-    /* Shadows */
-    --shadow-soft: 0 2px 8px -2px hsl(192 50% 12% / 0.08);
-    --shadow-medium: 0 4px 16px -4px hsl(192 50% 12% / 0.12);
-    --shadow-strong: 0 12px 32px -8px hsl(192 50% 12% / 0.18);
-    --shadow-glow: 0 0 32px hsl(174 65% 42% / 0.2);
+    /* Shadows with dark blue */
+    --shadow-soft: 0 2px 8px -2px hsl(190 63% 6% / 0.08);
+    --shadow-medium: 0 4px 16px -4px hsl(190 63% 6% / 0.12);
+    --shadow-strong: 0 12px 32px -8px hsl(190 63% 6% / 0.18);
+    --shadow-glow: 0 0 32px hsl(172 60% 15% / 0.2);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 180 20% 97%;
+    --sidebar-foreground: 190 63% 6%;
+    --sidebar-primary: 190 63% 6%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 180 7% 92%;
+    --sidebar-accent-foreground: 190 63% 6%;
+    --sidebar-border: 180 7% 92%;
+    --sidebar-ring: 172 60% 15%;
   }
 }
 
