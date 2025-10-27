@@ -1,6 +1,9 @@
 /* Playfair Display - now unused, using General Sans for all headings */
 /* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap'); */
 
+/* Plus Jakarta Sans Font Family for service descriptions */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 /* General Sans Font Family */
 @font-face {
   font-family: 'General Sans';
@@ -289,5 +292,14 @@ h1 {
   /* Smooth transitions */
   .transition-smooth {
     transition: var(--transition-smooth);
+  }
+
+  /* Typography for service descriptions */
+  .service-body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: rgb(0, 0, 0);
   }
 }

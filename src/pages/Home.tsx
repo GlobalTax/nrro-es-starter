@@ -168,7 +168,7 @@ const Home = () => {
                 <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
                   Asesoramiento Fiscal
                 </h3>
-                <p className="text-base text-foreground mb-6 leading-relaxed">
+                <p className="service-body mb-6">
                   Asesoramos a empresas y socios en todas sus obligaciones fiscales, 
                   con visión estratégica y anticipación
                 </p>
@@ -200,7 +200,7 @@ const Home = () => {
                 <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
                   Mercantil
                 </h3>
-                <p className="text-base text-foreground mb-6 leading-relaxed">
+                <p className="service-body mb-6">
                   Asesoramiento jurídico-societario para estructuras empresariales con 
                   visión de estabilidad y seguridad en la gestión
                 </p>
@@ -232,7 +232,7 @@ const Home = () => {
                 <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
                   Laboral & Contabilidad
                 </h3>
-                <p className="text-base text-foreground mb-6 leading-relaxed">
+                <p className="service-body mb-6">
                   Externalización revisión contable y servicios de asesoramiento laboral, 
                   con enfoque de cumplimiento normativo
                 </p>
@@ -264,7 +264,7 @@ const Home = () => {
                 <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
                   Operaciones M&A
                 </h3>
-                <p className="text-base text-foreground mb-6 leading-relaxed">
+                <p className="service-body mb-6">
                   Acompañamos a empresarios que quieren vender o comprar una empresa. 
                   Nuestro enfoque se basa en el servicios completo
                 </p>
