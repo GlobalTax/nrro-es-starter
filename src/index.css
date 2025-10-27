@@ -1,5 +1,5 @@
-/* Playfair Display for elegant headings */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap');
+/* Playfair Display - now unused, using General Sans for all headings */
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap'); */
 
 /* General Sans Font Family */
 @font-face {
@@ -39,6 +39,31 @@
   src: url('/fonts/general-sans/GeneralSans-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+
+/* General Sans Italic Variants */
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans/GeneralSans-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans/GeneralSans-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans/GeneralSans-SemiboldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -131,14 +156,27 @@
     font-family: 'Inter', sans-serif;
   }
 
-  h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-    @apply font-bold tracking-tight;
+  /* All headings use General Sans */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'General Sans', sans-serif;
+    @apply tracking-tight;
   }
   
+  /* Specific weights per level */
+  h1 {
+    @apply font-bold; /* 700 */
+  }
+
+  h2 {
+    @apply font-semibold; /* 600 */
+  }
+
+  h3 {
+    @apply font-semibold; /* 600 */
+  }
+
   h4, h5, h6 {
-    font-family: 'General Sans', sans-serif;
-    @apply font-semibold;
+    @apply font-medium; /* 500 */
   }
   
   /* Smooth scroll */
