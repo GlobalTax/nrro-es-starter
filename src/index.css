@@ -199,15 +199,15 @@ h1 {
   }
 
   h2 {
-    @apply font-semibold; /* 600 */
+    @apply font-normal; /* 400 */
   }
 
   h3 {
-    @apply font-semibold; /* 600 */
+    @apply font-normal; /* 400 */
   }
 
   h4, h5, h6 {
-    @apply font-medium; /* 500 */
+    @apply font-normal; /* 400 */
   }
   
   /* Smooth scroll */

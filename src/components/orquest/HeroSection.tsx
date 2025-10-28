@@ -33,7 +33,7 @@ export const HeroSection = ({ onViewDemo }: HeroSectionProps) => {
         
         {/* Título principal */}
         <motion.h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+          className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6"
           {...fadeInUp}
         >
           Orquest + KairosHR: La combinación ganadora
