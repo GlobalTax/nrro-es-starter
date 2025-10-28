@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,9 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
   const location = useLocation();
+  const navRef = useRef<HTMLElement>(null);
 
   const isActive = (path: string) => {
     // Para rutas dinámicas, verificar si empieza con el path base
@@ -53,15 +55,78 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Detectar si el navbar está sobre un fondo oscuro
+  useEffect(() => {
+    const detectBackgroundColor = () => {
+      if (!navRef.current) return;
+
+      const navRect = navRef.current.getBoundingClientRect();
+      const elementsBelow = document.elementsFromPoint(
+        navRect.left + navRect.width / 2,
+        navRect.bottom + 10
+      );
+
+      // Buscar el primer elemento con data-dark attribute
+      for (const element of elementsBelow) {
+        if (element instanceof HTMLElement) {
+          const isDark = element.getAttribute('data-dark') === 'true';
+          if (isDark !== null && element.getAttribute('data-dark')) {
+            setIsLightMode(isDark);
+            return;
+          }
+        }
+      }
+
+      // Si no hay data attribute, intentar detectar por color de fondo
+      for (const element of elementsBelow) {
+        if (element instanceof HTMLElement && element !== navRef.current) {
+          const bgColor = window.getComputedStyle(element).backgroundColor;
+          if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+            // Extraer valores RGB
+            const rgb = bgColor.match(/\d+/g);
+            if (rgb && rgb.length >= 3) {
+              const r = parseInt(rgb[0]);
+              const g = parseInt(rgb[1]);
+              const b = parseInt(rgb[2]);
+              // Calcular luminosidad
+              const luminosity = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+              setIsLightMode(luminosity < 0.5); // Si es oscuro, usar modo light
+              return;
+            }
+          }
+        }
+      }
+      
+      // Default: modo oscuro (navbar con fondo negro)
+      setIsLightMode(false);
+    };
+
+    detectBackgroundColor();
+    window.addEventListener('scroll', detectBackgroundColor);
+    window.addEventListener('resize', detectBackgroundColor);
+
+    return () => {
+      window.removeEventListener('scroll', detectBackgroundColor);
+      window.removeEventListener('resize', detectBackgroundColor);
+    };
+  }, [location.pathname]);
+
   return (
-    <nav className={cn(
-      "sticky top-0 z-50 w-full border-b border-primary-foreground/10 bg-primary backdrop-blur-sm transition-all duration-300",
-      scrolled && "shadow-lg border-primary-foreground/20"
-    )}>
+    <nav 
+      ref={navRef}
+      className={cn(
+        "sticky top-0 z-50 w-full border-b backdrop-blur-sm transition-all duration-300",
+        isLightMode 
+          ? "bg-white/95 border-border text-foreground" 
+          : "bg-primary border-primary-foreground/10",
+        scrolled && "shadow-lg",
+        scrolled && (isLightMode ? "border-border/50" : "border-primary-foreground/20")
+      )}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Logo variant="compact" color="light" className="h-12" />
+          <Logo variant="compact" color={isLightMode ? "dark" : "light"} className="h-12" />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex md:items-center md:gap-10 lg:gap-12">
@@ -80,8 +145,12 @@ export const Navbar = () => {
                       className={cn(
                         "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight flex items-center gap-1",
                         location.pathname.startsWith('/servicios')
-                          ? "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
-                          : "text-primary-foreground/75 hover:text-white"
+                          ? isLightMode 
+                            ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
+                            : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
+                          : isLightMode
+                            ? "text-foreground/70 hover:text-foreground"
+                            : "text-primary-foreground/75 hover:text-white"
                       )}
                     >
                       Servicios
@@ -195,8 +264,12 @@ export const Navbar = () => {
                   className={cn(
                     "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight",
                     isActive(item.href)
-                      ? "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
-                      : "text-primary-foreground/75 hover:text-white hover:translate-y-[-1px]"
+                      ? isLightMode
+                        ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
+                        : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
+                      : isLightMode
+                        ? "text-foreground/70 hover:text-foreground hover:translate-y-[-1px]"
+                        : "text-primary-foreground/75 hover:text-white hover:translate-y-[-1px]"
                   )}
                 >
                   {item.name}
@@ -211,7 +284,10 @@ export const Navbar = () => {
           {/* Mobile toggle */}
           <button
             type="button"
-            className="md:hidden text-primary-foreground hover:text-white transition-all duration-200 hover:scale-110 active:scale-95 p-2 -mr-2"
+            className={cn(
+              "md:hidden transition-all duration-200 hover:scale-110 active:scale-95 p-2 -mr-2",
+              isLightMode ? "text-foreground hover:text-foreground/70" : "text-primary-foreground hover:text-white"
+            )}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -226,7 +302,10 @@ export const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-primary-foreground/10 bg-primary shadow-xl">
+        <div className={cn(
+          "md:hidden border-t shadow-xl",
+          isLightMode ? "border-border bg-white" : "border-primary-foreground/10 bg-primary"
+        )}>
           <div className="space-y-1 px-4 pb-6 pt-4">
             {navigation.map((item) => (
               <Link
@@ -236,8 +315,12 @@ export const Navbar = () => {
                 className={cn(
                   "block px-4 py-3.5 text-[15px] font-medium rounded-lg transition-all duration-200",
                   isActive(item.href)
-                    ? "text-white bg-white/15"
-                    : "text-primary-foreground/75 hover:bg-white/10 hover:text-white"
+                    ? isLightMode
+                      ? "text-foreground bg-foreground/10"
+                      : "text-white bg-white/15"
+                    : isLightMode
+                      ? "text-foreground/70 hover:bg-foreground/5 hover:text-foreground"
+                      : "text-primary-foreground/75 hover:bg-white/10 hover:text-white"
                 )}
               >
                 {item.name}
