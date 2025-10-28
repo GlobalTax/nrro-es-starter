@@ -10,6 +10,7 @@ import {
   UserCog,
   Home,
   Settings,
+  ExternalLink,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,6 +21,7 @@ import { Separator } from '@/components/ui/separator';
     { path: '/admin/portfolio', icon: Briefcase, label: 'Portfolio Companies' },
     { path: '/admin/services', icon: Settings, label: 'Services' },
     { path: '/admin/news', icon: Newspaper, label: 'News Articles' },
+    { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR' },
     { path: '/admin/team', icon: Users, label: 'Team Members' },
   ];
 
