@@ -98,6 +98,16 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
     name: 'typical_clients' as any,
   });
 
+  const { fields: transversalesFields, append: appendTransversal, remove: removeTransversal } = useFieldArray<any>({
+    control: form.control,
+    name: 'servicios_transversales' as any,
+  });
+
+  const { fields: statsFields, append: appendStat, remove: removeStat } = useFieldArray<any>({
+    control: form.control,
+    name: 'stats' as any,
+  });
+
   useEffect(() => {
     if (service && open) {
       form.reset({
@@ -364,22 +374,357 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                   </div>
                 </TabsContent>
 
-                <TabsContent value="metodologia">
-                  <p className="text-sm text-muted-foreground">
-                    Metodología section is optional. Leave empty if not needed.
-                  </p>
+                <TabsContent value="metodologia" className="space-y-6">
+                  <Card className="p-4">
+                    <div className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="metodologia.overline"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Overline</FormLabel>
+                            <FormControl>
+                              <Input {...field} placeholder="CÓMO TRABAJAMOS" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="space-y-2">
+                        <Label>Títulos (exactamente 2)</Label>
+                        <FormField
+                          control={form.control}
+                          name="metodologia.titulos.0"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...field} placeholder="Título 1" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="metodologia.titulos.1"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...field} placeholder="Título 2" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="metodologia.contacto.telefono"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Teléfono Contacto</FormLabel>
+                              <FormControl>
+                                <Input {...field} type="tel" placeholder="+34 XXX XXX XXX" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="metodologia.contacto.email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email Contacto</FormLabel>
+                              <FormControl>
+                                <Input {...field} type="email" placeholder="contacto@ejemplo.com" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="metodologia.introduccion"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Introducción</FormLabel>
+                            <FormControl>
+                              <Textarea {...field} rows={4} placeholder="Texto introductorio..." />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="space-y-4 mt-6">
+                        <div className="flex items-center justify-between">
+                          <Label className="text-base font-semibold">Pilares</Label>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const currentPilares = form.getValues('metodologia.pilares') || [];
+                              form.setValue('metodologia.pilares', [
+                                ...currentPilares,
+                                { numero: currentPilares.length + 1, titulo: '', puntos: [''] }
+                              ] as any);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Añadir Pilar
+                          </Button>
+                        </div>
+
+                        {form.watch('metodologia.pilares')?.map((pilar, pilarIndex) => (
+                          <Card key={pilarIndex} className="p-4 border-2">
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-semibold">Pilar {pilarIndex + 1}</h4>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    const pilares = form.getValues('metodologia.pilares') || [];
+                                    form.setValue('metodologia.pilares', pilares.filter((_, i) => i !== pilarIndex) as any);
+                                  }}
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              </div>
+
+                              <FormField
+                                control={form.control}
+                                name={`metodologia.pilares.${pilarIndex}.numero` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Número</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} type="number" />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+
+                              <FormField
+                                control={form.control}
+                                name={`metodologia.pilares.${pilarIndex}.titulo` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Título del Pilar</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} placeholder="Título..." />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+
+                              <div className="space-y-2">
+                                <Label className="text-sm">Puntos</Label>
+                                {pilar.puntos?.map((punto, puntoIndex) => (
+                                  <div key={puntoIndex} className="flex gap-2">
+                                    <Input
+                                      {...form.register(`metodologia.pilares.${pilarIndex}.puntos.${puntoIndex}` as any)}
+                                      placeholder="Punto..."
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => {
+                                        const pilares = form.getValues('metodologia.pilares');
+                                        if (pilares && pilares[pilarIndex]) {
+                                          pilares[pilarIndex].puntos = pilares[pilarIndex].puntos.filter((_, i) => i !== puntoIndex);
+                                          form.setValue('metodologia.pilares', [...pilares] as any);
+                                        }
+                                      }}
+                                      disabled={pilar.puntos.length === 1}
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                ))}
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    const pilares = form.getValues('metodologia.pilares');
+                                    if (pilares && pilares[pilarIndex]) {
+                                      pilares[pilarIndex].puntos.push('');
+                                      form.setValue('metodologia.pilares', [...pilares] as any);
+                                    }
+                                  }}
+                                >
+                                  <Plus className="h-4 w-4 mr-2" />
+                                  Añadir Punto
+                                </Button>
+                              </div>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </Card>
                 </TabsContent>
 
-                <TabsContent value="transversales">
-                  <p className="text-sm text-muted-foreground">
-                    Servicios Transversales section is optional. Leave empty if not needed.
-                  </p>
+                <TabsContent value="transversales" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base font-semibold">Servicios Transversales</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => appendTransversal({ titulo: '', contenido: '' } as any)}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Añadir Servicio
+                    </Button>
+                  </div>
+
+                  {transversalesFields.length === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                      No hay servicios transversales. Haz clic en "Añadir Servicio" para crear uno.
+                    </p>
+                  )}
+
+                  {transversalesFields.map((field, index) => (
+                    <Card key={field.id} className="p-4">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-semibold">Servicio {index + 1}</h4>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeTransversal(index)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+
+                        <FormField
+                          control={form.control}
+                          name={`servicios_transversales.${index}.titulo` as any}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Título</FormLabel>
+                              <FormControl>
+                                <Input {...field} placeholder="Título del servicio..." />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name={`servicios_transversales.${index}.contenido` as any}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Contenido</FormLabel>
+                              <FormControl>
+                                <Textarea {...field} rows={4} placeholder="Descripción detallada..." />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </Card>
+                  ))}
                 </TabsContent>
 
-                <TabsContent value="stats">
-                  <p className="text-sm text-muted-foreground">
-                    Stats section is optional. Leave empty if not needed.
-                  </p>
+                <TabsContent value="stats" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base font-semibold">Estadísticas</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => appendStat({ label: '', value: '', description: '' } as any)}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Añadir Estadística
+                    </Button>
+                  </div>
+
+                  {statsFields.length === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                      No hay estadísticas. Haz clic en "Añadir Estadística" para crear una.
+                    </p>
+                  )}
+
+                  <div className="grid gap-4">
+                    {statsFields.map((field, index) => (
+                      <Card key={field.id} className="p-4">
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-semibold">Stat {index + 1}</h4>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeStat(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+
+                          <div className="grid grid-cols-3 gap-4">
+                            <FormField
+                              control={form.control}
+                              name={`stats.${index}.label` as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Label</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} placeholder="CLIENTES" />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name={`stats.${index}.value` as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Valor</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} placeholder="500+" />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name={`stats.${index}.description` as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Descripción</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} placeholder="empresas asesoradas" />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="seo" className="space-y-4">
