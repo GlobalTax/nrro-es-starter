@@ -40,6 +40,17 @@ const Home = () => {
     { name: "Empresa 10", src: "https://via.placeholder.com/150x60?text=Logo+10" },
   ];
 
+  const technologyLogos = [
+    { name: "Sage" },
+    { name: "A3 Software" },
+    { name: "Wolters Kluwer" },
+    { name: "Microsoft 365" },
+    { name: "DocuSign" },
+    { name: "Dropbox Business" },
+    { name: "Lexnet" },
+    { name: "Sede Electrónica AEAT" },
+  ];
+
   const { data: services } = useQuery({
     queryKey: ['featured-services'],
     queryFn: async () => {
@@ -309,6 +320,17 @@ const Home = () => {
               </div>
 
             </div>
+          </div>
+        </section>
+
+        {/* Tecnología que usamos */}
+        <section className="bg-neutral-50 py-20 md:py-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              Tecnología que usamos
+            </h2>
+            
+            <LogoGrid logos={technologyLogos} />
           </div>
         </section>
 
