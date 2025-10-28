@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -15,31 +18,66 @@ import Portfolio from "./pages/Portfolio";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminPortfolio from "./pages/admin/AdminPortfolio";
+import AdminServices from "./pages/admin/AdminServices";
+import AdminNews from "./pages/admin/AdminNews";
+import AdminTeam from "./pages/admin/AdminTeam";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Layout><Home /></Layout>} />
-          <Route path="/servicios" element={<Layout><Services /></Layout>} />
-          <Route path="/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
-          <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
-          <Route path="/portfolio/:id" element={<Layout><PortfolioDetail /></Layout>} />
-          <Route path="/nosotros" element={<Layout><About /></Layout>} />
-          <Route path="/blog" element={<Layout><Blog /></Layout>} />
-          <Route path="/equipo" element={<Layout><Team /></Layout>} />
-          <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
-          <Route path="/contacto" element={<Layout><Contact /></Layout>} />
-          <Route path="*" element={<Layout><NotFound /></Layout>} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Layout><Home /></Layout>} />
+            <Route path="/servicios" element={<Layout><Services /></Layout>} />
+            <Route path="/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
+            <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
+            <Route path="/portfolio/:id" element={<Layout><PortfolioDetail /></Layout>} />
+            <Route path="/nosotros" element={<Layout><About /></Layout>} />
+            <Route path="/blog" element={<Layout><Blog /></Layout>} />
+            <Route path="/equipo" element={<Layout><Team /></Layout>} />
+            <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
+            <Route path="/contacto" element={<Layout><Contact /></Layout>} />
+
+            {/* Admin routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="portfolio" element={<AdminPortfolio />} />
+              <Route path="services" element={<AdminServices />} />
+              <Route path="news" element={<AdminNews />} />
+              <Route path="team" element={<AdminTeam />} />
+              <Route 
+                path="users" 
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <AdminUsers />
+                  </ProtectedRoute>
+                } 
+              />
+            </Route>
+
+            <Route path="*" element={<Layout><NotFound /></Layout>} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

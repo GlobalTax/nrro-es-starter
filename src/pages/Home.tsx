@@ -6,7 +6,9 @@ import { LogoGrid } from "@/components/ui/logo-grid";
 import { SectionHeader, Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { blogPosts, services } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { blogPosts } from "@/data/mockData";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -38,7 +40,22 @@ const Home = () => {
     { name: "Empresa 10", src: "https://via.placeholder.com/150x60?text=Logo+10" },
   ];
 
-  const serviceLogos = services.slice(0, 4).map((s) => ({ name: s.name }));
+  const { data: services } = useQuery({
+    queryKey: ['featured-services'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('services')
+        .select('id, name, slug')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .limit(4);
+      
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  const serviceLogos = (services || []).map((s) => ({ name: s.name }));
   const featuredPosts = blogPosts.slice(0, 3);
 
   return (

@@ -14,12 +14,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
-const navItems = [
-  { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-  { path: '/admin/portfolio', icon: Briefcase, label: 'Portfolio Companies' },
-  { path: '/admin/news', icon: Newspaper, label: 'News Articles' },
-  { path: '/admin/team', icon: Users, label: 'Team Members' },
-];
+  const navItems = [
+    { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/admin/portfolio', icon: Briefcase, label: 'Portfolio Companies' },
+    { path: '/admin/services', icon: Settings, label: 'Services' },
+    { path: '/admin/news', icon: Newspaper, label: 'News Articles' },
+    { path: '/admin/team', icon: Users, label: 'Team Members' },
+  ];
 
 export const AdminSidebar = () => {
   const location = useLocation();

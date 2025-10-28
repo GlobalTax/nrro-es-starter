@@ -11,7 +11,8 @@ import { Search, Loader2 } from "lucide-react";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { ViewToggle } from "@/components/portfolio/ViewToggle";
 import { cn } from "@/lib/utils";
-import { services as mockServices } from "@/data/mockData";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const ITEMS_PER_PAGE = 12;
 

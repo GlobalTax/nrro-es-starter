@@ -14,655 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      accountex_leads: {
-        Row: {
-          brevo_sent: boolean | null
-          brevo_sent_at: string | null
-          company: string
-          created_at: string
-          email: string
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          id: string
-          ip_address: unknown
-          message: string | null
-          phone: string | null
-          preferred_meeting_date: string | null
-          priority: string | null
-          processed_at: string | null
-          processed_by: string | null
-          referrer: string | null
-          sectors_of_interest: string | null
-          status: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          brevo_sent?: boolean | null
-          brevo_sent_at?: string | null
-          company: string
-          created_at?: string
-          email: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          phone?: string | null
-          preferred_meeting_date?: string | null
-          priority?: string | null
-          processed_at?: string | null
-          processed_by?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          brevo_sent?: boolean | null
-          brevo_sent_at?: string | null
-          company?: string
-          created_at?: string
-          email?: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          phone?: string | null
-          preferred_meeting_date?: string | null
-          priority?: string | null
-          processed_at?: string | null
-          processed_by?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
-      acquisition_leads: {
-        Row: {
-          acquisition_type: string | null
-          additional_details: string | null
-          company: string
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          email: string
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          id: string
-          investment_range: string | null
-          ip_address: unknown
-          is_deleted: boolean | null
-          phone: string | null
-          referrer: string | null
-          sectors_of_interest: string | null
-          status: string
-          target_timeline: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          acquisition_type?: string | null
-          additional_details?: string | null
-          company: string
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          id?: string
-          investment_range?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          phone?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          target_timeline?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          acquisition_type?: string | null
-          additional_details?: string | null
-          company?: string
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email?: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          id?: string
-          investment_range?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          phone?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          target_timeline?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
-      ad_conversions: {
-        Row: {
-          company_domain: string | null
-          conversion_name: string | null
-          conversion_type: string
-          conversion_value: number | null
-          created_at: string
-          gclid: string | null
-          id: string
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-          visitor_id: string | null
-        }
-        Insert: {
-          company_domain?: string | null
-          conversion_name?: string | null
-          conversion_type: string
-          conversion_value?: number | null
-          created_at?: string
-          gclid?: string | null
-          id?: string
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id?: string | null
-        }
-        Update: {
-          company_domain?: string | null
-          conversion_name?: string | null
-          conversion_type?: string
-          conversion_value?: number | null
-          created_at?: string
-          gclid?: string | null
-          id?: string
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id?: string | null
-        }
-        Relationships: []
-      }
-      admin_audit_log: {
-        Row: {
-          action_type: string
-          admin_user_id: string
-          created_at: string
-          id: string
-          ip_address: unknown
-          new_values: Json | null
-          old_values: Json | null
-          target_user_email: string | null
-          target_user_id: string | null
-          user_agent: string | null
-        }
-        Insert: {
-          action_type: string
-          admin_user_id: string
-          created_at?: string
-          id?: string
-          ip_address?: unknown
-          new_values?: Json | null
-          old_values?: Json | null
-          target_user_email?: string | null
-          target_user_id?: string | null
-          user_agent?: string | null
-        }
-        Update: {
-          action_type?: string
-          admin_user_id?: string
-          created_at?: string
-          id?: string
-          ip_address?: unknown
-          new_values?: Json | null
-          old_values?: Json | null
-          target_user_email?: string | null
-          target_user_id?: string | null
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
-      admin_notifications_log: {
-        Row: {
-          created_at: string
-          email_id: string | null
-          error_message: string | null
-          id: string
-          notification_type: string
-          recipient_email: string
-          sent_at: string
-          status: string
-        }
-        Insert: {
-          created_at?: string
-          email_id?: string | null
-          error_message?: string | null
-          id?: string
-          notification_type: string
-          recipient_email: string
-          sent_at?: string
-          status?: string
-        }
-        Update: {
-          created_at?: string
-          email_id?: string | null
-          error_message?: string | null
-          id?: string
-          notification_type?: string
-          recipient_email?: string
-          sent_at?: string
-          status?: string
-        }
-        Relationships: []
-      }
-      admin_users: {
-        Row: {
-          created_at: string
-          credentials_sent_at: string | null
-          email: string | null
-          full_name: string | null
-          id: string
-          is_active: boolean | null
-          last_login: string | null
-          needs_credentials: boolean | null
-          role: Database["public"]["Enums"]["admin_role"]
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          credentials_sent_at?: string | null
-          email?: string | null
-          full_name?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_login?: string | null
-          needs_credentials?: boolean | null
-          role?: Database["public"]["Enums"]["admin_role"]
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          credentials_sent_at?: string | null
-          email?: string | null
-          full_name?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_login?: string | null
-          needs_credentials?: boolean | null
-          role?: Database["public"]["Enums"]["admin_role"]
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
-      admin_videos: {
-        Row: {
-          category: string | null
-          created_at: string
-          created_by: string | null
-          description: string | null
-          display_locations: string[] | null
-          duration_seconds: number | null
-          file_size_bytes: number | null
-          file_type: string
-          file_url: string
-          id: string
-          is_active: boolean | null
-          thumbnail_url: string | null
-          title: string
-          updated_at: string
-          view_count: number | null
-        }
-        Insert: {
-          category?: string | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          display_locations?: string[] | null
-          duration_seconds?: number | null
-          file_size_bytes?: number | null
-          file_type: string
-          file_url: string
-          id?: string
-          is_active?: boolean | null
-          thumbnail_url?: string | null
-          title: string
-          updated_at?: string
-          view_count?: number | null
-        }
-        Update: {
-          category?: string | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          display_locations?: string[] | null
-          duration_seconds?: number | null
-          file_size_bytes?: number | null
-          file_type?: string
-          file_url?: string
-          id?: string
-          is_active?: boolean | null
-          thumbnail_url?: string | null
-          title?: string
-          updated_at?: string
-          view_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "admin_videos_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
       audit_logs: {
         Row: {
-          action: string
-          changed_fields: string[] | null
-          created_at: string
-          id: string
-          ip_address: unknown
-          new_values: Json | null
-          old_values: Json | null
-          record_id: string | null
-          table_name: string
-          user_agent: string | null
-          user_email: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          changed_fields?: string[] | null
-          created_at?: string
-          id?: string
-          ip_address?: unknown
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name: string
-          user_agent?: string | null
-          user_email?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          changed_fields?: string[] | null
-          created_at?: string
-          id?: string
-          ip_address?: unknown
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name?: string
-          user_agent?: string | null
-          user_email?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      banner_events: {
-        Row: {
-          banner_id: string
-          created_at: string
-          event: string
-          id: string
-          ip_address: unknown
-          path: string
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          banner_id: string
-          created_at?: string
-          event: string
-          id?: string
-          ip_address?: unknown
-          path: string
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          banner_id?: string
-          created_at?: string
-          event?: string
-          id?: string
-          ip_address?: unknown
-          path?: string
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "banner_events_banner_id_fkey"
-            columns: ["banner_id"]
-            isOneToOne: false
-            referencedRelation: "banners"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      banners: {
-        Row: {
-          align: string
-          audience: string[]
-          color_primary: string
-          color_secondary: string | null
+          action: string | null
+          actor: string | null
           created_at: string | null
-          cta_href: string | null
-          cta_text: string | null
-          dismissible: boolean
-          end_at: string | null
-          exclusive: boolean | null
+          data: Json | null
+          entity: string | null
+          entity_id: string | null
           id: string
-          max_width: string
-          name: string
-          pages: string[]
-          position: string
-          priority: number
-          rounded: string
-          shadow: boolean
-          slug: string
-          start_at: string | null
-          subtitle: string | null
-          text_on_primary: string | null
-          title: string
-          updated_at: string | null
-          variant: string
-          version: number
-          visible: boolean
         }
         Insert: {
-          align?: string
-          audience?: string[]
-          color_primary?: string
-          color_secondary?: string | null
+          action?: string | null
+          actor?: string | null
           created_at?: string | null
-          cta_href?: string | null
-          cta_text?: string | null
-          dismissible?: boolean
-          end_at?: string | null
-          exclusive?: boolean | null
+          data?: Json | null
+          entity?: string | null
+          entity_id?: string | null
           id?: string
-          max_width?: string
-          name: string
-          pages?: string[]
-          position?: string
-          priority?: number
-          rounded?: string
-          shadow?: boolean
-          slug: string
-          start_at?: string | null
-          subtitle?: string | null
-          text_on_primary?: string | null
-          title: string
-          updated_at?: string | null
-          variant?: string
-          version?: number
-          visible?: boolean
         }
         Update: {
-          align?: string
-          audience?: string[]
-          color_primary?: string
-          color_secondary?: string | null
+          action?: string | null
+          actor?: string | null
           created_at?: string | null
-          cta_href?: string | null
-          cta_text?: string | null
-          dismissible?: boolean
-          end_at?: string | null
-          exclusive?: boolean | null
+          data?: Json | null
+          entity?: string | null
+          entity_id?: string | null
           id?: string
-          max_width?: string
-          name?: string
-          pages?: string[]
-          position?: string
-          priority?: number
-          rounded?: string
-          shadow?: boolean
-          slug?: string
-          start_at?: string | null
-          subtitle?: string | null
-          text_on_primary?: string | null
-          title?: string
-          updated_at?: string | null
-          variant?: string
-          version?: number
-          visible?: boolean
         }
         Relationships: []
       }
-      blog_analytics: {
+      blog_post_state_changes: {
         Row: {
+          changed_at: string | null
+          changed_by: string
+          from_status: string | null
           id: string
-          ip_address: unknown
+          notes: string | null
           post_id: string
-          post_slug: string
-          reading_time: number | null
-          referrer: string | null
-          scroll_percentage: number | null
-          session_id: string | null
-          user_agent: string | null
-          viewed_at: string
-          visitor_id: string | null
+          to_status: string
         }
         Insert: {
+          changed_at?: string | null
+          changed_by: string
+          from_status?: string | null
           id?: string
-          ip_address?: unknown
+          notes?: string | null
           post_id: string
-          post_slug: string
-          reading_time?: number | null
-          referrer?: string | null
-          scroll_percentage?: number | null
-          session_id?: string | null
-          user_agent?: string | null
-          viewed_at?: string
-          visitor_id?: string | null
+          to_status: string
         }
         Update: {
+          changed_at?: string | null
+          changed_by?: string
+          from_status?: string | null
           id?: string
-          ip_address?: unknown
+          notes?: string | null
           post_id?: string
-          post_slug?: string
-          reading_time?: number | null
-          referrer?: string | null
-          scroll_percentage?: number | null
-          session_id?: string | null
-          user_agent?: string | null
-          viewed_at?: string
-          visitor_id?: string | null
-        }
-        Relationships: []
-      }
-      blog_post_metrics: {
-        Row: {
-          avg_reading_time: number | null
-          avg_scroll_percentage: number | null
-          created_at: string
-          id: string
-          last_viewed: string | null
-          post_id: string
-          post_slug: string
-          total_views: number | null
-          unique_views: number | null
-          updated_at: string
-        }
-        Insert: {
-          avg_reading_time?: number | null
-          avg_scroll_percentage?: number | null
-          created_at?: string
-          id?: string
-          last_viewed?: string | null
-          post_id: string
-          post_slug: string
-          total_views?: number | null
-          unique_views?: number | null
-          updated_at?: string
-        }
-        Update: {
-          avg_reading_time?: number | null
-          avg_scroll_percentage?: number | null
-          created_at?: string
-          id?: string
-          last_viewed?: string | null
-          post_id?: string
-          post_slug?: string
-          total_views?: number | null
-          unique_views?: number | null
-          updated_at?: string
+          to_status?: string
         }
         Relationships: [
           {
-            foreignKeyName: "blog_post_metrics_post_id_fkey"
+            foreignKeyName: "blog_post_state_changes_post_id_fkey"
             columns: ["post_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "blog_posts"
             referencedColumns: ["id"]
           },
@@ -670,6106 +84,1060 @@ export type Database = {
       }
       blog_posts: {
         Row: {
-          author_avatar_url: string | null
-          author_name: string
-          category: string
-          content: string
-          created_at: string
-          excerpt: string | null
-          featured_image_url: string | null
+          author_id: string
+          category: string | null
+          content_en: string | null
+          content_es: string | null
+          created_at: string | null
+          excerpt_en: string | null
+          excerpt_es: string | null
+          featured_image: string | null
           id: string
-          is_featured: boolean
-          is_published: boolean
-          meta_description: string | null
-          meta_title: string | null
           published_at: string | null
-          reading_time: number
-          slug: string
+          read_time: number | null
+          scheduled_at: string | null
+          seo_description_en: string | null
+          seo_description_es: string | null
+          seo_title_en: string | null
+          seo_title_es: string | null
+          slug_en: string | null
+          slug_es: string
+          status: string
           tags: string[] | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          author_avatar_url?: string | null
-          author_name?: string
-          category: string
-          content: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean
-          is_published?: boolean
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          reading_time?: number
-          slug: string
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          author_avatar_url?: string | null
-          author_name?: string
-          category?: string
-          content?: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean
-          is_published?: boolean
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          reading_time?: number
-          slug?: string
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      brevo_sync_log: {
-        Row: {
-          brevo_id: string | null
-          created_at: string | null
-          entity_id: string
-          entity_type: string
-          id: string
-          last_sync_at: string | null
-          sync_attempts: number | null
-          sync_error: string | null
-          sync_status: string
+          title_en: string | null
+          title_es: string
           updated_at: string | null
+          view_count: number | null
         }
         Insert: {
-          brevo_id?: string | null
+          author_id: string
+          category?: string | null
+          content_en?: string | null
+          content_es?: string | null
           created_at?: string | null
-          entity_id: string
-          entity_type: string
+          excerpt_en?: string | null
+          excerpt_es?: string | null
+          featured_image?: string | null
           id?: string
-          last_sync_at?: string | null
-          sync_attempts?: number | null
-          sync_error?: string | null
-          sync_status?: string
+          published_at?: string | null
+          read_time?: number | null
+          scheduled_at?: string | null
+          seo_description_en?: string | null
+          seo_description_es?: string | null
+          seo_title_en?: string | null
+          seo_title_es?: string | null
+          slug_en?: string | null
+          slug_es: string
+          status?: string
+          tags?: string[] | null
+          title_en?: string | null
+          title_es: string
           updated_at?: string | null
+          view_count?: number | null
         }
         Update: {
-          brevo_id?: string | null
+          author_id?: string
+          category?: string | null
+          content_en?: string | null
+          content_es?: string | null
           created_at?: string | null
-          entity_id?: string
-          entity_type?: string
+          excerpt_en?: string | null
+          excerpt_es?: string | null
+          featured_image?: string | null
           id?: string
-          last_sync_at?: string | null
-          sync_attempts?: number | null
-          sync_error?: string | null
-          sync_status?: string
+          published_at?: string | null
+          read_time?: number | null
+          scheduled_at?: string | null
+          seo_description_en?: string | null
+          seo_description_es?: string | null
+          seo_title_en?: string | null
+          seo_title_es?: string | null
+          slug_en?: string | null
+          slug_es?: string
+          status?: string
+          tags?: string[] | null
+          title_en?: string | null
+          title_es?: string
           updated_at?: string | null
+          view_count?: number | null
         }
         Relationships: []
       }
-      business_metrics: {
+      candidatos: {
         Row: {
-          avg_deal_size: number
-          conversion_rate: number
-          created_at: string
-          deal_count: number
-          id: string
-          period_end: string
-          period_start: string
-          revenue_amount: number
-          updated_at: string
-        }
-        Insert: {
-          avg_deal_size?: number
-          conversion_rate?: number
-          created_at?: string
-          deal_count?: number
-          id?: string
-          period_end: string
-          period_start: string
-          revenue_amount?: number
-          updated_at?: string
-        }
-        Update: {
-          avg_deal_size?: number
-          conversion_rate?: number
-          created_at?: string
-          deal_count?: number
-          id?: string
-          period_end?: string
-          period_start?: string
-          revenue_amount?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      calendar_bookings: {
-        Row: {
-          booking_date: string
-          booking_datetime: string
-          booking_time: string
-          cancellation_reason: string | null
-          cancelled_at: string | null
-          client_email: string
-          client_name: string
-          client_phone: string | null
-          company_name: string | null
-          confirmed_at: string | null
-          confirmed_by: string | null
-          created_at: string
-          id: string
-          meeting_format: string
-          meeting_type: string
-          notes: string | null
-          status: string
-          updated_at: string
-          valuation_id: string | null
-        }
-        Insert: {
-          booking_date: string
-          booking_datetime: string
-          booking_time: string
-          cancellation_reason?: string | null
-          cancelled_at?: string | null
-          client_email: string
-          client_name: string
-          client_phone?: string | null
-          company_name?: string | null
-          confirmed_at?: string | null
-          confirmed_by?: string | null
-          created_at?: string
-          id?: string
-          meeting_format?: string
-          meeting_type?: string
-          notes?: string | null
-          status?: string
-          updated_at?: string
-          valuation_id?: string | null
-        }
-        Update: {
-          booking_date?: string
-          booking_datetime?: string
-          booking_time?: string
-          cancellation_reason?: string | null
-          cancelled_at?: string | null
-          client_email?: string
-          client_name?: string
-          client_phone?: string | null
-          company_name?: string | null
-          confirmed_at?: string | null
-          confirmed_by?: string | null
-          created_at?: string
-          id?: string
-          meeting_format?: string
-          meeting_type?: string
-          notes?: string | null
-          status?: string
-          updated_at?: string
-          valuation_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "calendar_bookings_valuation_id_fkey"
-            columns: ["valuation_id"]
-            isOneToOne: false
-            referencedRelation: "company_valuations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      carousel_logos: {
-        Row: {
-          company_name: string
-          created_at: string
-          display_order: number | null
-          id: string
-          is_active: boolean | null
-          logo_url: string | null
-          updated_at: string
-        }
-        Insert: {
-          company_name: string
-          created_at?: string
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          logo_url?: string | null
-          updated_at?: string
-        }
-        Update: {
-          company_name?: string
-          created_at?: string
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          logo_url?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      carousel_testimonials: {
-        Row: {
-          client_company: string
-          client_name: string
-          created_at: string
-          display_order: number | null
-          id: string
-          is_active: boolean | null
-          logo_url: string | null
-          quote: string
-          updated_at: string
-        }
-        Insert: {
-          client_company: string
-          client_name: string
-          created_at?: string
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          logo_url?: string | null
-          quote: string
-          updated_at?: string
-        }
-        Update: {
-          client_company?: string
-          client_name?: string
-          created_at?: string
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          logo_url?: string | null
-          quote?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      case_studies: {
-        Row: {
-          company_size: string | null
-          created_at: string
-          description: string
-          display_locations: string[] | null
-          featured_image_url: string | null
-          highlights: string[] | null
-          id: string
-          is_active: boolean | null
-          is_featured: boolean | null
-          is_value_confidential: boolean | null
-          logo_url: string | null
-          sector: string
-          title: string
-          updated_at: string
-          value_amount: number | null
-          value_currency: string | null
-          year: number | null
-        }
-        Insert: {
-          company_size?: string | null
-          created_at?: string
-          description: string
-          display_locations?: string[] | null
-          featured_image_url?: string | null
-          highlights?: string[] | null
-          id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          is_value_confidential?: boolean | null
-          logo_url?: string | null
-          sector: string
-          title: string
-          updated_at?: string
-          value_amount?: number | null
-          value_currency?: string | null
-          year?: number | null
-        }
-        Update: {
-          company_size?: string | null
-          created_at?: string
-          description?: string
-          display_locations?: string[] | null
-          featured_image_url?: string | null
-          highlights?: string[] | null
-          id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          is_value_confidential?: boolean | null
-          logo_url?: string | null
-          sector?: string
-          title?: string
-          updated_at?: string
-          value_amount?: number | null
-          value_currency?: string | null
-          year?: number | null
-        }
-        Relationships: []
-      }
-      collaborator_applications: {
-        Row: {
-          assigned_at: string | null
-          assigned_to: string | null
-          company: string | null
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          experience: string | null
-          full_name: string
-          id: string
-          ip_address: unknown
-          is_deleted: boolean | null
-          lead_status_crm: Database["public"]["Enums"]["lead_status"] | null
-          motivation: string | null
-          phone: string
-          profession: string
-          status: string
-          status_updated_at: string | null
-          updated_at: string
-          user_agent: string | null
-        }
-        Insert: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          company?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          experience?: string | null
-          full_name: string
-          id?: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          motivation?: string | null
-          phone: string
-          profession: string
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Update: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          company?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          experience?: string | null
-          full_name?: string
-          id?: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          motivation?: string | null
-          phone?: string
-          profession?: string
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "collaborator_applications_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      company_acquisition_inquiries: {
-        Row: {
-          acquisition_type: string | null
-          company: string
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          id: string
-          investment_budget: string | null
-          ip_address: unknown
-          is_deleted: boolean | null
-          message: string | null
-          notes: string | null
-          page_origin: string
-          phone: string | null
-          preferred_location: string | null
-          priority: string
-          processed_at: string | null
-          processed_by: string | null
-          referrer: string | null
-          sectors_of_interest: string | null
-          status: string
-          target_timeline: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-        }
-        Insert: {
-          acquisition_type?: string | null
-          company: string
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          id?: string
-          investment_budget?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          message?: string | null
-          notes?: string | null
-          page_origin?: string
-          phone?: string | null
-          preferred_location?: string | null
-          priority?: string
-          processed_at?: string | null
-          processed_by?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          target_timeline?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Update: {
-          acquisition_type?: string | null
-          company?: string
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          id?: string
-          investment_budget?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          message?: string | null
-          notes?: string | null
-          page_origin?: string
-          phone?: string | null
-          preferred_location?: string | null
-          priority?: string
-          processed_at?: string | null
-          processed_by?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          target_timeline?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_acquisition_inquiries_processed_by"
-            columns: ["processed_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      company_operations: {
-        Row: {
-          company_name: string
-          company_size_employees: string | null
-          created_at: string
-          deal_type: string | null
-          deleted_at: string | null
-          description: string
-          display_locations: string[] | null
-          ebitda_amount: number | null
-          ebitda_multiple: number | null
-          featured_image_url: string | null
-          growth_percentage: number | null
-          highlights: string[] | null
-          id: string
-          is_active: boolean | null
-          is_deleted: boolean | null
-          is_featured: boolean | null
-          logo_url: string | null
-          revenue_amount: number | null
-          sector: string
-          short_description: string | null
-          status: string | null
-          subsector: string | null
-          updated_at: string
-          valuation_amount: number
-          valuation_currency: string | null
-          year: number
-        }
-        Insert: {
-          company_name: string
-          company_size_employees?: string | null
-          created_at?: string
-          deal_type?: string | null
-          deleted_at?: string | null
-          description: string
-          display_locations?: string[] | null
-          ebitda_amount?: number | null
-          ebitda_multiple?: number | null
-          featured_image_url?: string | null
-          growth_percentage?: number | null
-          highlights?: string[] | null
-          id?: string
-          is_active?: boolean | null
-          is_deleted?: boolean | null
-          is_featured?: boolean | null
-          logo_url?: string | null
-          revenue_amount?: number | null
-          sector: string
-          short_description?: string | null
-          status?: string | null
-          subsector?: string | null
-          updated_at?: string
-          valuation_amount: number
-          valuation_currency?: string | null
-          year: number
-        }
-        Update: {
-          company_name?: string
-          company_size_employees?: string | null
-          created_at?: string
-          deal_type?: string | null
-          deleted_at?: string | null
-          description?: string
-          display_locations?: string[] | null
-          ebitda_amount?: number | null
-          ebitda_multiple?: number | null
-          featured_image_url?: string | null
-          growth_percentage?: number | null
-          highlights?: string[] | null
-          id?: string
-          is_active?: boolean | null
-          is_deleted?: boolean | null
-          is_featured?: boolean | null
-          logo_url?: string | null
-          revenue_amount?: number | null
-          sector?: string
-          short_description?: string | null
-          status?: string | null
-          subsector?: string | null
-          updated_at?: string
-          valuation_amount?: number
-          valuation_currency?: string | null
-          year?: number
-        }
-        Relationships: []
-      }
-      company_valuations: {
-        Row: {
-          activity_description: string | null
-          adjustment_amount: number | null
-          assigned_at: string | null
-          assigned_to: string | null
-          cif: string | null
-          company_name: string
-          competitive_advantage: string | null
-          completion_percentage: number | null
-          contact_name: string
-          created_at: string
-          current_step: number | null
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          ebitda: number | null
-          ebitda_multiple_used: number | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          employee_range: string
-          final_valuation: number | null
-          form_submitted_at: string | null
-          growth_rate: number | null
-          has_adjustments: boolean | null
-          id: string
-          industry: string
-          ip_address: unknown
-          is_deleted: boolean | null
-          last_activity_at: string | null
-          last_modified_field: string | null
-          lead_status_crm: Database["public"]["Enums"]["lead_status"] | null
-          location: string | null
-          net_profit_margin: number | null
-          ownership_participation: string | null
-          phone: string | null
-          phone_e164: string | null
-          referrer: string | null
-          revenue: number | null
-          source_project: string | null
-          status_updated_at: string | null
-          time_spent_seconds: number | null
-          token_expires_at: string | null
-          token_used_at: string | null
-          unique_token: string | null
-          user_agent: string | null
-          user_id: string | null
-          valuation_range_max: number | null
-          valuation_range_min: number | null
-          valuation_status: string | null
-          whatsapp_opt_in: boolean | null
-          whatsapp_sent: boolean | null
-          whatsapp_sent_at: string | null
-          years_of_operation: number | null
-        }
-        Insert: {
-          activity_description?: string | null
-          adjustment_amount?: number | null
-          assigned_at?: string | null
-          assigned_to?: string | null
-          cif?: string | null
-          company_name: string
-          competitive_advantage?: string | null
-          completion_percentage?: number | null
-          contact_name: string
-          created_at?: string
-          current_step?: number | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          ebitda?: number | null
-          ebitda_multiple_used?: number | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          employee_range: string
-          final_valuation?: number | null
-          form_submitted_at?: string | null
-          growth_rate?: number | null
-          has_adjustments?: boolean | null
-          id?: string
-          industry: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          last_activity_at?: string | null
-          last_modified_field?: string | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          location?: string | null
-          net_profit_margin?: number | null
-          ownership_participation?: string | null
-          phone?: string | null
-          phone_e164?: string | null
-          referrer?: string | null
-          revenue?: number | null
-          source_project?: string | null
-          status_updated_at?: string | null
-          time_spent_seconds?: number | null
-          token_expires_at?: string | null
-          token_used_at?: string | null
-          unique_token?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-          valuation_range_max?: number | null
-          valuation_range_min?: number | null
-          valuation_status?: string | null
-          whatsapp_opt_in?: boolean | null
-          whatsapp_sent?: boolean | null
-          whatsapp_sent_at?: string | null
-          years_of_operation?: number | null
-        }
-        Update: {
-          activity_description?: string | null
-          adjustment_amount?: number | null
-          assigned_at?: string | null
-          assigned_to?: string | null
-          cif?: string | null
-          company_name?: string
-          competitive_advantage?: string | null
-          completion_percentage?: number | null
-          contact_name?: string
-          created_at?: string
-          current_step?: number | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          ebitda?: number | null
-          ebitda_multiple_used?: number | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          employee_range?: string
-          final_valuation?: number | null
-          form_submitted_at?: string | null
-          growth_rate?: number | null
-          has_adjustments?: boolean | null
-          id?: string
-          industry?: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          last_activity_at?: string | null
-          last_modified_field?: string | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          location?: string | null
-          net_profit_margin?: number | null
-          ownership_participation?: string | null
-          phone?: string | null
-          phone_e164?: string | null
-          referrer?: string | null
-          revenue?: number | null
-          source_project?: string | null
-          status_updated_at?: string | null
-          time_spent_seconds?: number | null
-          token_expires_at?: string | null
-          token_used_at?: string | null
-          unique_token?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-          valuation_range_max?: number | null
-          valuation_range_min?: number | null
-          valuation_status?: string | null
-          whatsapp_opt_in?: boolean | null
-          whatsapp_sent?: boolean | null
-          whatsapp_sent_at?: string | null
-          years_of_operation?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "company_valuations_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      contact_leads: {
-        Row: {
-          assigned_at: string | null
-          assigned_to: string | null
-          company: string
-          company_size: string | null
-          country: string | null
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          id: string
-          investment_budget: string | null
-          ip_address: unknown
-          is_deleted: boolean | null
-          lead_status_crm: Database["public"]["Enums"]["lead_status"] | null
-          phone: string | null
-          referral: string | null
-          sectors_of_interest: string | null
-          service_type: Database["public"]["Enums"]["service_type_enum"] | null
-          status: string
-          status_updated_at: string | null
-          updated_at: string
-          user_agent: string | null
-        }
-        Insert: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          company: string
-          company_size?: string | null
-          country?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          id?: string
-          investment_budget?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          phone?: string | null
-          referral?: string | null
-          sectors_of_interest?: string | null
-          service_type?: Database["public"]["Enums"]["service_type_enum"] | null
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Update: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          company?: string
-          company_size?: string | null
-          country?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          id?: string
-          investment_budget?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_status_crm?: Database["public"]["Enums"]["lead_status"] | null
-          phone?: string | null
-          referral?: string | null
-          sectors_of_interest?: string | null
-          service_type?: Database["public"]["Enums"]["service_type_enum"] | null
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "contact_leads_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      contact_lists: {
-        Row: {
-          contact_count: number | null
-          created_at: string
-          created_by: string | null
-          description: string | null
-          id: string
-          is_active: boolean | null
-          list_type: string
-          name: string
-          updated_at: string
-        }
-        Insert: {
-          contact_count?: number | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          list_type?: string
-          name: string
-          updated_at?: string
-        }
-        Update: {
-          contact_count?: number | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          list_type?: string
-          name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      contact_segments: {
-        Row: {
-          auto_update: boolean | null
-          contact_count: number | null
-          created_at: string
-          created_by: string | null
-          criteria: Json
-          description: string | null
-          id: string
-          is_active: boolean | null
-          name: string
-          updated_at: string
-        }
-        Insert: {
-          auto_update?: boolean | null
-          contact_count?: number | null
-          created_at?: string
-          created_by?: string | null
-          criteria?: Json
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          name: string
-          updated_at?: string
-        }
-        Update: {
-          auto_update?: boolean | null
-          contact_count?: number | null
-          created_at?: string
-          created_by?: string | null
-          criteria?: Json
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      contact_tags: {
-        Row: {
-          color: string | null
-          created_at: string
-          created_by: string | null
-          description: string | null
-          id: string
-          is_active: boolean | null
-          name: string
-          updated_at: string
-          usage_count: number | null
-        }
-        Insert: {
-          color?: string | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          name: string
-          updated_at?: string
-          usage_count?: number | null
-        }
-        Update: {
-          color?: string | null
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          name?: string
-          updated_at?: string
-          usage_count?: number | null
-        }
-        Relationships: []
-      }
-      contacto_documentos: {
-        Row: {
-          compartido_por: string | null
-          contacto_id: string
+          anos_experiencia: number | null
           created_at: string | null
-          documento_id: string
-          fecha_compartido: string | null
-          id: string
-          notas: string | null
-        }
-        Insert: {
-          compartido_por?: string | null
-          contacto_id: string
-          created_at?: string | null
-          documento_id: string
-          fecha_compartido?: string | null
-          id?: string
-          notas?: string | null
-        }
-        Update: {
-          compartido_por?: string | null
-          contacto_id?: string
-          created_at?: string | null
-          documento_id?: string
-          fecha_compartido?: string | null
-          id?: string
-          notas?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "contacto_documentos_contacto_id_fkey"
-            columns: ["contacto_id"]
-            isOneToOne: false
-            referencedRelation: "contactos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "contacto_documentos_documento_id_fkey"
-            columns: ["documento_id"]
-            isOneToOne: false
-            referencedRelation: "documentos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      contactos: {
-        Row: {
-          apellidos: string | null
-          avatar: string | null
-          cargo: string | null
-          created_at: string | null
+          created_by: string | null
+          cv_url: string | null
+          departamento: string | null
           email: string
-          empresa_principal_id: string | null
+          empleado_id: string | null
+          empresa_actual: string | null
+          estado: string | null
+          fecha_disponibilidad: string | null
+          fuente: string | null
           id: string
-          import_log_id: string | null
-          linkedin: string | null
+          idiomas: string[] | null
+          linkedin_url: string | null
+          nivel_estudios: string | null
           nombre: string
           notas: string | null
+          preferencia_trabajo: string | null
+          puesto_actual: string | null
+          puesto_solicitado: string
+          salario_esperado: number | null
+          skills: string[] | null
           telefono: string | null
           updated_at: string | null
         }
         Insert: {
-          apellidos?: string | null
-          avatar?: string | null
-          cargo?: string | null
+          anos_experiencia?: number | null
           created_at?: string | null
+          created_by?: string | null
+          cv_url?: string | null
+          departamento?: string | null
           email: string
-          empresa_principal_id?: string | null
+          empleado_id?: string | null
+          empresa_actual?: string | null
+          estado?: string | null
+          fecha_disponibilidad?: string | null
+          fuente?: string | null
           id?: string
-          import_log_id?: string | null
-          linkedin?: string | null
+          idiomas?: string[] | null
+          linkedin_url?: string | null
+          nivel_estudios?: string | null
           nombre: string
           notas?: string | null
+          preferencia_trabajo?: string | null
+          puesto_actual?: string | null
+          puesto_solicitado: string
+          salario_esperado?: number | null
+          skills?: string[] | null
           telefono?: string | null
           updated_at?: string | null
         }
         Update: {
-          apellidos?: string | null
-          avatar?: string | null
-          cargo?: string | null
+          anos_experiencia?: number | null
           created_at?: string | null
+          created_by?: string | null
+          cv_url?: string | null
+          departamento?: string | null
           email?: string
-          empresa_principal_id?: string | null
+          empleado_id?: string | null
+          empresa_actual?: string | null
+          estado?: string | null
+          fecha_disponibilidad?: string | null
+          fuente?: string | null
           id?: string
-          import_log_id?: string | null
-          linkedin?: string | null
+          idiomas?: string[] | null
+          linkedin_url?: string | null
+          nivel_estudios?: string | null
           nombre?: string
           notas?: string | null
+          preferencia_trabajo?: string | null
+          puesto_actual?: string | null
+          puesto_solicitado?: string
+          salario_esperado?: number | null
+          skills?: string[] | null
           telefono?: string | null
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "contactos_empresa_principal_id_fkey"
-            columns: ["empresa_principal_id"]
-            isOneToOne: false
-            referencedRelation: "empresas"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "contactos_import_log_id_fkey"
-            columns: ["import_log_id"]
-            isOneToOne: false
-            referencedRelation: "import_logs"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      content_analytics: {
-        Row: {
-          avg_time_on_page: number
-          blog_post_id: string | null
-          bounce_rate: number
-          created_at: string
-          engagement_score: number
-          id: string
-          page_views: number
-          period_date: string
-          unique_visitors: number
-          updated_at: string
-        }
-        Insert: {
-          avg_time_on_page?: number
-          blog_post_id?: string | null
-          bounce_rate?: number
-          created_at?: string
-          engagement_score?: number
-          id?: string
-          page_views?: number
-          period_date: string
-          unique_visitors?: number
-          updated_at?: string
-        }
-        Update: {
-          avg_time_on_page?: number
-          blog_post_id?: string | null
-          bounce_rate?: number
-          created_at?: string
-          engagement_score?: number
-          id?: string
-          page_views?: number
-          period_date?: string
-          unique_visitors?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "content_analytics_blog_post_id_fkey"
-            columns: ["blog_post_id"]
-            isOneToOne: false
-            referencedRelation: "blog_posts"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      custom_widgets: {
-        Row: {
-          created_at: string
-          id: string
-          is_public: boolean
-          permissions: string[]
-          updated_at: string
-          user_id: string
-          widget_config: Json
-          widget_name: string
-          widget_type: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_public?: boolean
-          permissions?: string[]
-          updated_at?: string
-          user_id: string
-          widget_config?: Json
-          widget_name: string
-          widget_type: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_public?: boolean
-          permissions?: string[]
-          updated_at?: string
-          user_id?: string
-          widget_config?: Json
-          widget_name?: string
-          widget_type?: string
-        }
-        Relationships: []
-      }
-      document_downloads: {
-        Row: {
-          created_at: string | null
-          document_id: string
-          download_method: string | null
-          downloaded_at: string | null
-          id: string
-          ip_address: unknown
-          page_url: string | null
-          referrer: string | null
-          session_id: string | null
-          user_agent: string | null
-          user_company: string | null
-          user_email: string
-          user_id: string | null
-          user_name: string | null
-          user_phone: string | null
-          user_position: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-          visitor_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          document_id: string
-          download_method?: string | null
-          downloaded_at?: string | null
-          id?: string
-          ip_address?: unknown
-          page_url?: string | null
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          user_company?: string | null
-          user_email: string
-          user_id?: string | null
-          user_name?: string | null
-          user_phone?: string | null
-          user_position?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          document_id?: string
-          download_method?: string | null
-          downloaded_at?: string | null
-          id?: string
-          ip_address?: unknown
-          page_url?: string | null
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          user_company?: string | null
-          user_email?: string
-          user_id?: string | null
-          user_name?: string | null
-          user_phone?: string | null
-          user_position?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "document_downloads_document_id_fkey"
-            columns: ["document_id"]
-            isOneToOne: false
-            referencedRelation: "documents"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      documentos: {
-        Row: {
-          created_at: string | null
-          file_name: string
-          file_size_bytes: number
-          id: string
-          mandato_id: string | null
-          mime_type: string
-          storage_path: string
-          tags: string[] | null
-          tipo: string | null
-          updated_at: string | null
-          uploaded_by: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          file_name: string
-          file_size_bytes: number
-          id?: string
-          mandato_id?: string | null
-          mime_type: string
-          storage_path: string
-          tags?: string[] | null
-          tipo?: string | null
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          file_name?: string
-          file_size_bytes?: number
-          id?: string
-          mandato_id?: string | null
-          mime_type?: string
-          storage_path?: string
-          tags?: string[] | null
-          tipo?: string | null
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "documentos_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "documentos_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      documents: {
-        Row: {
-          access_level: string
-          author_name: string | null
-          category: string
-          created_at: string | null
-          created_by: string | null
-          cta_text: string | null
-          description: string | null
-          download_count: number | null
-          file_size_bytes: number | null
-          file_type: string | null
-          file_url: string
-          id: string
-          is_featured: boolean | null
-          landing_page_id: string | null
-          lead_conversion_count: number | null
-          meta_description: string | null
-          meta_title: string | null
-          og_image_url: string | null
-          previous_version_id: string | null
-          published_at: string | null
-          reading_time_minutes: number | null
-          requires_form: boolean | null
-          sector: string | null
-          slug: string
-          status: string
-          tags: string[] | null
-          target_audience: string[] | null
-          thumbnail_url: string | null
-          title: string
-          type: string
-          updated_at: string | null
-          version: number | null
-          view_count: number | null
-        }
-        Insert: {
-          access_level?: string
-          author_name?: string | null
-          category: string
-          created_at?: string | null
-          created_by?: string | null
-          cta_text?: string | null
-          description?: string | null
-          download_count?: number | null
-          file_size_bytes?: number | null
-          file_type?: string | null
-          file_url: string
-          id?: string
-          is_featured?: boolean | null
-          landing_page_id?: string | null
-          lead_conversion_count?: number | null
-          meta_description?: string | null
-          meta_title?: string | null
-          og_image_url?: string | null
-          previous_version_id?: string | null
-          published_at?: string | null
-          reading_time_minutes?: number | null
-          requires_form?: boolean | null
-          sector?: string | null
-          slug: string
-          status?: string
-          tags?: string[] | null
-          target_audience?: string[] | null
-          thumbnail_url?: string | null
-          title: string
-          type: string
-          updated_at?: string | null
-          version?: number | null
-          view_count?: number | null
-        }
-        Update: {
-          access_level?: string
-          author_name?: string | null
-          category?: string
-          created_at?: string | null
-          created_by?: string | null
-          cta_text?: string | null
-          description?: string | null
-          download_count?: number | null
-          file_size_bytes?: number | null
-          file_type?: string | null
-          file_url?: string
-          id?: string
-          is_featured?: boolean | null
-          landing_page_id?: string | null
-          lead_conversion_count?: number | null
-          meta_description?: string | null
-          meta_title?: string | null
-          og_image_url?: string | null
-          previous_version_id?: string | null
-          published_at?: string | null
-          reading_time_minutes?: number | null
-          requires_form?: boolean | null
-          sector?: string | null
-          slug?: string
-          status?: string
-          tags?: string[] | null
-          target_audience?: string[] | null
-          thumbnail_url?: string | null
-          title?: string
-          type?: string
-          updated_at?: string | null
-          version?: number | null
-          view_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "documents_created_by_fkey"
+            foreignKeyName: "candidatos_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "documents_previous_version_id_fkey"
-            columns: ["previous_version_id"]
+            foreignKeyName: "candidatos_empleado_id_fkey"
+            columns: ["empleado_id"]
             isOneToOne: false
-            referencedRelation: "documents"
+            referencedRelation: "empleados"
             referencedColumns: ["id"]
           },
         ]
       }
-      email_sequence_steps: {
+      cierres_nomina: {
         Row: {
-          attachment_type: string | null
-          content: string
-          created_at: string | null
-          delay_hours: number
-          email_template: string | null
-          id: string
-          include_attachment: boolean | null
-          is_active: boolean | null
-          sequence_id: string | null
-          step_order: number
-          subject: string
-        }
-        Insert: {
-          attachment_type?: string | null
-          content: string
-          created_at?: string | null
-          delay_hours?: number
-          email_template?: string | null
-          id?: string
-          include_attachment?: boolean | null
-          is_active?: boolean | null
-          sequence_id?: string | null
-          step_order: number
-          subject: string
-        }
-        Update: {
-          attachment_type?: string | null
-          content?: string
-          created_at?: string | null
-          delay_hours?: number
-          email_template?: string | null
-          id?: string
-          include_attachment?: boolean | null
-          is_active?: boolean | null
-          sequence_id?: string | null
-          step_order?: number
-          subject?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "email_sequence_steps_sequence_id_fkey"
-            columns: ["sequence_id"]
-            isOneToOne: false
-            referencedRelation: "email_sequences"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      email_sequences: {
-        Row: {
+          anio: number
           created_at: string | null
           created_by: string | null
+          desviacion: number | null
+          estado: string
+          fecha_cierre: string | null
+          fecha_comparacion: string | null
+          fecha_inicio: string | null
           id: string
-          is_active: boolean | null
-          name: string
-          trigger_conditions: Json | null
-          trigger_type: string
+          mes: number
+          observaciones: string | null
+          responsable: string | null
+          total_previsto: number | null
+          total_real: number | null
           updated_at: string | null
         }
         Insert: {
+          anio: number
           created_at?: string | null
           created_by?: string | null
+          desviacion?: number | null
+          estado?: string
+          fecha_cierre?: string | null
+          fecha_comparacion?: string | null
+          fecha_inicio?: string | null
           id?: string
-          is_active?: boolean | null
-          name: string
-          trigger_conditions?: Json | null
-          trigger_type: string
+          mes: number
+          observaciones?: string | null
+          responsable?: string | null
+          total_previsto?: number | null
+          total_real?: number | null
           updated_at?: string | null
         }
         Update: {
+          anio?: number
           created_at?: string | null
           created_by?: string | null
+          desviacion?: number | null
+          estado?: string
+          fecha_cierre?: string | null
+          fecha_comparacion?: string | null
+          fecha_inicio?: string | null
           id?: string
-          is_active?: boolean | null
-          name?: string
-          trigger_conditions?: Json | null
-          trigger_type?: string
+          mes?: number
+          observaciones?: string | null
+          responsable?: string | null
+          total_previsto?: number | null
+          total_real?: number | null
           updated_at?: string | null
-        }
-        Relationships: []
-      }
-      empresa_documentos: {
-        Row: {
-          compartido_por: string | null
-          created_at: string | null
-          documento_id: string
-          empresa_id: string
-          fecha_compartido: string | null
-          id: string
-          notas: string | null
-        }
-        Insert: {
-          compartido_por?: string | null
-          created_at?: string | null
-          documento_id: string
-          empresa_id: string
-          fecha_compartido?: string | null
-          id?: string
-          notas?: string | null
-        }
-        Update: {
-          compartido_por?: string | null
-          created_at?: string | null
-          documento_id?: string
-          empresa_id?: string
-          fecha_compartido?: string | null
-          id?: string
-          notas?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "empresa_documentos_documento_id_fkey"
-            columns: ["documento_id"]
+            foreignKeyName: "cierres_nomina_created_by_fkey"
+            columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: "documentos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "empresa_documentos_empresa_id_fkey"
-            columns: ["empresa_id"]
-            isOneToOne: false
-            referencedRelation: "empresas"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      empresas: {
+      comparativas_nomina: {
         Row: {
-          capital_circulante: number | null
-          cif: string | null
+          bruto_previsto: number | null
+          bruto_real: number | null
+          cierre_id: string
+          coste_previsto: number | null
+          coste_real: number | null
           created_at: string | null
-          descripcion: string | null
-          deuda: number | null
-          ebitda: number | null
-          empleados: number | null
-          es_target: boolean | null
-          estado_target: string | null
-          facturacion: number | null
+          diferencia_bruto: number | null
+          diferencia_coste: number | null
+          discrepancia: boolean | null
+          empleado_id: string
           id: string
-          import_log_id: string | null
-          margen_ebitda: number | null
-          nivel_interes: string | null
+          nomina_id: string | null
+          observaciones: string | null
+          porcentaje_desviacion: number | null
+        }
+        Insert: {
+          bruto_previsto?: number | null
+          bruto_real?: number | null
+          cierre_id: string
+          coste_previsto?: number | null
+          coste_real?: number | null
+          created_at?: string | null
+          diferencia_bruto?: number | null
+          diferencia_coste?: number | null
+          discrepancia?: boolean | null
+          empleado_id: string
+          id?: string
+          nomina_id?: string | null
+          observaciones?: string | null
+          porcentaje_desviacion?: number | null
+        }
+        Update: {
+          bruto_previsto?: number | null
+          bruto_real?: number | null
+          cierre_id?: string
+          coste_previsto?: number | null
+          coste_real?: number | null
+          created_at?: string | null
+          diferencia_bruto?: number | null
+          diferencia_coste?: number | null
+          discrepancia?: boolean | null
+          empleado_id?: string
+          id?: string
+          nomina_id?: string | null
+          observaciones?: string | null
+          porcentaje_desviacion?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comparativas_nomina_cierre_id_fkey"
+            columns: ["cierre_id"]
+            isOneToOne: false
+            referencedRelation: "cierres_nomina"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comparativas_nomina_empleado_id_fkey"
+            columns: ["empleado_id"]
+            isOneToOne: false
+            referencedRelation: "empleados"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comparativas_nomina_nomina_id_fkey"
+            columns: ["nomina_id"]
+            isOneToOne: false
+            referencedRelation: "nominas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comparativas_nomina_nomina_id_fkey"
+            columns: ["nomina_id"]
+            isOneToOne: false
+            referencedRelation: "nominas_summary"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      empleados: {
+        Row: {
+          activo: boolean | null
+          area: string | null
+          avatar_url: string | null
+          bonus: number | null
+          contrato_url: string | null
+          coste_seg_social: number | null
+          coste_total_anual: number | null
+          coste_total_mensual: number | null
+          created_at: string | null
+          departamento: string | null
+          email: string | null
+          fecha_alta: string | null
+          fecha_baja: string | null
+          firma_url: string | null
+          id: string
+          nif: string | null
           nombre: string
-          revenue: number | null
-          sector: string
-          sitio_web: string | null
-          subsector: string | null
+          notas: string | null
+          oficina: string | null
+          puesto: string | null
+          rol: string | null
+          salario_base: number | null
+          tipo_contrato: string | null
+          variable: number | null
+        }
+        Insert: {
+          activo?: boolean | null
+          area?: string | null
+          avatar_url?: string | null
+          bonus?: number | null
+          contrato_url?: string | null
+          coste_seg_social?: number | null
+          coste_total_anual?: number | null
+          coste_total_mensual?: number | null
+          created_at?: string | null
+          departamento?: string | null
+          email?: string | null
+          fecha_alta?: string | null
+          fecha_baja?: string | null
+          firma_url?: string | null
+          id?: string
+          nif?: string | null
+          nombre: string
+          notas?: string | null
+          oficina?: string | null
+          puesto?: string | null
+          rol?: string | null
+          salario_base?: number | null
+          tipo_contrato?: string | null
+          variable?: number | null
+        }
+        Update: {
+          activo?: boolean | null
+          area?: string | null
+          avatar_url?: string | null
+          bonus?: number | null
+          contrato_url?: string | null
+          coste_seg_social?: number | null
+          coste_total_anual?: number | null
+          coste_total_mensual?: number | null
+          created_at?: string | null
+          departamento?: string | null
+          email?: string | null
+          fecha_alta?: string | null
+          fecha_baja?: string | null
+          firma_url?: string | null
+          id?: string
+          nif?: string | null
+          nombre?: string
+          notas?: string | null
+          oficina?: string | null
+          puesto?: string | null
+          rol?: string | null
+          salario_base?: number | null
+          tipo_contrato?: string | null
+          variable?: number | null
+        }
+        Relationships: []
+      }
+      entrevistas: {
+        Row: {
+          candidato_id: string
+          created_at: string | null
+          created_by: string | null
+          debilidades: string[] | null
+          duracion_minutos: number | null
+          entrevistador_id: string
+          estado: string | null
+          fecha_hora: string
+          fortalezas: string[] | null
+          id: string
+          meeting_url: string | null
+          notas_evaluacion: string | null
+          puntuacion: number | null
+          recomendacion: string | null
+          ronda: number | null
+          tipo: string | null
           ubicacion: string | null
           updated_at: string | null
         }
         Insert: {
-          capital_circulante?: number | null
-          cif?: string | null
+          candidato_id: string
           created_at?: string | null
-          descripcion?: string | null
-          deuda?: number | null
-          ebitda?: number | null
-          empleados?: number | null
-          es_target?: boolean | null
-          estado_target?: string | null
-          facturacion?: number | null
+          created_by?: string | null
+          debilidades?: string[] | null
+          duracion_minutos?: number | null
+          entrevistador_id: string
+          estado?: string | null
+          fecha_hora: string
+          fortalezas?: string[] | null
           id?: string
-          import_log_id?: string | null
-          margen_ebitda?: number | null
-          nivel_interes?: string | null
-          nombre: string
-          revenue?: number | null
-          sector: string
-          sitio_web?: string | null
-          subsector?: string | null
+          meeting_url?: string | null
+          notas_evaluacion?: string | null
+          puntuacion?: number | null
+          recomendacion?: string | null
+          ronda?: number | null
+          tipo?: string | null
           ubicacion?: string | null
           updated_at?: string | null
         }
         Update: {
-          capital_circulante?: number | null
-          cif?: string | null
+          candidato_id?: string
           created_at?: string | null
-          descripcion?: string | null
-          deuda?: number | null
-          ebitda?: number | null
-          empleados?: number | null
-          es_target?: boolean | null
-          estado_target?: string | null
-          facturacion?: number | null
+          created_by?: string | null
+          debilidades?: string[] | null
+          duracion_minutos?: number | null
+          entrevistador_id?: string
+          estado?: string | null
+          fecha_hora?: string
+          fortalezas?: string[] | null
           id?: string
-          import_log_id?: string | null
-          margen_ebitda?: number | null
-          nivel_interes?: string | null
-          nombre?: string
-          revenue?: number | null
-          sector?: string
-          sitio_web?: string | null
-          subsector?: string | null
+          meeting_url?: string | null
+          notas_evaluacion?: string | null
+          puntuacion?: number | null
+          recomendacion?: string | null
+          ronda?: number | null
+          tipo?: string | null
           ubicacion?: string | null
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "empresas_import_log_id_fkey"
-            columns: ["import_log_id"]
+            foreignKeyName: "entrevistas_candidato_id_fkey"
+            columns: ["candidato_id"]
             isOneToOne: false
-            referencedRelation: "import_logs"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      fee_templates: {
-        Row: {
-          base_fee_percentage: number | null
-          created_at: string
-          description: string | null
-          id: string
-          is_active: boolean | null
-          minimum_fee: number | null
-          name: string
-          service_type: Database["public"]["Enums"]["service_type"]
-          success_fee_percentage: number | null
-          template_sections: Json | null
-          updated_at: string
-        }
-        Insert: {
-          base_fee_percentage?: number | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          minimum_fee?: number | null
-          name: string
-          service_type: Database["public"]["Enums"]["service_type"]
-          success_fee_percentage?: number | null
-          template_sections?: Json | null
-          updated_at?: string
-        }
-        Update: {
-          base_fee_percentage?: number | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          minimum_fee?: number | null
-          name?: string
-          service_type?: Database["public"]["Enums"]["service_type"]
-          success_fee_percentage?: number | null
-          template_sections?: Json | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      general_contact_leads: {
-        Row: {
-          annual_revenue: string | null
-          company: string
-          country: string | null
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          how_did_you_hear: string | null
-          id: string
-          ip_address: unknown
-          is_deleted: boolean | null
-          message: string
-          page_origin: string
-          phone: string | null
-          referrer: string | null
-          status: string
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-        }
-        Insert: {
-          annual_revenue?: string | null
-          company: string
-          country?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          how_did_you_hear?: string | null
-          id?: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          message: string
-          page_origin: string
-          phone?: string | null
-          referrer?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Update: {
-          annual_revenue?: string | null
-          company?: string
-          country?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          how_did_you_hear?: string | null
-          id?: string
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          message?: string
-          page_origin?: string
-          phone?: string | null
-          referrer?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Relationships: []
-      }
-      hero_slides: {
-        Row: {
-          autoplay_duration: number | null
-          background_color: string | null
-          created_at: string
-          cta_primary_text: string | null
-          cta_primary_url: string | null
-          cta_secondary_text: string | null
-          cta_secondary_url: string | null
-          description: string | null
-          display_order: number
-          id: string
-          image_url: string | null
-          is_active: boolean
-          subtitle: string | null
-          text_color: string | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          autoplay_duration?: number | null
-          background_color?: string | null
-          created_at?: string
-          cta_primary_text?: string | null
-          cta_primary_url?: string | null
-          cta_secondary_text?: string | null
-          cta_secondary_url?: string | null
-          description?: string | null
-          display_order?: number
-          id?: string
-          image_url?: string | null
-          is_active?: boolean
-          subtitle?: string | null
-          text_color?: string | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          autoplay_duration?: number | null
-          background_color?: string | null
-          created_at?: string
-          cta_primary_text?: string | null
-          cta_primary_url?: string | null
-          cta_secondary_text?: string | null
-          cta_secondary_url?: string | null
-          description?: string | null
-          display_order?: number
-          id?: string
-          image_url?: string | null
-          is_active?: boolean
-          subtitle?: string | null
-          text_color?: string | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      import_logs: {
-        Row: {
-          completed_at: string | null
-          config: Json | null
-          created_at: string
-          errors: Json | null
-          failed: number
-          file_name: string | null
-          id: string
-          import_type: string
-          imported_by: string | null
-          skipped: number
-          status: string
-          successful: number
-          total_records: number
-        }
-        Insert: {
-          completed_at?: string | null
-          config?: Json | null
-          created_at?: string
-          errors?: Json | null
-          failed?: number
-          file_name?: string | null
-          id?: string
-          import_type: string
-          imported_by?: string | null
-          skipped?: number
-          status?: string
-          successful?: number
-          total_records?: number
-        }
-        Update: {
-          completed_at?: string | null
-          config?: Json | null
-          created_at?: string
-          errors?: Json | null
-          failed?: number
-          file_name?: string | null
-          id?: string
-          import_type?: string
-          imported_by?: string | null
-          skipped?: number
-          status?: string
-          successful?: number
-          total_records?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "import_logs_imported_by_fkey"
-            columns: ["imported_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      interacciones: {
-        Row: {
-          contacto_id: string | null
-          created_at: string | null
-          created_by: string | null
-          descripcion: string | null
-          documentos_adjuntos: Json | null
-          duracion_minutos: number | null
-          empresa_id: string | null
-          fecha: string
-          fecha_siguiente_accion: string | null
-          id: string
-          mandato_id: string | null
-          resultado: string | null
-          siguiente_accion: string | null
-          tipo: string
-          titulo: string
-          updated_at: string | null
-        }
-        Insert: {
-          contacto_id?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          descripcion?: string | null
-          documentos_adjuntos?: Json | null
-          duracion_minutos?: number | null
-          empresa_id?: string | null
-          fecha?: string
-          fecha_siguiente_accion?: string | null
-          id?: string
-          mandato_id?: string | null
-          resultado?: string | null
-          siguiente_accion?: string | null
-          tipo: string
-          titulo: string
-          updated_at?: string | null
-        }
-        Update: {
-          contacto_id?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          descripcion?: string | null
-          documentos_adjuntos?: Json | null
-          duracion_minutos?: number | null
-          empresa_id?: string | null
-          fecha?: string
-          fecha_siguiente_accion?: string | null
-          id?: string
-          mandato_id?: string | null
-          resultado?: string | null
-          siguiente_accion?: string | null
-          tipo?: string
-          titulo?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "interacciones_contacto_id_fkey"
-            columns: ["contacto_id"]
-            isOneToOne: false
-            referencedRelation: "contactos"
+            referencedRelation: "candidatos"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "interacciones_empresa_id_fkey"
-            columns: ["empresa_id"]
-            isOneToOne: false
-            referencedRelation: "empresas"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "interacciones_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "interacciones_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      investor_leads: {
-        Row: {
-          assigned_at: string | null
-          assigned_to: string | null
-          brevo_sent: boolean | null
-          brevo_sent_at: string | null
-          company: string | null
-          created_at: string
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          document_format: string
-          document_id: string | null
-          email: string
-          email_message_id: string | null
-          email_opened: boolean | null
-          email_opened_at: string | null
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          gdpr_consent: boolean
-          id: string
-          investment_range: string | null
-          investor_type: string | null
-          ip_address: unknown
-          is_deleted: boolean | null
-          lead_score: number | null
-          marketing_consent: boolean | null
-          notes: string | null
-          phone: string | null
-          preferred_location: string | null
-          referrer: string | null
-          rod_document_id: string | null
-          sectors_of_interest: string | null
-          status: string
-          status_updated_at: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-        }
-        Insert: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          brevo_sent?: boolean | null
-          brevo_sent_at?: string | null
-          company?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          document_format: string
-          document_id?: string | null
-          email: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          gdpr_consent?: boolean
-          id?: string
-          investment_range?: string | null
-          investor_type?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_score?: number | null
-          marketing_consent?: boolean | null
-          notes?: string | null
-          phone?: string | null
-          preferred_location?: string | null
-          referrer?: string | null
-          rod_document_id?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Update: {
-          assigned_at?: string | null
-          assigned_to?: string | null
-          brevo_sent?: boolean | null
-          brevo_sent_at?: string | null
-          company?: string | null
-          created_at?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          document_format?: string
-          document_id?: string | null
-          email?: string
-          email_message_id?: string | null
-          email_opened?: boolean | null
-          email_opened_at?: string | null
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          gdpr_consent?: boolean
-          id?: string
-          investment_range?: string | null
-          investor_type?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          lead_score?: number | null
-          marketing_consent?: boolean | null
-          notes?: string | null
-          phone?: string | null
-          preferred_location?: string | null
-          referrer?: string | null
-          rod_document_id?: string | null
-          sectors_of_interest?: string | null
-          status?: string
-          status_updated_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "investor_leads_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "investor_leads_deleted_by_fkey"
-            columns: ["deleted_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "investor_leads_document_id_fkey"
-            columns: ["document_id"]
-            isOneToOne: false
-            referencedRelation: "documents"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "investor_leads_rod_document_id_fkey"
-            columns: ["rod_document_id"]
-            isOneToOne: false
-            referencedRelation: "rod_documents"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      job_application_activities: {
-        Row: {
-          activity_type: string
-          application_id: string
-          created_at: string
-          description: string
-          id: string
-          metadata: Json | null
-          performed_by: string | null
-        }
-        Insert: {
-          activity_type: string
-          application_id: string
-          created_at?: string
-          description: string
-          id?: string
-          metadata?: Json | null
-          performed_by?: string | null
-        }
-        Update: {
-          activity_type?: string
-          application_id?: string
-          created_at?: string
-          description?: string
-          id?: string
-          metadata?: Json | null
-          performed_by?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_application_activities_application_id_fkey"
-            columns: ["application_id"]
-            isOneToOne: false
-            referencedRelation: "job_applications"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "job_application_activities_performed_by_fkey"
-            columns: ["performed_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      job_applications: {
-        Row: {
-          additional_documents_urls: string[] | null
-          availability: string | null
-          cover_letter: string | null
-          created_at: string
-          current_company: string | null
-          current_location: string | null
-          current_position: string | null
-          cv_url: string | null
-          deleted_at: string | null
-          deleted_by: string | null
-          deletion_reason: string | null
-          education_level: string | null
-          email: string
-          expected_salary_max: number | null
-          expected_salary_min: number | null
-          full_name: string
-          id: string
-          interview_scheduled_at: string | null
-          ip_address: unknown
-          is_deleted: boolean | null
-          job_post_id: string
-          linkedin_url: string | null
-          notes: string | null
-          phone: string | null
-          portfolio_url: string | null
-          rating: number | null
-          referrer: string | null
-          reviewed_at: string | null
-          reviewed_by: string | null
-          status: string
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          willing_to_relocate: boolean | null
-          years_of_experience: number | null
-        }
-        Insert: {
-          additional_documents_urls?: string[] | null
-          availability?: string | null
-          cover_letter?: string | null
-          created_at?: string
-          current_company?: string | null
-          current_location?: string | null
-          current_position?: string | null
-          cv_url?: string | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          education_level?: string | null
-          email: string
-          expected_salary_max?: number | null
-          expected_salary_min?: number | null
-          full_name: string
-          id?: string
-          interview_scheduled_at?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          job_post_id: string
-          linkedin_url?: string | null
-          notes?: string | null
-          phone?: string | null
-          portfolio_url?: string | null
-          rating?: number | null
-          referrer?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          willing_to_relocate?: boolean | null
-          years_of_experience?: number | null
-        }
-        Update: {
-          additional_documents_urls?: string[] | null
-          availability?: string | null
-          cover_letter?: string | null
-          created_at?: string
-          current_company?: string | null
-          current_location?: string | null
-          current_position?: string | null
-          cv_url?: string | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          deletion_reason?: string | null
-          education_level?: string | null
-          email?: string
-          expected_salary_max?: number | null
-          expected_salary_min?: number | null
-          full_name?: string
-          id?: string
-          interview_scheduled_at?: string | null
-          ip_address?: unknown
-          is_deleted?: boolean | null
-          job_post_id?: string
-          linkedin_url?: string | null
-          notes?: string | null
-          phone?: string | null
-          portfolio_url?: string | null
-          rating?: number | null
-          referrer?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          willing_to_relocate?: boolean | null
-          years_of_experience?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_applications_deleted_by_fkey"
-            columns: ["deleted_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "job_applications_job_post_id_fkey"
-            columns: ["job_post_id"]
-            isOneToOne: false
-            referencedRelation: "job_posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "job_applications_reviewed_by_fkey"
-            columns: ["reviewed_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      job_categories: {
-        Row: {
-          created_at: string
-          description: string | null
-          display_order: number | null
-          icon: string | null
-          id: string
-          is_active: boolean | null
-          name: string
-          slug: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          display_order?: number | null
-          icon?: string | null
-          id?: string
-          is_active?: boolean | null
-          name: string
-          slug: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          display_order?: number | null
-          icon?: string | null
-          id?: string
-          is_active?: boolean | null
-          name?: string
-          slug?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      job_post_templates: {
-        Row: {
-          benefits_template: string[] | null
-          category: string | null
-          created_at: string | null
-          created_by: string | null
-          default_contract_type: string | null
-          default_employment_type: string | null
-          default_experience_level: string | null
-          default_is_hybrid: boolean | null
-          default_is_remote: boolean | null
-          default_location: string | null
-          default_sector: string | null
-          description: string | null
-          description_template: string | null
-          id: string
-          is_active: boolean | null
-          name: string
-          requirements_template: string[] | null
-          responsibilities_template: string[] | null
-          short_description_template: string | null
-          times_used: number | null
-          title_template: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          benefits_template?: string[] | null
-          category?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          default_contract_type?: string | null
-          default_employment_type?: string | null
-          default_experience_level?: string | null
-          default_is_hybrid?: boolean | null
-          default_is_remote?: boolean | null
-          default_location?: string | null
-          default_sector?: string | null
-          description?: string | null
-          description_template?: string | null
-          id?: string
-          is_active?: boolean | null
-          name: string
-          requirements_template?: string[] | null
-          responsibilities_template?: string[] | null
-          short_description_template?: string | null
-          times_used?: number | null
-          title_template?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          benefits_template?: string[] | null
-          category?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          default_contract_type?: string | null
-          default_employment_type?: string | null
-          default_experience_level?: string | null
-          default_is_hybrid?: boolean | null
-          default_is_remote?: boolean | null
-          default_location?: string | null
-          default_sector?: string | null
-          description?: string | null
-          description_template?: string | null
-          id?: string
-          is_active?: boolean | null
-          name?: string
-          requirements_template?: string[] | null
-          responsibilities_template?: string[] | null
-          short_description_template?: string | null
-          times_used?: number | null
-          title_template?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_post_templates_created_by_fkey"
+            foreignKeyName: "entrevistas_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      job_posts: {
-        Row: {
-          application_count: number | null
-          application_email: string | null
-          application_method: string
-          application_url: string | null
-          benefits: string[] | null
-          category_id: string | null
-          closes_at: string | null
-          company_name: string
-          contract_type: string
-          created_at: string
-          created_by: string | null
-          description: string
-          display_locations: string[] | null
-          employment_type: string
-          experience_level: string | null
-          featured_image_url: string | null
-          id: string
-          is_featured: boolean | null
-          is_hybrid: boolean | null
-          is_remote: boolean | null
-          is_salary_visible: boolean | null
-          is_urgent: boolean | null
-          location: string
-          meta_description: string | null
-          meta_title: string | null
-          published_at: string | null
-          required_languages: string[] | null
-          requirements: string[] | null
-          responsibilities: string[] | null
-          salary_currency: string | null
-          salary_max: number | null
-          salary_min: number | null
-          salary_period: string | null
-          sector: string | null
-          short_description: string
-          slug: string
-          status: string
-          title: string
-          updated_at: string
-          view_count: number | null
-        }
-        Insert: {
-          application_count?: number | null
-          application_email?: string | null
-          application_method?: string
-          application_url?: string | null
-          benefits?: string[] | null
-          category_id?: string | null
-          closes_at?: string | null
-          company_name?: string
-          contract_type: string
-          created_at?: string
-          created_by?: string | null
-          description: string
-          display_locations?: string[] | null
-          employment_type: string
-          experience_level?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          is_hybrid?: boolean | null
-          is_remote?: boolean | null
-          is_salary_visible?: boolean | null
-          is_urgent?: boolean | null
-          location: string
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          required_languages?: string[] | null
-          requirements?: string[] | null
-          responsibilities?: string[] | null
-          salary_currency?: string | null
-          salary_max?: number | null
-          salary_min?: number | null
-          salary_period?: string | null
-          sector?: string | null
-          short_description: string
-          slug: string
-          status?: string
-          title: string
-          updated_at?: string
-          view_count?: number | null
-        }
-        Update: {
-          application_count?: number | null
-          application_email?: string | null
-          application_method?: string
-          application_url?: string | null
-          benefits?: string[] | null
-          category_id?: string | null
-          closes_at?: string | null
-          company_name?: string
-          contract_type?: string
-          created_at?: string
-          created_by?: string | null
-          description?: string
-          display_locations?: string[] | null
-          employment_type?: string
-          experience_level?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          is_hybrid?: boolean | null
-          is_remote?: boolean | null
-          is_salary_visible?: boolean | null
-          is_urgent?: boolean | null
-          location?: string
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          required_languages?: string[] | null
-          requirements?: string[] | null
-          responsibilities?: string[] | null
-          salary_currency?: string | null
-          salary_max?: number | null
-          salary_min?: number | null
-          salary_period?: string | null
-          sector?: string | null
-          short_description?: string
-          slug?: string
-          status?: string
-          title?: string
-          updated_at?: string
-          view_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_posts_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "job_categories"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "job_posts_created_by_fkey"
-            columns: ["created_by"]
+            foreignKeyName: "entrevistas_entrevistador_id_fkey"
+            columns: ["entrevistador_id"]
             isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      key_statistics: {
-        Row: {
-          display_locations: string[] | null
-          display_order: number | null
-          id: string
-          is_active: boolean | null
-          metric_key: string
-          metric_label: string
-          metric_value: string
-          updated_at: string
-        }
-        Insert: {
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          metric_key: string
-          metric_label: string
-          metric_value: string
-          updated_at?: string
-        }
-        Update: {
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          metric_key?: string
-          metric_label?: string
-          metric_value?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      landing_page_conversions: {
-        Row: {
-          attribution_data: Json | null
-          conversion_type: string
-          conversion_value: number | null
-          created_at: string
-          form_data: Json | null
-          id: string
-          ip_address: unknown
-          landing_page_id: string
-          referrer: string | null
-          session_id: string | null
-          user_agent: string | null
-          visitor_data: Json | null
-          visitor_id: string | null
-        }
-        Insert: {
-          attribution_data?: Json | null
-          conversion_type: string
-          conversion_value?: number | null
-          created_at?: string
-          form_data?: Json | null
-          id?: string
-          ip_address?: unknown
-          landing_page_id: string
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          visitor_data?: Json | null
-          visitor_id?: string | null
-        }
-        Update: {
-          attribution_data?: Json | null
-          conversion_type?: string
-          conversion_value?: number | null
-          created_at?: string
-          form_data?: Json | null
-          id?: string
-          ip_address?: unknown
-          landing_page_id?: string
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          visitor_data?: Json | null
-          visitor_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "landing_page_conversions_landing_page_id_fkey"
-            columns: ["landing_page_id"]
-            isOneToOne: false
-            referencedRelation: "landing_pages"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      landing_page_templates: {
+      media_files: {
         Row: {
-          created_at: string
-          description: string | null
-          display_order: number
-          id: string
-          is_active: boolean
-          name: string
-          preview_image_url: string | null
-          template_config: Json
-          template_html: string
-          type: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean
-          name: string
-          preview_image_url?: string | null
-          template_config?: Json
-          template_html: string
-          type: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean
-          name?: string
-          preview_image_url?: string | null
-          template_config?: Json
-          template_html?: string
-          type?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      landing_pages: {
-        Row: {
-          analytics_config: Json
-          content_config: Json
-          conversion_goals: Json
-          created_at: string
-          created_by: string | null
-          custom_css: string | null
-          custom_js: string | null
-          id: string
-          is_published: boolean
-          meta_description: string | null
-          meta_keywords: string[] | null
-          meta_title: string | null
-          published_at: string | null
-          slug: string
-          template_id: string | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          analytics_config?: Json
-          content_config?: Json
-          conversion_goals?: Json
-          created_at?: string
-          created_by?: string | null
-          custom_css?: string | null
-          custom_js?: string | null
-          id?: string
-          is_published?: boolean
-          meta_description?: string | null
-          meta_keywords?: string[] | null
-          meta_title?: string | null
-          published_at?: string | null
-          slug: string
-          template_id?: string | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          analytics_config?: Json
-          content_config?: Json
-          conversion_goals?: Json
-          created_at?: string
-          created_by?: string | null
-          custom_css?: string | null
-          custom_js?: string | null
-          id?: string
-          is_published?: boolean
-          meta_description?: string | null
-          meta_keywords?: string[] | null
-          meta_title?: string | null
-          published_at?: string | null
-          slug?: string
-          template_id?: string | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "landing_pages_template_id_fkey"
-            columns: ["template_id"]
-            isOneToOne: false
-            referencedRelation: "landing_page_templates"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      lead_enrichment_snapshots: {
-        Row: {
-          confidence_score: number | null
-          created_at: string
-          enriched_by: string | null
-          enriched_data: Json
-          enrichment_source: string
-          id: string
-          lead_security_id: string
-          notes: string | null
-        }
-        Insert: {
-          confidence_score?: number | null
-          created_at?: string
-          enriched_by?: string | null
-          enriched_data?: Json
-          enrichment_source: string
-          id?: string
-          lead_security_id: string
-          notes?: string | null
-        }
-        Update: {
-          confidence_score?: number | null
-          created_at?: string
-          enriched_by?: string | null
-          enriched_data?: Json
-          enrichment_source?: string
-          id?: string
-          lead_security_id?: string
-          notes?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_enrichment_snapshots_lead_security_id_fkey"
-            columns: ["lead_security_id"]
-            isOneToOne: false
-            referencedRelation: "lead_security"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      lead_security: {
-        Row: {
-          cif: string | null
-          company_name: string
-          contact_name: string
-          created_at: string
-          ebitda_band: string | null
-          email: string
-          id: string
-          ip_address: unknown
-          phone: string | null
-          referrer: string | null
-          revenue_band: string | null
-          security_subtype: string
-          status: string
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          website: string | null
-        }
-        Insert: {
-          cif?: string | null
-          company_name: string
-          contact_name: string
-          created_at?: string
-          ebitda_band?: string | null
-          email: string
-          id?: string
-          ip_address?: unknown
-          phone?: string | null
-          referrer?: string | null
-          revenue_band?: string | null
-          security_subtype: string
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          website?: string | null
-        }
-        Update: {
-          cif?: string | null
-          company_name?: string
-          contact_name?: string
-          created_at?: string
-          ebitda_band?: string | null
-          email?: string
-          id?: string
-          ip_address?: unknown
-          phone?: string | null
-          referrer?: string | null
-          revenue_band?: string | null
-          security_subtype?: string
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          website?: string | null
-        }
-        Relationships: []
-      }
-      lead_tasks: {
-        Row: {
-          assigned_to: string | null
-          completed_at: string | null
-          completed_by: string | null
-          created_at: string | null
-          deliverable_url: string | null
-          due_date: string | null
-          id: string
-          is_automated: boolean | null
-          is_system_task: boolean | null
-          lead_id: string
-          lead_type: string
-          notes: string | null
-          responsible_system: string | null
-          status: string
-          task_category: string | null
-          task_name: string
-          task_order: number
-          updated_at: string | null
-        }
-        Insert: {
-          assigned_to?: string | null
-          completed_at?: string | null
-          completed_by?: string | null
-          created_at?: string | null
-          deliverable_url?: string | null
-          due_date?: string | null
-          id?: string
-          is_automated?: boolean | null
-          is_system_task?: boolean | null
-          lead_id: string
-          lead_type: string
-          notes?: string | null
-          responsible_system?: string | null
-          status?: string
-          task_category?: string | null
-          task_name: string
-          task_order: number
-          updated_at?: string | null
-        }
-        Update: {
-          assigned_to?: string | null
-          completed_at?: string | null
-          completed_by?: string | null
-          created_at?: string | null
-          deliverable_url?: string | null
-          due_date?: string | null
-          id?: string
-          is_automated?: boolean | null
-          is_system_task?: boolean | null
-          lead_id?: string
-          lead_type?: string
-          notes?: string | null
-          responsible_system?: string | null
-          status?: string
-          task_category?: string | null
-          task_name?: string
-          task_order?: number
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_tasks_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "lead_tasks_completed_by_fkey"
-            columns: ["completed_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      lead_valuation_initial: {
-        Row: {
-          assumptions: Json
-          calculation_method: string
-          created_at: string
-          ebitda_multiple_base: number
-          ebitda_multiple_high: number
-          ebitda_multiple_low: number
-          ev_base: number
-          ev_high: number
-          ev_low: number
-          id: string
-          lead_security_id: string
-          scorecard_data: Json
-        }
-        Insert: {
-          assumptions?: Json
-          calculation_method?: string
-          created_at?: string
-          ebitda_multiple_base: number
-          ebitda_multiple_high: number
-          ebitda_multiple_low: number
-          ev_base: number
-          ev_high: number
-          ev_low: number
-          id?: string
-          lead_security_id: string
-          scorecard_data?: Json
-        }
-        Update: {
-          assumptions?: Json
-          calculation_method?: string
-          created_at?: string
-          ebitda_multiple_base?: number
-          ebitda_multiple_high?: number
-          ebitda_multiple_low?: number
-          ev_base?: number
-          ev_high?: number
-          ev_low?: number
-          id?: string
-          lead_security_id?: string
-          scorecard_data?: Json
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_valuation_initial_lead_security_id_fkey"
-            columns: ["lead_security_id"]
-            isOneToOne: false
-            referencedRelation: "lead_security"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      lead_valuation_refined: {
-        Row: {
-          adjustment_factors: Json
-          approved_at: string | null
-          approved_by: string | null
-          created_at: string
-          ebitda_multiple_adjusted: number
-          ev_final: number
-          ev_range_max: number
-          ev_range_min: number
-          id: string
-          initial_vs_refined_diff: number | null
-          lead_security_id: string
-          pdf_url: string | null
-          presentation_token: string | null
-          refinement_notes: string | null
-          sensitivity_analysis: Json | null
-          updated_at: string
-        }
-        Insert: {
-          adjustment_factors?: Json
-          approved_at?: string | null
-          approved_by?: string | null
-          created_at?: string
-          ebitda_multiple_adjusted: number
-          ev_final: number
-          ev_range_max: number
-          ev_range_min: number
-          id?: string
-          initial_vs_refined_diff?: number | null
-          lead_security_id: string
-          pdf_url?: string | null
-          presentation_token?: string | null
-          refinement_notes?: string | null
-          sensitivity_analysis?: Json | null
-          updated_at?: string
-        }
-        Update: {
-          adjustment_factors?: Json
-          approved_at?: string | null
-          approved_by?: string | null
-          created_at?: string
-          ebitda_multiple_adjusted?: number
-          ev_final?: number
-          ev_range_max?: number
-          ev_range_min?: number
-          id?: string
-          initial_vs_refined_diff?: number | null
-          lead_security_id?: string
-          pdf_url?: string | null
-          presentation_token?: string | null
-          refinement_notes?: string | null
-          sensitivity_analysis?: Json | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_valuation_refined_lead_security_id_fkey"
-            columns: ["lead_security_id"]
-            isOneToOne: false
-            referencedRelation: "lead_security"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      legal_leads: {
-        Row: {
-          company: string
-          company_size: string | null
-          consultation_type: string | null
-          created_at: string
-          email: string
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          hubspot_sent: boolean | null
-          hubspot_sent_at: string | null
-          id: string
-          ip_address: unknown
-          message: string | null
-          phone: string | null
-          referrer: string | null
-          sector: string | null
-          status: string
-          transaction_stage: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          company: string
-          company_size?: string | null
-          consultation_type?: string | null
-          created_at?: string
-          email: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          hubspot_sent?: boolean | null
-          hubspot_sent_at?: string | null
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          phone?: string | null
-          referrer?: string | null
-          sector?: string | null
-          status?: string
-          transaction_stage?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          company?: string
-          company_size?: string | null
-          consultation_type?: string | null
-          created_at?: string
-          email?: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          hubspot_sent?: boolean | null
-          hubspot_sent_at?: string | null
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          phone?: string | null
-          referrer?: string | null
-          sector?: string | null
-          status?: string
-          transaction_stage?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
-      login_attempts: {
-        Row: {
-          attempted_at: string
-          email: string
-          id: string
-          ip_address: unknown
-          success: boolean
-          user_agent: string | null
-        }
-        Insert: {
-          attempted_at?: string
-          email: string
-          id?: string
-          ip_address?: unknown
-          success?: boolean
-          user_agent?: string | null
-        }
-        Update: {
-          attempted_at?: string
-          email?: string
-          id?: string
-          ip_address?: unknown
-          success?: boolean
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
-      ma_resources_requests: {
-        Row: {
-          company: string
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          ip_address: unknown
-          operation_type: string | null
-          phone: string | null
-          referrer: string | null
-          sectors_of_interest: string[] | null
-          status: string
-          updated_at: string
-          user_agent: string | null
-        }
-        Insert: {
-          company: string
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          ip_address?: unknown
-          operation_type?: string | null
-          phone?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string[] | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Update: {
-          company?: string
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          ip_address?: unknown
-          operation_type?: string | null
-          phone?: string | null
-          referrer?: string | null
-          sectors_of_interest?: string[] | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
-      mandato_checklist_task_files: {
-        Row: {
+          alt_text: string | null
+          card_path: string | null
+          card_url: string | null
           created_at: string | null
           description: string | null
-          file_category: string | null
           file_name: string
-          file_path: string
-          file_size_bytes: number
+          file_size: number
+          file_type: string
+          height: number | null
+          hero_path: string | null
+          hero_url: string | null
           id: string
+          last_used_at: string | null
           mime_type: string
-          task_id: string
-          updated_at: string | null
-          uploaded_by: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          file_category?: string | null
-          file_name: string
-          file_path: string
-          file_size_bytes: number
-          id?: string
-          mime_type: string
-          task_id: string
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          file_category?: string | null
-          file_name?: string
-          file_path?: string
-          file_size_bytes?: number
-          id?: string
-          mime_type?: string
-          task_id?: string
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_checklist_task_files_task_id_fkey"
-            columns: ["task_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_checklist_tasks"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandato_checklist_task_files_task_id_fkey"
-            columns: ["task_id"]
-            isOneToOne: false
-            referencedRelation: "task_time_summary"
-            referencedColumns: ["task_id"]
-          },
-        ]
-      }
-      mandato_checklist_tasks: {
-        Row: {
-          created_at: string | null
-          descripcion: string | null
-          estado: string
-          fase: string
-          fecha_completada: string | null
-          fecha_limite: string | null
-          id: string
-          mandato_id: string
-          notas: string | null
-          orden: number
-          responsable: string | null
-          sistema: string | null
-          tarea: string
-          updated_at: string | null
-          url_relacionada: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          descripcion?: string | null
-          estado?: string
-          fase: string
-          fecha_completada?: string | null
-          fecha_limite?: string | null
-          id?: string
-          mandato_id: string
-          notas?: string | null
-          orden?: number
-          responsable?: string | null
-          sistema?: string | null
-          tarea: string
-          updated_at?: string | null
-          url_relacionada?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          descripcion?: string | null
-          estado?: string
-          fase?: string
-          fecha_completada?: string | null
-          fecha_limite?: string | null
-          id?: string
-          mandato_id?: string
-          notas?: string | null
-          orden?: number
-          responsable?: string | null
-          sistema?: string | null
-          tarea?: string
-          updated_at?: string | null
-          url_relacionada?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_checklist_tasks_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "mandato_checklist_tasks_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mandato_checklist_templates: {
-        Row: {
-          activo: boolean | null
-          created_at: string | null
-          descripcion: string | null
-          fase: string
-          id: string
-          orden: number
-          responsable: string | null
-          sistema: string | null
-          tarea: string
-        }
-        Insert: {
-          activo?: boolean | null
-          created_at?: string | null
-          descripcion?: string | null
-          fase: string
-          id?: string
-          orden: number
-          responsable?: string | null
-          sistema?: string | null
-          tarea: string
-        }
-        Update: {
-          activo?: boolean | null
-          created_at?: string | null
-          descripcion?: string | null
-          fase?: string
-          id?: string
-          orden?: number
-          responsable?: string | null
-          sistema?: string | null
-          tarea?: string
-        }
-        Relationships: []
-      }
-      mandato_contactos: {
-        Row: {
-          contacto_id: string
-          created_at: string | null
-          id: string
-          mandato_id: string
-          notas: string | null
-          rol: string
-        }
-        Insert: {
-          contacto_id: string
-          created_at?: string | null
-          id?: string
-          mandato_id: string
-          notas?: string | null
-          rol: string
-        }
-        Update: {
-          contacto_id?: string
-          created_at?: string | null
-          id?: string
-          mandato_id?: string
-          notas?: string | null
-          rol?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_contactos_contacto_id_fkey"
-            columns: ["contacto_id"]
-            isOneToOne: false
-            referencedRelation: "contactos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandato_contactos_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "mandato_contactos_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mandato_documentos: {
-        Row: {
-          created_at: string | null
-          descripcion: string | null
-          file_name: string
-          file_size_bytes: number
-          id: string
-          mandato_id: string
-          mime_type: string
-          storage_path: string
-          tipo: Database["public"]["Enums"]["documento_tipo"]
-          updated_at: string | null
-          uploaded_by: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          descripcion?: string | null
-          file_name: string
-          file_size_bytes: number
-          id?: string
-          mandato_id: string
-          mime_type: string
-          storage_path: string
-          tipo?: Database["public"]["Enums"]["documento_tipo"]
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          descripcion?: string | null
-          file_name?: string
-          file_size_bytes?: number
-          id?: string
-          mandato_id?: string
-          mime_type?: string
-          storage_path?: string
-          tipo?: Database["public"]["Enums"]["documento_tipo"]
-          updated_at?: string | null
-          uploaded_by?: string | null
-        }
-        Relationships: []
-      }
-      mandato_empresas: {
-        Row: {
-          created_at: string | null
-          empresa_id: string
-          id: string
-          mandato_id: string
-          notas: string | null
-          rol: string
-        }
-        Insert: {
-          created_at?: string | null
-          empresa_id: string
-          id?: string
-          mandato_id: string
-          notas?: string | null
-          rol: string
-        }
-        Update: {
-          created_at?: string | null
-          empresa_id?: string
-          id?: string
-          mandato_id?: string
-          notas?: string | null
-          rol?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_empresas_empresa_id_fkey"
-            columns: ["empresa_id"]
-            isOneToOne: false
-            referencedRelation: "empresas"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandato_empresas_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "mandato_empresas_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mandato_kanban_config: {
-        Row: {
-          activo: boolean | null
-          color: string
-          created_at: string | null
-          fase_id: string
-          id: string
-          label: string
-          orden: number
-          updated_at: string | null
-        }
-        Insert: {
-          activo?: boolean | null
-          color: string
-          created_at?: string | null
-          fase_id: string
-          id?: string
-          label: string
-          orden: number
-          updated_at?: string | null
-        }
-        Update: {
-          activo?: boolean | null
-          color?: string
-          created_at?: string | null
-          fase_id?: string
-          id?: string
-          label?: string
-          orden?: number
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      mandato_time_entries: {
-        Row: {
-          approved_at: string | null
-          approved_by: string | null
-          created_at: string | null
-          description: string
-          duration_minutes: number | null
-          end_time: string | null
-          id: string
-          is_billable: boolean | null
-          mandato_id: string
-          notes: string | null
-          rejection_reason: string | null
-          start_time: string
-          status: string | null
-          task_id: string
-          updated_at: string | null
-          user_id: string
-          work_type: string
-        }
-        Insert: {
-          approved_at?: string | null
-          approved_by?: string | null
-          created_at?: string | null
-          description: string
-          duration_minutes?: number | null
-          end_time?: string | null
-          id?: string
-          is_billable?: boolean | null
-          mandato_id: string
-          notes?: string | null
-          rejection_reason?: string | null
-          start_time: string
-          status?: string | null
-          task_id: string
-          updated_at?: string | null
-          user_id: string
-          work_type: string
-        }
-        Update: {
-          approved_at?: string | null
-          approved_by?: string | null
-          created_at?: string | null
-          description?: string
-          duration_minutes?: number | null
-          end_time?: string | null
-          id?: string
-          is_billable?: boolean | null
-          mandato_id?: string
-          notes?: string | null
-          rejection_reason?: string | null
-          start_time?: string
-          status?: string | null
-          task_id?: string
-          updated_at?: string | null
-          user_id?: string
-          work_type?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_time_entries_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "mandato_time_entries_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandato_time_entries_task_id_fkey"
-            columns: ["task_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_checklist_tasks"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandato_time_entries_task_id_fkey"
-            columns: ["task_id"]
-            isOneToOne: false
-            referencedRelation: "task_time_summary"
-            referencedColumns: ["task_id"]
-          },
-        ]
-      }
-      mandato_transactions: {
-        Row: {
-          amount: number
-          category: string | null
-          created_at: string
-          created_by: string | null
-          currency: string
-          description: string
-          id: string
-          mandato_id: string
-          notes: string | null
-          payment_method: string | null
-          reference_number: string | null
-          status: Database["public"]["Enums"]["transaction_status"]
-          transaction_date: string
-          transaction_type: Database["public"]["Enums"]["transaction_type"]
-          updated_at: string
-        }
-        Insert: {
-          amount: number
-          category?: string | null
-          created_at?: string
-          created_by?: string | null
-          currency?: string
-          description: string
-          id?: string
-          mandato_id: string
-          notes?: string | null
-          payment_method?: string | null
-          reference_number?: string | null
-          status?: Database["public"]["Enums"]["transaction_status"]
-          transaction_date: string
-          transaction_type: Database["public"]["Enums"]["transaction_type"]
-          updated_at?: string
-        }
-        Update: {
-          amount?: number
-          category?: string | null
-          created_at?: string
-          created_by?: string | null
-          currency?: string
-          description?: string
-          id?: string
-          mandato_id?: string
-          notes?: string | null
-          payment_method?: string | null
-          reference_number?: string | null
-          status?: Database["public"]["Enums"]["transaction_status"]
-          transaction_date?: string
-          transaction_type?: Database["public"]["Enums"]["transaction_type"]
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_transactions_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      mandatos: {
-        Row: {
-          created_at: string | null
-          descripcion: string | null
-          empresa_principal_id: string | null
-          es_interno: boolean | null
-          estado: string
-          estado_negociacion: string | null
-          fecha_cierre: string | null
-          fecha_inicio: string | null
-          id: string
-          import_log_id: string | null
-          numero_ofertas_recibidas: number | null
-          perfil_empresa_buscada: string | null
-          prioridad: string | null
-          rango_inversion_max: number | null
-          rango_inversion_min: number | null
-          sectores_interes: string[] | null
-          timeline_objetivo: string | null
-          tipo: string
-          tipo_comprador_buscado: string | null
-          updated_at: string | null
-          valor: number | null
-          valoracion_esperada: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          descripcion?: string | null
-          empresa_principal_id?: string | null
-          es_interno?: boolean | null
-          estado?: string
-          estado_negociacion?: string | null
-          fecha_cierre?: string | null
-          fecha_inicio?: string | null
-          id?: string
-          import_log_id?: string | null
-          numero_ofertas_recibidas?: number | null
-          perfil_empresa_buscada?: string | null
-          prioridad?: string | null
-          rango_inversion_max?: number | null
-          rango_inversion_min?: number | null
-          sectores_interes?: string[] | null
-          timeline_objetivo?: string | null
-          tipo?: string
-          tipo_comprador_buscado?: string | null
-          updated_at?: string | null
-          valor?: number | null
-          valoracion_esperada?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          descripcion?: string | null
-          empresa_principal_id?: string | null
-          es_interno?: boolean | null
-          estado?: string
-          estado_negociacion?: string | null
-          fecha_cierre?: string | null
-          fecha_inicio?: string | null
-          id?: string
-          import_log_id?: string | null
-          numero_ofertas_recibidas?: number | null
-          perfil_empresa_buscada?: string | null
-          prioridad?: string | null
-          rango_inversion_max?: number | null
-          rango_inversion_min?: number | null
-          sectores_interes?: string[] | null
-          timeline_objetivo?: string | null
-          tipo?: string
-          tipo_comprador_buscado?: string | null
-          updated_at?: string | null
-          valor?: number | null
-          valoracion_esperada?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandatos_empresa_principal_id_fkey"
-            columns: ["empresa_principal_id"]
-            isOneToOne: false
-            referencedRelation: "empresas"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "mandatos_import_log_id_fkey"
-            columns: ["import_log_id"]
-            isOneToOne: false
-            referencedRelation: "import_logs"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      market_reports: {
-        Row: {
-          category: string
-          cover_image_url: string | null
-          created_at: string | null
-          created_by: string | null
-          description: string | null
-          download_count: number | null
-          file_url: string | null
-          id: string
-          is_active: boolean | null
-          last_updated: string | null
-          pages: number | null
-          title: string
-          updated_at: string | null
-        }
-        Insert: {
-          category?: string
-          cover_image_url?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          description?: string | null
-          download_count?: number | null
-          file_url?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_updated?: string | null
-          pages?: number | null
-          title: string
-          updated_at?: string | null
-        }
-        Update: {
-          category?: string
-          cover_image_url?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          description?: string | null
-          download_count?: number | null
-          file_url?: string | null
-          id?: string
-          is_active?: boolean | null
-          last_updated?: string | null
-          pages?: number | null
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      message_logs: {
-        Row: {
-          created_at: string
-          error_details: string | null
-          id: string
-          payload_summary: Json | null
-          provider_id: string | null
-          provider_name: string | null
-          recipient: string | null
-          retry_count: number | null
-          status: string
-          type: string
-          valuation_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          error_details?: string | null
-          id?: string
-          payload_summary?: Json | null
-          provider_id?: string | null
-          provider_name?: string | null
-          recipient?: string | null
-          retry_count?: number | null
-          status: string
-          type: string
-          valuation_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          error_details?: string | null
-          id?: string
-          payload_summary?: Json | null
-          provider_id?: string | null
-          provider_name?: string | null
-          recipient?: string | null
-          retry_count?: number | null
-          status?: string
-          type?: string
-          valuation_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "message_logs_valuation_id_fkey"
-            columns: ["valuation_id"]
-            isOneToOne: false
-            referencedRelation: "company_valuations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      news_articles: {
-        Row: {
-          author_avatar_url: string | null
-          author_name: string
-          category: string
-          content: string
-          created_at: string
-          excerpt: string | null
-          featured_image_url: string | null
-          id: string
-          is_featured: boolean | null
-          is_published: boolean | null
-          meta_description: string | null
-          meta_title: string | null
-          published_at: string | null
-          read_time: number | null
-          search_vector: unknown
-          slug: string
+          original_name: string
+          original_path: string
+          original_url: string
           tags: string[] | null
-          title: string
-          updated_at: string
+          thumbnail_path: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          uploaded_at: string | null
+          uploaded_by: string
+          usage_count: number | null
+          width: number | null
         }
         Insert: {
-          author_avatar_url?: string | null
-          author_name?: string
-          category: string
-          content: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          is_published?: boolean | null
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          read_time?: number | null
-          search_vector?: unknown
-          slug: string
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          author_avatar_url?: string | null
-          author_name?: string
-          category?: string
-          content?: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          is_published?: boolean | null
-          meta_description?: string | null
-          meta_title?: string | null
-          published_at?: string | null
-          read_time?: number | null
-          search_vector?: unknown
-          slug?: string
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      newsletter_subscribers: {
-        Row: {
-          company: string | null
-          created_at: string
-          email: string
-          full_name: string | null
-          id: string
-          interests: string[] | null
-          ip_address: unknown
-          is_active: boolean
-          source: string | null
-          subscribed_at: string
-          unsubscribed_at: string | null
-          updated_at: string
-          user_agent: string | null
-        }
-        Insert: {
-          company?: string | null
-          created_at?: string
-          email: string
-          full_name?: string | null
-          id?: string
-          interests?: string[] | null
-          ip_address?: unknown
-          is_active?: boolean
-          source?: string | null
-          subscribed_at?: string
-          unsubscribed_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Update: {
-          company?: string | null
-          created_at?: string
-          email?: string
-          full_name?: string | null
-          id?: string
-          interests?: string[] | null
-          ip_address?: unknown
-          is_active?: boolean
-          source?: string | null
-          subscribed_at?: string
-          unsubscribed_at?: string | null
-          updated_at?: string
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
-      operation_inquiries: {
-        Row: {
-          company_name: string
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          ip_address: unknown
-          message: string
-          operation_id: string
-          phone: string | null
-          referrer: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          company_name: string
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          ip_address?: unknown
-          message: string
-          operation_id: string
-          phone?: string | null
-          referrer?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          company_name?: string
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          ip_address?: unknown
-          message?: string
-          operation_id?: string
-          phone?: string | null
-          referrer?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
-      pdf_download_logs: {
-        Row: {
-          created_at: string | null
-          download_status: string
-          file_size_bytes: number | null
-          generation_time_ms: number | null
-          id: string
-          ip_address: unknown
-          pdf_type: string
-          user_agent: string | null
-          user_id: string | null
-          valuation_id: string | null
-        }
-        Insert: {
+          alt_text?: string | null
+          card_path?: string | null
+          card_url?: string | null
           created_at?: string | null
-          download_status?: string
-          file_size_bytes?: number | null
-          generation_time_ms?: number | null
-          id?: string
-          ip_address?: unknown
-          pdf_type: string
-          user_agent?: string | null
-          user_id?: string | null
-          valuation_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          download_status?: string
-          file_size_bytes?: number | null
-          generation_time_ms?: number | null
-          id?: string
-          ip_address?: unknown
-          pdf_type?: string
-          user_agent?: string | null
-          user_id?: string | null
-          valuation_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "pdf_download_logs_valuation_id_fkey"
-            columns: ["valuation_id"]
-            isOneToOne: false
-            referencedRelation: "company_valuations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      portfolio_companies: {
-        Row: {
-          country: string
-          created_at: string
-          description: string | null
-          display_order: number | null
-          founded_year: number | null
-          id: string
-          investment_date: string | null
-          investment_thesis: string | null
-          is_active: boolean | null
-          is_featured: boolean | null
-          logo_url: string | null
-          metrics: Json | null
-          name: string
-          search_vector: unknown
-          sector: string
-          slug: string
-          stage: string
-          timeline: Json | null
-          updated_at: string
-          website_url: string | null
-        }
-        Insert: {
-          country: string
-          created_at?: string
           description?: string | null
-          display_order?: number | null
-          founded_year?: number | null
+          file_name: string
+          file_size: number
+          file_type: string
+          height?: number | null
+          hero_path?: string | null
+          hero_url?: string | null
           id?: string
-          investment_date?: string | null
-          investment_thesis?: string | null
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          logo_url?: string | null
-          metrics?: Json | null
-          name: string
-          search_vector?: unknown
-          sector: string
-          slug: string
-          stage: string
-          timeline?: Json | null
-          updated_at?: string
-          website_url?: string | null
+          last_used_at?: string | null
+          mime_type: string
+          original_name: string
+          original_path: string
+          original_url: string
+          tags?: string[] | null
+          thumbnail_path?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          uploaded_at?: string | null
+          uploaded_by: string
+          usage_count?: number | null
+          width?: number | null
         }
         Update: {
-          country?: string
-          created_at?: string
+          alt_text?: string | null
+          card_path?: string | null
+          card_url?: string | null
+          created_at?: string | null
           description?: string | null
-          display_order?: number | null
-          founded_year?: number | null
+          file_name?: string
+          file_size?: number
+          file_type?: string
+          height?: number | null
+          hero_path?: string | null
+          hero_url?: string | null
           id?: string
-          investment_date?: string | null
-          investment_thesis?: string | null
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          logo_url?: string | null
-          metrics?: Json | null
-          name?: string
-          search_vector?: unknown
-          sector?: string
-          slug?: string
-          stage?: string
-          timeline?: Json | null
-          updated_at?: string
-          website_url?: string | null
+          last_used_at?: string | null
+          mime_type?: string
+          original_name?: string
+          original_path?: string
+          original_url?: string
+          tags?: string[] | null
+          thumbnail_path?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          uploaded_at?: string | null
+          uploaded_by?: string
+          usage_count?: number | null
+          width?: number | null
         }
         Relationships: []
       }
-      rate_limits: {
+      media_usage: {
         Row: {
-          action: string
-          count: number
-          created_at: string
-          id: string
-          identifier: string
-          window_start: string
-        }
-        Insert: {
-          action: string
-          count?: number
-          created_at?: string
-          id?: string
-          identifier: string
-          window_start?: string
-        }
-        Update: {
-          action?: string
-          count?: number
-          created_at?: string
-          id?: string
-          identifier?: string
-          window_start?: string
-        }
-        Relationships: []
-      }
-      rh_departamentos: {
-        Row: {
-          codigo: string
           created_at: string | null
-          empresa_id: string | null
+          entity_id: string
+          entity_type: string
           id: string
-          nombre: string
+          media_file_id: string
+          usage_type: string
         }
         Insert: {
-          codigo: string
           created_at?: string | null
-          empresa_id?: string | null
+          entity_id: string
+          entity_type: string
           id?: string
-          nombre: string
+          media_file_id: string
+          usage_type: string
         }
         Update: {
-          codigo?: string
           created_at?: string | null
-          empresa_id?: string | null
+          entity_id?: string
+          entity_type?: string
           id?: string
-          nombre?: string
+          media_file_id?: string
+          usage_type?: string
         }
         Relationships: [
           {
-            foreignKeyName: "rh_departamentos_empresa_id_fkey"
-            columns: ["empresa_id"]
+            foreignKeyName: "media_usage_media_file_id_fkey"
+            columns: ["media_file_id"]
             isOneToOne: false
-            referencedRelation: "rh_empresas"
+            referencedRelation: "media_files"
             referencedColumns: ["id"]
           },
         ]
       }
-      rh_empleados: {
+      movimientos_mes: {
         Row: {
-          activo_2025: boolean | null
-          codigo_empleado: string
-          coste_total_mensual: number | null
-          created_at: string | null
-          departamento_id: string | null
-          empresa_id: string | null
-          fecha_alta: string | null
-          fecha_antiguedad: string | null
-          fecha_baja: string | null
-          id: string
-          is_active: boolean | null
-          nombre: string
-          puesto: string | null
-          salario_base: number | null
-          tipo_contrato: string | null
-        }
-        Insert: {
-          activo_2025?: boolean | null
-          codigo_empleado: string
-          coste_total_mensual?: number | null
-          created_at?: string | null
-          departamento_id?: string | null
-          empresa_id?: string | null
-          fecha_alta?: string | null
-          fecha_antiguedad?: string | null
-          fecha_baja?: string | null
-          id?: string
-          is_active?: boolean | null
-          nombre: string
-          puesto?: string | null
-          salario_base?: number | null
-          tipo_contrato?: string | null
-        }
-        Update: {
-          activo_2025?: boolean | null
-          codigo_empleado?: string
-          coste_total_mensual?: number | null
-          created_at?: string | null
-          departamento_id?: string | null
-          empresa_id?: string | null
-          fecha_alta?: string | null
-          fecha_antiguedad?: string | null
-          fecha_baja?: string | null
-          id?: string
-          is_active?: boolean | null
-          nombre?: string
-          puesto?: string | null
-          salario_base?: number | null
-          tipo_contrato?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "rh_empleados_departamento_id_fkey"
-            columns: ["departamento_id"]
-            isOneToOne: false
-            referencedRelation: "rh_departamentos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "rh_empleados_empresa_id_fkey"
-            columns: ["empresa_id"]
-            isOneToOne: false
-            referencedRelation: "rh_empresas"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      rh_empresas: {
-        Row: {
-          codigo: string
-          created_at: string | null
-          id: string
-          nif: string
-          nombre: string
-        }
-        Insert: {
-          codigo: string
-          created_at?: string | null
-          id?: string
-          nif: string
-          nombre: string
-        }
-        Update: {
-          codigo?: string
-          created_at?: string | null
-          id?: string
-          nif?: string
-          nombre?: string
-        }
-        Relationships: []
-      }
-      rh_movimientos_laborales: {
-        Row: {
+          aprobado: boolean | null
+          cierre_id: string
           created_at: string | null
           descripcion: string | null
-          empleado_id: string | null
-          fecha_movimiento: string
+          empleado_id: string
+          fecha_efectiva: string | null
+          fecha_revision: string | null
           id: string
-          observaciones: string | null
-          tipo_movimiento: string
-          valor_numerico: number | null
+          importe_impacto: number | null
+          revisado: boolean | null
+          revisado_por: string | null
+          tipo: string
+          valor_anterior: number | null
+          valor_nuevo: number | null
         }
         Insert: {
+          aprobado?: boolean | null
+          cierre_id: string
           created_at?: string | null
           descripcion?: string | null
-          empleado_id?: string | null
-          fecha_movimiento: string
+          empleado_id: string
+          fecha_efectiva?: string | null
+          fecha_revision?: string | null
           id?: string
-          observaciones?: string | null
-          tipo_movimiento: string
-          valor_numerico?: number | null
+          importe_impacto?: number | null
+          revisado?: boolean | null
+          revisado_por?: string | null
+          tipo: string
+          valor_anterior?: number | null
+          valor_nuevo?: number | null
         }
         Update: {
+          aprobado?: boolean | null
+          cierre_id?: string
           created_at?: string | null
           descripcion?: string | null
-          empleado_id?: string | null
-          fecha_movimiento?: string
+          empleado_id?: string
+          fecha_efectiva?: string | null
+          fecha_revision?: string | null
           id?: string
-          observaciones?: string | null
-          tipo_movimiento?: string
-          valor_numerico?: number | null
+          importe_impacto?: number | null
+          revisado?: boolean | null
+          revisado_por?: string | null
+          tipo?: string
+          valor_anterior?: number | null
+          valor_nuevo?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "rh_movimientos_laborales_empleado_id_fkey"
-            columns: ["empleado_id"]
+            foreignKeyName: "movimientos_mes_cierre_id_fkey"
+            columns: ["cierre_id"]
             isOneToOne: false
-            referencedRelation: "rh_empleados"
+            referencedRelation: "cierres_nomina"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "rh_movimientos_laborales_empleado_id_fkey"
+            foreignKeyName: "movimientos_mes_empleado_id_fkey"
             columns: ["empleado_id"]
             isOneToOne: false
-            referencedRelation: "v_empleados_completo"
+            referencedRelation: "empleados"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movimientos_mes_revisado_por_fkey"
+            columns: ["revisado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      rh_nominas: {
+      nominas: {
         Row: {
-          anio: number
-          anticipos: number | null
+          anio: number | null
           bruto: number | null
           coste_empresa: number | null
-          created_at: string | null
-          embargos: number | null
           empleado_id: string | null
+          fecha_subida: string | null
           id: string
-          irpf: number | null
-          mes: number
+          mes: number | null
           neto: number | null
-          otros_descuentos: number | null
           pdf_url: string | null
-          ss_empresa: number | null
-          ss_trabajador: number | null
-          total_tc1: number | null
+        }
+        Insert: {
+          anio?: number | null
+          bruto?: number | null
+          coste_empresa?: number | null
+          empleado_id?: string | null
+          fecha_subida?: string | null
+          id?: string
+          mes?: number | null
+          neto?: number | null
+          pdf_url?: string | null
+        }
+        Update: {
+          anio?: number | null
+          bruto?: number | null
+          coste_empresa?: number | null
+          empleado_id?: string | null
+          fecha_subida?: string | null
+          id?: string
+          mes?: number | null
+          neto?: number | null
+          pdf_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nominas_empleado_id_fkey"
+            columns: ["empleado_id"]
+            isOneToOne: false
+            referencedRelation: "empleados"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          action_url: string | null
+          category: string | null
+          created_at: string | null
+          entity_id: string | null
+          entity_type: string | null
+          expires_at: string | null
+          id: string
+          message: string
+          read: boolean | null
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          action_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          expires_at?: string | null
+          id?: string
+          message: string
+          read?: boolean | null
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          action_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          expires_at?: string | null
+          id?: string
+          message?: string
+          read?: boolean | null
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      presupuestos: {
+        Row: {
+          anio: number
+          created_at: string | null
+          departamento: string
+          id: string
+          importe_anual: number
         }
         Insert: {
           anio: number
-          anticipos?: number | null
-          bruto?: number | null
-          coste_empresa?: number | null
           created_at?: string | null
-          embargos?: number | null
-          empleado_id?: string | null
+          departamento: string
           id?: string
-          irpf?: number | null
-          mes: number
-          neto?: number | null
-          otros_descuentos?: number | null
-          pdf_url?: string | null
-          ss_empresa?: number | null
-          ss_trabajador?: number | null
-          total_tc1?: number | null
+          importe_anual?: number
         }
         Update: {
           anio?: number
-          anticipos?: number | null
-          bruto?: number | null
-          coste_empresa?: number | null
           created_at?: string | null
-          embargos?: number | null
-          empleado_id?: string | null
+          departamento?: string
           id?: string
-          irpf?: number | null
-          mes?: number
-          neto?: number | null
-          otros_descuentos?: number | null
-          pdf_url?: string | null
-          ss_empresa?: number | null
-          ss_trabajador?: number | null
-          total_tc1?: number | null
+          importe_anual?: number
+        }
+        Relationships: []
+      }
+      previsiones_nomina: {
+        Row: {
+          bonus_previsto: number | null
+          bruto_previsto: number | null
+          cierre_id: string
+          confirmado: boolean | null
+          coste_ss_previsto: number | null
+          coste_total_previsto: number | null
+          created_at: string | null
+          empleado_id: string
+          id: string
+          notas: string | null
+          updated_at: string | null
+          variable_previsto: number | null
+        }
+        Insert: {
+          bonus_previsto?: number | null
+          bruto_previsto?: number | null
+          cierre_id: string
+          confirmado?: boolean | null
+          coste_ss_previsto?: number | null
+          coste_total_previsto?: number | null
+          created_at?: string | null
+          empleado_id: string
+          id?: string
+          notas?: string | null
+          updated_at?: string | null
+          variable_previsto?: number | null
+        }
+        Update: {
+          bonus_previsto?: number | null
+          bruto_previsto?: number | null
+          cierre_id?: string
+          confirmado?: boolean | null
+          coste_ss_previsto?: number | null
+          coste_total_previsto?: number | null
+          created_at?: string | null
+          empleado_id?: string
+          id?: string
+          notas?: string | null
+          updated_at?: string | null
+          variable_previsto?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "rh_nominas_empleado_id_fkey"
+            foreignKeyName: "previsiones_nomina_cierre_id_fkey"
+            columns: ["cierre_id"]
+            isOneToOne: false
+            referencedRelation: "cierres_nomina"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "previsiones_nomina_empleado_id_fkey"
             columns: ["empleado_id"]
             isOneToOne: false
-            referencedRelation: "rh_empleados"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "rh_nominas_empleado_id_fkey"
-            columns: ["empleado_id"]
-            isOneToOne: false
-            referencedRelation: "v_empleados_completo"
+            referencedRelation: "empleados"
             referencedColumns: ["id"]
           },
         ]
       }
-      rod_documents: {
+      profiles: {
         Row: {
-          activated_at: string | null
           created_at: string | null
-          created_by: string | null
-          deactivated_at: string | null
-          deleted_at: string | null
-          deleted_by: string | null
-          description: string | null
-          file_size_bytes: number | null
-          file_type: string
-          file_url: string
-          id: string
-          is_active: boolean | null
-          is_deleted: boolean | null
-          is_latest: boolean | null
-          title: string
-          total_downloads: number | null
-          updated_at: string | null
-          version: string
-        }
-        Insert: {
-          activated_at?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          deactivated_at?: string | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          description?: string | null
-          file_size_bytes?: number | null
-          file_type: string
-          file_url: string
-          id?: string
-          is_active?: boolean | null
-          is_deleted?: boolean | null
-          is_latest?: boolean | null
-          title: string
-          total_downloads?: number | null
-          updated_at?: string | null
-          version: string
-        }
-        Update: {
-          activated_at?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          deactivated_at?: string | null
-          deleted_at?: string | null
-          deleted_by?: string | null
-          description?: string | null
-          file_size_bytes?: number | null
-          file_type?: string
-          file_url?: string
-          id?: string
-          is_active?: boolean | null
-          is_deleted?: boolean | null
-          is_latest?: boolean | null
-          title?: string
-          total_downloads?: number | null
-          updated_at?: string | null
-          version?: string
-        }
-        Relationships: []
-      }
-      sector_multiples: {
-        Row: {
-          description: string | null
-          ebitda_multiple: number
-          employee_range: string | null
-          id: string
-          is_active: boolean
-          last_updated: string
-          revenue_multiple: number
-          sector_name: string
-        }
-        Insert: {
-          description?: string | null
-          ebitda_multiple: number
-          employee_range?: string | null
-          id?: string
-          is_active?: boolean
-          last_updated?: string
-          revenue_multiple: number
-          sector_name: string
-        }
-        Update: {
-          description?: string | null
-          ebitda_multiple?: number
-          employee_range?: string | null
-          id?: string
-          is_active?: boolean
-          last_updated?: string
-          revenue_multiple?: number
-          sector_name?: string
-        }
-        Relationships: []
-      }
-      sector_multiples_asesorias: {
-        Row: {
-          created_at: string
-          description: string | null
-          ebitda_multiple: number
-          employee_range: string
-          id: string
-          revenue_multiple: number
-          sector_name: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          ebitda_multiple: number
-          employee_range: string
-          id?: string
-          revenue_multiple: number
-          sector_name: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          ebitda_multiple?: number
-          employee_range?: string
-          id?: string
-          revenue_multiple?: number
-          sector_name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      sector_report_templates: {
-        Row: {
-          ai_prompt_template: string | null
-          content_structure: Json | null
-          created_at: string | null
-          created_by: string | null
-          id: string
-          is_active: boolean | null
-          sector: string
-          template_name: string
-          template_type: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          ai_prompt_template?: string | null
-          content_structure?: Json | null
-          created_at?: string | null
-          created_by?: string | null
-          id?: string
-          is_active?: boolean | null
-          sector: string
-          template_name: string
-          template_type?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          ai_prompt_template?: string | null
-          content_structure?: Json | null
-          created_at?: string | null
-          created_by?: string | null
-          id?: string
-          is_active?: boolean | null
-          sector?: string
-          template_name?: string
-          template_type?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      sector_valuation_multiples: {
-        Row: {
-          description: string | null
-          display_locations: string[] | null
-          display_order: number | null
-          id: string
-          is_active: boolean | null
-          median_multiple: string
-          multiple_range: string
-          sector_name: string
-          updated_at: string
-        }
-        Insert: {
-          description?: string | null
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          median_multiple: string
-          multiple_range: string
-          sector_name: string
-          updated_at?: string
-        }
-        Update: {
-          description?: string | null
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          median_multiple?: string
-          multiple_range?: string
-          sector_name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      sectors: {
-        Row: {
-          created_at: string
-          created_by: string | null
-          description: string | null
-          display_order: number
-          id: string
-          is_active: boolean
-          name_en: string | null
-          name_es: string
-          parent_id: string | null
-          slug: string
-          updated_at: string
-          usage_count: number
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean
-          name_en?: string | null
-          name_es: string
-          parent_id?: string | null
-          slug: string
-          updated_at?: string
-          usage_count?: number
-        }
-        Update: {
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean
-          name_en?: string | null
-          name_es?: string
-          parent_id?: string | null
-          slug?: string
-          updated_at?: string
-          usage_count?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sectors_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "sectors"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      security_events: {
-        Row: {
-          created_at: string
-          details: Json | null
-          event_type: string
-          id: string
-          ip_address: unknown
-          severity: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          details?: Json | null
-          event_type: string
-          id?: string
-          ip_address?: unknown
-          severity?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          details?: Json | null
-          event_type?: string
-          id?: string
-          ip_address?: unknown
-          severity?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      sell_leads: {
-        Row: {
-          company: string
-          created_at: string
-          email: string
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
-          hubspot_sent: boolean | null
-          hubspot_sent_at: string | null
-          id: string
-          ip_address: unknown
-          message: string | null
-          page_origin: string | null
-          phone: string | null
-          referrer: string | null
-          revenue_range: string | null
-          sector: string | null
-          status: string
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-        }
-        Insert: {
-          company: string
-          created_at?: string
-          email: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
-          hubspot_sent?: boolean | null
-          hubspot_sent_at?: string | null
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          page_origin?: string | null
-          phone?: string | null
-          referrer?: string | null
-          revenue_range?: string | null
-          sector?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Update: {
-          company?: string
-          created_at?: string
-          email?: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
-          hubspot_sent?: boolean | null
-          hubspot_sent_at?: string | null
-          id?: string
-          ip_address?: unknown
-          message?: string | null
-          page_origin?: string | null
-          phone?: string | null
-          referrer?: string | null
-          revenue_range?: string | null
-          sector?: string | null
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-        }
-        Relationships: []
-      }
-      tareas: {
-        Row: {
-          asignado_a: string | null
-          created_at: string | null
-          descripcion: string | null
-          estado: string | null
-          fecha_vencimiento: string | null
-          id: string
-          mandato_id: string | null
-          prioridad: string | null
-          titulo: string
-          updated_at: string | null
-        }
-        Insert: {
-          asignado_a?: string | null
-          created_at?: string | null
-          descripcion?: string | null
-          estado?: string | null
-          fecha_vencimiento?: string | null
-          id?: string
-          mandato_id?: string | null
-          prioridad?: string | null
-          titulo: string
-          updated_at?: string | null
-        }
-        Update: {
-          asignado_a?: string | null
-          created_at?: string | null
-          descripcion?: string | null
-          estado?: string | null
-          fecha_vencimiento?: string | null
-          id?: string
-          mandato_id?: string | null
-          prioridad?: string | null
-          titulo?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "tareas_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "tareas_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      team_members: {
-        Row: {
-          bio: string | null
-          created_at: string
-          display_order: number | null
           email: string | null
           id: string
-          image_url: string | null
-          is_active: boolean | null
-          linkedin_url: string | null
-          name: string
-          phone: string | null
-          position: string | null
-          section: string | null
-          updated_at: string
+          role: string
         }
         Insert: {
-          bio?: string | null
-          created_at?: string
-          display_order?: number | null
+          created_at?: string | null
+          email?: string | null
+          id: string
+          role?: string
+        }
+        Update: {
+          created_at?: string | null
           email?: string | null
           id?: string
-          image_url?: string | null
-          is_active?: boolean | null
-          linkedin_url?: string | null
-          name: string
-          phone?: string | null
-          position?: string | null
-          section?: string | null
-          updated_at?: string
-        }
-        Update: {
-          bio?: string | null
-          created_at?: string
-          display_order?: number | null
-          email?: string | null
-          id?: string
-          image_url?: string | null
-          is_active?: boolean | null
-          linkedin_url?: string | null
-          name?: string
-          phone?: string | null
-          position?: string | null
-          section?: string | null
-          updated_at?: string
+          role?: string
         }
         Relationships: []
       }
-      testimonials: {
+      services: {
         Row: {
-          client_company: string
-          client_name: string
-          client_photo_url: string | null
-          client_position: string | null
-          created_at: string
-          display_locations: string[] | null
-          display_order: number | null
-          id: string
-          is_active: boolean | null
-          is_featured: boolean | null
-          project_type: string | null
-          rating: number | null
-          sector: string | null
-          testimonial_text: string
-          updated_at: string
-        }
-        Insert: {
-          client_company: string
-          client_name: string
-          client_photo_url?: string | null
-          client_position?: string | null
-          created_at?: string
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          project_type?: string | null
-          rating?: number | null
-          sector?: string | null
-          testimonial_text: string
-          updated_at?: string
-        }
-        Update: {
-          client_company?: string
-          client_name?: string
-          client_photo_url?: string | null
-          client_position?: string | null
-          created_at?: string
-          display_locations?: string[] | null
-          display_order?: number | null
-          id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          project_type?: string | null
-          rating?: number | null
-          sector?: string | null
-          testimonial_text?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      tool_ratings: {
-        Row: {
-          company_sector: string | null
-          company_size: string | null
-          created_at: string
-          ease_of_use: number
-          feedback_comment: string | null
-          id: string
-          ip_address: unknown
-          recommendation: number
-          result_accuracy: number
-          user_agent: string | null
-          user_email: string | null
-        }
-        Insert: {
-          company_sector?: string | null
-          company_size?: string | null
-          created_at?: string
-          ease_of_use: number
-          feedback_comment?: string | null
-          id?: string
-          ip_address?: unknown
-          recommendation: number
-          result_accuracy: number
-          user_agent?: string | null
-          user_email?: string | null
-        }
-        Update: {
-          company_sector?: string | null
-          company_size?: string | null
-          created_at?: string
-          ease_of_use?: number
-          feedback_comment?: string | null
-          id?: string
-          ip_address?: unknown
-          recommendation?: number
-          result_accuracy?: number
-          user_agent?: string | null
-          user_email?: string | null
-        }
-        Relationships: []
-      }
-      tracking_events: {
-        Row: {
-          company_domain: string | null
-          created_at: string
-          event_data: Json | null
-          event_type: string
-          id: string
-          ip_address: unknown
-          page_path: string
-          referrer: string | null
-          session_id: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_content: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          utm_term: string | null
-          visitor_id: string
-        }
-        Insert: {
-          company_domain?: string | null
-          created_at?: string
-          event_data?: Json | null
-          event_type: string
-          id?: string
-          ip_address?: unknown
-          page_path?: string
-          referrer?: string | null
-          session_id: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id: string
-        }
-        Update: {
-          company_domain?: string | null
-          created_at?: string
-          event_data?: Json | null
-          event_type?: string
-          id?: string
-          ip_address?: unknown
-          page_path?: string
-          referrer?: string | null
-          session_id?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_content?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          utm_term?: string | null
-          visitor_id?: string
-        }
-        Relationships: []
-      }
-      tv_dashboard_fase_mapping: {
-        Row: {
-          activo: boolean
-          color: string
-          columna_tv: string
-          created_at: string
-          fase_id: string
-          fase_tipo: string
-          icono: string
-          id: string
-          orden: number
-          updated_at: string
-        }
-        Insert: {
-          activo?: boolean
-          color: string
-          columna_tv: string
-          created_at?: string
-          fase_id: string
-          fase_tipo: string
-          icono: string
-          id?: string
-          orden: number
-          updated_at?: string
-        }
-        Update: {
-          activo?: boolean
-          color?: string
-          columna_tv?: string
-          created_at?: string
-          fase_id?: string
-          fase_tipo?: string
-          icono?: string
-          id?: string
-          orden?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      user_dashboard_layouts: {
-        Row: {
-          created_at: string
-          id: string
-          is_default: boolean
-          is_shared: boolean
-          layout_data: Json
-          layout_name: string
-          shared_with: string[] | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_default?: boolean
-          is_shared?: boolean
-          layout_data?: Json
-          layout_name: string
-          shared_with?: string[] | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_default?: boolean
-          is_shared?: boolean
-          layout_data?: Json
-          layout_name?: string
-          shared_with?: string[] | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      user_registration_requests: {
-        Row: {
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          ip_address: unknown
-          processed_at: string | null
-          processed_by: string | null
-          rejection_reason: string | null
-          requested_at: string
-          status: string
-          updated_at: string
-          user_agent: string | null
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          ip_address?: unknown
-          processed_at?: string | null
-          processed_by?: string | null
-          rejection_reason?: string | null
-          requested_at?: string
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          ip_address?: unknown
-          processed_at?: string | null
-          processed_by?: string | null
-          rejection_reason?: string | null
-          requested_at?: string
-          status?: string
-          updated_at?: string
-          user_agent?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
-      venta_empresas_comparisons: {
-        Row: {
-          aspect: string
+          area: string
+          benefits: string | null
           created_at: string | null
-          display_order: number
-          id: string
-          is_active: boolean | null
-          is_critical: boolean | null
-          updated_at: string | null
-          with_capittal: string
-          without_capittal: string
-        }
-        Insert: {
-          aspect: string
-          created_at?: string | null
-          display_order: number
-          id?: string
-          is_active?: boolean | null
-          is_critical?: boolean | null
-          updated_at?: string | null
-          with_capittal: string
-          without_capittal: string
-        }
-        Update: {
-          aspect?: string
-          created_at?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean | null
-          is_critical?: boolean | null
-          updated_at?: string | null
-          with_capittal?: string
-          without_capittal?: string
-        }
-        Relationships: []
-      }
-      venta_empresas_process_steps: {
-        Row: {
-          created_at: string | null
+          created_by: string | null
           description: string
-          display_order: number
-          duration: string
+          display_order: number | null
+          features: string[]
           icon_name: string
           id: string
           is_active: boolean | null
-          step_number: number
-          title: string
+          meta_description: string | null
+          meta_title: string | null
+          metodologia: Json | null
+          name: string
+          servicios_transversales: Json | null
+          slug: string
+          stats: Json | null
+          typical_clients: string[]
           updated_at: string | null
+          updated_by: string | null
         }
         Insert: {
+          area: string
+          benefits?: string | null
           created_at?: string | null
+          created_by?: string | null
           description: string
-          display_order: number
-          duration: string
-          icon_name?: string
+          display_order?: number | null
+          features?: string[]
+          icon_name: string
           id?: string
           is_active?: boolean | null
-          step_number: number
-          title: string
+          meta_description?: string | null
+          meta_title?: string | null
+          metodologia?: Json | null
+          name: string
+          servicios_transversales?: Json | null
+          slug: string
+          stats?: Json | null
+          typical_clients?: string[]
           updated_at?: string | null
+          updated_by?: string | null
         }
         Update: {
+          area?: string
+          benefits?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string
-          display_order?: number
-          duration?: string
+          display_order?: number | null
+          features?: string[]
           icon_name?: string
           id?: string
           is_active?: boolean | null
-          step_number?: number
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      venta_empresas_testimonials: {
-        Row: {
-          avatar_initials: string
-          company: string
-          created_at: string | null
-          display_order: number
-          id: string
-          is_active: boolean | null
-          name: string
-          position: string
-          price_increase: string
-          quote: string
-          rating: number | null
-          sector: string
-          time_to_sale: string
-          updated_at: string | null
-          valuation: string
-        }
-        Insert: {
-          avatar_initials: string
-          company: string
-          created_at?: string | null
-          display_order: number
-          id?: string
-          is_active?: boolean | null
-          name: string
-          position: string
-          price_increase: string
-          quote: string
-          rating?: number | null
-          sector: string
-          time_to_sale: string
-          updated_at?: string | null
-          valuation: string
-        }
-        Update: {
-          avatar_initials?: string
-          company?: string
-          created_at?: string | null
-          display_order?: number
-          id?: string
-          is_active?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          metodologia?: Json | null
           name?: string
-          position?: string
-          price_increase?: string
-          quote?: string
-          rating?: number | null
-          sector?: string
-          time_to_sale?: string
+          servicios_transversales?: Json | null
+          slug?: string
+          stats?: Json | null
+          typical_clients?: string[]
           updated_at?: string | null
-          valuation?: string
+          updated_by?: string | null
         }
         Relationships: []
       }
-      webinar_registrations: {
+      simulaciones: {
         Row: {
-          attended: boolean | null
-          attended_at: string | null
-          company: string | null
-          created_at: string
-          email: string
-          email_sent: boolean | null
-          email_sent_at: string | null
-          full_name: string
+          descripcion: string | null
+          detalles: Json | null
+          fecha: string | null
           id: string
-          ip_address: unknown
-          job_title: string | null
-          phone: string | null
-          referrer: string | null
-          reminder_sent: boolean | null
-          reminder_sent_at: string | null
-          sector: string | null
-          specific_interests: string | null
-          updated_at: string
-          user_agent: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-          webinar_id: string
-          years_experience: string | null
+          resultado_total: number | null
+          subida_fija: number | null
+          subida_porcentaje: number | null
+          usuario: string | null
         }
         Insert: {
-          attended?: boolean | null
-          attended_at?: string | null
-          company?: string | null
-          created_at?: string
-          email: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name: string
+          descripcion?: string | null
+          detalles?: Json | null
+          fecha?: string | null
           id?: string
-          ip_address?: unknown
-          job_title?: string | null
-          phone?: string | null
-          referrer?: string | null
-          reminder_sent?: boolean | null
-          reminder_sent_at?: string | null
-          sector?: string | null
-          specific_interests?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          webinar_id: string
-          years_experience?: string | null
+          resultado_total?: number | null
+          subida_fija?: number | null
+          subida_porcentaje?: number | null
+          usuario?: string | null
         }
         Update: {
-          attended?: boolean | null
-          attended_at?: string | null
-          company?: string | null
-          created_at?: string
-          email?: string
-          email_sent?: boolean | null
-          email_sent_at?: string | null
-          full_name?: string
+          descripcion?: string | null
+          detalles?: Json | null
+          fecha?: string | null
           id?: string
-          ip_address?: unknown
-          job_title?: string | null
-          phone?: string | null
-          referrer?: string | null
-          reminder_sent?: boolean | null
-          reminder_sent_at?: string | null
-          sector?: string | null
-          specific_interests?: string | null
-          updated_at?: string
-          user_agent?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-          webinar_id?: string
-          years_experience?: string | null
+          resultado_total?: number | null
+          subida_fija?: number | null
+          subida_porcentaje?: number | null
+          usuario?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "webinar_registrations_webinar_id_fkey"
-            columns: ["webinar_id"]
-            isOneToOne: false
-            referencedRelation: "webinars"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
-      webinars: {
+      user_roles: {
         Row: {
-          attendee_count: number | null
-          category: string
-          created_at: string
-          description: string
-          duration_minutes: number
+          created_at: string | null
           id: string
-          is_active: boolean | null
-          is_featured: boolean | null
-          key_takeaways: string[] | null
-          materials_url: string | null
-          max_capacity: number | null
-          recording_url: string | null
-          registration_url: string | null
-          sector: string | null
-          short_description: string | null
-          speaker_avatar_url: string | null
-          speaker_company: string | null
-          speaker_name: string
-          speaker_title: string
-          status: string
-          tags: string[] | null
-          title: string
-          updated_at: string
-          webinar_date: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
         }
         Insert: {
-          attendee_count?: number | null
-          category: string
-          created_at?: string
-          description: string
-          duration_minutes?: number
+          created_at?: string | null
           id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          key_takeaways?: string[] | null
-          materials_url?: string | null
-          max_capacity?: number | null
-          recording_url?: string | null
-          registration_url?: string | null
-          sector?: string | null
-          short_description?: string | null
-          speaker_avatar_url?: string | null
-          speaker_company?: string | null
-          speaker_name: string
-          speaker_title: string
-          status?: string
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-          webinar_date: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
         }
         Update: {
-          attendee_count?: number | null
-          category?: string
-          created_at?: string
-          description?: string
-          duration_minutes?: number
+          created_at?: string | null
           id?: string
-          is_active?: boolean | null
-          is_featured?: boolean | null
-          key_takeaways?: string[] | null
-          materials_url?: string | null
-          max_capacity?: number | null
-          recording_url?: string | null
-          registration_url?: string | null
-          sector?: string | null
-          short_description?: string | null
-          speaker_avatar_url?: string | null
-          speaker_company?: string | null
-          speaker_name?: string
-          speaker_title?: string
-          status?: string
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-          webinar_date?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
     }
     Views: {
-      banner_daily_analytics: {
-        Row: {
-          banner_id: string | null
-          banner_name: string | null
-          banner_slug: string | null
-          clicks: number | null
-          ctr_percentage: number | null
-          event_date: string | null
-          impressions: number | null
-          unique_pages: number | null
-          unique_users: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "banner_events_banner_id_fkey"
-            columns: ["banner_id"]
-            isOneToOne: false
-            referencedRelation: "banners"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mandato_time_summary: {
-        Row: {
-          descripcion: string | null
-          horas_facturables: number | null
-          mandato_id: string | null
-          promedio_horas_por_entrada: number | null
-          tipo: string | null
-          total_entradas: number | null
-          total_horas: number | null
-          trabajadores_asignados: number | null
-        }
-        Relationships: []
-      }
-      task_time_summary: {
-        Row: {
-          fase: string | null
-          mandato_id: string | null
-          tarea: string | null
-          task_id: string | null
-          total_entradas: number | null
-          total_horas: number | null
-          usuarios_trabajando: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mandato_checklist_tasks_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandato_time_summary"
-            referencedColumns: ["mandato_id"]
-          },
-          {
-            foreignKeyName: "mandato_checklist_tasks_mandato_id_fkey"
-            columns: ["mandato_id"]
-            isOneToOne: false
-            referencedRelation: "mandatos"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      v_empleados_completo: {
-        Row: {
-          codigo_empleado: string | null
-          coste_total_mensual: number | null
-          created_at: string | null
-          departamento_id: string | null
-          departamento_nombre: string | null
-          empresa_id: string | null
-          empresa_nombre: string | null
-          id: string | null
-          is_active: boolean | null
-          nombre: string | null
-          puesto: string | null
-          salario_base: number | null
-          tipo_contrato: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "rh_empleados_departamento_id_fkey"
-            columns: ["departamento_id"]
-            isOneToOne: false
-            referencedRelation: "rh_departamentos"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "rh_empleados_empresa_id_fkey"
-            columns: ["empresa_id"]
-            isOneToOne: false
-            referencedRelation: "rh_empresas"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      v_nominas_completo: {
+      nominas_summary: {
         Row: {
           anio: number | null
           bruto: number | null
           coste_empresa: number | null
-          created_at: string | null
           empleado_id: string | null
-          empleado_nombre: string | null
-          empresa_nombre: string | null
+          fecha_subida: string | null
           id: string | null
           mes: number | null
           neto: number | null
-          pdf_url: string | null
+        }
+        Insert: {
+          anio?: number | null
+          bruto?: number | null
+          coste_empresa?: number | null
+          empleado_id?: string | null
+          fecha_subida?: string | null
+          id?: string | null
+          mes?: number | null
+          neto?: number | null
+        }
+        Update: {
+          anio?: number | null
+          bruto?: number | null
+          coste_empresa?: number | null
+          empleado_id?: string | null
+          fecha_subida?: string | null
+          id?: string | null
+          mes?: number | null
+          neto?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "rh_nominas_empleado_id_fkey"
+            foreignKeyName: "nominas_empleado_id_fkey"
             columns: ["empleado_id"]
             isOneToOne: false
-            referencedRelation: "rh_empleados"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "rh_nominas_empleado_id_fkey"
-            columns: ["empleado_id"]
-            isOneToOne: false
-            referencedRelation: "v_empleados_completo"
+            referencedRelation: "empleados"
             referencedColumns: ["id"]
           },
         ]
       }
     }
     Functions: {
-      approve_user_registration: {
-        Args: { request_id: string }
-        Returns: boolean
-      }
-      audit_table_security: {
-        Args: { table_name_param: string }
-        Returns: {
-          allows_anonymous: boolean
-          command: string
-          is_permissive: boolean
-          policy_name: string
-          security_risk_level: string
-        }[]
-      }
-      audit_tracking_data_access: {
-        Args: never
-        Returns: {
-          access_count: number
-          access_date: string
-          top_utm_sources: string[]
-          unique_visitors: number
-        }[]
-      }
-      audit_valuation_data_access: {
-        Args: never
-        Returns: {
-          access_count: number
-          access_date: string
-          anonymous_access_count: number
-          high_risk_access_count: number
-          unique_ips: number
-        }[]
-      }
-      bootstrap_first_admin: { Args: { user_email: string }; Returns: boolean }
-      check_login_rate_limit: {
-        Args: {
-          p_email: string
-          p_ip_address: unknown
-          p_max_attempts?: number
-          p_window_minutes?: number
-        }
-        Returns: Json
-      }
-      check_rate_limit:
-        | {
-            Args: {
-              identifier: string
-              max_requests?: number
-              window_minutes?: number
-            }
-            Returns: boolean
-          }
-        | {
-            Args: {
-              _action: string
-              _identifier: string
-              _max_requests?: number
-              _window_minutes?: number
-            }
-            Returns: boolean
-          }
-      check_rate_limit_enhanced: {
-        Args: {
-          p_category?: string
-          p_identifier: string
-          p_max_requests?: number
-          p_window_minutes?: number
-        }
-        Returns: boolean
-      }
-      check_rate_limit_enhanced_safe: {
-        Args: {
-          p_category?: string
-          p_identifier: string
-          p_max_requests?: number
-          p_window_minutes?: number
-        }
-        Returns: boolean
-      }
-      check_user_admin_role: {
-        Args: { check_user_id: string }
-        Returns: string
-      }
-      cleanup_old_audit_logs: { Args: never; Returns: number }
-      cleanup_old_tracking_events: { Args: never; Returns: number }
-      copy_checklist_template_to_mandato: {
-        Args: { p_mandato_id: string }
-        Returns: number
-      }
-      create_admin_user_record: {
-        Args: {
-          p_email: string
-          p_full_name: string
-          p_role?: Database["public"]["Enums"]["admin_role"]
-          p_user_id: string
-        }
-        Returns: Json
-      }
-      create_temporary_user: {
-        Args: {
-          p_email: string
-          p_full_name: string
-          p_role?: Database["public"]["Enums"]["admin_role"]
-        }
-        Returns: Json
-      }
-      create_temporary_user_bypass: {
-        Args: {
-          p_email: string
-          p_full_name: string
-          p_role?: Database["public"]["Enums"]["admin_role"]
-        }
-        Returns: Json
-      }
-      create_temporary_user_enhanced: {
-        Args: {
-          p_email: string
-          p_full_name: string
-          p_role?: Database["public"]["Enums"]["admin_role"]
-        }
-        Returns: Json
-      }
-      current_user_is_admin: { Args: never; Returns: boolean }
-      deactivate_admin_user: { Args: { p_user_id: string }; Returns: boolean }
-      disk_usage_monitor: {
-        Args: never
-        Returns: {
-          largest_tables: string[]
-          recommendations: string[]
-          storage_buckets_info: Json
-          total_database_size: string
-        }[]
-      }
-      enhanced_rate_limit_check: {
-        Args: {
-          identifier: string
-          max_requests?: number
-          window_minutes?: number
-        }
-        Returns: boolean
-      }
-      generate_proposal_number: { Args: never; Returns: string }
-      generate_secure_temp_password: { Args: never; Returns: string }
-      generate_signed_valuation_token: { Args: never; Returns: string }
-      generate_unique_proposal_url: { Args: never; Returns: string }
-      get_admin_basic_info: {
-        Args: never
-        Returns: {
-          full_name: string
-          id: string
-          is_active: boolean
-          last_login: string
-          role: Database["public"]["Enums"]["admin_role"]
-        }[]
-      }
-      get_admin_user_info: {
-        Args: { check_user_id: string }
-        Returns: {
-          email: string
-          full_name: string
-          id: string
-          is_active: boolean
-          last_login: string
-          role: Database["public"]["Enums"]["admin_role"]
-          user_id: string
-        }[]
-      }
-      get_news_filter_options: {
-        Args: never
-        Returns: {
-          all_tags: string[]
-          categories: string[]
-        }[]
-      }
-      get_portfolio_filter_options: {
-        Args: never
-        Returns: {
-          countries: string[]
-          sectors: string[]
-          stages: string[]
-        }[]
-      }
-      get_user_role: { Args: { check_user_id: string }; Returns: string }
       has_role: {
         Args: {
-          check_user_id: string
-          required_role: Database["public"]["Enums"]["admin_role"]
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
         }
         Returns: boolean
       }
-      is_admin_user: { Args: { _user_id: string }; Returns: boolean }
-      is_user_admin: { Args: { check_user_id: string }; Returns: boolean }
-      is_user_super_admin: { Args: { check_user_id: string }; Returns: boolean }
-      log_auth_security_event: {
-        Args: {
-          details?: Json
-          event_type: string
-          ip_address?: unknown
-          user_agent?: string
-          user_email?: string
-        }
-        Returns: undefined
-      }
-      log_behavior_access_violation: { Args: never; Returns: undefined }
-      log_critical_security_event: {
-        Args: {
-          details?: Json
-          event_type: string
-          operation: string
-          table_name: string
-        }
-        Returns: undefined
-      }
-      log_critical_security_violation: {
-        Args: { details?: Json; table_name: string; violation_type: string }
-        Returns: undefined
-      }
-      log_login_attempt: {
-        Args: {
-          p_email: string
-          p_ip_address: unknown
-          p_success: boolean
-          p_user_agent?: string
-        }
-        Returns: undefined
-      }
-      log_security_event:
-        | {
-            Args: { _details?: Json; _event_type: string; _severity: string }
-            Returns: string
-          }
-        | {
-            Args: {
-              p_action_attempted?: string
-              p_details?: Json
-              p_event_type: string
-              p_severity?: string
-              p_table_name?: string
-            }
-            Returns: undefined
-          }
-      log_security_violation: {
-        Args: {
-          details?: Json
-          table_name: string
-          user_id?: string
-          violation_type: string
-        }
-        Returns: undefined
-      }
-      log_tracking_access_violation: { Args: never; Returns: undefined }
-      log_valuation_access_attempt: { Args: never; Returns: undefined }
-      monitor_security_violations: { Args: never; Returns: undefined }
-      refresh_banner_analytics: { Args: never; Returns: undefined }
-      reject_user_registration: {
-        Args: { reason?: string; request_id: string }
-        Returns: boolean
-      }
-      rollback_import: { Args: { p_import_log_id: string }; Returns: Json }
-      search_news_articles: {
-        Args: {
-          filter_category?: string
-          filter_tags?: string[]
-          limit_count?: number
-          offset_count?: number
-          search_query?: string
-        }
-        Returns: {
-          author_avatar_url: string
-          author_name: string
-          category: string
-          content: string
-          excerpt: string
-          featured_image_url: string
-          id: string
-          is_featured: boolean
-          published_at: string
-          read_time: number
-          relevance: number
-          slug: string
-          tags: string[]
-          title: string
-        }[]
-      }
-      search_portfolio_companies: {
-        Args: {
-          filter_country?: string
-          filter_sector?: string
-          filter_stage?: string
-          limit_count?: number
-          offset_count?: number
-          search_query?: string
-        }
-        Returns: {
-          country: string
-          description: string
-          founded_year: number
-          id: string
-          investment_date: string
-          investment_thesis: string
-          is_featured: boolean
-          logo_url: string
-          metrics: Json
-          name: string
-          relevance: number
-          sector: string
-          slug: string
-          stage: string
-          timeline: Json
-          website_url: string
-        }[]
-      }
-      show_limit: { Args: never; Returns: number }
-      show_trgm: { Args: { "": string }; Returns: string[] }
-      update_admin_user_role: {
-        Args: {
-          p_new_role: Database["public"]["Enums"]["admin_role"]
-          p_user_id: string
-        }
-        Returns: boolean
-      }
-      update_kanban_order: { Args: { updates: Json }; Returns: undefined }
-      validate_data_access_security: {
-        Args: never
-        Returns: {
-          has_rls: boolean
-          policy_count: number
-          security_status: string
-          table_name: string
-        }[]
-      }
-      validate_strong_password: {
-        Args: { password_text: string }
-        Returns: boolean
-      }
-      validate_valuation_token: { Args: { _token: string }; Returns: string }
-      verify_valuation_token: { Args: { token: string }; Returns: boolean }
+      publish_scheduled_posts: { Args: never; Returns: number }
     }
     Enums: {
-      admin_role: "super_admin" | "admin" | "editor" | "viewer"
-      documento_tipo:
-        | "Contrato"
-        | "NDA"
-        | "Due Diligence"
-        | "Financiero"
-        | "Legal"
-        | "Otro"
-      lead_status:
-        | "nuevo"
-        | "contactando"
-        | "calificado"
-        | "propuesta_enviada"
-        | "negociacion"
-        | "en_espera"
-        | "ganado"
-        | "perdido"
-        | "archivado"
-      proposal_status:
-        | "draft"
-        | "sent"
-        | "viewed"
-        | "approved"
-        | "rejected"
-        | "expired"
-      service_type:
-        | "venta_empresas"
-        | "due_diligence"
-        | "valoraciones"
-        | "asesoramiento_legal"
-        | "planificacion_fiscal"
-        | "reestructuraciones"
-      service_type_enum: "vender" | "comprar" | "otros"
-      transaction_status: "pendiente" | "completada" | "cancelada"
-      transaction_type:
-        | "ingreso"
-        | "gasto"
-        | "honorario"
-        | "due_diligence"
-        | "ajuste_valoracion"
-        | "comision"
-        | "otro"
+      app_role: "admin" | "marketing" | "editor" | "viewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -6897,53 +1265,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      admin_role: ["super_admin", "admin", "editor", "viewer"],
-      documento_tipo: [
-        "Contrato",
-        "NDA",
-        "Due Diligence",
-        "Financiero",
-        "Legal",
-        "Otro",
-      ],
-      lead_status: [
-        "nuevo",
-        "contactando",
-        "calificado",
-        "propuesta_enviada",
-        "negociacion",
-        "en_espera",
-        "ganado",
-        "perdido",
-        "archivado",
-      ],
-      proposal_status: [
-        "draft",
-        "sent",
-        "viewed",
-        "approved",
-        "rejected",
-        "expired",
-      ],
-      service_type: [
-        "venta_empresas",
-        "due_diligence",
-        "valoraciones",
-        "asesoramiento_legal",
-        "planificacion_fiscal",
-        "reestructuraciones",
-      ],
-      service_type_enum: ["vender", "comprar", "otros"],
-      transaction_status: ["pendiente", "completada", "cancelada"],
-      transaction_type: [
-        "ingreso",
-        "gasto",
-        "honorario",
-        "due_diligence",
-        "ajuste_valoracion",
-        "comision",
-        "otro",
-      ],
+      app_role: ["admin", "marketing", "editor", "viewer"],
     },
   },
 } as const
