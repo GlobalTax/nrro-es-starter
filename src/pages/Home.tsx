@@ -88,8 +88,8 @@ const Home = () => {
                 Con decisiones hoy.
               </h1>
               <p className="text-lead mb-8">
-                Asesoría fiscal, contable y legal con más de 25 años de experiencia en Barcelona. 
-                Soluciones estratégicas para empresas y autónomos que piensan a largo plazo.
+                Asesoramos a grupos de empresas y empresas familiares en sus decisiones clave: 
+                fiscalidad, sucesión, estructura societaria y compraventa de empresas.
               </p>
               <div className="flex gap-4">
                 <Button
