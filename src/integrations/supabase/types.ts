@@ -401,6 +401,39 @@ export type Database = {
           },
         ]
       }
+      demo_requests: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string | null
+          name: string
+          restaurant_name: string | null
+          source: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          restaurant_name?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          restaurant_name?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
       empleados: {
         Row: {
           activo: boolean | null

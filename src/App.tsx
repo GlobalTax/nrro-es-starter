@@ -18,6 +18,7 @@ import Portfolio from "./pages/Portfolio";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import OrquestKairosHR from "./pages/OrquestKairosHR";
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { AdminPortfolio } from "./pages/admin/AdminPortfolio";
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/equipo" element={<Layout><Team /></Layout>} />
             <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
             <Route path="/contacto" element={<Layout><Contact /></Layout>} />
+            <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
 
             {/* Admin routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
