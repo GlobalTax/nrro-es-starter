@@ -15,22 +15,6 @@ export const HeroSection = ({ onViewDemo }: HeroSectionProps) => {
   return (
     <section className="bg-gradient-to-b from-background to-muted/30 py-20 px-4">
       <div className="max-w-7xl mx-auto text-center">
-        {/* Logos lado a lado */}
-        <motion.div 
-          className="flex justify-center items-center gap-8 mb-8 flex-wrap"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="w-32 h-32 bg-muted rounded-lg flex items-center justify-center border-2 border-border">
-            <span className="text-sm font-semibold text-muted-foreground">Orquest</span>
-          </div>
-          <div className="text-4xl font-bold text-muted-foreground">+</div>
-          <div className="w-32 h-32 bg-muted rounded-lg flex items-center justify-center border-2 border-border">
-            <span className="text-sm font-semibold text-muted-foreground">KairosHR</span>
-          </div>
-        </motion.div>
-        
         {/* Título principal */}
         <motion.h1 
           className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6"
