@@ -44,13 +44,14 @@ export default function Blog() {
       />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary via-primary-hover to-accent py-20">
+      <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-primary-foreground mb-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="service-hero-overline mb-6">Blog</div>
+            <h1 className="service-hero-title mb-8">
               Blog y Recursos
             </h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
+            <p className="service-hero-subtitle max-w-3xl mx-auto">
               Mantente informado con las últimas novedades fiscales, consejos contables y estrategias para tu negocio.
             </p>
           </div>

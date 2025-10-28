@@ -35,13 +35,14 @@ export default function About() {
       />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary via-primary-hover to-accent py-20">
+      <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-primary-foreground mb-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="service-hero-overline mb-6">Nosotros</div>
+            <h1 className="service-hero-title mb-8">
               Sobre Nosotros
             </h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
+            <p className="service-hero-subtitle max-w-3xl mx-auto">
               Más de 25 años transformando la gestión fiscal y contable en un verdadero impulso para empresas y profesionales.
             </p>
           </div>
@@ -49,61 +50,61 @@ export default function About() {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-background">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="animate-slide-up space-y-6">
-              <h2 className="text-4xl font-serif font-bold text-foreground mb-8">
-                Nuestra Historia
+            <div className="space-y-6">
+              <div className="section-overline mb-4">Nuestra Historia</div>
+              <h2 className="text-3xl md:text-4xl font-normal mb-8">
+                Creciendo junto a nuestros clientes
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Fundada con la visión de ofrecer servicios de asesoría fiscal y contable de máxima calidad, 
-                <span className="font-display font-semibold text-foreground"> navarro</span> se ha consolidado como un referente en Barcelona 
-                gracias a nuestro compromiso inquebrantable con la excelencia y el servicio personalizado.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                A lo largo de más de 25 años, hemos acompañado a cientos de empresas y profesionales en su crecimiento, 
-                adaptándonos constantemente a los cambios normativos y las necesidades del mercado. Nuestra filosofía se 
-                basa en convertir la gestión fiscal y contable en una ventaja competitiva para nuestros clientes.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                En 2025, dimos un paso más en nuestra evolución trasladándonos a nuestras nuevas oficinas en el corazón del 
-                Eixample barcelonés, un espacio diseñado para ofrecer el mejor servicio en un entorno profesional de primer nivel.
-              </p>
+              <div className="space-y-4 service-body">
+                <p>
+                  Fundada con la visión de ofrecer servicios de asesoría fiscal y contable de máxima calidad, 
+                  <span className="font-medium text-foreground"> navarro</span> se ha consolidado como un referente en Barcelona 
+                  gracias a nuestro compromiso inquebrantable con la excelencia y el servicio personalizado.
+                </p>
+                <p>
+                  A lo largo de más de 25 años, hemos acompañado a cientos de empresas y profesionales en su crecimiento, 
+                  adaptándonos constantemente a los cambios normativos y las necesidades del mercado. Nuestra filosofía se 
+                  basa en convertir la gestión fiscal y contable en una ventaja competitiva para nuestros clientes.
+                </p>
+                <p>
+                  En 2025, dimos un paso más en nuestra evolución trasladándonos a nuestras nuevas oficinas en el corazón del 
+                  Eixample barcelonés, un espacio diseñado para ofrecer el mejor servicio en un entorno profesional de primer nivel.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">
-              Nuestros Valores
+          <div className="text-center mb-12">
+            <div className="section-overline mb-4">Nuestros Valores</div>
+            <h2 className="text-3xl md:text-4xl font-normal mb-4">
+              Los principios que guían nuestro trabajo
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Los principios que guían nuestro trabajo y definen nuestra relación con los clientes
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {values.map((value, index) => {
+            {values.map((value) => {
               const Icon = value.icon;
               return (
                 <Card
-                  key={index}
-                  className="hover-lift border-border/50 hover:border-accent/50 transition-all"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  key={value.title}
+                  className="border-border bg-white"
                 >
                   <CardContent className="p-8">
-                    <div className="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
-                      <Icon className="h-7 w-7 text-accent" />
+                    <div className="w-14 h-14 rounded-full bg-black flex items-center justify-center mb-4">
+                      <Icon className="h-7 w-7 text-white" />
                     </div>
-                    <h3 className="text-2xl font-display font-semibold text-foreground mb-3">
+                    <h3 className="text-xl font-medium text-foreground mb-3">
                       {value.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="service-body">
                       {value.description}
                     </p>
                   </CardContent>
@@ -115,30 +116,30 @@ export default function About() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-br from-primary via-primary-hover to-accent">
+      <section className="py-16 md:py-24 bg-white border-t border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div className="animate-scale-in">
-              <div className="text-5xl md:text-6xl font-serif font-bold text-accent-foreground mb-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center max-w-5xl mx-auto">
+            <div>
+              <div className="stat-number mb-2">
                 25+
               </div>
-              <p className="text-lg text-accent-foreground/90 font-display font-medium">
+              <p className="text-sm text-body uppercase tracking-wider">
                 Años de experiencia
               </p>
             </div>
-            <div className="animate-scale-in" style={{ animationDelay: '150ms' }}>
-              <div className="text-5xl md:text-6xl font-serif font-bold text-accent-foreground mb-3">
+            <div>
+              <div className="stat-number mb-2">
                 500+
               </div>
-              <p className="text-lg text-accent-foreground/90 font-display font-medium">
+              <p className="text-sm text-body uppercase tracking-wider">
                 Clientes satisfechos
               </p>
             </div>
-            <div className="animate-scale-in" style={{ animationDelay: '300ms' }}>
-              <div className="text-5xl md:text-6xl font-serif font-bold text-accent-foreground mb-3">
+            <div>
+              <div className="stat-number mb-2">
                 100%
               </div>
-              <p className="text-lg text-accent-foreground/90 font-display font-medium">
+              <p className="text-sm text-body uppercase tracking-wider">
                 Compromiso con la calidad
               </p>
             </div>

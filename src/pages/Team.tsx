@@ -15,43 +15,48 @@ const Team = () => {
 
       <div className="min-h-screen">
         {/* Hero */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="max-w-4xl">
-            <Overline className="mb-4">Team</Overline>
-            <h1 className="mb-6">Our Team</h1>
-            <p className="text-lead">
-              We're a team of experienced investors, operators, and advisors committed
-              to partnering with exceptional founders and management teams.
-            </p>
+        <section className="bg-black py-32 md:py-48 text-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="service-hero-overline mb-6">Equipo</div>
+              <h1 className="service-hero-title mb-8">
+                Nuestro Equipo
+              </h1>
+              <p className="service-hero-subtitle max-w-3xl mx-auto">
+                Profesionales experimentados comprometidos con el éxito de nuestros clientes, 
+                aportando experiencia técnica y visión estratégica en cada proyecto.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* Team Grid */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
-            {teamMembers.map((member) => (
-              <Card key={member.id} className="overflow-hidden group">
-                {/* Avatar placeholder with b/w → color hover */}
-                <div className="aspect-square bg-neutral-100 grayscale group-hover:grayscale-0 transition-smooth" />
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-serif mb-1">{member.name}</h3>
-                  <p className="text-sm text-accent font-medium mb-4">{member.role}</p>
-                  <p className="text-sm text-body leading-relaxed mb-6">{member.bio}</p>
+        <section className="bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
+              {teamMembers.map((member) => (
+                <Card key={member.id} className="overflow-hidden border-border">
+                  <div className="aspect-square bg-neutral-100" />
                   
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-primary hover:text-accent transition-smooth"
-                    aria-label={`${member.name}'s LinkedIn profile`}
-                  >
-                    <Linkedin className="h-4 w-4" />
-                    LinkedIn
-                  </a>
-                </div>
-              </Card>
-            ))}
+                  <div className="p-6">
+                    <h3 className="text-xl font-medium mb-1">{member.name}</h3>
+                    <p className="section-overline mb-4">{member.role}</p>
+                    <p className="service-body mb-6">{member.bio}</p>
+                    
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-foreground hover:text-accent transition-smooth border-b border-foreground hover:border-accent"
+                      aria-label={`${member.name}'s LinkedIn profile`}
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      LinkedIn
+                    </a>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
       </div>

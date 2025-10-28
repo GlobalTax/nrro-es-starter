@@ -41,23 +41,30 @@ const Methodology = () => {
 
       <div className="min-h-screen">
         {/* Hero */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="max-w-4xl">
-            <Overline className="mb-4">Nuestro Enfoque</Overline>
-            <h1 className="mb-6">Metodología de Trabajo</h1>
-            <p className="text-lead">
-              Trabajamos con un método probado que combina experiencia profesional, 
-              trato personalizado y tecnología para ofrecer el mejor servicio a nuestros clientes.
-            </p>
+        <section className="bg-black py-32 md:py-48 text-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="service-hero-overline mb-6">Nuestro Enfoque</div>
+              <h1 className="service-hero-title mb-8">
+                Metodología de Trabajo
+              </h1>
+              <p className="service-hero-subtitle max-w-3xl mx-auto">
+                Trabajamos con un método probado que combina experiencia profesional, 
+                trato personalizado y tecnología para ofrecer el mejor servicio a nuestros clientes.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* Nuestra Filosofía */}
-        <section className="border-y border-border bg-neutral-100 py-24">
+        <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <h2 className="mb-8">Nuestra Filosofía</h2>
-              <div className="space-y-6 text-body leading-relaxed">
+            <div className="max-w-4xl">
+              <div className="section-overline mb-4">Nuestra Filosofía</div>
+              <h2 className="text-3xl md:text-4xl font-normal mb-8">
+                Soluciones personalizadas para cada cliente
+              </h2>
+              <div className="space-y-4 service-body">
                 <p>
                   En NRRO creemos que cada empresa es única y requiere soluciones personalizadas.
                   No aplicamos fórmulas estándar, sino que adaptamos nuestros servicios a las
@@ -79,54 +86,72 @@ const Methodology = () => {
         </section>
 
         {/* Proceso de Trabajo */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <SectionHeader
-            overline="Proceso"
-            title="Cómo Trabajamos Contigo"
-            description="Un proceso claro y estructurado en 4 fases"
-          />
+        <section className="py-16 md:py-24 bg-muted">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <div className="section-overline mb-4">Proceso</div>
+              <h2 className="text-3xl md:text-4xl font-normal mb-4">
+                Cómo Trabajamos Contigo
+              </h2>
+              <p className="service-body max-w-2xl mx-auto">
+                Un proceso claro y estructurado en 4 fases
+              </p>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl">
-            {steps.map((step, idx) => (
-              <Card key={step.title} className="p-8 relative">
-                <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-primary font-bold">{idx + 1}</span>
-                </div>
-                <step.icon className="h-10 w-10 text-accent mb-6" strokeWidth={1.5} />
-                <h3 className="text-xl font-serif mb-3">{step.title}</h3>
-                <p className="text-body leading-relaxed">{step.description}</p>
-              </Card>
-            ))}
+            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {steps.map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <Card key={step.title} className="border-border bg-white">
+                    <div className="p-8 relative">
+                      <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black flex items-center justify-center">
+                        <span className="text-white font-medium text-lg">{idx + 1}</span>
+                      </div>
+                      <Icon className="h-10 w-10 text-foreground/40 mb-6" strokeWidth={1.5} />
+                      <h3 className="text-xl font-medium mb-3">{step.title}</h3>
+                      <p className="service-body">{step.description}</p>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </section>
 
         {/* Valores Diferenciales */}
-        <section className="bg-neutral-100 py-24">
+        <section className="py-16 md:py-24 bg-white border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader
-              overline="Valores"
-              title="Lo que nos Diferencia"
-              description="Nuestros pilares de trabajo"
-            />
+            <div className="text-center mb-12">
+              <div className="section-overline mb-4">Valores</div>
+              <h2 className="text-3xl md:text-4xl font-normal mb-4">
+                Lo que nos Diferencia
+              </h2>
+            </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
-              <Card className="p-8 text-center">
-                <h3 className="text-xl font-serif mb-3">Proximidad</h3>
-                <p className="text-body leading-relaxed">
-                  Trato cercano y personalizado. Tu asesor te conoce y conoce tu negocio.
-                </p>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <Card className="border-border bg-white">
+                <div className="p-8 text-center">
+                  <h3 className="text-xl font-medium mb-3">Proximidad</h3>
+                  <p className="service-body">
+                    Trato cercano y personalizado. Tu asesor te conoce y conoce tu negocio.
+                  </p>
+                </div>
               </Card>
-              <Card className="p-8 text-center">
-                <h3 className="text-xl font-serif mb-3">Multidisciplinar</h3>
-                <p className="text-body leading-relaxed">
-                  Equipo experto en todas las áreas: fiscal, contable, legal y laboral.
-                </p>
+              <Card className="border-border bg-white">
+                <div className="p-8 text-center">
+                  <h3 className="text-xl font-medium mb-3">Multidisciplinar</h3>
+                  <p className="service-body">
+                    Equipo experto en todas las áreas: fiscal, contable, legal y laboral.
+                  </p>
+                </div>
               </Card>
-              <Card className="p-8 text-center">
-                <h3 className="text-xl font-serif mb-3">Tecnología</h3>
-                <p className="text-body leading-relaxed">
-                  Plataformas digitales para gestión eficiente y acceso 24/7 a tu información.
-                </p>
+              <Card className="border-border bg-white">
+                <div className="p-8 text-center">
+                  <h3 className="text-xl font-medium mb-3">Tecnología</h3>
+                  <p className="service-body">
+                    Plataformas digitales para gestión eficiente y acceso 24/7 a tu información.
+                  </p>
+                </div>
               </Card>
             </div>
           </div>
