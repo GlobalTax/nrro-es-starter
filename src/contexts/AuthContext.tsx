@@ -31,14 +31,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchAdminUser = async (userId: string): Promise<AdminUser | null> => {
     try {
-      // Check if user has admin role using has_role function
-      const { data: isAdmin, error: roleError } = await supabase
-        .rpc('has_role', { 
-          _user_id: userId, 
-          _role: 'admin' 
-        });
+      // Check if user has admin role by querying user_roles directly
+      const { data: userRoles, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
 
       if (roleError) throw roleError;
+
+      const roles = userRoles?.map(r => r.role) || [];
+      const isAdmin = roles.includes('admin');
 
       if (isAdmin) {
         // Fetch user profile
