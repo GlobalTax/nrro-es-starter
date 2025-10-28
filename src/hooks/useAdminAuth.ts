@@ -29,17 +29,17 @@ export const useAdminAuth = () => {
     const roleMapping: Record<string, string> = {
       super_admin: 'admin',
       admin: 'admin',
-      editor: 'moderator',
+      editor: 'editor',
       viewer: 'user',
     };
 
     const mappedRole = roleMapping[requiredRole];
     
-    // Check if user has the required role
-    if (userRoles.includes(mappedRole as any)) return true;
-    
     // Admin has all permissions
     if (userRoles.includes('admin')) return true;
+    
+    // Check if user has the required role
+    if (userRoles.includes(mappedRole as any)) return true;
     
     return false;
   };

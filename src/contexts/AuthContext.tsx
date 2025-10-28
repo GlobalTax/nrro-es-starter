@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchAdminUser = async (userId: string): Promise<AdminUser | null> => {
     try {
-      // Check if user has admin role by querying user_roles directly
+      // Check if user has any admin panel roles by querying user_roles directly
       const { data: userRoles, error: roleError } = await supabase
         .from('user_roles')
         .select('role')
@@ -40,9 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (roleError) throw roleError;
 
       const roles = userRoles?.map(r => r.role) || [];
-      const isAdmin = roles.includes('admin');
+      const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing'].includes(r));
 
-      if (isAdmin) {
+      if (hasPanelAccess) {
         // Fetch user profile
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           user_id: profile.id,
           email: profile.email || '',
           full_name: profile.email || '',
-          role: 'admin',
+          role: roles.includes('admin') ? 'admin' : 'editor',
           is_active: true,
         };
         setAdminUser(adminUserData);
