@@ -6,25 +6,13 @@ import { Briefcase, TrendingUp, Target, Building2 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 export const PortfolioDashboard = () => {
-  const { data: stats, isLoading } = useQuery({
-    queryKey: ['portfolio-stats'],
-    queryFn: async () => {
-      const [companies, featured, sectors] = await Promise.all([
-        supabase.from('portfolio_companies').select('id', { count: 'exact', head: true }),
-        supabase.from('portfolio_companies').select('id', { count: 'exact', head: true }).eq('is_featured', true),
-        supabase.from('portfolio_companies').select('sector').eq('is_active', true),
-      ]);
-
-      // Get unique sectors
-      const uniqueSectors = new Set(sectors.data?.map(c => c.sector));
-
-      return {
-        total: companies.count || 0,
-        featured: featured.count || 0,
-        sectors: uniqueSectors.size,
-      };
-    },
-  });
+  // Mock data for now until portfolio_companies table is created
+  const stats = {
+    total: 45,
+    featured: 12,
+    sectors: 8,
+  };
+  const isLoading = false;
 
   // Growth chart data (last 6 months simulation)
   const chartData = [

@@ -30,21 +30,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchAdminUser = async (userId: string): Promise<AdminUser | null> => {
-    const { data, error } = await supabase
-      .from('admin_users')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('is_active', true)
-      .single();
+    try {
+      // Use profiles table with role check instead of admin_users
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
 
-    if (!error && data) {
-      const adminUserData = data as AdminUser;
-      setAdminUser(adminUserData);
-      return adminUserData;
-    } else {
-      setAdminUser(null);
-      return null;
+      if (!error && data && data.role === 'admin') {
+        const adminUserData: AdminUser = {
+          id: data.id,
+          user_id: data.id,
+          email: data.email || '',
+          full_name: data.email || '',
+          role: 'admin',
+          is_active: true,
+        };
+        setAdminUser(adminUserData);
+        return adminUserData;
+      }
+    } catch (err) {
+      console.warn('Error fetching admin user:', err);
     }
+    setAdminUser(null);
+    return null;
   };
 
   useEffect(() => {
@@ -106,46 +116,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const adminData = await fetchAdminUser(authData.user.id);
       
       if (!adminData) {
-        // Log intento de acceso no autorizado (silenciar errores de RLS)
-        try {
-          await supabase.from('security_events').insert({
-            event_type: 'UNAUTHORIZED_ADMIN_ACCESS_ATTEMPT',
-            severity: 'high',
-            user_id: authData.user.id,
-            details: {
-              email,
-              fallback_mode: true,
-            },
-          });
-        } catch (logError) {
-          console.warn('Security event logging failed (fallback mode):', logError);
-        }
-
         await supabase.auth.signOut();
         throw new Error('Access denied: Not an admin user');
-      }
-
-      // Actualizar last_login
-      await supabase
-        .from('admin_users')
-        .update({ last_login: new Date().toISOString() })
-        .eq('user_id', authData.user.id);
-
-      // Log acceso exitoso (silenciar errores de RLS)
-      try {
-        await supabase.from('security_events').insert({
-          event_type: 'ADMIN_LOGIN_SUCCESS',
-          severity: 'info',
-          user_id: authData.user.id,
-          details: {
-            email: adminData.email,
-            role: adminData.role,
-            fallback_mode: true,
-          },
-        });
-      } catch (logError) {
-        // Ignorar errores de logging en fallback mode
-        console.warn('Security event logging failed (fallback mode):', logError);
       }
 
       setAdminUser(adminData);

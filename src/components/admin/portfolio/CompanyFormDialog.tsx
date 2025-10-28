@@ -56,32 +56,13 @@ export const CompanyFormDialog = ({
         display_order: data.display_order,
       };
 
-      if (company) {
-        // Update existing company
-        const { error } = await supabase
-          .from('portfolio_companies')
-          .update(companyData)
-          .eq('id', company.id);
-
-        if (error) throw error;
-
-        toast({
-          title: 'Company updated',
-          description: 'The company has been updated successfully.',
-        });
-      } else {
-        // Create new company
-        const { error } = await supabase
-          .from('portfolio_companies')
-          .insert(companyData);
-
-        if (error) throw error;
-
-        toast({
-          title: 'Company created',
-          description: 'The company has been created successfully.',
-        });
-      }
+      // Portfolio companies functionality disabled until table is created
+      toast({
+        title: 'Feature disabled',
+        description: 'Portfolio companies table needs to be created in the database.',
+        variant: 'destructive',
+      });
+      return;
 
       onSuccess();
       onOpenChange(false);

@@ -13,7 +13,7 @@ interface ServicePreviewModalProps {
 }
 
 export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewModalProps) => {
-  const Icon = LucideIcons[service.icon_name as keyof typeof LucideIcons];
+  const Icon = (LucideIcons as any)[service.icon_name] as any;
 
   const getAreaColor = (area: string) => {
     const colors = {

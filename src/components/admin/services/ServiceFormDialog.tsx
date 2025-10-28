@@ -88,14 +88,14 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
     },
   });
 
-  const { fields: featureFields, append: appendFeature, remove: removeFeature } = useFieldArray({
+  const { fields: featureFields, append: appendFeature, remove: removeFeature } = useFieldArray<any>({
     control: form.control,
-    name: 'features',
+    name: 'features' as any,
   });
 
-  const { fields: clientFields, append: appendClient, remove: removeClient } = useFieldArray({
+  const { fields: clientFields, append: appendClient, remove: removeClient } = useFieldArray<any>({
     control: form.control,
-    name: 'typical_clients',
+    name: 'typical_clients' as any,
   });
 
   useEffect(() => {
@@ -124,14 +124,22 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
   const mutation = useMutation({
     mutationFn: async (data: ServiceFormData) => {
+      // Cast JSONB fields explicitly
+      const dbData = {
+        ...data,
+        metodologia: data.metodologia as any,
+        servicios_transversales: data.servicios_transversales as any,
+        stats: data.stats as any,
+      };
+
       if (isEditing) {
         const { error } = await supabase
           .from('services')
-          .update({ ...data, updated_at: new Date().toISOString() })
+          .update({ ...dbData, updated_at: new Date().toISOString() })
           .eq('id', service.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from('services').insert([data]);
+        const { error } = await supabase.from('services').insert([dbData]);
         if (error) throw error;
       }
     },
@@ -286,7 +294,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => appendFeature('')}
+                        onClick={() => appendFeature('' as any)}
                       >
                         <Plus className="h-4 w-4 mr-2" />
                         Add Feature
@@ -318,7 +326,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => appendClient('')}
+                        onClick={() => appendClient('' as any)}
                       >
                         <Plus className="h-4 w-4 mr-2" />
                         Add Client

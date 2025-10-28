@@ -33,8 +33,8 @@ const Services = () => {
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
   });
 
-  // Use database data if available, otherwise fallback to mock data
-  const services = (dbServices && dbServices.length > 0) ? dbServices : mockServices;
+  // Use database data
+  const services = dbServices || [];
   const areas = filterOptions?.areas || ['Fiscal', 'Contable', 'Legal', 'Laboral'];
 
   const isLoading = isLoadingOptions || isLoadingServices;

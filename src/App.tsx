@@ -18,13 +18,13 @@ import Portfolio from "./pages/Portfolio";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminPortfolio from "./pages/admin/AdminPortfolio";
+import { AdminLogin } from "./pages/admin/AdminLogin";
+import { AdminDashboard } from "./pages/admin/AdminDashboard";
+import { AdminPortfolio } from "./pages/admin/AdminPortfolio";
 import AdminServices from "./pages/admin/AdminServices";
-import AdminNews from "./pages/admin/AdminNews";
-import AdminTeam from "./pages/admin/AdminTeam";
-import AdminUsers from "./pages/admin/AdminUsers";
+import { AdminNews } from "./pages/admin/AdminNews";
+import { AdminTeam } from "./pages/admin/AdminTeam";
+import { AdminUsers } from "./pages/admin/AdminUsers";
 
 const queryClient = new QueryClient();
 
