@@ -8,6 +8,7 @@ import { usePreviewContent } from "@/hooks/usePreviewContent";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { insights } from "@/data/mockData";
+import DOMPurify from "dompurify";
 
 const InsightDetail = () => {
   const { slug } = useParams();
@@ -156,7 +157,13 @@ const InsightDetail = () => {
               )}
               <div 
                 className="text-body space-y-6"
-                dangerouslySetInnerHTML={{ __html: insight.content }}
+                dangerouslySetInnerHTML={{ 
+                  __html: DOMPurify.sanitize(insight.content, {
+                    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre'],
+                    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel'],
+                    ALLOW_DATA_ATTR: false
+                  })
+                }}
               />
             </div>
           </div>
