@@ -51,7 +51,7 @@ serve(async (req: Request) => {
 
     console.log('[ADMIN_AUTH] Login attempt:', { email, ip: ipAddress });
 
-    // Check rate limit
+    // Check rate limit (fail-closed: block on error OR exceeded)
     const { data: rateLimitOk, error: rateLimitError } = await supabase.rpc(
       'check_login_rate_limit',
       {
@@ -61,12 +61,9 @@ serve(async (req: Request) => {
       }
     );
 
-    if (rateLimitError) {
-      console.error('[ADMIN_AUTH] Rate limit check error:', rateLimitError);
-    }
-
-    if (rateLimitOk === false) {
-      console.warn('[ADMIN_AUTH] Rate limit exceeded:', { email, ip: ipAddress });
+    // SECURITY: Fail-closed - block if error OR exceeded
+    if (rateLimitError || rateLimitOk === false) {
+      console.warn('[ADMIN_AUTH] Rate limit check failed or exceeded:', { email, ip: ipAddress, error: rateLimitError });
       
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',

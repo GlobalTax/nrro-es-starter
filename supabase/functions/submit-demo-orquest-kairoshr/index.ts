@@ -61,7 +61,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('[DEMO] Processing request:', { email, company: company || restaurant_name });
 
-    // Check rate limiting by email (5 requests per hour)
+    // Check rate limiting by email (5 requests per hour, fail-closed)
     const { data: emailRateLimitOk, error: emailRateLimitError } = await supabase.rpc(
       'check_rate_limit_enhanced_safe',
       {
@@ -72,12 +72,9 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
 
-    if (emailRateLimitError) {
-      console.error('[DEMO] Email rate limit check error:', emailRateLimitError);
-    }
-
-    if (emailRateLimitOk === false) {
-      console.log('[DEMO] Email rate limit exceeded:', email);
+    // SECURITY: Fail-closed - block if error OR exceeded
+    if (emailRateLimitError || emailRateLimitOk === false) {
+      console.warn('[DEMO] Rate limit check failed or exceeded:', { email, error: emailRateLimitError });
       
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',
@@ -109,7 +106,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Check rate limiting by IP (10 requests per hour)
+    // Check rate limiting by IP (10 requests per hour, fail-closed)
     const { data: ipRateLimitOk, error: ipRateLimitError } = await supabase.rpc(
       'check_rate_limit_enhanced_safe',
       {
@@ -120,12 +117,9 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
 
-    if (ipRateLimitError) {
-      console.error('[DEMO] IP rate limit check error:', ipRateLimitError);
-    }
-
-    if (ipRateLimitOk === false) {
-      console.log('[DEMO] IP rate limit exceeded:', ipAddress);
+    // SECURITY: Fail-closed - block if error OR exceeded
+    if (ipRateLimitError || ipRateLimitOk === false) {
+      console.warn('[DEMO] Rate limit check failed or exceeded:', { ip: ipAddress, error: ipRateLimitError });
       
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',

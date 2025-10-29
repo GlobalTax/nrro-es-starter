@@ -70,7 +70,7 @@ serve(async (req: Request) => {
 
     console.log('[CONTACT] Processing submission:', { email, company, subject });
 
-    // Check rate limiting by email (10 requests per hour)
+    // Check rate limiting by email (10 requests per hour, fail-closed)
     const { data: emailRateLimitOk, error: emailRateLimitError } = await supabase.rpc(
       'check_rate_limit_enhanced_safe',
       {
@@ -81,12 +81,9 @@ serve(async (req: Request) => {
       }
     );
 
-    if (emailRateLimitError) {
-      console.error('[CONTACT] Email rate limit check error:', emailRateLimitError);
-    }
-
-    if (emailRateLimitOk === false) {
-      console.log('[CONTACT] Email rate limit exceeded:', email);
+    // SECURITY: Fail-closed - block if error OR exceeded
+    if (emailRateLimitError || emailRateLimitOk === false) {
+      console.warn('[CONTACT] Rate limit check failed or exceeded:', { email, error: emailRateLimitError });
       
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',
@@ -118,7 +115,7 @@ serve(async (req: Request) => {
       );
     }
 
-    // Check rate limiting by IP (20 requests per hour)
+    // Check rate limiting by IP (20 requests per hour, fail-closed)
     const { data: ipRateLimitOk, error: ipRateLimitError } = await supabase.rpc(
       'check_rate_limit_enhanced_safe',
       {
@@ -129,12 +126,9 @@ serve(async (req: Request) => {
       }
     );
 
-    if (ipRateLimitError) {
-      console.error('[CONTACT] IP rate limit check error:', ipRateLimitError);
-    }
-
-    if (ipRateLimitOk === false) {
-      console.log('[CONTACT] IP rate limit exceeded:', ipAddress);
+    // SECURITY: Fail-closed - block if error OR exceeded
+    if (ipRateLimitError || ipRateLimitOk === false) {
+      console.warn('[CONTACT] Rate limit check failed or exceeded:', { ip: ipAddress, error: ipRateLimitError });
       
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',

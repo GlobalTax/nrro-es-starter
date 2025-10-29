@@ -401,6 +401,51 @@ export type Database = {
           },
         ]
       }
+      contact_leads: {
+        Row: {
+          company: string | null
+          created_at: string | null
+          email: string
+          email_sent: boolean | null
+          id: string
+          ip_address: string | null
+          message: string
+          name: string
+          service_type: Database["public"]["Enums"]["service_type"] | null
+          subject: string
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string | null
+          email: string
+          email_sent?: boolean | null
+          id?: string
+          ip_address?: string | null
+          message: string
+          name: string
+          service_type?: Database["public"]["Enums"]["service_type"] | null
+          subject: string
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string | null
+          email?: string
+          email_sent?: boolean | null
+          id?: string
+          ip_address?: string | null
+          message?: string
+          name?: string
+          service_type?: Database["public"]["Enums"]["service_type"] | null
+          subject?: string
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       demo_requests: {
         Row: {
           created_at: string | null
@@ -1148,6 +1193,75 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limit_tracking: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          identifier: string
+          last_request: string | null
+          request_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          id?: string
+          identifier: string
+          last_request?: string | null
+          request_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          identifier?: string
+          last_request?: string | null
+          request_count?: number | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
+      security_events: {
+        Row: {
+          created_at: string | null
+          details: Json | null
+          event_type: Database["public"]["Enums"]["security_event_type"]
+          id: string
+          ip_address: string | null
+          operation: string | null
+          severity: Database["public"]["Enums"]["event_severity"]
+          table_name: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          details?: Json | null
+          event_type: Database["public"]["Enums"]["security_event_type"]
+          id?: string
+          ip_address?: string | null
+          operation?: string | null
+          severity?: Database["public"]["Enums"]["event_severity"]
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          details?: Json | null
+          event_type?: Database["public"]["Enums"]["security_event_type"]
+          id?: string
+          ip_address?: string | null
+          operation?: string | null
+          severity?: Database["public"]["Enums"]["event_severity"]
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           area: string
@@ -1355,6 +1469,25 @@ export type Database = {
       }
     }
     Functions: {
+      check_login_rate_limit: {
+        Args: {
+          p_identifier: string
+          p_max_attempts?: number
+          p_window_minutes?: number
+        }
+        Returns: boolean
+      }
+      check_rate_limit_enhanced_safe: {
+        Args: {
+          p_category: string
+          p_identifier: string
+          p_max_requests?: number
+          p_window_minutes?: number
+        }
+        Returns: boolean
+      }
+      cleanup_old_rate_limits: { Args: never; Returns: undefined }
+      cleanup_old_security_events: { Args: never; Returns: undefined }
       get_news_filter_options: {
         Args: never
         Returns: {
@@ -1378,6 +1511,7 @@ export type Database = {
         Returns: boolean
       }
       publish_scheduled_posts: { Args: never; Returns: number }
+      run_maintenance_tasks: { Args: never; Returns: undefined }
       search_news_articles: {
         Args: {
           filter_category?: string
@@ -1446,6 +1580,24 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "marketing" | "editor" | "viewer" | "hr_manager"
+      event_severity: "info" | "warn" | "high" | "critical"
+      security_event_type:
+        | "LOGIN_SUCCESS"
+        | "LOGIN_FAILED"
+        | "LOGOUT"
+        | "RATE_LIMIT_EXCEEDED"
+        | "UNAUTHORIZED_ACCESS"
+        | "ADMIN_ACTION"
+        | "DEMO_REQUEST_SUBMISSION"
+        | "CONTACT_FORM_SUBMISSION"
+        | "PASSWORD_RESET"
+        | "SESSION_EXPIRED"
+      service_type:
+        | "empresa_familiar"
+        | "tax_advisory"
+        | "legal_advisory"
+        | "financial_planning"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1574,6 +1726,26 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "marketing", "editor", "viewer", "hr_manager"],
+      event_severity: ["info", "warn", "high", "critical"],
+      security_event_type: [
+        "LOGIN_SUCCESS",
+        "LOGIN_FAILED",
+        "LOGOUT",
+        "RATE_LIMIT_EXCEEDED",
+        "UNAUTHORIZED_ACCESS",
+        "ADMIN_ACTION",
+        "DEMO_REQUEST_SUBMISSION",
+        "CONTACT_FORM_SUBMISSION",
+        "PASSWORD_RESET",
+        "SESSION_EXPIRED",
+      ],
+      service_type: [
+        "empresa_familiar",
+        "tax_advisory",
+        "legal_advisory",
+        "financial_planning",
+        "other",
+      ],
     },
   },
 } as const
