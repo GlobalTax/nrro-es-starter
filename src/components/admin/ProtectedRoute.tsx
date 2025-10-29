@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface ProtectedRouteProps {
   children: ReactNode;
-  requiredRole?: 'super_admin' | 'admin' | 'editor';
+  requiredRole?: 'super_admin' | 'admin' | 'editor' | 'hr_viewer';
 }
 
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
@@ -14,7 +14,36 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   const { isAdmin, hasRole } = useAdminAuth();
   const [isVerifying, setIsVerifying] = useState(true);
   const [serverVerified, setServerVerified] = useState(false);
+  const [lastActivity, setLastActivity] = useState(Date.now());
 
+  // Session timeout (30 minutes)
+  const SESSION_TIMEOUT = 30 * 60 * 1000;
+
+  // Track user activity
+  useEffect(() => {
+    const updateActivity = () => setLastActivity(Date.now());
+    
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    events.forEach(event => window.addEventListener(event, updateActivity));
+    
+    return () => {
+      events.forEach(event => window.removeEventListener(event, updateActivity));
+    };
+  }, []);
+
+  // Check for inactivity timeout
+  useEffect(() => {
+    const checkTimeout = setInterval(() => {
+      if (Date.now() - lastActivity > SESSION_TIMEOUT) {
+        console.warn('[PROTECTED_ROUTE] Session timeout due to inactivity');
+        supabase.auth.signOut();
+      }
+    }, 60000); // Check every minute
+
+    return () => clearInterval(checkTimeout);
+  }, [lastActivity]);
+
+  // Initial and periodic session verification
   useEffect(() => {
     const verifySession = async () => {
       if (!user) {
@@ -41,6 +70,11 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     };
 
     verifySession();
+
+    // Revalidate session every 5 minutes
+    const revalidationInterval = setInterval(verifySession, 5 * 60 * 1000);
+
+    return () => clearInterval(revalidationInterval);
   }, [user]);
 
   if (isLoading || isVerifying) {

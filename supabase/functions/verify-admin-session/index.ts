@@ -53,7 +53,7 @@ serve(async (req: Request) => {
     }
 
     const roles = userRoles?.map(r => r.role) || [];
-    const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing'].includes(r));
+    const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing', 'hr_viewer'].includes(r));
 
     if (!hasPanelAccess) {
       console.warn('[VERIFY_SESSION] User has no panel access:', user.id);

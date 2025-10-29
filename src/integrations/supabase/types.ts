@@ -1579,7 +1579,13 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "marketing" | "editor" | "viewer" | "hr_manager"
+      app_role:
+        | "admin"
+        | "marketing"
+        | "editor"
+        | "viewer"
+        | "hr_manager"
+        | "hr_viewer"
       event_severity: "info" | "warn" | "high" | "critical"
       security_event_type:
         | "LOGIN_SUCCESS"
@@ -1725,7 +1731,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "marketing", "editor", "viewer", "hr_manager"],
+      app_role: [
+        "admin",
+        "marketing",
+        "editor",
+        "viewer",
+        "hr_manager",
+        "hr_viewer",
+      ],
       event_severity: ["info", "warn", "high", "critical"],
       security_event_type: [
         "LOGIN_SUCCESS",

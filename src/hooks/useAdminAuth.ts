@@ -22,7 +22,7 @@ export const useAdminAuth = () => {
     enabled: !!adminUser?.user_id,
   });
 
-  const hasRole = (requiredRole: 'super_admin' | 'admin' | 'editor' | 'viewer') => {
+  const hasRole = (requiredRole: 'super_admin' | 'admin' | 'editor' | 'viewer' | 'hr_viewer') => {
     if (!adminUser || !userRoles) return false;
     
     // Map old role names to new enum values
@@ -31,6 +31,7 @@ export const useAdminAuth = () => {
       admin: 'admin',
       editor: 'editor',
       viewer: 'user',
+      hr_viewer: 'hr_viewer',
     };
 
     const mappedRole = roleMapping[requiredRole];
@@ -42,6 +43,14 @@ export const useAdminAuth = () => {
     if (userRoles.includes(mappedRole as any)) return true;
     
     return false;
+  };
+
+  const isHRViewer = () => {
+    return hasRole('hr_viewer');
+  };
+
+  const canViewHR = () => {
+    return isAdmin && (hasRole('admin') || hasRole('hr_viewer'));
   };
 
   const canEdit = () => {
@@ -82,5 +91,7 @@ export const useAdminAuth = () => {
     canManageUsers,
     requireAdmin,
     requireSuperAdmin,
+    isHRViewer,
+    canViewHR,
   };
 };

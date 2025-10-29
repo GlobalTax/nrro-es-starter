@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
-type AdminRole = 'super_admin' | 'admin' | 'editor' | 'viewer';
+type AdminRole = 'super_admin' | 'admin' | 'editor' | 'viewer' | 'hr_viewer';
 
 interface AdminUser {
   id: string;
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (roleError) throw roleError;
 
       const roles = userRoles?.map(r => r.role) || [];
-      const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing'].includes(r));
+      const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing', 'hr_viewer'].includes(r));
 
       if (hasPanelAccess) {
         // Fetch user profile
@@ -109,6 +109,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (!session) {
           console.warn('[AUTH] Session expired, signing out');
           await signOut();
+        } else {
+          // Refresh admin user data during revalidation
+          await fetchAdminUser(session.user.id);
         }
       } catch (error) {
         console.error('[AUTH] Session revalidation error:', error);
