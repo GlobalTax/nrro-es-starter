@@ -1,189 +1,227 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-serve(async (req) => {
+serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const { email, password } = await req.json();
-    const ipAddress = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
-    const userAgent = req.headers.get('user-agent') || 'unknown';
 
-    console.log('Admin auth attempt:', { email, ipAddress });
-
-    // 1. Verificar rate limit
-    const { data: rateLimitCheck, error: rateLimitError } = await supabase
-      .rpc('check_login_rate_limit', {
-        p_email: email,
-        p_ip_address: ipAddress,
-        p_max_attempts: 5,
-        p_window_minutes: 15
-      });
-
-    if (rateLimitError) {
-      console.error('Rate limit check error:', rateLimitError);
-    }
-
-    if (rateLimitCheck && !rateLimitCheck.allowed) {
-      console.log('Rate limit exceeded for:', email);
-      
-      // Registrar intento bloqueado
-      await supabase.rpc('log_login_attempt', {
-        p_email: email,
-        p_ip_address: ipAddress,
-        p_success: false,
-        p_user_agent: userAgent
-      });
-
+    // Validate inputs
+    if (!email || !password) {
       return new Response(
-        JSON.stringify({
-          error: 'Too many failed attempts. Please try again later.',
-          lockout_until: rateLimitCheck.lockout_until,
-          remaining_attempts: 0
-        }),
-        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'Email and password are required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // 2. Autenticar con Supabase Auth
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Password length validation
+    if (password.length < 6) {
+      return new Response(
+        JSON.stringify({ error: 'Password must be at least 6 characters' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Extract IP and User Agent
+    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+    const userAgent = req.headers.get('user-agent') || 'unknown';
+
+    console.log('[ADMIN_AUTH] Login attempt:', { email, ip: ipAddress });
+
+    // Check rate limit
+    const { data: rateLimitOk, error: rateLimitError } = await supabase.rpc(
+      'check_login_rate_limit',
+      {
+        p_identifier: ipAddress,
+        p_max_attempts: 5,
+        p_window_minutes: 15,
+      }
+    );
+
+    if (rateLimitError) {
+      console.error('[ADMIN_AUTH] Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.warn('[ADMIN_AUTH] Rate limit exceeded:', { email, ip: ipAddress });
+      
+      await supabase.from('security_events').insert({
+        event_type: 'RATE_LIMIT_EXCEEDED',
+        severity: 'high',
+        user_id: null,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        table_name: 'admin_login',
+        operation: 'LOGIN',
+        details: {
+          email,
+          reason: 'Too many login attempts',
+          timestamp: new Date().toISOString(),
+        },
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          error: 'Too many login attempts. Please try again later.',
+          retryAfter: 900 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Retry-After': '900',
+          } 
+        }
+      );
+    }
+
+    // Authenticate user
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (authError) {
-      console.log('Authentication failed:', authError.message);
+      console.warn('[ADMIN_AUTH] Authentication failed:', { email, error: authError.message });
       
-      // Registrar intento fallido
-      await supabase.rpc('log_login_attempt', {
-        p_email: email,
-        p_ip_address: ipAddress,
-        p_success: false,
-        p_user_agent: userAgent
+      // Log failed attempt
+      await supabase.from('security_events').insert({
+        event_type: 'LOGIN_FAILED',
+        severity: 'medium',
+        user_id: null,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        table_name: 'admin_login',
+        operation: 'LOGIN',
+        details: {
+          email,
+          reason: 'Invalid credentials',
+          timestamp: new Date().toISOString(),
+        },
       });
 
       return new Response(
-        JSON.stringify({
-          error: 'Invalid credentials',
-          remaining_attempts: rateLimitCheck?.remaining_attempts || 0
-        }),
+        JSON.stringify({ error: 'Invalid email or password' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // 3. Verificar que es admin usando función server-side
-    const { data: adminData, error: adminError } = await supabase
-      .rpc('get_admin_user_info', { check_user_id: authData.user.id });
+    // Verify user has admin panel access by checking user_roles
+    const { data: userRoles, error: rolesError } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', authData.user.id);
 
-    if (adminError || !adminData || adminData.length === 0) {
-      console.log('Not an admin user:', email);
+    if (rolesError) {
+      console.error('[ADMIN_AUTH] Error fetching user roles:', rolesError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to verify permissions' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const roles = userRoles?.map(r => r.role) || [];
+    const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing'].includes(r));
+
+    if (!hasPanelAccess) {
+      console.warn('[ADMIN_AUTH] User has no panel access:', { email, userId: authData.user.id });
       
-      // Log intento de acceso no autorizado
+      // Log unauthorized access attempt
       await supabase.from('security_events').insert({
-        event_type: 'UNAUTHORIZED_ADMIN_ACCESS_ATTEMPT',
+        event_type: 'UNAUTHORIZED_ACCESS',
         severity: 'high',
         user_id: authData.user.id,
         ip_address: ipAddress,
+        user_agent: userAgent,
+        table_name: 'admin_login',
+        operation: 'LOGIN',
         details: {
           email,
-          user_agent: userAgent,
-          timestamp: new Date().toISOString()
+          reason: 'No admin panel access',
+          timestamp: new Date().toISOString(),
         },
       });
 
-      // Registrar intento fallido
-      await supabase.rpc('log_login_attempt', {
-        p_email: email,
-        p_ip_address: ipAddress,
-        p_success: false,
-        p_user_agent: userAgent
-      });
+      // Sign out the user
+      await supabase.auth.signOut();
 
       return new Response(
-        JSON.stringify({ error: 'Access denied: Not an admin user' }),
+        JSON.stringify({ error: 'Access denied' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const adminUser = adminData[0];
+    // Get profile info
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', authData.user.id)
+      .single();
 
-    // Verificar si está activo
-    if (!adminUser.is_active) {
-      console.log('Admin user is inactive:', email);
-      
-      await supabase.rpc('log_login_attempt', {
-        p_email: email,
-        p_ip_address: ipAddress,
-        p_success: false,
-        p_user_agent: userAgent
-      });
+    // Construct admin user object
+    const adminUser = {
+      id: authData.user.id,
+      user_id: authData.user.id,
+      email: profile?.email || authData.user.email,
+      full_name: profile?.email || authData.user.email,
+      role: roles.includes('admin') ? 'admin' : 'editor',
+      is_active: true,
+    };
 
-      return new Response(
-        JSON.stringify({ error: 'Account disabled. Contact administrator.' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // 4. Actualizar last_login
-    await supabase
-      .from('admin_users')
-      .update({ last_login: new Date().toISOString() })
-      .eq('user_id', authData.user.id);
-
-    // 5. Log acceso exitoso
+    // Log successful login
     await supabase.from('security_events').insert({
-      event_type: 'ADMIN_LOGIN_SUCCESS',
+      event_type: 'LOGIN_SUCCESS',
       severity: 'info',
       user_id: authData.user.id,
       ip_address: ipAddress,
+      user_agent: userAgent,
+      table_name: 'admin_login',
+      operation: 'LOGIN',
       details: {
-        email: adminUser.email,
-        role: adminUser.role,
-        user_agent: userAgent,
-        timestamp: new Date().toISOString()
+        email,
+        roles: roles,
+        timestamp: new Date().toISOString(),
       },
     });
 
-    // 6. Registrar intento exitoso
-    await supabase.rpc('log_login_attempt', {
-      p_email: email,
-      p_ip_address: ipAddress,
-      p_success: true,
-      p_user_agent: userAgent
-    });
-
-    console.log('Admin login successful:', email);
+    console.log('[ADMIN_AUTH] Login successful:', { email, userId: authData.user.id, roles });
 
     return new Response(
       JSON.stringify({
         session: authData.session,
-        adminUser: {
-          id: adminUser.id,
-          user_id: adminUser.user_id,
-          email: adminUser.email,
-          full_name: adminUser.full_name,
-          role: adminUser.role,
-        },
+        adminUser: adminUser,
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error: any) {
-    console.error('Admin auth error:', error);
+    console.error('[ADMIN_AUTH] Unexpected error:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Internal server error' }),
+      JSON.stringify({ error: 'An error occurred during authentication' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

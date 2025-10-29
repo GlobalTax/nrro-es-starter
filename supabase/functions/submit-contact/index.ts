@@ -1,23 +1,24 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  company: string;
-  subject: string;
-  message: string;
-}
+// Validation schema
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email too long"),
+  company: z.string().trim().min(1, "Company is required").max(100, "Company name too long"),
+  subject: z.string().trim().min(1, "Subject is required").max(100, "Subject too long"),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(5000, "Message too long"),
+});
 
 // Email service stub
 async function sendEmailStub(to: string, subject: string, html: string): Promise<{ success: boolean }> {
   console.log('[EMAIL STUB] Sending email:', { to, subject });
-  console.log('[EMAIL STUB] HTML content:', html);
   // TODO: Integrate Resend API when ready
   return { success: true };
 }
@@ -35,39 +36,42 @@ function mapSubjectToServiceType(subject: string): "vender" | "comprar" | "otros
 }
 
 serve(async (req: Request) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Parse request body
-    const { name, email, company, subject, message }: ContactFormData = await req.json();
+    // Parse and validate request body
+    const body = await req.json();
+    const validation = contactSchema.safeParse(body);
 
-    // Validate required fields
-    if (!name || !email || !company || !subject || !message) {
+    if (!validation.success) {
+      console.warn('[CONTACT] Validation failed:', validation.error.flatten());
       return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
+        JSON.stringify({ 
+          error: 'Invalid input data',
+          fields: validation.error.flatten().fieldErrors,
+        }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid email address' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    const { name, email, company, subject, message } = validation.data;
 
-    // Check rate limiting (10 requests per email per hour)
-    const { data: rateLimitOk, error: rateLimitError } = await supabase.rpc(
+    // Extract IP address and user agent
+    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+    const userAgent = req.headers.get('user-agent') || 'unknown';
+
+    console.log('[CONTACT] Processing submission:', { email, company, subject });
+
+    // Check rate limiting by email (10 requests per hour)
+    const { data: emailRateLimitOk, error: emailRateLimitError } = await supabase.rpc(
       'check_rate_limit_enhanced_safe',
       {
         p_identifier: email,
@@ -77,22 +81,23 @@ serve(async (req: Request) => {
       }
     );
 
-    if (rateLimitError) {
-      console.error('Rate limit check error:', rateLimitError);
+    if (emailRateLimitError) {
+      console.error('[CONTACT] Email rate limit check error:', emailRateLimitError);
     }
 
-    if (rateLimitOk === false) {
-      console.log('[RATE LIMIT] Exceeded for:', email);
+    if (emailRateLimitOk === false) {
+      console.log('[CONTACT] Email rate limit exceeded:', email);
       
-      // Log security event
       await supabase.from('security_events').insert({
         event_type: 'RATE_LIMIT_EXCEEDED',
         severity: 'high',
         table_name: 'contact_leads',
         operation: 'INSERT',
+        ip_address: ipAddress,
+        user_agent: userAgent,
         details: {
           email,
-          category: 'contact_form',
+          category: 'contact_form_email',
           timestamp: new Date().toISOString(),
         },
       });
@@ -113,16 +118,56 @@ serve(async (req: Request) => {
       );
     }
 
-    // Extract IP address and user agent
-    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
-                     req.headers.get('x-real-ip') || 
-                     'unknown';
-    const userAgent = req.headers.get('user-agent') || 'unknown';
+    // Check rate limiting by IP (20 requests per hour)
+    const { data: ipRateLimitOk, error: ipRateLimitError } = await supabase.rpc(
+      'check_rate_limit_enhanced_safe',
+      {
+        p_identifier: ipAddress,
+        p_category: 'contact_form_ip',
+        p_max_requests: 20,
+        p_window_minutes: 60,
+      }
+    );
+
+    if (ipRateLimitError) {
+      console.error('[CONTACT] IP rate limit check error:', ipRateLimitError);
+    }
+
+    if (ipRateLimitOk === false) {
+      console.log('[CONTACT] IP rate limit exceeded:', ipAddress);
+      
+      await supabase.from('security_events').insert({
+        event_type: 'RATE_LIMIT_EXCEEDED',
+        severity: 'high',
+        table_name: 'contact_leads',
+        operation: 'INSERT',
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        details: {
+          ip: ipAddress,
+          category: 'contact_form_ip',
+          timestamp: new Date().toISOString(),
+        },
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          error: 'Too many submissions. Please try again later.',
+          retryAfter: 3600 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Retry-After': '3600',
+          } 
+        }
+      );
+    }
 
     // Map subject to service_type
     const serviceType = mapSubjectToServiceType(subject);
-
-    console.log('[CONTACT] Processing submission:', { email, company, subject, serviceType });
 
     // Insert into contact_leads table
     const { data: contactLead, error: insertError } = await supabase
@@ -132,7 +177,7 @@ serve(async (req: Request) => {
         email: email,
         company: company,
         service_type: serviceType,
-        referral: message, // Store message in referral field
+        referral: message,
         ip_address: ipAddress,
         user_agent: userAgent,
         status: 'new',
@@ -143,7 +188,7 @@ serve(async (req: Request) => {
     if (insertError) {
       console.error('[CONTACT] Database insert error:', insertError);
       return new Response(
-        JSON.stringify({ error: 'Failed to save contact submission' }),
+        JSON.stringify({ error: 'Failed to save your submission. Please try again.' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -156,44 +201,22 @@ serve(async (req: Request) => {
       severity: 'info',
       table_name: 'contact_leads',
       operation: 'INSERT',
+      ip_address: ipAddress,
+      user_agent: userAgent,
       details: {
         lead_id: contactLead.id,
         email,
         company,
         service_type: serviceType,
-        ip_address: ipAddress,
         timestamp: new Date().toISOString(),
       },
     });
 
-    // Send confirmation email to user (stub)
+    // Send confirmation email (stub)
     await sendEmailStub(
       email,
       'Thank you for contacting Ethos Ventures',
-      `
-        <h1>Thank you for contacting us, ${name}!</h1>
-        <p>We have received your message and will get back to you as soon as possible.</p>
-        <p><strong>Your message:</strong></p>
-        <p>${message}</p>
-        <p>Best regards,<br>The Ethos Ventures Team</p>
-      `
-    );
-
-    // Send notification email to admin (stub)
-    await sendEmailStub(
-      'admin@ethos-ventures.com', // Replace with actual admin email
-      `New contact submission from ${name}`,
-      `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-        <hr>
-        <p><small>IP: ${ipAddress} | User Agent: ${userAgent}</small></p>
-      `
+      `<h1>Thank you for contacting us, ${name}!</h1><p>We have received your message and will get back to you as soon as possible.</p>`
     );
 
     // Update email_sent status
@@ -205,7 +228,7 @@ serve(async (req: Request) => {
       })
       .eq('id', contactLead.id);
 
-    console.log('[CONTACT] Email stubs executed successfully');
+    console.log('[CONTACT] Processing completed successfully');
 
     return new Response(
       JSON.stringify({ 
@@ -219,7 +242,7 @@ serve(async (req: Request) => {
   } catch (error: any) {
     console.error('[CONTACT] Unexpected error:', error);
     return new Response(
-      JSON.stringify({ error: 'An unexpected error occurred', details: error.message }),
+      JSON.stringify({ error: 'An error occurred. Please try again later.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

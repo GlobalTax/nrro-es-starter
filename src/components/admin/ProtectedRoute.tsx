@@ -1,7 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -11,8 +12,38 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { user, isLoading } = useAuth();
   const { isAdmin, hasRole } = useAdminAuth();
+  const [isVerifying, setIsVerifying] = useState(true);
+  const [serverVerified, setServerVerified] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    const verifySession = async () => {
+      if (!user) {
+        setIsVerifying(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase.functions.invoke('verify-admin-session');
+        
+        if (error || !data?.valid) {
+          console.warn('[PROTECTED_ROUTE] Server verification failed');
+          await supabase.auth.signOut();
+          setServerVerified(false);
+        } else {
+          setServerVerified(true);
+        }
+      } catch (error) {
+        console.error('[PROTECTED_ROUTE] Verification error:', error);
+        setServerVerified(false);
+      } finally {
+        setIsVerifying(false);
+      }
+    };
+
+    verifySession();
+  }, [user]);
+
+  if (isLoading || isVerifying) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -20,7 +51,7 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     );
   }
 
-  if (!user) {
+  if (!user || !serverVerified) {
     return <Navigate to="/admin/login" replace />;
   }
 

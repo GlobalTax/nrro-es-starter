@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [revalidationInterval, setRevalidationInterval] = useState<number | null>(null);
 
   const fetchAdminUser = async (userId: string): Promise<AdminUser | null> => {
     try {
@@ -86,7 +87,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchAdminUser(session.user.id);
+        // Defer fetchAdminUser to avoid deadlock
+        setTimeout(() => {
+          fetchAdminUser(session.user.id);
+        }, 0);
       } else {
         setAdminUser(null);
       }
@@ -94,6 +98,59 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Setup periodic session revalidation (every 5 minutes)
+  useEffect(() => {
+    if (!user) return;
+
+    const interval = window.setInterval(async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          console.warn('[AUTH] Session expired, signing out');
+          await signOut();
+        }
+      } catch (error) {
+        console.error('[AUTH] Session revalidation error:', error);
+      }
+    }, 5 * 60 * 1000); // 5 minutes
+
+    setRevalidationInterval(interval);
+
+    return () => {
+      if (revalidationInterval) {
+        clearInterval(revalidationInterval);
+      }
+    };
+  }, [user]);
+
+  // Setup realtime subscription for role changes
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('user_roles_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'user_roles',
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => {
+          console.log('[AUTH] User roles changed, refreshing admin data');
+          setTimeout(() => {
+            fetchAdminUser(user.id);
+          }, 0);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
 
   const signIn = async (email: string, password: string) => {
     try {
