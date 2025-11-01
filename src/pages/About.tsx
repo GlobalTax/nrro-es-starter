@@ -3,12 +3,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, TrendingUp, Award, Loader2, Briefcase, Rocket, Zap, Building, Handshake, CheckCircle, Sparkles } from 'lucide-react';
 import { BadgeHero } from '@/components/ui/badge-hero';
 import { useTeamMembers } from '@/hooks/useTeamMembers';
+import { usePageContent } from '@/hooks/usePageContent';
 import { TeamMemberCard } from '@/components/team/TeamMemberCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 export default function About() {
   const { data: teamMembers, isLoading: teamLoading } = useTeamMembers();
+  const { data: heroContent } = usePageContent('about', 'hero');
+  
+  const hero = heroContent?.[0]?.content || {
+    overline: 'NOSOTROS',
+    title: '25 años de experiencia. Un proyecto personal.',
+    subtitle: 'De Garrigues a obn.es, y ahora navarro. Experiencia consolidada, servicio personalizado, máxima ilusión.'
+  };
   
   const values = [
     {
@@ -42,17 +50,20 @@ export default function About() {
       />
 
       {/* Hero Section */}
-      <section className="bg-black text-white py-40 md:py-56 lg:py-72">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl text-left">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-gradient-to-br from-primary via-primary-hover to-accent py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary-hover/90 to-accent/90" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <div className="mb-6">
-              <BadgeHero>NOSOTROS</BadgeHero>
+              <BadgeHero variant="light">{hero.overline}</BadgeHero>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-6 leading-tight">
-              25 años de experiencia. Un proyecto personal.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6 text-primary-foreground">
+              {hero.title}
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white/80 mb-8 leading-relaxed">
-              De Garrigues a obn.es, y ahora navarro. Experiencia consolidada, servicio personalizado, máxima ilusión.
+            <p className="text-xl md:text-2xl leading-relaxed mb-8 text-primary-foreground/90">
+              {hero.subtitle}
             </p>
           </div>
         </div>
