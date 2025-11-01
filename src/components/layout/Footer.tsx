@@ -231,14 +231,6 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link 
-                  to="/casos-de-exito" 
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  Casos de Éxito
-                </Link>
-              </li>
-              <li>
-                <Link 
                   to="/blog" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
@@ -267,14 +259,6 @@ export const Footer = () => {
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
                   Nosotros
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/metodologia" 
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  Metodología
                 </Link>
               </li>
               <li>
