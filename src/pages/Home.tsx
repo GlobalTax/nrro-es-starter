@@ -329,11 +329,9 @@ const Home = () => {
         {/* Blog Preview */}
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader
-              overline="Blog"
-              title="Últimas Publicaciones"
-              description="Artículos y novedades sobre fiscalidad, contabilidad y derecho empresarial"
-            />
+          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+            Últimas publicaciones
+          </h2>
 
             {postsLoading ? (
               <div className="grid md:grid-cols-3 gap-8">
