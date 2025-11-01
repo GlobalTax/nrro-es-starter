@@ -227,20 +227,6 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="bg-black text-white py-16 md:py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-normal mb-4">
-            ¿Listo para optimizar tu {service.area.toLowerCase()}?
-          </h2>
-          <p className="service-hero-subtitle mb-8 max-w-2xl mx-auto">
-            Contáctanos y te asesoraremos de forma personalizada
-          </p>
-          <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
-            <Link to="/contacto">Solicitar Consulta</Link>
-          </Button>
-        </div>
-      </section>
     </>
   );
 };
