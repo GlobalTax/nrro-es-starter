@@ -109,8 +109,8 @@ export const services: Service[] = [
       overline: "CÓMO TRABAJAMOS",
       titulos: ["Soluciones a medida.", "Excelencia en los negocios"],
       contacto: {
-        telefono: "+34 620 27 35 52",
-        email: "s.navarro@nrro.com"
+        telefono: "934593600",
+        email: "info@nrro.es"
       },
       introduccion: "En NRRO ofrecemos un servicio integral de asesoría fiscal diseñado específicamente para las necesidades de tu negocio. Nuestro enfoque combina conocimiento técnico con una comprensión profunda de tus objetivos empresariales.",
       pilares: [

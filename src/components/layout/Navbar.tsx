@@ -249,7 +249,7 @@ export const Navbar = () => {
                                     className="flex items-center gap-2 text-foreground/70 hover:text-foreground transition-colors"
                                   >
                                     <Phone className="h-4 w-4" />
-                                    +93 4593600
+                                    93 459 36 00
                                   </a>
                                   <a 
                                     href="mailto:info@nrro.es" 
