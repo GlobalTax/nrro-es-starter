@@ -227,6 +227,8 @@ const Home = () => {
                     label={dato.categoria}
                     value={dato.valor}
                     description={dato.descripcion}
+                    icon={dato.icon}
+                    delay={index * 100}
                   />
                 ))}
               </div>
