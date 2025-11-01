@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Meta } from "@/components/seo/Meta";
-import { Clock, Search } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 import { useBlogSearch } from "@/hooks/useBlogSearch";
 import { BadgeHero } from "@/components/ui/badge-hero";
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -87,43 +86,17 @@ const Blog = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (
-                  <Link key={post.id} to={`/blog/${post.slug_es}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow">
-                      <CardContent className="p-6 space-y-4">
-                        {post.category && (
-                          <Badge variant="outline">{post.category}</Badge>
-                        )}
-                        <h3 className="text-xl font-semibold line-clamp-2">
-                          {post.title_es}
-                        </h3>
-                        {post.excerpt_es && (
-                          <p className="text-muted-foreground line-clamp-3">
-                            {post.excerpt_es}
-                          </p>
-                        )}
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          {post.published_at && (
-                            <time dateTime={post.published_at}>
-                              {new Date(post.published_at).toLocaleDateString("es-ES", {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })}
-                            </time>
-                          )}
-                          {post.read_time && (
-                            <>
-                              <span>•</span>
-                              <span className="inline-flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                {post.read_time} min
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                  <BlogPostCard
+                    key={post.id}
+                    slug={post.slug_es}
+                    category={post.category}
+                    title={post.title_es}
+                    excerpt={post.excerpt_es}
+                    authorName={post.author_name}
+                    authorSpecialization={post.author_specialization}
+                    publishedAt={post.published_at}
+                    readTime={post.read_time}
+                  />
                 ))}
               </div>
 

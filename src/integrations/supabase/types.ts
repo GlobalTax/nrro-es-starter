@@ -85,6 +85,8 @@ export type Database = {
       blog_posts: {
         Row: {
           author_id: string
+          author_name: string | null
+          author_specialization: string | null
           category: string | null
           content_en: string | null
           content_es: string | null
@@ -111,6 +113,8 @@ export type Database = {
         }
         Insert: {
           author_id: string
+          author_name?: string | null
+          author_specialization?: string | null
           category?: string | null
           content_en?: string | null
           content_es?: string | null
@@ -137,6 +141,8 @@ export type Database = {
         }
         Update: {
           author_id?: string
+          author_name?: string | null
+          author_specialization?: string | null
           category?: string | null
           content_en?: string | null
           content_es?: string | null
@@ -1717,6 +1723,8 @@ export type Database = {
           search_query?: string
         }
         Returns: {
+          author_name: string
+          author_specialization: string
           category: string
           excerpt_es: string
           featured_image: string

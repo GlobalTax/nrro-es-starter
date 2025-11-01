@@ -1,9 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Clock } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { useRelatedBlogPosts } from '@/hooks/useRelatedBlogPosts';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BlogPostCard } from './BlogPostCard';
 
 interface RelatedBlogPostsProps {
   currentPostId: string;
@@ -43,43 +40,17 @@ export const RelatedBlogPosts = ({ currentPostId, category, tags }: RelatedBlogP
         <h2 className="text-2xl md:text-3xl font-normal mb-8">Artículos relacionados</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {relatedPosts.map((post: any) => (
-            <Link key={post.id} to={`/blog/${post.slug_es}`}>
-              <Card className="h-full overflow-hidden hover-lift transition-smooth group">
-                <CardContent className="p-6">
-                  {post.category && (
-                    <Badge variant="secondary" className="mb-3">
-                      {post.category}
-                    </Badge>
-                  )}
-                  <h3 className="text-lg font-medium mb-2 line-clamp-2 group-hover:text-accent transition-colors">
-                    {post.title_es}
-                  </h3>
-                  {post.excerpt_es && (
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                      {post.excerpt_es}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <time dateTime={post.published_at}>
-                      {new Date(post.published_at).toLocaleDateString('es-ES', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    {post.read_time && (
-                      <>
-                        <span>•</span>
-                        <span className="inline-flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {post.read_time} min
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+            <BlogPostCard
+              key={post.id}
+              slug={post.slug_es}
+              category={post.category}
+              title={post.title_es}
+              excerpt={post.excerpt_es}
+              authorName={post.author_name}
+              authorSpecialization={post.author_specialization}
+              publishedAt={post.published_at}
+              readTime={post.read_time}
+            />
           ))}
         </div>
       </div>

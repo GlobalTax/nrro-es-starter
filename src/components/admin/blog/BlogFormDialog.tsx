@@ -60,6 +60,8 @@ const blogFormSchema = z.object({
   seo_description_es: z.string().optional(),
   seo_title_en: z.string().optional(),
   seo_description_en: z.string().optional(),
+  author_name: z.string().optional(),
+  author_specialization: z.string().optional(),
 });
 
 type BlogFormValues = z.infer<typeof blogFormSchema>;
@@ -101,6 +103,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
       seo_description_es: "",
       seo_title_en: "",
       seo_description_en: "",
+      author_name: "",
+      author_specialization: "",
     },
   });
 
@@ -125,6 +129,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: post.seo_description_es || "",
         seo_title_en: post.seo_title_en || "",
         seo_description_en: post.seo_description_en || "",
+        author_name: post.author_name || "",
+        author_specialization: post.author_specialization || "",
       });
       setIsAIGenerated(false);
       setShowAIGenerator(false);
@@ -186,6 +192,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_title_en: values.seo_title_en || null,
         seo_description_en: values.seo_description_en || null,
         author_id: adminUser?.user_id,
+        author_name: values.author_name || null,
+        author_specialization: values.author_specialization || null,
       };
 
       if (post) {
@@ -616,6 +624,34 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                             {...field}
                             onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                           />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="author_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nombre del Autor</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Carlos Navarro" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="author_specialization"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Especialización del Autor</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Derecho Fiscal" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

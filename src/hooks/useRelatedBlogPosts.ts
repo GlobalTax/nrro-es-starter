@@ -14,7 +14,7 @@ export function useRelatedBlogPosts({ currentPostId, category, tags }: RelatedPo
       // Get posts from same category (excluding current)
       const { data: categoryPosts, error: categoryError } = await supabase
         .from('blog_posts')
-        .select('id, title_es, slug_es, excerpt_es, featured_image, category, published_at, read_time')
+        .select('id, title_es, slug_es, excerpt_es, featured_image, category, published_at, read_time, author_name, author_specialization')
         .eq('status', 'published')
         .eq('category', category)
         .neq('id', currentPostId)
@@ -26,7 +26,7 @@ export function useRelatedBlogPosts({ currentPostId, category, tags }: RelatedPo
       // Get posts with overlapping tags
       const { data: tagPosts, error: tagError } = await supabase
         .from('blog_posts')
-        .select('id, title_es, slug_es, excerpt_es, featured_image, category, tags, published_at, read_time')
+        .select('id, title_es, slug_es, excerpt_es, featured_image, category, tags, published_at, read_time, author_name, author_specialization')
         .eq('status', 'published')
         .neq('id', currentPostId)
         .order('published_at', { ascending: false })
@@ -64,7 +64,7 @@ export function useRelatedBlogPosts({ currentPostId, category, tags }: RelatedPo
       if (relatedPosts.length < 3) {
         const { data: recentPosts, error: recentError } = await supabase
           .from('blog_posts')
-          .select('id, title_es, slug_es, excerpt_es, featured_image, category, published_at, read_time')
+          .select('id, title_es, slug_es, excerpt_es, featured_image, category, published_at, read_time, author_name, author_specialization')
           .eq('status', 'published')
           .neq('id', currentPostId)
           .order('published_at', { ascending: false })
