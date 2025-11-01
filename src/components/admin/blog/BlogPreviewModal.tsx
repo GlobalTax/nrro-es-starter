@@ -1,4 +1,5 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Clock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
@@ -23,6 +24,15 @@ export const BlogPreviewModal = ({ open, onOpenChange, post }: BlogPreviewModalP
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-0">
+        <VisuallyHidden>
+          <DialogHeader>
+            <DialogTitle>Vista previa del artículo</DialogTitle>
+            <DialogDescription>
+              Visualización del contenido del artículo antes de su publicación
+            </DialogDescription>
+          </DialogHeader>
+        </VisuallyHidden>
+        
         <div className="sticky top-0 z-10 bg-background border-b px-6 py-4">
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             <ArrowLeft className="mr-2 h-4 w-4" />
