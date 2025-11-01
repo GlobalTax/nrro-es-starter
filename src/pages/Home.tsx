@@ -7,7 +7,7 @@ import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { blogPosts } from "@/data/mockData";
+// Blog posts are now fetched from Supabase
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -86,7 +86,22 @@ const Home = () => {
   });
 
   const serviceLogos = (services || []).map((s) => ({ name: s.name }));
-  const featuredPosts = blogPosts.slice(0, 3);
+  
+  // Fetch featured blog posts from Supabase
+  const { data: featuredPosts = [], isLoading: postsLoading } = useQuery({
+    queryKey: ['featured-blog-posts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('id, title_es, slug_es, excerpt_es, category, author_name, read_time, featured_image, published_at')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(3);
+      
+      if (error) throw error;
+      return data || [];
+    },
+  });
 
   return (
     <>
@@ -320,28 +335,43 @@ const Home = () => {
               description="Artículos y novedades sobre fiscalidad, contabilidad y derecho empresarial"
             />
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {featuredPosts.map((post) => (
-                <Card key={post.slug} className="p-6">
-                  <Overline className="mb-3">{post.category}</Overline>
-                  <h3 className="text-2xl mb-3 font-serif">{post.title}</h3>
-                  <p className="text-sm text-body mb-6 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-subtle mb-4 pb-4 border-b border-border">
-                    <span>{post.author}</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <Link
-                    to={`/blog/${post.slug}`}
-                    className="text-sm font-medium text-primary hover:text-accent inline-flex items-center transition-smooth group"
-                  >
-                    Leer artículo 
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-smooth" />
-                  </Link>
-                </Card>
-              ))}
-            </div>
+            {postsLoading ? (
+              <div className="grid md:grid-cols-3 gap-8">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton key={i} className="h-96 rounded-xl" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-8">
+                {featuredPosts.map((post) => (
+                  <Card key={post.slug_es} className="p-6">
+                    {post.featured_image && (
+                      <img 
+                        src={post.featured_image} 
+                        alt={post.title_es}
+                        className="w-full h-48 object-cover rounded-lg mb-4"
+                      />
+                    )}
+                    <Overline className="mb-3">{post.category}</Overline>
+                    <h3 className="text-2xl mb-3 font-serif">{post.title_es}</h3>
+                    <p className="text-sm text-body mb-6 leading-relaxed">
+                      {post.excerpt_es}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-subtle mb-4 pb-4 border-b border-border">
+                      <span>{post.author_name}</span>
+                      <span>{post.read_time} min</span>
+                    </div>
+                    <Link
+                      to={`/blog/${post.slug_es}`}
+                      className="text-sm font-medium text-primary hover:text-accent inline-flex items-center transition-smooth group"
+                    >
+                      Leer artículo 
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-smooth" />
+                    </Link>
+                  </Card>
+                ))}
+              </div>
+            )}
 
             <div className="text-center mt-12">
               <Button asChild variant="outline" size="lg">
