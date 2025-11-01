@@ -200,7 +200,7 @@ export default function CaseStudyDetail() {
       {caseStudy.detailed_content && (
         <section className="bg-white py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto prose prose-lg">
+            <div className="max-w-4xl mx-auto prose prose-base">
               <div dangerouslySetInnerHTML={{ __html: caseStudy.detailed_content }} />
             </div>
           </div>
