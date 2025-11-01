@@ -7,7 +7,7 @@ import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-// Blog posts are now fetched from Supabase
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -93,7 +93,7 @@ const Home = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('id, title_es, slug_es, excerpt_es, category, author_name, read_time, featured_image, published_at')
+        .select('id, title_es, slug_es, excerpt_es, category, author_name, author_specialization, read_time, published_at')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(3);
@@ -344,31 +344,17 @@ const Home = () => {
             ) : (
               <div className="grid md:grid-cols-3 gap-8">
                 {featuredPosts.map((post) => (
-                  <Card key={post.slug_es} className="p-6">
-                    {post.featured_image && (
-                      <img 
-                        src={post.featured_image} 
-                        alt={post.title_es}
-                        className="w-full h-48 object-cover rounded-lg mb-4"
-                      />
-                    )}
-                    <Overline className="mb-3">{post.category}</Overline>
-                    <h3 className="text-2xl mb-3 font-serif">{post.title_es}</h3>
-                    <p className="text-sm text-body mb-6 leading-relaxed">
-                      {post.excerpt_es}
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-subtle mb-4 pb-4 border-b border-border">
-                      <span>{post.author_name}</span>
-                      <span>{post.read_time} min</span>
-                    </div>
-                    <Link
-                      to={`/blog/${post.slug_es}`}
-                      className="text-sm font-medium text-primary hover:text-accent inline-flex items-center transition-smooth group"
-                    >
-                      Leer artículo 
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-smooth" />
-                    </Link>
-                  </Card>
+                  <BlogPostCard
+                    key={post.id}
+                    slug={post.slug_es}
+                    category={post.category}
+                    title={post.title_es}
+                    excerpt={post.excerpt_es}
+                    authorName={post.author_name}
+                    authorSpecialization={post.author_specialization}
+                    publishedAt={post.published_at}
+                    readTime={post.read_time}
+                  />
                 ))}
               </div>
             )}
