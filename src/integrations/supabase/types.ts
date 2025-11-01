@@ -259,6 +259,123 @@ export type Database = {
           },
         ]
       }
+      case_studies: {
+        Row: {
+          challenge: string
+          client_industry: string
+          client_logo_url: string | null
+          client_name: string
+          client_size: string | null
+          created_at: string | null
+          created_by: string | null
+          detailed_content: string | null
+          display_order: number | null
+          gallery: Json | null
+          hero_image_url: string | null
+          hero_subtitle: string | null
+          hero_title: string
+          id: string
+          is_featured: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          metrics: Json | null
+          primary_service: string | null
+          project_duration: string | null
+          published_at: string | null
+          related_services: string[] | null
+          results_summary: string
+          slug: string
+          solution: string
+          status: Database["public"]["Enums"]["case_study_status"]
+          tags: string[] | null
+          testimonial_author: string | null
+          testimonial_avatar_url: string | null
+          testimonial_position: string | null
+          testimonial_text: string | null
+          timeline: Json | null
+          title: string
+          updated_at: string | null
+          updated_by: string | null
+          view_count: number | null
+        }
+        Insert: {
+          challenge: string
+          client_industry: string
+          client_logo_url?: string | null
+          client_name: string
+          client_size?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          detailed_content?: string | null
+          display_order?: number | null
+          gallery?: Json | null
+          hero_image_url?: string | null
+          hero_subtitle?: string | null
+          hero_title: string
+          id?: string
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          metrics?: Json | null
+          primary_service?: string | null
+          project_duration?: string | null
+          published_at?: string | null
+          related_services?: string[] | null
+          results_summary: string
+          slug: string
+          solution: string
+          status?: Database["public"]["Enums"]["case_study_status"]
+          tags?: string[] | null
+          testimonial_author?: string | null
+          testimonial_avatar_url?: string | null
+          testimonial_position?: string | null
+          testimonial_text?: string | null
+          timeline?: Json | null
+          title: string
+          updated_at?: string | null
+          updated_by?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          challenge?: string
+          client_industry?: string
+          client_logo_url?: string | null
+          client_name?: string
+          client_size?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          detailed_content?: string | null
+          display_order?: number | null
+          gallery?: Json | null
+          hero_image_url?: string | null
+          hero_subtitle?: string | null
+          hero_title?: string
+          id?: string
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          metrics?: Json | null
+          primary_service?: string | null
+          project_duration?: string | null
+          published_at?: string | null
+          related_services?: string[] | null
+          results_summary?: string
+          slug?: string
+          solution?: string
+          status?: Database["public"]["Enums"]["case_study_status"]
+          tags?: string[] | null
+          testimonial_author?: string | null
+          testimonial_avatar_url?: string | null
+          testimonial_position?: string | null
+          testimonial_text?: string | null
+          timeline?: Json | null
+          title?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       cierres_nomina: {
         Row: {
           anio: number
@@ -1504,6 +1621,14 @@ export type Database = {
           total_views: number
         }[]
       }
+      get_case_studies_filter_options: {
+        Args: never
+        Returns: {
+          all_tags: string[]
+          industries: string[]
+          services: string[]
+        }[]
+      }
       get_news_filter_options: {
         Args: never
         Returns: {
@@ -1530,6 +1655,10 @@ export type Database = {
         Args: { post_id: string }
         Returns: undefined
       }
+      increment_case_study_view_count: {
+        Args: { case_study_id: string }
+        Returns: undefined
+      }
       publish_scheduled_posts: { Args: never; Returns: number }
       run_maintenance_tasks: { Args: never; Returns: undefined }
       search_blog_posts: {
@@ -1554,6 +1683,36 @@ export type Database = {
           status: string
           tags: string[]
           title_es: string
+          view_count: number
+        }[]
+      }
+      search_case_studies: {
+        Args: {
+          filter_industry?: string
+          filter_service?: string
+          filter_status?: Database["public"]["Enums"]["case_study_status"]
+          filter_tags?: string[]
+          limit_count?: number
+          offset_count?: number
+          search_query?: string
+        }
+        Returns: {
+          client_industry: string
+          client_logo_url: string
+          client_name: string
+          hero_image_url: string
+          hero_subtitle: string
+          id: string
+          is_featured: boolean
+          metrics: Json
+          primary_service: string
+          published_at: string
+          relevance: number
+          results_summary: string
+          slug: string
+          status: Database["public"]["Enums"]["case_study_status"]
+          tags: string[]
+          title: string
           view_count: number
         }[]
       }
@@ -1631,6 +1790,7 @@ export type Database = {
         | "viewer"
         | "hr_manager"
         | "hr_viewer"
+      case_study_status: "draft" | "review" | "published" | "archived"
       event_severity: "info" | "warn" | "high" | "critical"
       security_event_type:
         | "LOGIN_SUCCESS"
@@ -1784,6 +1944,7 @@ export const Constants = {
         "hr_manager",
         "hr_viewer",
       ],
+      case_study_status: ["draft", "review", "published", "archived"],
       event_severity: ["info", "warn", "high", "critical"],
       security_event_type: [
         "LOGIN_SUCCESS",
