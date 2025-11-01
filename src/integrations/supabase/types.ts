@@ -1519,9 +1519,11 @@ export type Database = {
           email: string | null
           id: string
           is_active: boolean | null
+          linkedin: string | null
           name: string
           order_index: number | null
           position: string | null
+          specialization: string | null
           updated_at: string | null
         }
         Insert: {
@@ -1531,9 +1533,11 @@ export type Database = {
           email?: string | null
           id?: string
           is_active?: boolean | null
+          linkedin?: string | null
           name: string
           order_index?: number | null
           position?: string | null
+          specialization?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -1543,9 +1547,11 @@ export type Database = {
           email?: string | null
           id?: string
           is_active?: boolean | null
+          linkedin?: string | null
           name?: string
           order_index?: number | null
           position?: string | null
+          specialization?: string | null
           updated_at?: string | null
         }
         Relationships: []

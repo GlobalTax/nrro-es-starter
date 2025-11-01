@@ -1,9 +1,13 @@
 import { Meta } from '@/components/seo/Meta';
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, Target, TrendingUp, Award } from 'lucide-react';
+import { Users, Target, TrendingUp, Award, Loader2 } from 'lucide-react';
 import { BadgeHero } from '@/components/ui/badge-hero';
+import { useTeamMembers } from '@/hooks/useTeamMembers';
+import { TeamMemberCard } from '@/components/team/TeamMemberCard';
 
 export default function About() {
+  const { data: teamMembers, isLoading: teamLoading } = useTeamMembers();
+  
   const values = [
     {
       icon: Users,
@@ -147,6 +151,47 @@ export default function About() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="section-overline mb-4">Nuestro Equipo</div>
+            <h2 className="text-3xl md:text-4xl font-normal mb-4">
+              Profesionales comprometidos con tu éxito
+            </h2>
+            <p className="text-lead max-w-2xl mx-auto text-body">
+              Un equipo multidisciplinar con amplia experiencia en fiscalidad, 
+              contabilidad, derecho y gestión laboral.
+            </p>
+          </div>
+
+          {teamLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : teamMembers && teamMembers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {teamMembers.map((member) => (
+                <TeamMemberCard
+                  key={member.id}
+                  name={member.name}
+                  position={member.position}
+                  bio={member.bio}
+                  specialization={member.specialization}
+                  linkedin={member.linkedin}
+                  email={member.email}
+                  avatarUrl={member.avatar_url}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted-foreground">
+              No hay miembros del equipo disponibles en este momento.
+            </p>
+          )}
         </div>
       </section>
     </>
