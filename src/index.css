@@ -392,6 +392,50 @@ h1 {
     }
   }
 
+  /* Badge Hero - Para overlines en secciones hero */
+  .badge-hero {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid rgba(229, 231, 235, 0.35);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #E5E7EB;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-family: 'Plus Jakarta Sans', 'Roboto', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .badge-hero:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(229, 231, 235, 0.6);
+  }
+
+  /* Variante para fondos claros */
+  .badge-hero-light {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid rgba(12, 30, 33, 0.2);
+    border-radius: 10px;
+    background: rgba(12, 30, 33, 0.04);
+    color: #0C1E21;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-family: 'Plus Jakarta Sans', 'Roboto', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .badge-hero-light:hover {
+    background: rgba(12, 30, 33, 0.08);
+    border-color: rgba(12, 30, 33, 0.35);
+  }
+
   /* Markdown/Prose Styling */
   .prose {
     color: inherit;

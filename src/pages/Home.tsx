@@ -19,6 +19,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useHomeDatos } from "@/hooks/useHomeDatos";
 import { usePageContent } from "@/hooks/usePageContent";
 import { HeroSectionContent, AboutContent, FeaturedServicesContent, LogosContent } from "@/types/pageContent";
+import { BadgeHero } from "@/components/ui/badge-hero";
 
 const Home = () => {
   const { trackCTAClick } = useAnalytics();
@@ -99,6 +100,9 @@ const Home = () => {
       <section data-dark="true" className="bg-black text-white py-40 md:py-56 lg:py-72">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl text-left">
+              <div className="mb-6">
+                <BadgeHero>ASESORAMIENTO INTEGRAL</BadgeHero>
+              </div>
               <h1 
                 className="hero-title mb-6"
                 dangerouslySetInnerHTML={{ 

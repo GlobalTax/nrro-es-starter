@@ -11,6 +11,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { BadgeFilter } from '@/components/ui/badge-filter';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Search, Filter, FileText } from 'lucide-react';
+import { BadgeHero } from '@/components/ui/badge-hero';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -58,9 +59,9 @@ export default function CaseStudies() {
       <section className="bg-black text-white py-20 md:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-white/70 mb-4">
-              CASOS DE ÉXITO
-            </h3>
+            <div className="mb-6">
+              <BadgeHero>CASOS DE ÉXITO</BadgeHero>
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6">
               Resultados reales, impacto medible
             </h1>

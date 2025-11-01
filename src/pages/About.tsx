@@ -1,6 +1,7 @@
 import { Meta } from '@/components/seo/Meta';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, TrendingUp, Award } from 'lucide-react';
+import { BadgeHero } from '@/components/ui/badge-hero';
 
 export default function About() {
   const values = [
@@ -38,7 +39,9 @@ export default function About() {
       <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="service-hero-overline mb-6">Nosotros</div>
+            <div className="mb-6">
+              <BadgeHero>Nosotros</BadgeHero>
+            </div>
             <h1 className="service-hero-title mb-8">
               Sobre Nosotros
             </h1>

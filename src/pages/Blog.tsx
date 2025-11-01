@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 import { useBlogSearch } from "@/hooks/useBlogSearch";
+import { BadgeHero } from "@/components/ui/badge-hero";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -32,14 +33,25 @@ const Blog = () => {
         keywords="blog jurídico, análisis legal, noticias fiscales, derecho mercantil"
       />
 
-      <div className="min-h-screen py-24">
+      {/* Hero Section */}
+      <section className="bg-black text-white py-20 md:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h1 className="mb-6">Blog</h1>
-            <p className="text-lead text-muted-foreground">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-6">
+              <BadgeHero>Blog</BadgeHero>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6">
+              Artículos y análisis
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto">
               Análisis, reflexiones y actualizaciones sobre el panorama legal y empresarial
             </p>
           </div>
+        </div>
+      </section>
+
+      <div className="min-h-screen py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="mb-12 max-w-xl">
             <div className="relative">

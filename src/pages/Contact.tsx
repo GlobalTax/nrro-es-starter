@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Meta } from '@/components/seo/Meta';
 import { useToast } from '@/hooks/use-toast';
+import { BadgeHero } from '@/components/ui/badge-hero';
 
 export default function Contact() {
   const { toast } = useToast();
@@ -74,7 +75,9 @@ export default function Contact() {
       <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="service-hero-overline mb-6">Contacto</div>
+            <div className="mb-6">
+              <BadgeHero>Contacto</BadgeHero>
+            </div>
             <h1 className="service-hero-title mb-8">
               Hablemos de tu proyecto
             </h1>
