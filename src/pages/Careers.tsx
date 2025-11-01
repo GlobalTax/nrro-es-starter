@@ -1,5 +1,4 @@
 import { Meta } from "@/components/seo/Meta";
-import { BadgeHero } from "@/components/ui/badge-hero";
 import { CareerApplicationForm } from "@/components/careers/CareerApplicationForm";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -94,16 +93,13 @@ export default function Careers() {
       />
 
       {/* Hero Section */}
-      <section data-dark="true" className="bg-black text-white py-40 md:py-56 lg:py-72">
+      <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl text-left">
-            <div className="mb-6">
-              <BadgeHero>Únete al Equipo</BadgeHero>
-            </div>
-            <h1 className="hero-title mb-6">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 leading-tight">
               Construye tu carrera con nosotros
             </h1>
-            <p className="text-lead mb-8">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               Forma parte de un equipo comprometido con la excelencia y el desarrollo profesional continuo
             </p>
           </div>
