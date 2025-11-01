@@ -96,17 +96,19 @@ export default function Careers() {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-primary text-primary-foreground py-24 md:py-32 lg:py-40">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <BadgeHero variant="light" className="mb-6">
-            Únete al Equipo
-          </BadgeHero>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Construye tu carrera con nosotros
-          </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
-            Forma parte de un equipo comprometido con la excelencia y el desarrollo profesional continuo
-          </p>
+      <section className="bg-black py-32 md:py-48 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <BadgeHero>Únete al Equipo</BadgeHero>
+            </div>
+            <h1 className="service-hero-title mb-8">
+              Construye tu carrera con nosotros
+            </h1>
+            <p className="service-hero-subtitle max-w-3xl mx-auto">
+              Forma parte de un equipo comprometido con la excelencia y el desarrollo profesional continuo
+            </p>
+          </div>
         </div>
       </section>
 

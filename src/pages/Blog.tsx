@@ -34,16 +34,16 @@ const Blog = () => {
       />
 
       {/* Hero Section */}
-      <section className="bg-black text-white py-20 md:py-28">
+      <section className="bg-black py-32 md:py-48 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto">
             <div className="mb-6">
               <BadgeHero>Blog</BadgeHero>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6">
+            <h1 className="service-hero-title mb-8">
               Artículos y análisis
             </h1>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto">
+            <p className="service-hero-subtitle max-w-3xl mx-auto">
               Análisis, reflexiones y actualizaciones sobre el panorama legal y empresarial
             </p>
           </div>

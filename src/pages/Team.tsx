@@ -1,4 +1,5 @@
 import { Meta } from "@/components/seo/Meta";
+import { BadgeHero } from "@/components/ui/badge-hero";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
 import { useTeamMembers } from "@/hooks/useTeamMembers";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,7 +20,9 @@ const Team = () => {
         <section className="bg-black py-32 md:py-48 text-center">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-              <div className="service-hero-overline mb-6">Equipo</div>
+              <div className="mb-6">
+                <BadgeHero>Equipo</BadgeHero>
+              </div>
               <h1 className="service-hero-title mb-8">
                 Nuestro Equipo
               </h1>
