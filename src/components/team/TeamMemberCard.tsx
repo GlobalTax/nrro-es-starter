@@ -28,7 +28,7 @@ export const TeamMemberCard = ({
           <img
             src={avatarUrl}
             alt={name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
