@@ -59,22 +59,17 @@ const Services = () => {
 
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center bg-gradient-to-br from-primary via-primary-hover to-accent overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary-hover/90 to-accent/90" />
-          
-          <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div className="max-w-3xl mx-auto text-center animate-fade-in">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-primary-foreground mb-6 leading-tight">
+        <section className="bg-black py-32 md:py-48 text-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 leading-tight">
                 Nuestros Servicios
               </h1>
-              <p className="text-xl md:text-2xl text-primary-foreground/90 leading-relaxed">
+              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
                 Soluciones integrales para particulares y empresas con el máximo rigor y profesionalidad
               </p>
             </div>
           </div>
-
-          {/* Decorative gradient at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
         </section>
 
         {/* Filters and Results Section */}
