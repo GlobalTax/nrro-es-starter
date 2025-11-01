@@ -30,6 +30,7 @@ import BlogDetail from "./pages/BlogDetail";
 import { AdminTeam } from "./pages/admin/AdminTeam";
 import { AdminUsers } from "./pages/admin/AdminUsers";
 import AdminContent from "./pages/admin/AdminContent";
+import { AdminSettings } from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -69,12 +70,13 @@ const App = () => (
               }
             >
               <Route index element={<AdminDashboard />} />
+              <Route path="settings" element={<AdminSettings />} />
               <Route path="content" element={<AdminContent />} />
               <Route path="case-studies" element={<AdminCaseStudies />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="blog" element={<AdminBlog />} />
               <Route path="team" element={<AdminTeam />} />
-              <Route 
+              <Route
                 path="users" 
                 element={
                   <ProtectedRoute requiredRole="super_admin">

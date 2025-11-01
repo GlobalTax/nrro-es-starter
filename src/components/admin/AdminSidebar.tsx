@@ -18,6 +18,7 @@ import { Separator } from '@/components/ui/separator';
 
   const navItems = [
     { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/admin/settings', icon: Settings, label: 'Site Settings' },
     { path: '/admin/content', icon: FileText, label: 'Gestión de Contenido' },
     { path: '/admin/case-studies', icon: TrendingUp, label: 'Case Studies' },
     { path: '/admin/services', icon: Settings, label: 'Services' },

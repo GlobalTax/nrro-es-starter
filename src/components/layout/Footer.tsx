@@ -2,9 +2,25 @@ import { Link } from "react-router-dom";
 import { Linkedin, Instagram, Twitter, Facebook, Mail, Phone } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
+import { useSiteSettingsMap } from '@/hooks/useSiteSettings';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { settings } = useSiteSettingsMap();
+
+  // Valores por defecto (fallback)
+  const socialLinks = {
+    instagram: settings.social_instagram || 'https://www.instagram.com',
+    twitter: settings.social_twitter || 'https://www.twitter.com',
+    facebook: settings.social_facebook || 'https://www.facebook.com',
+    linkedin: settings.social_linkedin || 'https://www.linkedin.com/company/navarro-tax-legal/',
+  };
+
+  const contactInfo = {
+    phone: settings.contact_phone || '+34934593600',
+    phoneDisplay: settings.contact_phone_display || '934593600',
+    email: settings.contact_email || 'info@nrro.es',
+  };
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -17,22 +33,22 @@ export const Footer = () => {
             </h3>
             <div className="flex flex-wrap gap-6">
               <a
-                href="tel:+34934593600"
+                href={`tel:${contactInfo.phone}`}
                 className="flex items-center gap-3 text-primary-foreground/90 hover:text-accent transition-colors group"
               >
                 <div className="rounded-full border-2 border-primary-foreground/20 p-2 group-hover:border-accent transition-colors">
                   <Phone className="h-4 w-4" />
                 </div>
-                <span className="font-medium">934593600</span>
+                <span className="font-medium">{contactInfo.phoneDisplay}</span>
               </a>
               <a
-                href="mailto:info@nrro.es"
+                href={`mailto:${contactInfo.email}`}
                 className="flex items-center gap-3 text-primary-foreground/90 hover:text-accent transition-colors group"
               >
                 <div className="rounded-full border-2 border-primary-foreground/20 p-2 group-hover:border-accent transition-colors">
                   <Mail className="h-4 w-4" />
                 </div>
-                <span className="font-medium">info@nrro.es</span>
+                <span className="font-medium">{contactInfo.email}</span>
               </a>
             </div>
           </div>
@@ -52,7 +68,7 @@ export const Footer = () => {
             {/* Social Media Links */}
             <div className="flex flex-col gap-4">
               <a
-                href="https://www.instagram.com"
+                href={socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-accent transition-colors group"
@@ -63,7 +79,7 @@ export const Footer = () => {
                 <span className="text-sm font-mono uppercase tracking-wider">Instagram</span>
               </a>
               <a
-                href="https://www.twitter.com"
+                href={socialLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-accent transition-colors group"
@@ -74,7 +90,7 @@ export const Footer = () => {
                 <span className="text-sm font-mono uppercase tracking-wider">Twitter</span>
               </a>
               <a
-                href="https://www.facebook.com"
+                href={socialLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-accent transition-colors group"
@@ -85,7 +101,7 @@ export const Footer = () => {
                 <span className="text-sm font-mono uppercase tracking-wider">Facebook</span>
               </a>
               <a
-                href="https://www.linkedin.com/company/navarro-tax-legal/"
+                href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-accent transition-colors group"
