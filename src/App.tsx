@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
@@ -44,6 +44,7 @@ const App = () => (
             {/* Public routes */}
             <Route path="/" element={<Layout><Home /></Layout>} />
             <Route path="/servicios" element={<Layout><Services /></Layout>} />
+            <Route path="/servicios/contable-laboral" element={<Navigate to="/servicios/asesoramiento-contable-laboral" replace />} />
             <Route path="/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
             <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
             <Route path="/portfolio/:id" element={<Layout><PortfolioDetail /></Layout>} />

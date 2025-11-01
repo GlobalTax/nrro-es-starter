@@ -18,7 +18,7 @@ const serviciosMenu = [
   { name: "Compraventa de empresas", href: "/servicios/compraventa-empresas" },
   { name: "Asesoramiento Fiscal", href: "/servicios/asesoramiento-fiscal" },
   { name: "Mercantil y derecho societario", href: "/servicios/mercantil-derecho-societario" },
-  { name: "Asesoramiento Contable y Laboral", href: "/servicios/contable-laboral" }
+  { name: "Asesoramiento Contable y Laboral", href: "/servicios/asesoramiento-contable-laboral" }
 ];
 
 const areasMenu = [
