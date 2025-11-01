@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -63,7 +64,9 @@ interface TeamMemberFormDialogProps {
 
 export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamMemberFormDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const form = useForm<TeamMemberFormValues>({
     resolver: zodResolver(teamMemberSchema),
@@ -101,11 +104,8 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
       let avatarUrl = values.avatar_url;
 
       // Handle avatar upload if there's a new file
-      if (typeof values.avatar_url === 'string' && values.avatar_url.startsWith('data:')) {
-        const response = await fetch(values.avatar_url);
-        const blob = await response.blob();
-        const file = new File([blob], 'avatar.jpg', { type: blob.type });
-        avatarUrl = await uploadAvatar(file);
+      if (avatarFile) {
+        avatarUrl = await uploadAvatar(avatarFile);
 
         // Delete old avatar if updating
         if (member?.avatar_url) {
@@ -153,9 +153,12 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
         });
       }
 
+      await queryClient.invalidateQueries({ queryKey: ['team-members'] });
+      
+      form.reset();
+      setAvatarFile(null);
       onSuccess();
       onClose();
-      form.reset();
     } catch (error: any) {
       toast({
         title: 'Error',
@@ -192,7 +195,10 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
                   <FormControl>
                     <ImageUpload
                       value={field.value}
-                      onChange={field.onChange}
+                      onChange={(url, file) => {
+                        field.onChange(url);
+                        setAvatarFile(file);
+                      }}
                       className="max-w-xs mx-auto"
                     />
                   </FormControl>

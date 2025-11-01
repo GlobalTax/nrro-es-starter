@@ -16,6 +16,7 @@ export const ImageUpload = ({ value, onChange, onUploadProgress, className }: Im
   const [preview, setPreview] = useState<string | null>(value);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   const handleFile = useCallback((file: File) => {
     setError(null);
@@ -31,6 +32,9 @@ export const ImageUpload = ({ value, onChange, onUploadProgress, className }: Im
       setError('File size must be less than 5MB');
       return;
     }
+
+    // Store the original file
+    setUploadedFile(file);
 
     // Create preview
     const reader = new FileReader();
@@ -80,6 +84,7 @@ export const ImageUpload = ({ value, onChange, onUploadProgress, className }: Im
   const handleRemove = useCallback(() => {
     setPreview(null);
     setUploadProgress(0);
+    setUploadedFile(null);
     onChange(null, null);
   }, [onChange]);
 
