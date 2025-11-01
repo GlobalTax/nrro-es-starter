@@ -100,29 +100,6 @@ const ServiceDetail = () => {
           </div>
         </div>
       </section>
-
-      {/* Stats Section */}
-      {service.stats && service.stats.length > 0 && (
-        <section className="bg-neutral-50 py-16 md:py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              Cifras del servicio
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {service.stats.map((stat: any, index: number) => (
-                <StatCard
-                  key={index}
-                  label={stat.label}
-                  value={stat.value}
-                  description={stat.description}
-                  delay={index * 100}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Cómo Trabajamos Section - 3 columns */}
       {service.metodologia && (
         <section className="bg-white py-16 md:py-24">
@@ -231,6 +208,28 @@ const ServiceDetail = () => {
                 </Accordion>
               </div>
               
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Stats Section */}
+      {service.stats && service.stats.length > 0 && (
+        <section className="bg-neutral-50 py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              Cifras del servicio
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {service.stats.map((stat: any, index: number) => (
+                <StatCard
+                  key={index}
+                  label={stat.label}
+                  value={stat.value}
+                  description={stat.description}
+                  delay={index * 100}
+                />
+              ))}
             </div>
           </div>
         </section>
