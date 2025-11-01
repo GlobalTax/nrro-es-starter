@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ServiceContactForm } from "@/components/services/ServiceContactForm";
+import { StatCard } from "@/components/ui/stat-card";
 
 const ServiceDetail = () => {
   const { slug } = useParams();
@@ -205,21 +206,20 @@ const ServiceDetail = () => {
         </section>
       )}
 
-      {/* Stats/Datos Grid */}
+      {/* Stats/Datos Grid - 3x2 */}
       {service.stats && service.stats.length > 0 && (
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-overline mb-12">DATOS</div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.stats.map((stat: any, idx: number) => (
-                <div key={idx} className="bg-muted p-8 rounded-lg">
-                  <div className="text-xs font-medium tracking-wider text-muted-foreground mb-4">
-                    {stat.label}
-                  </div>
-                  <div className="stat-number mb-4">{stat.value}</div>
-                  <p className="service-body text-sm">{stat.description}</p>
-                </div>
+                <StatCard
+                  key={idx}
+                  label={stat.label}
+                  value={stat.value}
+                  description={stat.description}
+                />
               ))}
             </div>
           </div>

@@ -181,6 +181,16 @@ export const services: Service[] = [
         label: "TASA DE ÉXITO",
         value: "98%",
         description: "Resolución favorable en inspecciones y recursos tributarios."
+      },
+      {
+        label: "PROYECTOS",
+        value: "500+",
+        description: "Operaciones de reestructuración, sucesión y M&A completadas con éxito."
+      },
+      {
+        label: "COMPROMISO",
+        value: "100%",
+        description: "Dedicación total a cada mandato, con rigor técnico y confidencialidad."
       }
     ]
   },
@@ -194,6 +204,38 @@ export const services: Service[] = [
     features: ["Contabilidad general", "Estados financieros", "Control de gestión", "Análisis de ratios", "Cierre contable"],
     benefits: "Información financiera clara y precisa para tomar mejores decisiones empresariales. Cumplimiento de todas las obligaciones contables.",
     typical_clients: ["Startups", "PYMES", "Empresas en crecimiento"],
+    stats: [
+      {
+        label: "EMPRESAS",
+        value: "250+",
+        description: "Empresas gestionan su contabilidad con NRRO y confían en nuestros servicios financieros."
+      },
+      {
+        label: "PRECISIÓN",
+        value: "99.9%",
+        description: "Exactitud en registros contables y cierres mensuales, garantizando información fiable."
+      },
+      {
+        label: "INFORMES",
+        value: "1.500+",
+        description: "Estados financieros y análisis de gestión elaborados anualmente para nuestros clientes."
+      },
+      {
+        label: "TIEMPO RESPUESTA",
+        value: "24h",
+        description: "Plazo medio de respuesta a consultas contables y financieras de nuestros clientes."
+      },
+      {
+        label: "DIGITALIZACIÓN",
+        value: "100%",
+        description: "Procesos contables digitalizados mediante software de última generación."
+      },
+      {
+        label: "EXPERIENCIA",
+        value: "20 años",
+        description: "Trayectoria consolidada en asesoramiento contable y financiero empresarial."
+      }
+    ]
   },
   {
     id: "3",
@@ -205,6 +247,38 @@ export const services: Service[] = [
     features: ["Constitución de sociedades", "Operaciones societarias", "M&A", "Contratos mercantiles", "Compliance corporativo"],
     benefits: "Protege tus intereses en todas las operaciones empresariales. Minimiza riesgos legales y optimiza estructuras societarias.",
     typical_clients: ["Startups", "Empresas", "Grupos empresariales"],
+    stats: [
+      {
+        label: "OPERACIONES",
+        value: "200+",
+        description: "Operaciones societarias, fusiones y adquisiciones asesoradas con éxito."
+      },
+      {
+        label: "EMPRESAS CONSTITUIDAS",
+        value: "150+",
+        description: "Sociedades constituidas y estructuradas jurídicamente desde su inicio."
+      },
+      {
+        label: "CONTRATOS",
+        value: "1.000+",
+        description: "Contratos mercantiles redactados y revisados para proteger tus intereses."
+      },
+      {
+        label: "LITIGIOSIDAD",
+        value: "5%",
+        description: "Tasa de conflictos gracias a nuestra asesoría preventiva y contratos sólidos."
+      },
+      {
+        label: "EXPERIENCIA",
+        value: "25 años",
+        description: "Trayectoria en derecho mercantil y asesoramiento a grupos empresariales."
+      },
+      {
+        label: "SECTORES",
+        value: "15+",
+        description: "Sectores económicos diversos en los que hemos asesorado operaciones."
+      }
+    ]
   },
   {
     id: "4",
@@ -216,6 +290,38 @@ export const services: Service[] = [
     features: ["Nóminas y seguros sociales", "Contratos laborales", "Altas y bajas", "Inspecciones", "Relaciones laborales"],
     benefits: "Evita sanciones laborales y optimiza costes de personal. Gestión eficiente de todo el ciclo laboral.",
     typical_clients: ["PYMES", "Empresas", "Organizaciones"],
+    stats: [
+      {
+        label: "TRABAJADORES",
+        value: "2.000+",
+        description: "Nóminas y seguros sociales gestionados mensualmente para nuestros clientes."
+      },
+      {
+        label: "EMPRESAS",
+        value: "180+",
+        description: "Empresas confían en NRRO para la gestión integral de sus recursos humanos."
+      },
+      {
+        label: "CONTRATOS",
+        value: "500+",
+        description: "Contratos laborales redactados anualmente adaptados a cada situación."
+      },
+      {
+        label: "INSPECCIONES",
+        value: "95%",
+        description: "Tasa de superación de inspecciones laborales sin incidencias significativas."
+      },
+      {
+        label: "EXPERIENCIA",
+        value: "18 años",
+        description: "Trayectoria en gestión laboral y asesoramiento en relaciones laborales."
+      },
+      {
+        label: "AHORRO",
+        value: "15%",
+        description: "Reducción media de costes laborales mediante optimización de plantillas."
+      }
+    ]
   },
 ];
 
