@@ -305,7 +305,7 @@ const Home = () => {
               }}
               plugins={[
                 Autoplay({
-                  delay: 3000,
+                  delay: 1500,
                 })
               ]}
               className="w-full"
