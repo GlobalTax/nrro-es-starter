@@ -366,9 +366,9 @@ h1 {
   /* Títulos grandes para "Cómo Trabajamos" */
   .metodologia-title {
     font-family: 'Roboto Mono', monospace;
-    font-size: 56px;
+    font-size: 64px;
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.15;
     color: #000000;
   }
 
@@ -384,7 +384,7 @@ h1 {
   /* Responsive adjustments for new classes */
   @media (max-width: 768px) {
     .metodologia-title {
-      font-size: 36px;
+      font-size: 40px;
     }
     
     .stat-number {

@@ -100,7 +100,7 @@ const ServiceDetail = () => {
       {service.metodologia && (
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
               
               {/* Columna Izquierda */}
               <div>
@@ -108,26 +108,28 @@ const ServiceDetail = () => {
                   {service.metodologia.overline}
                 </div>
                 
-                {service.metodologia.titulos.map((titulo: string, idx: number) => (
-                  <h2 key={idx} className="metodologia-title mb-4">
-                    {titulo}
-                  </h2>
-                ))}
+                <div className="space-y-2">
+                  {service.metodologia.titulos.map((titulo: string, idx: number) => (
+                    <h2 key={idx} className="metodologia-title">
+                      {titulo}
+                    </h2>
+                  ))}
+                </div>
                 
                 {service.metodologia.contacto && (
-                  <div className="mt-8 space-y-3">
+                  <div className="mt-12 space-y-4">
                     <a 
                       href={`tel:${service.metodologia.contacto.telefono}`}
                       className="flex items-center gap-3 text-lg hover:text-primary transition-colors"
                     >
-                      <Phone className="h-5 w-5" />
+                      <Phone className="h-4 w-4" />
                       {service.metodologia.contacto.telefono}
                     </a>
                     <a 
                       href={`mailto:${service.metodologia.contacto.email}`}
                       className="flex items-center gap-3 text-lg hover:text-primary transition-colors"
                     >
-                      <Mail className="h-5 w-5" />
+                      <Mail className="h-4 w-4" />
                       {service.metodologia.contacto.email}
                     </a>
                   </div>
@@ -144,11 +146,11 @@ const ServiceDetail = () => {
                   {service.metodologia.pilares.map((pilar: any) => (
                     <div key={pilar.numero}>
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-semibold">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-semibold text-lg">
                           {pilar.numero}
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-semibold mb-3">
+                          <h3 className="text-xl font-semibold mb-4">
                             {pilar.titulo}
                           </h3>
                           <ul className="space-y-2">
