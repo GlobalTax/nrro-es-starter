@@ -1,0 +1,9 @@
+-- Insert sample team members
+INSERT INTO team_members (name, position, bio, specialization, email, linkedin, order_index, is_active)
+VALUES 
+  ('Ana García López', 'Managing Partner', 'Experta en derecho tributario y planificación fiscal con más de 20 años de experiencia asesorando a empresas nacionales e internacionales.', 'Derecho Fiscal y Tributario', 'ana.garcia@nrro.com', 'https://www.linkedin.com/in/ana-garcia-lopez', 1, true),
+  ('Carlos Navarro Ruiz', 'Senior Tax Advisor', 'Especialista en fiscalidad internacional y operaciones corporativas complejas. Asesor de confianza para empresas en crecimiento.', 'Fiscalidad Internacional', 'carlos.navarro@nrro.com', 'https://www.linkedin.com/in/carlos-navarro', 2, true),
+  ('María Fernández Torres', 'Legal Counsel', 'Abogada especializada en derecho mercantil y societario, con amplia experiencia en M&A y reestructuraciones empresariales.', 'Derecho Mercantil', 'maria.fernandez@nrro.com', 'https://www.linkedin.com/in/maria-fernandez', 3, true),
+  ('Javier Martínez Soto', 'Senior Accountant', 'Experto en contabilidad empresarial y auditoría, garantizando el cumplimiento normativo y la optimización de procesos financieros.', 'Contabilidad y Auditoría', 'javier.martinez@nrro.com', null, 4, true),
+  ('Laura Sánchez Díaz', 'HR & Labor Advisor', 'Especialista en derecho laboral y gestión de recursos humanos, ayudando a las empresas a optimizar sus estructuras de personal.', 'Derecho Laboral', 'laura.sanchez@nrro.com', 'https://www.linkedin.com/in/laura-sanchez', 5, true),
+  ('Roberto Pérez Gómez', 'Tax Consultant', 'Asesor fiscal con enfoque en optimización tributaria y planificación estratégica para pymes y emprendedores.', 'Optimización Fiscal', 'roberto.perez@nrro.com', null, 6, true);
