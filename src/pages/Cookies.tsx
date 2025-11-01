@@ -5,7 +5,7 @@ const Cookies = () => {
     <>
       <Meta
         title="Política de Cookies"
-        description="Información sobre el uso de cookies en el sitio web de Navarro Tax Legal. Conoce qué cookies utilizamos y cómo gestionarlas."
+        description="Información sobre el uso de cookies en el sitio web de NRRO (Navarro, Legal Y Tributario S.L.P.). Conoce qué cookies utilizamos y cómo gestionarlas."
         keywords="política cookies navarro, cookies nrro, gestión cookies asesoría fiscal"
         canonicalUrl="https://nrro.es/cookies"
       />

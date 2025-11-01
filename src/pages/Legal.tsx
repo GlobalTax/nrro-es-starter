@@ -5,7 +5,7 @@ const Legal = () => {
     <>
       <Meta
         title="Aviso Legal y Términos de Uso"
-        description="Términos y condiciones de uso del sitio web de Navarro Tax Legal. Información legal sobre NRRO."
+        description="Términos y condiciones de uso del sitio web de NRRO (Navarro, Legal Y Tributario S.L.P.). Información legal completa."
         keywords="aviso legal navarro, términos uso nrro, condiciones sitio web asesoría fiscal"
         canonicalUrl="https://nrro.es/legal"
       />
@@ -31,9 +31,9 @@ const Legal = () => {
             <div className="space-y-12">
               
               {/* Last Updated */}
-              <div className="text-sm text-muted-foreground">
-                <p>Última actualización: 30 de octubre de 2025</p>
-              </div>
+            <div className="text-sm text-muted-foreground">
+              <p>Última actualización: 1 de noviembre de 2025</p>
+            </div>
 
               {/* Identificación */}
               <div className="space-y-4">
@@ -44,26 +44,35 @@ const Legal = () => {
                   <p>
                     En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI), se informa de los siguientes datos:
                   </p>
-                  <ul className="list-none space-y-2">
-                    <li>
-                      <strong className="text-foreground">Denominación social:</strong> Navarro Tax Legal, S.L.
-                    </li>
-                    <li>
-                      <strong className="text-foreground">Nombre comercial:</strong> NRRO / Navarro
-                    </li>
-                    <li>
-                      <strong className="text-foreground">Domicilio social:</strong> Carrer Ausias March número 36, 08010 Barcelona, España
-                    </li>
-                    <li>
-                      <strong className="text-foreground">Email de contacto:</strong>{" "}
-                      <a href="mailto:info@nrro.es" className="text-accent hover:underline">
-                        info@nrro.es
-                      </a>
-                    </li>
-                    <li>
-                      <strong className="text-foreground">Teléfono:</strong> 934593600
-                    </li>
-                  </ul>
+              <ul className="list-none space-y-2">
+                <li>
+                  <strong className="text-foreground">Denominación social:</strong> Navarro, Legal Y Tributario S.L.P.
+                </li>
+                <li>
+                  <strong className="text-foreground">CIF:</strong> B67261552
+                </li>
+                <li>
+                  <strong className="text-foreground">Forma jurídica:</strong> Sociedad Limitada Profesional
+                </li>
+                <li>
+                  <strong className="text-foreground">Nombre comercial:</strong> NRRO / Navarro
+                </li>
+                <li>
+                  <strong className="text-foreground">Grupo empresarial:</strong> Grupo Navarro
+                </li>
+                <li>
+                  <strong className="text-foreground">Domicilio social:</strong> Carrer Ausias March número 36, 08010 Barcelona, España
+                </li>
+                <li>
+                  <strong className="text-foreground">Email de contacto:</strong>{" "}
+                  <a href="mailto:info@nrro.es" className="text-accent hover:underline">
+                    info@nrro.es
+                  </a>
+                </li>
+                <li>
+                  <strong className="text-foreground">Teléfono:</strong> 934593600
+                </li>
+              </ul>
                 </div>
               </div>
 
@@ -77,7 +86,7 @@ const Legal = () => {
                     Este sitio web tiene como finalidad:
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>Proporcionar información corporativa sobre Navarro Tax Legal y sus servicios</li>
+                    <li>Proporcionar información corporativa sobre Navarro, Legal Y Tributario S.L.P. (NRRO) y sus servicios</li>
                     <li>Servir como canal de contacto para clientes actuales y potenciales</li>
                     <li>Mostrar casos de éxito y testimonios (con el consentimiento de nuestros clientes)</li>
                     <li>Publicar contenidos informativos sobre fiscalidad, contabilidad y asesoría legal</li>
@@ -119,7 +128,7 @@ const Legal = () => {
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
-                    Todos los contenidos de este sitio web (textos, imágenes, logos, diseño gráfico, código fuente, estructura) son propiedad de Navarro Tax Legal o sus licenciantes y están protegidos por:
+                    Todos los contenidos de este sitio web (textos, imágenes, logos, diseño gráfico, código fuente, estructura) son propiedad de Navarro, Legal Y Tributario S.L.P. (NRRO) o sus licenciantes y están protegidos por:
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Real Decreto Legislativo 1/1996 (Ley de Propiedad Intelectual)</li>
@@ -131,7 +140,7 @@ const Legal = () => {
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Reproducir, distribuir, modificar o comunicar públicamente los contenidos sin autorización</li>
-                    <li>Utilizar los logos y marcas de Navarro Tax Legal fuera de su contexto</li>
+                    <li>Utilizar los logos y marcas de NRRO fuera de su contexto</li>
                     <li>Realizar ingeniería inversa del código fuente</li>
                     <li>Extraer bases de datos o contenidos mediante técnicas automatizadas</li>
                   </ul>
@@ -148,7 +157,7 @@ const Legal = () => {
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
-                    Navarro Tax Legal no se responsabiliza de:
+                    NRRO no se responsabiliza de:
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>
@@ -200,7 +209,7 @@ const Legal = () => {
                     Este sitio web puede contener enlaces a sitios de terceros (proveedores, partners, redes sociales). 
                   </p>
                   <p>
-                    Navarro Tax Legal:
+                    NRRO:
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>No se responsabiliza del contenido de sitios externos</li>
@@ -220,7 +229,7 @@ const Legal = () => {
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
-                    Navarro Tax Legal se reserva el derecho a:
+                    NRRO se reserva el derecho a:
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Modificar los contenidos del sitio web sin previo aviso</li>

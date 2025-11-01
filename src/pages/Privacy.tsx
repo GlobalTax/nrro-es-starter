@@ -5,7 +5,7 @@ const Privacy = () => {
     <>
       <Meta
         title="Política de Privacidad"
-        description="Política de privacidad y protección de datos de Navarro Tax Legal. Conoce cómo tratamos tu información personal conforme al RGPD."
+        description="Política de privacidad y protección de datos de NRRO (Navarro, Legal Y Tributario S.L.P.). Conoce cómo tratamos tu información personal conforme al RGPD."
         keywords="política privacidad navarro, protección datos nrro, rgpd asesoría fiscal"
         canonicalUrl="https://nrro.es/privacy"
       />
@@ -18,7 +18,7 @@ const Privacy = () => {
               Política de Privacidad
             </h1>
             <p className="text-xl text-muted-foreground">
-              En Navarro Tax Legal nos comprometemos a proteger tu privacidad y garantizar la seguridad de tus datos personales
+              En NRRO (Navarro, Legal Y Tributario S.L.P.) nos comprometemos a proteger tu privacidad y garantizar la seguridad de tus datos personales
             </p>
           </div>
         </div>
@@ -31,9 +31,9 @@ const Privacy = () => {
             <div className="space-y-12">
               
               {/* Last Updated */}
-              <div className="text-sm text-muted-foreground">
-                <p>Última actualización: 30 de octubre de 2025</p>
-              </div>
+            <div className="text-sm text-muted-foreground">
+              <p>Última actualización: 1 de noviembre de 2025</p>
+            </div>
 
               {/* Responsable del tratamiento */}
               <div className="space-y-4">
@@ -41,21 +41,27 @@ const Privacy = () => {
                   1. Responsable del Tratamiento
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
-                  <p>
-                    <strong className="text-foreground">Identidad:</strong> Navarro Tax Legal (NRRO)
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Domicilio:</strong> Carrer Ausias March número 36, 08010 Barcelona
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Email de contacto:</strong>{" "}
-                    <a href="mailto:info@nrro.es" className="text-accent hover:underline">
-                      info@nrro.es
-                    </a>
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Teléfono:</strong> 934593600
-                  </p>
+              <p>
+                <strong className="text-foreground">Denominación social:</strong> Navarro, Legal Y Tributario S.L.P.
+              </p>
+              <p>
+                <strong className="text-foreground">CIF:</strong> B67261552
+              </p>
+              <p>
+                <strong className="text-foreground">Nombre comercial:</strong> NRRO / Navarro
+              </p>
+              <p>
+                <strong className="text-foreground">Domicilio:</strong> Carrer Ausias March número 36, 08010 Barcelona
+              </p>
+              <p>
+                <strong className="text-foreground">Email de contacto:</strong>{" "}
+                <a href="mailto:info@nrro.es" className="text-accent hover:underline">
+                  info@nrro.es
+                </a>
+              </p>
+              <p>
+                <strong className="text-foreground">Teléfono:</strong> 934593600
+              </p>
                 </div>
               </div>
 
