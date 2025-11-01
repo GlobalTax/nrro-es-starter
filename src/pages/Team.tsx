@@ -1,16 +1,17 @@
-import { Card } from "@/components/ui/card";
-import { Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
-import { teamMembers } from "@/data/mockData";
-import { Linkedin } from "lucide-react";
+import { TeamMemberCard } from "@/components/team/TeamMemberCard";
+import { useTeamMembers } from "@/hooks/useTeamMembers";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Team = () => {
+  const { data: members, isLoading } = useTeamMembers();
+
   return (
     <>
       <Meta
-        title="Team"
-        description="Meet the Ethos Ventures team - experienced investors committed to building exceptional companies"
-        canonicalUrl={`${window.location.origin}/team`}
+        title="Equipo - NRRO Asesores"
+        description="Conoce al equipo de profesionales de NRRO - expertos comprometidos con el éxito de nuestros clientes"
+        canonicalUrl={`${window.location.origin}/equipo`}
       />
 
       <div className="min-h-screen">
@@ -33,30 +34,34 @@ const Team = () => {
         {/* Team Grid */}
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
-              {teamMembers.map((member) => (
-                <Card key={member.id} className="overflow-hidden border-border">
-                  <div className="aspect-square bg-neutral-100" />
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-medium mb-1">{member.name}</h3>
-                    <p className="section-overline mb-4">{member.role}</p>
-                    <p className="service-body mb-6">{member.bio}</p>
-                    
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-foreground hover:text-accent transition-smooth border-b border-foreground hover:border-accent"
-                      aria-label={`${member.name}'s LinkedIn profile`}
-                    >
-                      <Linkedin className="h-4 w-4" />
-                      LinkedIn
-                    </a>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            {isLoading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-96 rounded-lg" />
+                ))}
+              </div>
+            ) : members && members.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {members.map((member) => (
+                  <TeamMemberCard
+                    key={member.id}
+                    name={member.name}
+                    position={member.position || ''}
+                    bio={member.bio}
+                    specialization={member.specialization}
+                    linkedin={member.linkedin}
+                    email={member.email}
+                    avatarUrl={member.avatar_url}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  No hay miembros del equipo disponibles en este momento.
+                </p>
+              </div>
+            )}
           </div>
         </section>
       </div>
