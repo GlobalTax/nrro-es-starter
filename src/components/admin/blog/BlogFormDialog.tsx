@@ -39,6 +39,7 @@ import { AIBlogGenerator } from "./AIBlogGenerator";
 import { Loader2, Sparkles } from "lucide-react";
 import { uploadCompanyLogo } from "@/lib/uploadCompanyLogo";
 import type { GeneratedArticle } from "@/hooks/useAIBlogGenerator";
+import { useAnalyzeBlogContent } from "@/hooks/useAnalyzeBlogContent";
 
 const blogFormSchema = z.object({
   title_es: z.string().min(1, "El título es requerido"),
@@ -77,6 +78,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
   const [uploadingImage, setUploadingImage] = useState(false);
   const [showAIGenerator, setShowAIGenerator] = useState(false);
   const [isAIGenerated, setIsAIGenerated] = useState(false);
+  const { analyzeContent, isAnalyzing } = useAnalyzeBlogContent();
 
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(blogFormSchema),
@@ -249,6 +251,54 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
     });
   };
 
+  const handleAutocomplete = async () => {
+    const currentContentEs = form.getValues('content_es');
+    
+    if (!currentContentEs || currentContentEs.trim().length < 100) {
+      toast({
+        title: 'Contenido insuficiente',
+        description: 'Por favor escribe o pega el contenido del artículo primero (mínimo 100 caracteres)',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Analizando contenido...',
+      description: 'La IA está generando los metadatos',
+    });
+
+    const result = await analyzeContent(currentContentEs);
+    
+    if (result) {
+      // Solo llenar campos VACÍOS
+      if (!form.getValues('title_es')) {
+        form.setValue('title_es', result.title_es);
+        form.setValue('slug_es', generateSlug(result.title_es));
+      }
+      if (!form.getValues('title_en')) {
+        form.setValue('title_en', result.title_en);
+        form.setValue('slug_en', generateSlug(result.title_en));
+      }
+      if (!form.getValues('excerpt_es')) form.setValue('excerpt_es', result.excerpt_es);
+      if (!form.getValues('excerpt_en')) form.setValue('excerpt_en', result.excerpt_en);
+      if (!form.getValues('seo_title_es')) form.setValue('seo_title_es', result.seo_title_es);
+      if (!form.getValues('seo_title_en')) form.setValue('seo_title_en', result.seo_title_en);
+      if (!form.getValues('seo_description_es')) form.setValue('seo_description_es', result.seo_description_es);
+      if (!form.getValues('seo_description_en')) form.setValue('seo_description_en', result.seo_description_en);
+      if (!form.getValues('category')) form.setValue('category', result.category);
+      if (!form.getValues('tags') || form.getValues('tags').length === 0) {
+        form.setValue('tags', result.tags.join(', '));
+      }
+      if (!form.getValues('read_time')) form.setValue('read_time', result.read_time);
+
+      toast({
+        title: '✨ Autocompletado exitoso',
+        description: 'Los campos vacíos se han completado. Revisa y ajusta si es necesario.',
+      });
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -372,6 +422,32 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                       </FormItem>
                     )}
                   />
+
+                  {/* Autocomplete Button */}
+                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg border">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleAutocomplete}
+                      disabled={isAnalyzing || saveMutation.isPending}
+                      className="shrink-0"
+                    >
+                      {isAnalyzing ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Analizando...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-4 w-4" />
+                          Autocompletar con IA
+                        </>
+                      )}
+                    </Button>
+                    <p className="text-sm text-muted-foreground pt-2">
+                      Pega tu contenido arriba y usa este botón para que la IA complete automáticamente título, extracto, SEO, categoría, tags y tiempo de lectura.
+                    </p>
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="en" className="space-y-4">
