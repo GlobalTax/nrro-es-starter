@@ -96,76 +96,68 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Cómo Trabajamos Section - 2 columns */}
+      {/* Cómo Trabajamos Section - 3 columns */}
       {service.metodologia && (
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
               
-              {/* Columna Izquierda */}
-              <div>
-                <div className="section-overline mb-6">
+              {/* Columna 1: Overline con línea */}
+              <div className="relative">
+                <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
                   {service.metodologia.overline}
-                </div>
+                </h3>
+                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
+              </div>
+              
+              {/* Columna 2: Títulos */}
+              <div>
+                {service.metodologia.titulos.map((titulo: string, idx: number) => (
+                  <h2 key={idx} className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
+                    {titulo}
+                  </h2>
+                ))}
+              </div>
+              
+              {/* Columna 3: Contenido */}
+              <div className="space-y-6">
+                <p className="text-lg font-medium text-foreground leading-relaxed">
+                  {service.metodologia.introduccion}
+                </p>
                 
-                <div className="space-y-2">
-                  {service.metodologia.titulos.map((titulo: string, idx: number) => (
-                    <h2 key={idx} className="metodologia-title">
-                      {titulo}
-                    </h2>
-                  ))}
-                </div>
+                {service.metodologia.pilares.map((pilar: any) => (
+                  <div key={pilar.numero}>
+                    <p className="text-lg font-semibold text-foreground mb-2">
+                      {pilar.titulo}
+                    </p>
+                    <div className="space-y-2">
+                      {pilar.puntos.map((punto: string, idx: number) => (
+                        <p key={idx} className="text-body leading-relaxed">
+                          — {punto}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
                 
                 {service.metodologia.contacto && (
-                  <div className="mt-12 space-y-4">
+                  <div className="pt-4 space-y-2">
                     <a 
                       href={`tel:${service.metodologia.contacto.telefono}`}
-                      className="flex items-center gap-3 text-lg hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-foreground hover:text-accent transition-colors"
                     >
                       <Phone className="h-4 w-4" />
                       {service.metodologia.contacto.telefono}
                     </a>
                     <a 
                       href={`mailto:${service.metodologia.contacto.email}`}
-                      className="flex items-center gap-3 text-lg hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-foreground hover:text-accent transition-colors"
                     >
                       <Mail className="h-4 w-4" />
                       {service.metodologia.contacto.email}
                     </a>
                   </div>
                 )}
-              </div>
-              
-              {/* Columna Derecha */}
-              <div>
-                <p className="service-body text-lg mb-8">
-                  {service.metodologia.introduccion}
-                </p>
-                
-                <div className="space-y-8">
-                  {service.metodologia.pilares.map((pilar: any) => (
-                    <div key={pilar.numero}>
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-semibold text-lg">
-                          {pilar.numero}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-xl font-semibold mb-4">
-                            {pilar.titulo}
-                          </h3>
-                          <ul className="space-y-2">
-                            {pilar.puntos.map((punto: string, idx: number) => (
-                              <li key={idx} className="flex items-start gap-3">
-                                <span className="text-foreground/60 mt-2">—</span>
-                                <span className="service-body flex-1">{punto}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
               
             </div>
