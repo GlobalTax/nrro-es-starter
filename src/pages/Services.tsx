@@ -59,17 +59,22 @@ const Services = () => {
 
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-background py-20 md:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal">
+        <section className="relative min-h-[60vh] flex items-center bg-gradient-to-br from-primary via-primary-hover to-accent overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary-hover/90 to-accent/90" />
+          
+          <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="max-w-3xl mx-auto text-center animate-fade-in">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-primary-foreground mb-6 leading-tight">
                 Nuestros Servicios
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground">
-                Soluciones integrales de asesoría fiscal, contable, legal y laboral
+              <p className="text-xl md:text-2xl text-primary-foreground/90 leading-relaxed">
+                Soluciones integrales para particulares y empresas con el máximo rigor y profesionalidad
               </p>
             </div>
           </div>
+
+          {/* Decorative gradient at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
         </section>
 
         {/* Filters and Results Section */}
@@ -77,51 +82,53 @@ const Services = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
             {/* Filters Row */}
-            <div className="max-w-7xl mx-auto mb-12">
-              <div className="flex items-center justify-between flex-wrap gap-6">
-                
-                {/* Left: View Toggle + Area Filters */}
-                <div className="flex items-center gap-6 flex-wrap">
-                  <ViewToggle value={viewMode} onChange={setViewMode} />
+            <div className="max-w-7xl mx-auto -mt-12 relative z-10 mb-12">
+              <div className="bg-background rounded-lg shadow-strong p-6">
+                <div className="flex items-center justify-between flex-wrap gap-6">
                   
-                  <div className="flex flex-wrap gap-2 items-center">
-                    <span className="text-sm font-medium text-muted-foreground">Filtrar por:</span>
-                    <BadgeFilter
-                      label="Todos"
-                      active={activeArea === null}
-                      onClick={() => {
-                        setActiveArea(null);
-                        setCurrentPage(1);
-                      }}
-                    />
-                    {areas.map((area: string) => (
+                  {/* Left: View Toggle + Area Filters */}
+                  <div className="flex items-center gap-6 flex-wrap">
+                    <ViewToggle value={viewMode} onChange={setViewMode} />
+                    
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <span className="text-sm font-medium text-muted-foreground">Filtrar por:</span>
                       <BadgeFilter
-                        key={area}
-                        label={area}
-                        active={activeArea === area}
+                        label="Todos"
+                        active={activeArea === null}
                         onClick={() => {
-                          setActiveArea(activeArea === area ? null : area);
+                          setActiveArea(null);
                           setCurrentPage(1);
                         }}
                       />
-                    ))}
+                      {areas.map((area: string) => (
+                        <BadgeFilter
+                          key={area}
+                          label={area}
+                          active={activeArea === area}
+                          onClick={() => {
+                            setActiveArea(activeArea === area ? null : area);
+                            setCurrentPage(1);
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Right: Search */}
-                <div className="relative w-full sm:w-80">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Buscar servicios..."
-                    value={searchTerm}
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    className="pl-10"
-                    aria-label="Buscar servicios"
-                  />
+                  {/* Right: Search */}
+                  <div className="relative w-full sm:w-80">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Buscar servicios..."
+                      value={searchTerm}
+                      onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="pl-10"
+                      aria-label="Buscar servicios"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,7 +149,7 @@ const Services = () => {
                   <div className={cn(
                     "mb-12",
                     viewMode === 'grid'
-                      ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+                      ? "grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
                       : "space-y-6"
                   )}>
                     {services.map((service: any) => (

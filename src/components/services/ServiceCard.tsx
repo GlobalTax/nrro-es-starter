@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import * as LucideIcons from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
@@ -62,39 +63,36 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
   }
 
   return (
-    <Card className="group relative overflow-hidden hover-lift hover:shadow-2xl transition-all duration-300">
-      <div className="aspect-square bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center p-8">
-        <IconComponent className="h-20 w-20 text-primary group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-      </div>
-
-      <div className="p-6 space-y-4">
-        <div>
-          <Badge className={cn("mb-3", getAreaColor(service.area))}>{service.area}</Badge>
-          <h3 className="text-xl font-medium mb-2 group-hover:text-primary transition-colors">
-            {service.name}
-          </h3>
+    <Card className="group hover-lift border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-strong">
+      <div className="p-6">
+        {/* Icon Container */}
+        <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
+          <IconComponent className="h-6 w-6 text-accent" strokeWidth={1.5} />
         </div>
-
-        <p className="text-sm text-muted-foreground line-clamp-3">
+        
+        {/* Title */}
+        <h3 className="text-xl font-display font-normal text-foreground mb-3 group-hover:text-accent transition-colors">
+          {service.name}
+        </h3>
+        
+        {/* Description */}
+        <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
           {service.description}
         </p>
-
-        {service.features && service.features.length > 0 && (
-          <ul className="text-xs text-muted-foreground space-y-1">
-            {service.features.slice(0, 3).map((feature, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <span className="w-1 h-1 rounded-full bg-primary" />
-                {feature}
-              </li>
-            ))}
-          </ul>
-        )}
-
+        
+        {/* Area Badge */}
+        <div className="mb-4">
+          <Badge variant="outline" className="text-xs">
+            {service.area}
+          </Badge>
+        </div>
+        
+        {/* Link */}
         <Link
           to={`/servicios/${service.slug}`}
-          className="text-sm font-medium text-primary hover:text-primary/80 transition-smooth inline-block pt-2"
+          className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors"
         >
-          Más información →
+          Saber más <ArrowRight className="ml-1 h-4 w-4" />
         </Link>
       </div>
     </Card>
