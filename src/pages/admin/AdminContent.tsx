@@ -9,7 +9,7 @@ import { ContentEditorDialog } from '@/components/admin/content/ContentEditorDia
 import { PageContent } from '@/types/pageContent';
 
 const pages = [
-  { key: 'home', label: 'Home', icon: '🏠' },
+  { key: 'home', label: 'Home', icon: '🏠', description: 'Incluye KPIs, Hero, Sobre Nosotros' },
   { key: 'about', label: 'About', icon: '👥' },
   { key: 'methodology', label: 'Methodology', icon: '📋' },
   { key: 'strategy', label: 'Strategy', icon: '🎯' },

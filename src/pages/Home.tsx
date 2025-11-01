@@ -16,16 +16,12 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useHomeKpis } from "@/hooks/useHomeKpis";
 
 const Home = () => {
   const { trackCTAClick } = useAnalytics();
 
-  const kpis = [
-    { label: "Años de Experiencia", value: "25+" },
-    { label: "Clientes Activos", value: "500+" },
-    { label: "Operaciones Anuales", value: "2.000+" },
-    { label: "Satisfacción", value: "98%" },
-  ];
+  const { kpis, isLoading: kpisLoading } = useHomeKpis();
 
   const clientLogos = [
     { name: "Empresa 1", src: "https://via.placeholder.com/150x60?text=Logo+1" },
@@ -109,12 +105,22 @@ const Home = () => {
         </section>
 
         {/* KPIs */}
-        <section className="border-y border-border bg-neutral-100">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {kpis.map((kpi) => (
-                <Stat key={kpi.label} label={kpi.label} value={kpi.value} />
-              ))}
+        <section className="border-y border-border bg-neutral-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+            <dl className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
+              {kpisLoading ? (
+                <div className="col-span-full text-center text-muted-foreground">Cargando...</div>
+              ) : (
+                kpis.map((kpi, index) => (
+                  <Stat 
+                    key={index} 
+                    label={kpi.label} 
+                    value={kpi.value}
+                    prefix={kpi.prefix}
+                    suffix={kpi.suffix}
+                  />
+                ))
+              )}
             </dl>
           </div>
         </section>

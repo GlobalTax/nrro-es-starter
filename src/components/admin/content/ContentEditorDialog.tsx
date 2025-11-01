@@ -34,9 +34,17 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
   const [isActive, setIsActive] = useState(true);
   const [jsonContent, setJsonContent] = useState('{}');
   const [jsonError, setJsonError] = useState('');
+  const [kpiStats, setKpiStats] = useState<Array<{ label: string; value: string }>>([
+    { label: '', value: '' },
+    { label: '', value: '' },
+    { label: '', value: '' },
+    { label: '', value: '' },
+  ]);
 
   const createMutation = useCreatePageContent();
   const updateMutation = useUpdatePageContent();
+
+  const isKpisSection = sectionKey === 'kpis';
 
   useEffect(() => {
     if (content) {
@@ -44,11 +52,27 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
       setDisplayOrder(content.display_order);
       setIsActive(content.is_active);
       setJsonContent(JSON.stringify(content.content, null, 2));
+      
+      if (content.section_key === 'kpis' && content.content.stats) {
+        const stats = content.content.stats as Array<{ label: string; value: string }>;
+        setKpiStats([
+          stats[0] || { label: '', value: '' },
+          stats[1] || { label: '', value: '' },
+          stats[2] || { label: '', value: '' },
+          stats[3] || { label: '', value: '' },
+        ]);
+      }
     } else {
       setSectionKey('');
       setDisplayOrder(0);
       setIsActive(true);
       setJsonContent('{}');
+      setKpiStats([
+        { label: '', value: '' },
+        { label: '', value: '' },
+        { label: '', value: '' },
+        { label: '', value: '' },
+      ]);
     }
     setJsonError('');
   }, [content]);
@@ -66,13 +90,18 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
 
   const handleSave = async () => {
     if (!content) return;
-    if (!validateJson(jsonContent)) return;
-
-    const parsedContent = JSON.parse(jsonContent);
+    
+    let parsedContent;
+    
+    if (isKpisSection) {
+      parsedContent = { stats: kpiStats.filter(s => s.label && s.value) };
+    } else {
+      if (!validateJson(jsonContent)) return;
+      parsedContent = JSON.parse(jsonContent);
+    }
 
     try {
       if (content.id) {
-        // Update existing
         await updateMutation.mutateAsync({
           id: content.id,
           content: {
@@ -84,7 +113,6 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
         });
         toast.success('Contenido actualizado correctamente');
       } else {
-        // Create new
         await createMutation.mutateAsync({
           page_key: content.page_key,
           section_key: sectionKey,
@@ -100,6 +128,12 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
     }
   };
 
+  const updateKpiStat = (index: number, field: 'label' | 'value', value: string) => {
+    const newStats = [...kpiStats];
+    newStats[index] = { ...newStats[index], [field]: value };
+    setKpiStats(newStats);
+  };
+
   const getTemplateForSection = (type: string) => {
     const templates: Record<string, any> = {
       hero: {
@@ -109,10 +143,12 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
         cta_primary: { text: 'Primary Button', link: '/link' },
         cta_secondary: { text: 'Secondary Button', link: '/link' },
       },
-      stats: {
+      kpis: {
         stats: [
-          { label: 'Label 1', value: '100+' },
-          { label: 'Label 2', value: '200+' },
+          { label: 'Abogados y profesionales', value: '+70' },
+          { label: 'Clientes Recurrentes', value: '87%' },
+          { label: 'Áreas de Práctica', value: '10' },
+          { label: 'Cliente Internacional', value: '40%' },
         ],
       },
       about: {
@@ -214,29 +250,59 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="content-json">Contenido (JSON)</Label>
-            <Textarea
-              id="content-json"
-              value={jsonContent}
-              onChange={(e) => {
-                setJsonContent(e.target.value);
-                validateJson(e.target.value);
-              }}
-              rows={20}
-              className="font-mono text-sm"
-              placeholder='{"title": "Example", "description": "..."}'
-            />
-            {jsonError && (
-              <p className="text-sm text-destructive mt-2">{jsonError}</p>
-            )}
-          </div>
+          {isKpisSection ? (
+            <div className="space-y-4">
+              <div className="text-sm text-muted-foreground bg-muted p-3 rounded-md">
+                Edita los 4 KPIs que aparecen en la página principal. 
+                Usa "+" al inicio o "%" al final en el valor si es necesario (ej: "+70", "87%")
+              </div>
+              
+              {[0, 1, 2, 3].map(index => (
+                <div key={index} className="grid grid-cols-2 gap-4 p-4 border rounded-lg bg-card">
+                  <div>
+                    <Label>Etiqueta {index + 1}</Label>
+                    <Input 
+                      value={kpiStats[index]?.label || ''} 
+                      onChange={(e) => updateKpiStat(index, 'label', e.target.value)}
+                      placeholder="Ej: Abogados y profesionales"
+                    />
+                  </div>
+                  <div>
+                    <Label>Valor {index + 1}</Label>
+                    <Input 
+                      value={kpiStats[index]?.value || ''} 
+                      onChange={(e) => updateKpiStat(index, 'value', e.target.value)}
+                      placeholder="Ej: +70, 87%, 10"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <Label htmlFor="content-json">Contenido (JSON)</Label>
+              <Textarea
+                id="content-json"
+                value={jsonContent}
+                onChange={(e) => {
+                  setJsonContent(e.target.value);
+                  validateJson(e.target.value);
+                }}
+                rows={20}
+                className="font-mono text-sm"
+                placeholder='{"title": "Example", "description": "..."}'
+              />
+              {jsonError && (
+                <p className="text-sm text-destructive mt-2">{jsonError}</p>
+              )}
+            </div>
+          )}
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button onClick={handleSave} disabled={!!jsonError}>
+            <Button onClick={handleSave} disabled={!isKpisSection && !!jsonError}>
               Guardar
             </Button>
           </div>
