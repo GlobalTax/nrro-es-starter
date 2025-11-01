@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -34,8 +35,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { BlogEditor } from "./BlogEditor";
-import { Loader2 } from "lucide-react";
+import { AIBlogGenerator } from "./AIBlogGenerator";
+import { Loader2, Sparkles } from "lucide-react";
 import { uploadCompanyLogo } from "@/lib/uploadCompanyLogo";
+import type { GeneratedArticle } from "@/hooks/useAIBlogGenerator";
 
 const blogFormSchema = z.object({
   title_es: z.string().min(1, "El título es requerido"),
@@ -72,6 +75,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
   const queryClient = useQueryClient();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [showAIGenerator, setShowAIGenerator] = useState(false);
+  const [isAIGenerated, setIsAIGenerated] = useState(false);
 
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(blogFormSchema),
@@ -119,6 +124,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_title_en: post.seo_title_en || "",
         seo_description_en: post.seo_description_en || "",
       });
+      setIsAIGenerated(false);
+      setShowAIGenerator(false);
     }
   }, [post, form]);
 
@@ -201,6 +208,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
       });
       onOpenChange(false);
       form.reset();
+      setIsAIGenerated(false);
     },
     onError: (error: any) => {
       toast({
@@ -215,306 +223,101 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
     saveMutation.mutate(values);
   };
 
+  const handleAIGenerated = (article: GeneratedArticle) => {
+    form.setValue("title_es", article.title_es);
+    form.setValue("title_en", article.title_en);
+    form.setValue("slug_es", generateSlug(article.title_es));
+    form.setValue("slug_en", generateSlug(article.title_en));
+    form.setValue("excerpt_es", article.excerpt_es || "");
+    form.setValue("excerpt_en", article.excerpt_en || "");
+    form.setValue("content_es", article.content_es);
+    form.setValue("content_en", article.content_en);
+    form.setValue("category", article.category);
+    form.setValue("tags", article.tags.join(", "));
+    form.setValue("read_time", article.read_time);
+    
+    if (article.seo_title_es) form.setValue("seo_title_es", article.seo_title_es);
+    if (article.seo_title_en) form.setValue("seo_title_en", article.seo_title_en);
+    if (article.seo_description_es) form.setValue("seo_description_es", article.seo_description_es);
+    if (article.seo_description_en) form.setValue("seo_description_en", article.seo_description_en);
+    
+    setIsAIGenerated(true);
+    setShowAIGenerator(false);
+    toast({
+      title: "Contenido importado",
+      description: "Puedes editarlo antes de guardar.",
+    });
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{post ? "Editar Artículo" : "Nuevo Artículo"}</DialogTitle>
-          <DialogDescription>
-            {post ? "Actualiza la información del artículo" : "Crea un nuevo artículo para el blog"}
-          </DialogDescription>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DialogTitle>
+                {post ? "Editar Artículo" : "Nuevo Artículo"}
+              </DialogTitle>
+              {isAIGenerated && (
+                <Badge variant="secondary" className="gap-1">
+                  <Sparkles className="h-3 w-3" />
+                  Generado con IA
+                </Badge>
+              )}
+            </div>
+            {!post && !showAIGenerator && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setShowAIGenerator(true)}
+                className="gap-2"
+              >
+                <Sparkles className="h-4 w-4" />
+                Generar con IA
+              </Button>
+            )}
+          </div>
+          {!showAIGenerator && (
+            <DialogDescription>
+              {post ? "Actualiza la información del artículo" : "Crea un nuevo artículo para el blog"}
+            </DialogDescription>
+          )}
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <Tabs defaultValue="es">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="es">Español</TabsTrigger>
-                <TabsTrigger value="en">English</TabsTrigger>
-                <TabsTrigger value="meta">Metadata & SEO</TabsTrigger>
-              </TabsList>
+        {showAIGenerator ? (
+          <AIBlogGenerator
+            onGenerated={handleAIGenerated}
+            onCancel={() => setShowAIGenerator(false)}
+          />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <Tabs defaultValue="es">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="es">Español</TabsTrigger>
+                  <TabsTrigger value="en">English</TabsTrigger>
+                  <TabsTrigger value="meta">Metadata & SEO</TabsTrigger>
+                </TabsList>
 
-              <TabsContent value="es" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="title_es"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Título (ES) *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Título del artículo"
-                          onBlur={(e) => {
-                            field.onBlur();
-                            if (!form.getValues("slug_es")) {
-                              form.setValue("slug_es", generateSlug(e.target.value));
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="slug_es"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug (ES) *</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="slug-del-articulo" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="excerpt_es"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Extracto (ES)</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="Breve resumen del artículo"
-                          rows={3}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="content_es"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <BlogEditor
-                          value={field.value || ""}
-                          onChange={field.onChange}
-                          label="Contenido (ES)"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </TabsContent>
-
-              <TabsContent value="en" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="title_en"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Título (EN)</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Article title"
-                          onBlur={(e) => {
-                            field.onBlur();
-                            if (!form.getValues("slug_en") && e.target.value) {
-                              form.setValue("slug_en", generateSlug(e.target.value));
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="slug_en"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug (EN)</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="article-slug" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="excerpt_en"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Excerpt (EN)</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="Brief article summary"
-                          rows={3}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="content_en"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <BlogEditor
-                          value={field.value || ""}
-                          onChange={field.onChange}
-                          label="Content (EN)"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </TabsContent>
-
-              <TabsContent value="meta" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Categoría</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecciona una categoría" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Fiscal">Fiscal</SelectItem>
-                          <SelectItem value="Mercantil">Mercantil</SelectItem>
-                          <SelectItem value="Laboral">Laboral</SelectItem>
-                          <SelectItem value="Corporativo">Corporativo</SelectItem>
-                          <SelectItem value="Análisis">Análisis</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="tags"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tags (separados por comas)</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="tag1, tag2, tag3" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="featured_image"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Imagen Destacada</FormLabel>
-                      <FormControl>
-                        <ImageUpload
-                          value={field.value || null}
-                          onChange={(url, file) => {
-                            if (file) {
-                              setImageFile(file);
-                            } else if (url) {
-                              field.onChange(url);
-                            } else {
-                              field.onChange(null);
-                              setImageFile(null);
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="read_time"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tiempo de lectura (minutos)</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="status"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Estado</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="draft">Borrador</SelectItem>
-                          <SelectItem value="published">Publicado</SelectItem>
-                          <SelectItem value="scheduled">Programado</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {form.watch("status") === "scheduled" && (
+                <TabsContent value="es" className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="scheduled_at"
+                    name="title_es"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Fecha de publicación</FormLabel>
+                        <FormLabel>Título (ES) *</FormLabel>
                         <FormControl>
-                          <Input type="datetime-local" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-
-                <div className="space-y-4 pt-4 border-t">
-                  <h3 className="font-semibold">SEO</h3>
-                  <FormField
-                    control={form.control}
-                    name="seo_title_es"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>SEO Title (ES)</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Título para SEO (max 60 caracteres)" />
+                          <Input
+                            {...field}
+                            placeholder="Título del artículo"
+                            onBlur={(e) => {
+                              field.onBlur();
+                              if (!form.getValues("slug_es")) {
+                                form.setValue("slug_es", generateSlug(e.target.value));
+                              }
+                            }}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -523,34 +326,298 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
 
                   <FormField
                     control={form.control}
-                    name="seo_description_es"
+                    name="slug_es"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>SEO Description (ES)</FormLabel>
+                        <FormLabel>Slug (ES) *</FormLabel>
                         <FormControl>
-                          <Textarea {...field} placeholder="Descripción para SEO (max 160 caracteres)" rows={2} />
+                          <Input {...field} placeholder="slug-del-articulo" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                </div>
-              </TabsContent>
-            </Tabs>
 
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                Cancelar
-              </Button>
-              <Button type="submit" disabled={saveMutation.isPending || uploadingImage}>
-                {(saveMutation.isPending || uploadingImage) && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                {post ? "Actualizar" : "Crear"}
-              </Button>
-            </div>
-          </form>
-        </Form>
+                  <FormField
+                    control={form.control}
+                    name="excerpt_es"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Extracto (ES)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Breve resumen del artículo"
+                            rows={3}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="content_es"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <BlogEditor
+                            value={field.value || ""}
+                            onChange={field.onChange}
+                            label="Contenido (ES)"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TabsContent>
+
+                <TabsContent value="en" className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="title_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título (EN)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Article title"
+                            onBlur={(e) => {
+                              field.onBlur();
+                              if (!form.getValues("slug_en") && e.target.value) {
+                                form.setValue("slug_en", generateSlug(e.target.value));
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="slug_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug (EN)</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="article-slug" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="excerpt_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Excerpt (EN)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Brief article summary"
+                            rows={3}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="content_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <BlogEditor
+                            value={field.value || ""}
+                            onChange={field.onChange}
+                            label="Content (EN)"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TabsContent>
+
+                <TabsContent value="meta" className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Categoría</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecciona una categoría" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Fiscal">Fiscal</SelectItem>
+                            <SelectItem value="Mercantil">Mercantil</SelectItem>
+                            <SelectItem value="Laboral">Laboral</SelectItem>
+                            <SelectItem value="Corporativo">Corporativo</SelectItem>
+                            <SelectItem value="Análisis">Análisis</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="tags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tags (separados por comas)</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="tag1, tag2, tag3" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="featured_image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Imagen Destacada</FormLabel>
+                        <FormControl>
+                          <ImageUpload
+                            value={field.value || null}
+                            onChange={(url, file) => {
+                              if (file) {
+                                setImageFile(file);
+                              } else if (url) {
+                                field.onChange(url);
+                              } else {
+                                field.onChange(null);
+                                setImageFile(null);
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="read_time"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tiempo de lectura (minutos)</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Estado</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="draft">Borrador</SelectItem>
+                            <SelectItem value="published">Publicado</SelectItem>
+                            <SelectItem value="scheduled">Programado</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {form.watch("status") === "scheduled" && (
+                    <FormField
+                      control={form.control}
+                      name="scheduled_at"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Fecha de publicación</FormLabel>
+                          <FormControl>
+                            <Input type="datetime-local" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+                  <div className="space-y-4 pt-4 border-t">
+                    <h3 className="font-semibold">SEO</h3>
+                    <FormField
+                      control={form.control}
+                      name="seo_title_es"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Title (ES)</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Título para SEO (max 60 caracteres)" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="seo_description_es"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Description (ES)</FormLabel>
+                          <FormControl>
+                            <Textarea {...field} placeholder="Descripción para SEO (max 160 caracteres)" rows={2} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </TabsContent>
+              </Tabs>
+
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" disabled={saveMutation.isPending || uploadingImage}>
+                  {(saveMutation.isPending || uploadingImage) && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  {post ? "Actualizar" : "Crear"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -1,5 +1,8 @@
 project_id = "fwhqtzkkvnjkazhaficj"
 
+[functions.generate-blog-article]
+verify_jwt = true
+
 [functions.submit-contact]
 verify_jwt = false
 
