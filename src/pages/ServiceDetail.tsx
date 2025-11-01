@@ -165,7 +165,7 @@ const ServiceDetail = () => {
         </section>
       )}
 
-      {/* Servicios Transversales Section - 3 columns */}
+      {/* Servicios Transversales Section - 2 columns layout */}
       {service.servicios_transversales && service.servicios_transversales.length > 0 && (
         <section className="bg-white py-16 md:py-24 border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -179,27 +179,27 @@ const ServiceDetail = () => {
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
               </div>
               
-              {/* Columna 2: Título */}
-              <div>
+              {/* Columna 2 y 3: Título + Accordion en 2 columnas */}
+              <div className="md:col-span-2 space-y-6">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
                   Nuestros servicios transversales
                 </h2>
-              </div>
-              
-              {/* Columna 3: Accordion */}
-              <div>
-                <Accordion type="single" collapsible className="w-full">
+                
+                {/* Accordion en grid de 2 columnas */}
+                <div className="grid md:grid-cols-2 gap-4">
                   {service.servicios_transversales.map((item: any, idx: number) => (
-                    <AccordionItem key={idx} value={`item-${idx}`}>
-                      <AccordionTrigger className="text-xl hover:no-underline">
-                        {item.titulo}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-base pt-2 text-foreground/80 leading-relaxed">
-                        {item.contenido}
-                      </AccordionContent>
-                    </AccordionItem>
+                    <Accordion key={idx} type="single" collapsible className="w-full">
+                      <AccordionItem value={`item-${idx}`}>
+                        <AccordionTrigger className="text-xl hover:no-underline">
+                          {item.titulo}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-base pt-2 text-foreground/80 leading-relaxed">
+                          {item.contenido}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   ))}
-                </Accordion>
+                </div>
               </div>
               
             </div>
