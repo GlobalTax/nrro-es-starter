@@ -57,7 +57,7 @@ export const Footer = () => {
 
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="space-y-8">
             <Logo variant="compact" color="light" className="h-12" />
@@ -123,43 +123,109 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link 
-                  to="/services/empresa-familiar" 
+                  to="/servicios/empresa-familiar" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Empresa familiar
+                  Empresa Familiar
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/about" 
+                  to="/servicios/compraventa-empresas" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Nosotros
+                  Compraventa de empresas
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/#services" 
+                  to="/servicios/asesoramiento-fiscal" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Servicios
+                  Asesoramiento Fiscal
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/contact" 
+                  to="/servicios/mercantil-derecho-societario" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Contacto
+                  Mercantil y derecho societario
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/asesoramiento-contable-laboral" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Asesoramiento Contable y Laboral
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Other Services Column */}
+          {/* Areas Column */}
           <div>
             <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
-              Otros Servicios
+              Áreas
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link 
+                  to="/servicios/procedimiento-tributario" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Procedimiento tributario
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/conflicto-socios" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Conflicto de Socios
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/capital-riesgo" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Capital Riesgo
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/internacionalizacion-empresas" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Internacionalización de empresas
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/procesal-civil" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Procesal Civil
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/servicios/valoracion-empresas" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Valoración de empresas
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Other Links Column */}
+          <div>
+            <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
+              Otros
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
             </h3>
             <ul className="space-y-3">
@@ -181,15 +247,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link 
-                  to="/insights" 
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  Insights
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/team" 
+                  to="/equipo" 
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
                   Equipo
@@ -201,6 +259,30 @@ export const Footer = () => {
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
                   Trabaja con nosotros
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/nosotros" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Nosotros
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/metodologia" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Metodología
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/contacto" 
+                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+                >
+                  Contacto
                 </Link>
               </li>
             </ul>
