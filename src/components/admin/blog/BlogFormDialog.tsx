@@ -40,6 +40,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import { uploadCompanyLogo } from "@/lib/uploadCompanyLogo";
 import type { GeneratedArticle } from "@/hooks/useAIBlogGenerator";
 import { useAnalyzeBlogContent } from "@/hooks/useAnalyzeBlogContent";
+import { useTeamMembers } from "@/hooks/useTeamMembers";
 
 const blogFormSchema = z.object({
   title_es: z.string().min(1, "El título es requerido"),
@@ -60,8 +61,7 @@ const blogFormSchema = z.object({
   seo_description_es: z.string().optional(),
   seo_title_en: z.string().optional(),
   seo_description_en: z.string().optional(),
-  author_name: z.string().optional(),
-  author_specialization: z.string().optional(),
+  author_id: z.string().optional(),
 });
 
 type BlogFormValues = z.infer<typeof blogFormSchema>;
@@ -81,6 +81,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
   const [showAIGenerator, setShowAIGenerator] = useState(false);
   const [isAIGenerated, setIsAIGenerated] = useState(false);
   const { analyzeContent, isAnalyzing } = useAnalyzeBlogContent();
+  const { data: teamMembers, isLoading: loadingTeamMembers } = useTeamMembers();
 
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(blogFormSchema),
@@ -103,8 +104,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
       seo_description_es: "",
       seo_title_en: "",
       seo_description_en: "",
-      author_name: "",
-      author_specialization: "",
+      author_id: "",
     },
   });
 
@@ -129,8 +129,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: post.seo_description_es || "",
         seo_title_en: post.seo_title_en || "",
         seo_description_en: post.seo_description_en || "",
-        author_name: post.author_name || "",
-        author_specialization: post.author_specialization || "",
+        author_id: post.author_id || "",
       });
       setIsAIGenerated(false);
       setShowAIGenerator(false);
@@ -171,6 +170,9 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         ? values.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
         : [];
 
+      // Buscar el team member seleccionado para auto-rellenar nombre y especialización
+      const selectedMember = teamMembers?.find(m => m.id === values.author_id);
+
       const postData = {
         title_es: values.title_es,
         slug_es: values.slug_es,
@@ -191,9 +193,9 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: values.seo_description_es || null,
         seo_title_en: values.seo_title_en || null,
         seo_description_en: values.seo_description_en || null,
-        author_id: adminUser?.user_id,
-        author_name: values.author_name || null,
-        author_specialization: values.author_specialization || null,
+        author_id: values.author_id || null,
+        author_name: selectedMember?.name || null,
+        author_specialization: selectedMember?.specialization || null,
       };
 
       if (post) {
@@ -632,27 +634,28 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
 
                   <FormField
                     control={form.control}
-                    name="author_name"
+                    name="author_id"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Nombre del Autor</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Carlos Navarro" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="author_specialization"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Especialización del Autor</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Derecho Fiscal" />
-                        </FormControl>
+                        <FormLabel>Autor</FormLabel>
+                        <Select 
+                          onValueChange={field.onChange} 
+                          value={field.value}
+                          disabled={loadingTeamMembers}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder={loadingTeamMembers ? "Cargando..." : "Selecciona un autor"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {teamMembers?.map((member) => (
+                              <SelectItem key={member.id} value={member.id}>
+                                {member.name} {member.specialization && `- ${member.specialization}`}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
