@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { usePageContent } from "@/hooks/usePageContent";
 import sageDashboard from "@/assets/mockups/sage-dashboard.jpg";
 import a3Dashboard from "@/assets/mockups/a3-software-dashboard.jpg";
 import woltersKluwer from "@/assets/mockups/wolters-kluwer.jpg";
@@ -58,8 +59,9 @@ const DEFAULT_TECH_ITEMS: TechItem[] = [
 ];
 
 export const TechnologyShowcase = () => {
+  const { data: pageContent } = usePageContent('home', 'tecnologia');
+  const items = pageContent?.[0]?.content?.technologies || DEFAULT_TECH_ITEMS;
   const [selectedTech, setSelectedTech] = useState<TechItem | null>(null);
-  const items = DEFAULT_TECH_ITEMS;
 
   // Featured items (large cards)
   const featuredItems = items.filter((item) => item.featured);

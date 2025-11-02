@@ -12,6 +12,7 @@ import {
   ExternalLink,
   FileText,
   Briefcase,
+  Monitor,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +30,7 @@ import { Separator } from '@/components/ui/separator';
     { path: '/admin/candidatos', icon: Briefcase, label: 'Candidatos' },
     { path: '/admin/contact-leads', icon: Users, label: 'Leads de Contacto' },
     { path: '/admin/demo-requests', icon: Users, label: 'Demo Requests' },
+    { path: '/admin/technology', icon: Monitor, label: 'Tecnología' },
     { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR', external: true },
   ];
 
