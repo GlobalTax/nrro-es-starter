@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -82,6 +82,24 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
       is_active: member?.is_active ?? true,
     },
   });
+
+  // Reset form when dialog opens or member changes
+  useEffect(() => {
+    if (open) {
+      form.reset({
+        name: member?.name || '',
+        position: member?.position || '',
+        bio: member?.bio || '',
+        specialization: member?.specialization || '',
+        email: member?.email || '',
+        linkedin: member?.linkedin || '',
+        avatar_url: member?.avatar_url ?? null,
+        order_index: member?.order_index || 0,
+        is_active: member?.is_active ?? true,
+      });
+      setAvatarFile(null);
+    }
+  }, [open, member, form]);
 
   const uploadAvatar = async (file: File): Promise<string> => {
     const fileExt = file.name.split('.').pop();
