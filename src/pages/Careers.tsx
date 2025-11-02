@@ -127,7 +127,7 @@ export default function Careers() {
             
             {/* Columna 3: Descripción */}
             <div>
-              <p className="text-lg font-medium text-foreground leading-relaxed">
+              <p className="text-lg font-normal text-foreground leading-relaxed">
                 Más que un trabajo, es una oportunidad para crecer profesionalmente en un entorno estimulante.
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function Careers() {
                   <div className="rounded-full bg-accent/10 w-12 h-12 flex items-center justify-center mb-4">
                     <benefit.icon className="h-6 w-6 text-accent" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                  <h3 className="text-xl font-normal mb-2">{benefit.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {benefit.description}
                   </p>
@@ -165,7 +165,7 @@ export default function Careers() {
                   <div className="rounded-full bg-accent/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
                     <area.icon className="h-8 w-8 text-accent" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{area.name}</h3>
+                  <h3 className="text-lg font-normal mb-2">{area.name}</h3>
                   <p className="text-sm text-muted-foreground">{area.description}</p>
                 </CardContent>
               </Card>
