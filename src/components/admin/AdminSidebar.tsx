@@ -27,6 +27,8 @@ import { Separator } from '@/components/ui/separator';
     { path: '/admin/team', icon: Users, label: 'Team Members' },
     { path: '/admin/job-positions', icon: Briefcase, label: 'Vacantes' },
     { path: '/admin/candidatos', icon: Briefcase, label: 'Candidatos' },
+    { path: '/admin/contact-leads', icon: Users, label: 'Leads de Contacto' },
+    { path: '/admin/demo-requests', icon: Users, label: 'Demo Requests' },
     { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR', external: true },
   ];
 

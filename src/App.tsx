@@ -36,6 +36,8 @@ import AdminContent from "./pages/admin/AdminContent";
 import { AdminSettings } from "./pages/admin/AdminSettings";
 import AdminCandidatos from "./pages/admin/AdminCandidatos";
 import AdminJobPositions from "./pages/admin/AdminJobPositions";
+import AdminContactLeads from "./pages/admin/AdminContactLeads";
+import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
 
 const queryClient = new QueryClient();
 
@@ -86,8 +88,10 @@ const App = () => (
               <Route path="team" element={<AdminTeam />} />
               <Route path="job-positions" element={<AdminJobPositions />} />
               <Route path="candidatos" element={<AdminCandidatos />} />
+              <Route path="contact-leads" element={<AdminContactLeads />} />
+              <Route path="demo-requests" element={<AdminDemoRequests />} />
               <Route
-                path="users" 
+                path="users"
                 element={
                   <ProtectedRoute requiredRole="super_admin">
                     <AdminUsers />

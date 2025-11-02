@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100),
@@ -49,15 +50,32 @@ export const ServiceContactForm = ({ serviceName }: ServiceContactFormProps) => 
     setIsSubmitting(true);
     
     try {
-      // Simular envío del formulario
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { error } = await supabase.functions.invoke('submit-contact', {
+        body: {
+          name: values.name,
+          email: values.email,
+          company: values.company || '',
+          subject: `Consulta sobre servicio: ${serviceName}`,
+          message: values.message,
+        },
+      });
+
+      if (error) throw error;
       
       toast.success("Mensaje enviado", {
         description: "Nos pondremos en contacto contigo pronto.",
       });
       
-      form.reset();
+      form.reset({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        message: `Estoy interesado en el servicio: ${serviceName}`,
+        privacy: false,
+      });
     } catch (error) {
+      console.error('Error submitting form:', error);
       toast.error("Error al enviar", {
         description: "Por favor, inténtalo de nuevo más tarde.",
       });

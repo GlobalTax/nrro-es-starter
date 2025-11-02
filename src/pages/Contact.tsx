@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Meta } from '@/components/seo/Meta';
 import { useToast } from '@/hooks/use-toast';
 import { BadgeHero } from '@/components/ui/badge-hero';
+import { supabase } from '@/integrations/supabase/client';
 
 export default function Contact() {
   const { toast } = useToast();
@@ -24,22 +25,41 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const { error } = await supabase.functions.invoke('submit-contact', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          company: formData.phone, // Using phone field as company for compatibility
+          subject: formData.subject,
+          message: formData.message,
+        },
+      });
 
-    toast({
-      title: 'Mensaje enviado',
-      description: 'Nos pondremos en contacto contigo en breve.',
-    });
+      if (error) throw error;
 
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    });
-    setIsSubmitting(false);
+      toast({
+        title: 'Mensaje enviado',
+        description: 'Nos pondremos en contacto contigo en breve.',
+      });
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: 'Error al enviar',
+        description: 'Por favor, inténtalo de nuevo más tarde.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
