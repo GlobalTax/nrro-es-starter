@@ -12,6 +12,7 @@ import { CaseStudyGallery } from '@/components/case-studies/CaseStudyGallery';
 import { RelatedServices } from '@/components/case-studies/RelatedServices';
 import { ArrowLeft, Calendar, Building2, Users } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import DOMPurify from 'dompurify';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -201,7 +202,41 @@ export default function CaseStudyDetail() {
         <section className="bg-white py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto prose prose-base">
-              <div dangerouslySetInnerHTML={{ __html: caseStudy.detailed_content }} />
+              <div 
+                dangerouslySetInnerHTML={{ 
+                  __html: DOMPurify.sanitize(caseStudy.detailed_content, {
+                    ALLOWED_TAGS: [
+                      "p",
+                      "br",
+                      "strong",
+                      "em",
+                      "u",
+                      "h1",
+                      "h2",
+                      "h3",
+                      "h4",
+                      "h5",
+                      "h6",
+                      "ul",
+                      "ol",
+                      "li",
+                      "a",
+                      "img",
+                      "blockquote",
+                      "code",
+                      "pre",
+                      "table",
+                      "thead",
+                      "tbody",
+                      "tr",
+                      "th",
+                      "td",
+                    ],
+                    ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target", "rel"],
+                    ALLOW_DATA_ATTR: false,
+                  })
+                }} 
+              />
             </div>
           </div>
         </section>

@@ -21,6 +21,7 @@ import { BadgeHero } from "@/components/ui/badge-hero";
 import { useHomeDatos } from "@/hooks/useHomeDatos";
 import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import DOMPurify from "dompurify";
 
 const Home = () => {
   const { trackCTAClick } = useAnalytics();
@@ -123,7 +124,14 @@ const Home = () => {
               <h1 
                 className="hero-title mb-6"
                 dangerouslySetInnerHTML={{ 
-                  __html: heroContent?.title || "Planifica el futuro<br />Con decisiones hoy." 
+                  __html: DOMPurify.sanitize(
+                    heroContent?.title || "Planifica el futuro<br />Con decisiones hoy.",
+                    {
+                      ALLOWED_TAGS: ['br', 'strong', 'em'],
+                      ALLOWED_ATTR: [],
+                      ALLOW_DATA_ATTR: false,
+                    }
+                  )
                 }}
               />
               <p className="text-lead mb-8">
