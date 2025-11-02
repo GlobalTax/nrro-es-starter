@@ -155,12 +155,15 @@ export default function AdminCandidatos() {
               />
             </div>
 
-            <Select value={estadoFilter} onValueChange={setEstadoFilter}>
+            <Select 
+              value={estadoFilter || "all"} 
+              onValueChange={(val) => setEstadoFilter(val === "all" ? "" : val)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Filtrar por estado" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos los estados</SelectItem>
+                <SelectItem value="all">Todos los estados</SelectItem>
                 {ESTADOS.map((estado) => (
                   <SelectItem key={estado.value} value={estado.value}>
                     {estado.label}
@@ -169,12 +172,15 @@ export default function AdminCandidatos() {
               </SelectContent>
             </Select>
 
-            <Select value={departamentoFilter} onValueChange={setDepartamentoFilter}>
+            <Select 
+              value={departamentoFilter || "all"} 
+              onValueChange={(val) => setDepartamentoFilter(val === "all" ? "" : val)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Filtrar por departamento" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos los departamentos</SelectItem>
+                <SelectItem value="all">Todos los departamentos</SelectItem>
                 {DEPARTAMENTOS.map((dept) => (
                   <SelectItem key={dept} value={dept}>
                     {dept}
