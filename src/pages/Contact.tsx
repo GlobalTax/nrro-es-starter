@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import { useLanguage } from '@/hooks/useLanguage';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,6 @@ import { supabase } from '@/integrations/supabase/client';
 
 export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
-  const { t, getLocalizedPath } = useLanguage();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -54,8 +53,8 @@ export default function Contact() {
       });
 
       toast({
-        title: t('contact.toast.success'),
-        description: t('contact.toast.successDescription'),
+        title: "Mensaje enviado",
+        description: "Nos pondremos en contacto contigo pronto.",
       });
 
       setFormData({
@@ -68,8 +67,8 @@ export default function Contact() {
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
-        title: t('contact.toast.error'),
-        description: t('contact.toast.errorDescription'),
+        title: "Error",
+        description: "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
         variant: 'destructive',
       });
     } finally {
@@ -80,19 +79,19 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Phone,
-      title: t('contact.info.phone'),
+      title: 'Teléfono',
       value: '93 459 36 00',
       href: 'tel:+34934593600',
     },
     {
       icon: Mail,
-      title: t('contact.info.email'),
+      title: 'Email',
       value: 'info@nrro.es',
       href: 'mailto:info@nrro.es',
     },
     {
       icon: MapPin,
-      title: t('contact.info.address'),
+      title: 'Dirección',
       value: 'Carrer Ausias March número 36, 08010 Barcelona',
       href: 'https://maps.app.goo.gl/JjwmToznoU9Vx7zu9',
     },
@@ -101,9 +100,10 @@ export default function Contact() {
   return (
     <>
       <Meta
-        title={t('contact.meta.title')}
-        description={t('contact.meta.description')}
+        title="Contacto"
+        description="Ponte en contacto con nuestro equipo de asesores fiscales, legales y laborales"
         keywords="contacto asesoría fiscal Barcelona, contacto navarro tax legal, consulta gratuita fiscal"
+        canonicalUrl={`${window.location.origin}/contacto`}
       />
 
       {/* Hero Section */}
@@ -111,13 +111,13 @@ export default function Contact() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>{t('contact.hero.badge')}</BadgeHero>
+              <BadgeHero>Contacto</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              {t('contact.hero.title')}
+              Hablemos
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              {t('contact.hero.subtitle')}
+              Cuéntanos cómo podemos ayudarte
             </p>
           </div>
         </div>
@@ -131,17 +131,17 @@ export default function Contact() {
             <div className="animate-slide-up">
                 <Card className="shadow-medium border-border/50">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-serif">{t('contact.form.title')}</CardTitle>
+                  <CardTitle className="text-2xl font-serif">Envíanos un mensaje</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">{t('contact.form.name')}</Label>
+                      <Label htmlFor="name">Nombre</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder={t('contact.form.namePlaceholder')}
+                        placeholder="Tu nombre"
                         required
                         className="border-border/50 focus:border-accent"
                       />
@@ -149,50 +149,50 @@ export default function Contact() {
 
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="email">{t('contact.form.email')}</Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input
                           id="email"
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder={t('contact.form.emailPlaceholder')}
+                          placeholder="tu@email.com"
                           required
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone">{t('contact.form.phone')}</Label>
+                        <Label htmlFor="phone">Teléfono</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder={t('contact.form.phonePlaceholder')}
+                          placeholder="+34 123 456 789"
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="subject">{t('contact.form.subject')}</Label>
+                      <Label htmlFor="subject">Asunto</Label>
                       <Input
                         id="subject"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder={t('contact.form.subjectPlaceholder')}
+                        placeholder="¿En qué podemos ayudarte?"
                         required
                         className="border-border/50 focus:border-accent"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">{t('contact.form.message')}</Label>
+                      <Label htmlFor="message">Mensaje</Label>
                       <Textarea
                         id="message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder={t('contact.form.messagePlaceholder')}
+                        placeholder="Cuéntanos más sobre tu consulta..."
                         rows={6}
                         required
                         className="border-border/50 focus:border-accent resize-none"
@@ -205,7 +205,7 @@ export default function Contact() {
                       disabled={isSubmitting}
                       className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-soft"
                     >
-                      {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
+                      {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
                       <Send className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
@@ -217,10 +217,10 @@ export default function Contact() {
             <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-                  {t('contact.info.title')}
+                  Información de contacto
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  {t('contact.info.description')}
+                  Estamos aquí para ayudarte. Contáctanos por cualquiera de estos medios.
                 </p>
               </div>
 
@@ -262,16 +262,16 @@ export default function Contact() {
               <Card className="border-border/50 shadow-soft">
                 <CardContent className="p-6">
                   <h3 className="font-display font-normal text-foreground mb-4">
-                    {t('contact.hours.title')}
+                    Horario de atención
                   </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">{t('contact.hours.weekdays')}</span>
-                      <span className="font-medium text-foreground">{t('contact.hours.weekdaysTime')}</span>
+                      <span className="text-muted-foreground">Lunes a Viernes</span>
+                      <span className="font-medium text-foreground">9:00 - 18:00</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">{t('contact.hours.weekend')}</span>
-                      <span className="font-medium text-foreground">{t('contact.hours.weekendTime')}</span>
+                      <span className="text-muted-foreground">Fines de semana</span>
+                      <span className="font-medium text-foreground">Cerrado</span>
                     </div>
                   </div>
                 </CardContent>

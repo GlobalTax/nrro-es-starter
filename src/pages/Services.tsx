@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { useLanguage } from "@/hooks/useLanguage";
+
 import { Input } from "@/components/ui/input";
 import { BadgeFilter } from "@/components/ui/badge-filter";
 import { CustomPagination } from "@/components/ui/custom-pagination";
@@ -20,7 +20,6 @@ const ITEMS_PER_PAGE = 12;
 
 const Services = () => {
   const { trackPageView, trackEvent } = useAnalytics();
-  const { t, getLocalizedPath } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeArea, setActiveArea] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,9 +77,9 @@ const Services = () => {
   return (
     <>
       <Meta
-        title={t('services.hero.title')}
-        description={t('services.hero.subtitle')}
-        canonicalUrl={`${window.location.origin}${getLocalizedPath('services')}`}
+        title="Servicios"
+        description="Asesoramiento fiscal, legal, contable y laboral para empresas"
+        canonicalUrl={`${window.location.origin}/servicios`}
       />
 
       <div className="min-h-screen">
@@ -89,10 +88,10 @@ const Services = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 leading-tight">
-                {t('services.hero.title')}
+                Servicios
               </h1>
               <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-                {t('services.hero.subtitle')}
+                Asesoramiento fiscal, legal, contable y laboral
               </p>
             </div>
           </div>
@@ -112,9 +111,9 @@ const Services = () => {
                     <ViewToggle value={viewMode} onChange={setViewMode} />
                     
                     <div className="flex flex-wrap gap-2 items-center">
-                      <span className="text-sm font-medium text-muted-foreground">{t('services.filters.filterBy')}</span>
+                      <span className="text-sm font-medium text-muted-foreground">Filtrar por</span>
                       <BadgeFilter
-                        label={t('services.filters.all')}
+                        label="Todos"
                         active={activeArea === null}
                         onClick={() => {
                           setActiveArea(null);
@@ -140,14 +139,14 @@ const Services = () => {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       type="text"
-                      placeholder={t('services.filters.search')}
+                      placeholder="Buscar servicios..."
                       value={searchTerm}
                       onChange={(e) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
                       className="pl-10"
-                      aria-label={t('services.filters.search')}
+                      aria-label="Buscar servicios"
                     />
                   </div>
                 </div>
@@ -162,8 +161,8 @@ const Services = () => {
                 </div>
               ) : services.length === 0 ? (
                 <EmptyState
-                  title={t('services.empty')}
-                  description={t('services.emptyDescription')}
+                  title="No hemos encontrado servicios"
+                  description="Prueba cambiando el término o los filtros"
                 />
               ) : (
                 <>

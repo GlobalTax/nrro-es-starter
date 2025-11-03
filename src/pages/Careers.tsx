@@ -200,9 +200,9 @@ const Careers = () => {
                 </p>
               </div>
 
-              <CareerApplicationForm
-                initialPosition={selectedPosition}
-                onSuccess={() => setSelectedPosition(null)}
+              <CareerApplicationForm 
+                prefilledPosition={selectedPosition?.title}
+                jobPositionId={selectedPosition?.id}
               />
             </div>
           </div>
@@ -213,18 +213,19 @@ const Careers = () => {
       </div>
 
       {/* Job Position Modal */}
-      <JobPositionModal
-        position={selectedPosition}
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedPosition(null);
-        }}
-        onApply={() => {
-          setIsModalOpen(false);
-          formRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
+        <JobPositionModal 
+          position={selectedPosition}
+          open={isModalOpen}
+          onOpenChange={(open) => {
+            setIsModalOpen(open);
+            if (!open) setSelectedPosition(null);
+          }}
+          onApply={(position) => {
+            setIsModalOpen(false);
+            setSelectedPosition(position);
+            formRef.current?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
     </>
   );
 };

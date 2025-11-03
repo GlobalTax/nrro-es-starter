@@ -119,14 +119,14 @@ export default function CaseStudyDetail() {
             )}
 
             <div className="flex flex-wrap gap-2 mb-6">
-              {caseStudy.industry && (
+              {caseStudy.client_industry && (
                 <Badge variant="secondary" className="bg-white/20 text-white border-white/20">
-                  {caseStudy.industry}
+                  {caseStudy.client_industry}
                 </Badge>
               )}
-              {caseStudy.service_type && (
+              {caseStudy.primary_service && (
                 <Badge variant="secondary" className="bg-white/20 text-white border-white/20">
-                  {caseStudy.service_type}
+                  {caseStudy.primary_service}
                 </Badge>
               )}
               {caseStudy.tags?.map((tag: string) => (
@@ -150,16 +150,16 @@ export default function CaseStudyDetail() {
                   <span>{caseStudy.client_name}</span>
                 </div>
               )}
-              {caseStudy.duration && (
+              {caseStudy.project_duration && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-white/60" />
-                  <span>{caseStudy.duration}</span>
+                  <span>{caseStudy.project_duration}</span>
                 </div>
               )}
-              {caseStudy.team_size && (
+              {caseStudy.client_size && (
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-white/60" />
-                  <span>{caseStudy.team_size} personas</span>
+                  <span>{caseStudy.client_size}</span>
                 </div>
               )}
             </div>
@@ -223,12 +223,12 @@ export default function CaseStudyDetail() {
             <p className="text-body text-center mb-12 max-w-2xl mx-auto">
               Lo que dicen sobre nosotros
             </p>
-            <CaseStudyTestimonial
-              text={caseStudy.testimonial_text}
-              authorName={caseStudy.testimonial_author || ''}
-              authorPosition={caseStudy.testimonial_position || ''}
-              authorImage={caseStudy.testimonial_author_image}
-            />
+          <CaseStudyTestimonial
+            text={caseStudy.testimonial_text}
+            author={caseStudy.testimonial_author || ''}
+            position={caseStudy.testimonial_position || ''}
+            avatarUrl={caseStudy.testimonial_avatar_url}
+          />
           </div>
         </section>
       )}
@@ -249,7 +249,7 @@ export default function CaseStudyDetail() {
       {caseStudy.gallery && caseStudy.gallery.length > 0 && (
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <CaseStudyGallery images={caseStudy.gallery} />
+            <CaseStudyGallery gallery={caseStudy.gallery} />
           </div>
         </section>
       )}
@@ -261,7 +261,7 @@ export default function CaseStudyDetail() {
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-12">
               Cronología del Proyecto
             </h2>
-            <CaseStudyTimeline events={caseStudy.timeline} />
+            <CaseStudyTimeline timeline={caseStudy.timeline} />
           </div>
         </section>
       )}

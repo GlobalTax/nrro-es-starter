@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Loader2, Phone, Mail } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
+
 import { Button } from "@/components/ui/button";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -22,18 +22,17 @@ import { StatCard } from "@/components/ui/stat-card";
 const ServiceDetail = () => {
   const { slug } = useParams();
   const { trackPageView } = useAnalytics();
-  const { language, t, getLocalizedPath } = useLanguage();
 
   // Fetch from database
   const { data: dbService, isLoading } = useQuery({
-    queryKey: ['service', slug, language],
+    queryKey: ['service', slug],
     queryFn: async () => {
       if (!slug) return null;
       const supabaseAny = supabase as any;
       const response = await supabaseAny
         .from('services')
         .select('*')
-        .or(`slug_es.eq.${slug},slug_ca.eq.${slug},slug_en.eq.${slug}`)
+        .eq('slug_es', slug)
         .eq('is_active', true)
         .single();
       
@@ -43,14 +42,14 @@ const ServiceDetail = () => {
       const data = response.data;
       return {
         ...data,
-        name: data[`name_${language}`] || data.name_es,
-        slug: data[`slug_${language}`] || data.slug_es,
-        description: data[`description_${language}`] || data.description_es,
-        features: data[`features_${language}`] || data.features_es || [],
-        typical_clients: data[`typical_clients_${language}`] || data.typical_clients_es || [],
-        benefits: data[`benefits_${language}`] || data.benefits_es,
-        meta_title: data[`meta_title_${language}`] || data.meta_title_es,
-        meta_description: data[`meta_description_${language}`] || data.meta_description_es,
+        name: data.name_es,
+        slug: data.slug_es,
+        description: data.description_es,
+        features: data.features_es || [],
+        typical_clients: data.typical_clients_es || [],
+        benefits: data.benefits_es,
+        meta_title: data.meta_title_es,
+        meta_description: data.meta_description_es,
       };
     },
     enabled: !!slug,
@@ -79,9 +78,9 @@ const ServiceDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="text-center text-white">
-          <h1 className="mb-4 text-4xl">{t('serviceDetail.notFound')}</h1>
+          <h1 className="mb-4 text-4xl">Servicio no encontrado</h1>
           <Button asChild variant="outline" className="text-white border-white hover:bg-white hover:text-black">
-            <Link to={getLocalizedPath('services')}>{t('serviceDetail.backButton')}</Link>
+            <Link to="/servicios">Volver a Servicios</Link>
           </Button>
         </div>
       </div>
@@ -93,7 +92,7 @@ const ServiceDetail = () => {
       <Meta 
         title={service.meta_title || service.name}
         description={service.meta_description || service.description}
-        canonicalUrl={`${window.location.origin}${getLocalizedPath('services')}/${service.slug}`}
+        canonicalUrl={`${window.location.origin}/servicios/${service.slug}`}
       />
 
       {/* Hero Section - Black background, centered text */}
@@ -109,7 +108,7 @@ const ServiceDetail = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           {/* Overline */}
           <div className="service-hero-overline mb-6">
-            {t('serviceDetail.overline')}
+            Servicios
           </div>
           
           {/* Title */}
@@ -205,7 +204,7 @@ const ServiceDetail = () => {
               {/* Columna 1: Overline con línea */}
               <div className="relative">
                 <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                  {t('serviceDetail.crossServices')}
+                  Servicios transversales
                 </h3>
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
               </div>
@@ -213,7 +212,7 @@ const ServiceDetail = () => {
               {/* Columna 2 y 3: Título + Accordion en 2 columnas */}
               <div className="md:col-span-2 space-y-6">
                 <h2 className="text-[48px] leading-[52.8px] font-normal tracking-normal text-black">
-                  {t('serviceDetail.crossServicesTitle')}
+                  Qué más podemos hacer por ti
                 </h2>
                 
                 {/* Accordion vertical - todos los items uno debajo del otro */}
@@ -243,7 +242,7 @@ const ServiceDetail = () => {
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              {t('serviceDetail.statsTitle')}
+              Datos clave
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.stats.map((stat: any, index: number) => (
@@ -264,10 +263,10 @@ const ServiceDetail = () => {
       <section className="bg-muted py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
           <h2 className="text-4xl font-normal text-center mb-4">
-            {t('serviceDetail.contactTitle')}
+            ¿Hablamos?
           </h2>
           <p className="service-body text-center mb-12 text-muted-foreground">
-            {t('serviceDetail.contactSubtitle')}
+            Cuéntanos qué necesitas y te responderemos
           </p>
           
           <ServiceContactForm serviceName={service.name} />

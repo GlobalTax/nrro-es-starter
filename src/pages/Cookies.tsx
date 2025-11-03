@@ -1,17 +1,15 @@
 import { Meta } from "@/components/seo/Meta";
-import { useLanguage } from "@/hooks/useLanguage";
 import { Link } from "react-router-dom";
 
 const Cookies = () => {
-  const { t, language, getLocalizedPath } = useLanguage();
   
   return (
     <>
       <Meta
-        title={t('cookies.meta.title')}
-        description={t('cookies.meta.description')}
-        keywords={t('cookies.meta.keywords')}
-        canonicalUrl={window.location.origin + getLocalizedPath('cookies')}
+        title="Política de Cookies"
+        description="Información sobre las cookies que utilizamos en nuestro sitio web"
+        keywords="política cookies, privacidad, RGPD, protección datos"
+        canonicalUrl={`${window.location.origin}/cookies`}
       />
 
       {/* Hero Section */}
@@ -19,10 +17,10 @@ const Cookies = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-normal text-foreground mb-6">
-              {t('cookies.hero.title')}
+              Política de Cookies
             </h1>
             <p className="text-xl text-muted-foreground">
-              {t('cookies.hero.subtitle')}
+              Información sobre las cookies que utilizamos
             </p>
           </div>
         </div>
@@ -36,22 +34,13 @@ const Cookies = () => {
               
               {/* Last Updated */}
               <div className="text-sm text-muted-foreground">
-                <p>{t('cookies.lastUpdated')}</p>
+                <p>Última actualización: 25 de enero de 2025</p>
               </div>
               
-              {/* Disclaimer for CA/EN */}
-              {language !== 'es' && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-                  <p className="text-sm text-yellow-800">
-                    {t('cookies.disclaimer')}
-                  </p>
-                </div>
-              )}
-
               {/* ¿Qué son las cookies? */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.whatAreCookies')}
+                  ¿Qué son las cookies?
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -80,7 +69,7 @@ const Cookies = () => {
               {/* Cookies que utilizamos */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.typesOfCookies')}
+                  Tipos de cookies que utilizamos
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -103,7 +92,7 @@ const Cookies = () => {
               {/* Finalidad */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.finalityOfCookies')}
+                  Finalidad de las cookies
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -126,7 +115,7 @@ const Cookies = () => {
               {/* Base legal */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.legalBasis')}
+                  Base legal
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -141,7 +130,7 @@ const Cookies = () => {
               {/* Gestión */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.manageCookies')}
+                  Cómo gestionar las cookies
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -178,7 +167,7 @@ const Cookies = () => {
               {/* Cookies de terceros */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.thirdPartyCookies')}
+                  Cookies de terceros
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -196,7 +185,7 @@ const Cookies = () => {
               {/* Actualizaciones */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.updates')}
+                  Actualizaciones de la política
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -211,7 +200,7 @@ const Cookies = () => {
               {/* Más información */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.moreInfo')}
+                  Más información
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -223,7 +212,7 @@ const Cookies = () => {
               {/* Contacto */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('cookies.sections.contact')}
+                  Contacto
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>

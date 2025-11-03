@@ -1,17 +1,15 @@
 import { Meta } from "@/components/seo/Meta";
-import { useLanguage } from "@/hooks/useLanguage";
 import { Link } from "react-router-dom";
 
 const Privacy = () => {
-  const { t, language, getLocalizedPath } = useLanguage();
   
   return (
     <>
       <Meta
-        title={t('privacy.meta.title')}
-        description={t('privacy.meta.description')}
-        keywords={t('privacy.meta.keywords')}
-        canonicalUrl={window.location.origin + getLocalizedPath('privacy')}
+        title="Política de Privacidad"
+        description="Información sobre el tratamiento de datos personales"
+        keywords="privacidad, protección datos, RGPD, datos personales"
+        canonicalUrl={`${window.location.origin}/privacidad`}
       />
 
       {/* Hero Section */}
@@ -19,10 +17,10 @@ const Privacy = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-normal text-foreground mb-6">
-              {t('privacy.hero.title')}
+              Política de Privacidad
             </h1>
             <p className="text-xl text-muted-foreground">
-              {t('privacy.hero.subtitle')}
+              Protección de tus datos personales
             </p>
           </div>
         </div>
@@ -36,22 +34,13 @@ const Privacy = () => {
               
               {/* Last Updated */}
             <div className="text-sm text-muted-foreground">
-              <p>{t('privacy.lastUpdated')}</p>
+              <p>Última actualización: 25 de enero de 2025</p>
             </div>
-            
-            {/* Disclaimer for CA/EN */}
-            {language !== 'es' && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-                <p className="text-sm text-yellow-800">
-                  {t('privacy.disclaimer')}
-                </p>
-              </div>
-            )}
 
               {/* Responsable del tratamiento */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.responsible')}
+                  1. Responsable del Tratamiento de Datos
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
               <p>
@@ -81,7 +70,7 @@ const Privacy = () => {
               {/* Datos que recopilamos */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.dataCollected')}
+                  2. Datos que Recopilamos
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>A través de nuestro sitio web, podemos recopilar los siguientes tipos de datos:</p>
@@ -105,7 +94,7 @@ const Privacy = () => {
               {/* Finalidad del tratamiento */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.purpose')}
+                  3. Finalidad del Tratamiento
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>Tratamos tus datos personales para las siguientes finalidades:</p>
@@ -122,7 +111,7 @@ const Privacy = () => {
               {/* Base legal */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.legalBasis')}
+                  4. Base Legal del Tratamiento
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>El tratamiento de tus datos personales se basa en:</p>
@@ -146,7 +135,7 @@ const Privacy = () => {
               {/* Destinatarios */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.recipients')}
+                  5. Destinatarios de los Datos
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -167,7 +156,7 @@ const Privacy = () => {
               {/* Conservación de datos */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.retention')}
+                  6. Plazo de Conservación
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>Conservamos tus datos personales durante:</p>
@@ -188,7 +177,7 @@ const Privacy = () => {
               {/* Derechos del usuario */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.rights')}
+                  7. Derechos del Usuario
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>Tienes derecho a:</p>
@@ -228,7 +217,7 @@ const Privacy = () => {
               {/* Seguridad */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.security')}
+                  8. Medidas de Seguridad
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>Implementamos medidas técnicas y organizativas para proteger tus datos:</p>
@@ -246,7 +235,7 @@ const Privacy = () => {
               {/* Cookies */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.cookies')}
+                  9. Política de Cookies
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -263,7 +252,7 @@ const Privacy = () => {
                   </p>
                   <p className="mt-4">
                     Para más información sobre las cookies que utilizamos, consulta nuestra{" "}
-                    <Link to={getLocalizedPath('cookies')} className="text-accent hover:underline font-normal">
+                    <Link to="/cookies" className="text-accent hover:underline font-normal">
                       Política de Cookies
                     </Link>
                     .
@@ -274,7 +263,7 @@ const Privacy = () => {
               {/* Enlaces a terceros */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.links')}
+                  10. Enlaces a Sitios de Terceros
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -290,7 +279,7 @@ const Privacy = () => {
               {/* Menores de edad */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.minors')}
+                  11. Política sobre Menores
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -306,7 +295,7 @@ const Privacy = () => {
               {/* Transferencias internacionales */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.transfers')}
+                  12. Transferencias Internacionales
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -319,7 +308,7 @@ const Privacy = () => {
               {/* Modificaciones */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.modifications')}
+                  13. Modificaciones de la Política
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -334,7 +323,7 @@ const Privacy = () => {
               {/* Reclamación */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('privacy.sections.complaints')}
+                  14. Derecho a Presentar Reclamación
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>

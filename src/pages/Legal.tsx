@@ -1,17 +1,15 @@
 import { Meta } from "@/components/seo/Meta";
-import { useLanguage } from "@/hooks/useLanguage";
 import { Link } from "react-router-dom";
 
 const Legal = () => {
-  const { t, language, getLocalizedPath } = useLanguage();
   
   return (
     <>
       <Meta
-        title={t('legal.meta.title')}
-        description={t('legal.meta.description')}
-        keywords={t('legal.meta.keywords')}
-        canonicalUrl={window.location.origin + getLocalizedPath('legal')}
+        title="Aviso Legal"
+        description="Términos y condiciones de uso del sitio web"
+        keywords="aviso legal, términos condiciones, información legal"
+        canonicalUrl={`${window.location.origin}/aviso-legal`}
       />
 
       {/* Hero Section */}
@@ -19,10 +17,10 @@ const Legal = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-normal text-foreground mb-6">
-              {t('legal.hero.title')}
+              Aviso Legal
             </h1>
             <p className="text-xl text-muted-foreground">
-              {t('legal.hero.subtitle')}
+              Términos y condiciones de uso
             </p>
           </div>
         </div>
@@ -36,22 +34,13 @@ const Legal = () => {
               
               {/* Last Updated */}
               <div className="text-sm text-muted-foreground">
-                <p>{t('legal.lastUpdated')}</p>
+                <p>Última actualización: 25 de enero de 2025</p>
               </div>
               
-              {/* Disclaimer for CA/EN */}
-              {language !== 'es' && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-                  <p className="text-sm text-yellow-800">
-                    {t('legal.disclaimer')}
-                  </p>
-                </div>
-              )}
-
               {/* Identificación */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('legal.sections.identification')}
+                  1. Identificación del Titular
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -92,7 +81,7 @@ const Legal = () => {
               {/* Objeto del sitio */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  {t('legal.sections.purpose')}
+                  2. Objeto del Sitio Web
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>

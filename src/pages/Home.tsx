@@ -24,11 +24,9 @@ import { useHomeDatos } from "@/hooks/useHomeDatos";
 import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
-import { useLanguage } from "@/hooks/useLanguage";
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
-  const { t, language, getLocalizedPath } = useLanguage();
   
   // Track page view
   useEffect(() => {
@@ -69,11 +67,11 @@ const Home = () => {
   const clientLogos = clientesContent?.logos || defaultClientLogos;
 
   const { data: services } = useQuery({
-    queryKey: ['featured-services', language],
+    queryKey: ['featured-services'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('services')
-        .select(`id, name_${language}, slug_${language}, name_es, slug_es`)
+        .select(`id, name_es, slug_es`)
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .limit(4);
@@ -83,8 +81,8 @@ const Home = () => {
       // Map to consistent format
       return data?.map((s: any) => ({
         id: s.id,
-        name: s[`name_${language}`] || s.name_es,
-        slug: s[`slug_${language}`] || s.slug_es,
+        name: s.name_es,
+        slug: s.slug_es,
       })) || [];
     },
   });
@@ -93,11 +91,11 @@ const Home = () => {
   
   // Fetch featured blog posts from Supabase
   const { data: featuredPosts = [], isLoading: postsLoading } = useQuery({
-    queryKey: ['featured-blog-posts', language],
+    queryKey: ['featured-blog-posts'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select(`id, title_${language}, slug_${language}, excerpt_${language}, title_es, slug_es, excerpt_es, category, author_name, author_specialization, read_time, published_at`)
+        .select(`id, title_es, slug_es, excerpt_es, category, author_name, author_specialization, read_time, published_at`)
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(3);
@@ -107,9 +105,9 @@ const Home = () => {
       // Map to consistent format
       return data?.map((post: any) => ({
         id: post.id,
-        title: post[`title_${language}`] || post.title_es,
-        slug: post[`slug_${language}`] || post.slug_es,
-        excerpt: post[`excerpt_${language}`] || post.excerpt_es,
+        title: post.title_es,
+        slug: post.slug_es,
+        excerpt: post.excerpt_es,
         category: post.category,
         author_name: post.author_name,
         author_specialization: post.author_specialization,
@@ -122,8 +120,8 @@ const Home = () => {
   return (
     <>
       <Meta
-        title={t('seo.defaultTitle')}
-        description={t('seo.defaultDescription')}
+        title="Navarro — Asesoría fiscal, legal y contable para empresas"
+        description="Asesoramiento fiscal, legal, contable y laboral especializado para empresas y grupos empresariales en Barcelona"
         canonicalUrl={window.location.href}
       />
 
@@ -133,7 +131,7 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl text-left">
               <div className="mb-6">
-                <BadgeHero>{t('home.hero.badge')}</BadgeHero>
+                <BadgeHero>Navarro</BadgeHero>
               </div>
               <h1 
                 className="hero-title mb-6"
@@ -238,7 +236,7 @@ const Home = () => {
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              {t('home.stats.title')}
+              Nuestros datos
             </h2>
             
             {datosLoading ? (
@@ -344,7 +342,7 @@ const Home = () => {
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-            {t('home.blog.title')}
+            Últimos artículos
           </h2>
 
             {postsLoading ? (
@@ -378,7 +376,7 @@ const Home = () => {
                 size="lg"
                 onClick={() => trackCTAClick("Ver Todos los Artículos", "home_blog_section")}
               >
-                <Link to={getLocalizedPath('blog')}>{t('home.blog.viewAll')}</Link>
+                <Link to="/blog">Ver todos los artículos</Link>
               </Button>
             </div>
           </div>

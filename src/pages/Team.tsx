@@ -1,7 +1,7 @@
 import { Meta } from "@/components/seo/Meta";
 import { BadgeHero } from "@/components/ui/badge-hero";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
-import { useLanguage } from "@/hooks/useLanguage";
+
 import { useTeamSearch, useTeamFilterOptions, useTeamPositionOptions } from "@/hooks/useTeamSearch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BadgeFilter } from "@/components/ui/badge-filter";
@@ -11,7 +11,6 @@ import { Loader2, Users } from "lucide-react";
 import { useState } from "react";
 
 const Team = () => {
-  const { t, getLocalizedPath } = useLanguage();
   const [activeSpecialization, setActiveSpecialization] = useState<string | null>(null);
   const [activePosition, setActivePosition] = useState<string | null>(null);
   const { data: members, isLoading } = useTeamSearch({ 
@@ -24,9 +23,9 @@ const Team = () => {
   return (
     <>
       <Meta
-        title={t('team.meta.title')}
-        description={t('team.meta.description')}
-        canonicalUrl={`${window.location.origin}${getLocalizedPath('team')}`}
+        title="Equipo"
+        description="Conoce a nuestro equipo de profesionales"
+        canonicalUrl={`${window.location.origin}/equipo`}
       />
 
       <div className="min-h-screen">
@@ -35,13 +34,13 @@ const Team = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>{t('team.hero.badge')}</BadgeHero>
+              <BadgeHero>Equipo</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              {t('team.hero.title')}
+              Nuestro equipo
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              {t('team.hero.subtitle')}
+              Profesionales a tu servicio
             </p>
           </div>
           </div>
@@ -55,17 +54,17 @@ const Team = () => {
               {positions.length > 0 && (
                 <div className="mb-6">
                   <label className="text-sm font-medium text-foreground mb-2 block">
-                    {t('team.filters.categoryLabel')}
+                    Categoría
                   </label>
                   <Select
                     value={activePosition || "all"}
                     onValueChange={(value) => setActivePosition(value === "all" ? null : value)}
                   >
                     <SelectTrigger className="w-full sm:w-64">
-                      <SelectValue placeholder={t('team.filters.allCategories')} />
+                      <SelectValue placeholder="Todas las categorías" />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
-                      <SelectItem value="all">{t('team.filters.allCategories')}</SelectItem>
+                      <SelectItem value="all">Todas las categorías</SelectItem>
                       {positions.map((position) => (
                         <SelectItem key={position} value={position}>
                           {position}
@@ -80,9 +79,9 @@ const Team = () => {
               {specializations.length > 0 && (
                 <div>
                   <div className="flex flex-wrap gap-2 items-center justify-center">
-                    <span className="text-sm font-normal text-muted-foreground">{t('team.filters.areaLabel')}</span>
+                    <span className="text-sm font-normal text-muted-foreground">Especialización</span>
                     <BadgeFilter
-                      label={t('team.filters.all')}
+                      label="Todas"
                       active={activeSpecialization === null}
                       onClick={() => setActiveSpecialization(null)}
                     />
@@ -126,11 +125,11 @@ const Team = () => {
             ) : (
               <EmptyState
                 icon={Users}
-                title={t('team.empty')}
+                title="No hay miembros"
                 description={
                   activeSpecialization
-                    ? `${t('team.emptyDescription')} ${activeSpecialization}.`
-                    : t('team.emptyDescription')
+                    ? `No hay miembros con la especialización ${activeSpecialization}.`
+                    : 'No hay miembros que coincidan con los filtros seleccionados'
                 }
               />
             )}
