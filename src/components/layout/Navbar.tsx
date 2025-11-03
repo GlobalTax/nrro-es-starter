@@ -4,10 +4,6 @@ import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
-import { useLanguage } from "@/hooks/useLanguage";
-import { LanguageSelector } from "./LanguageSelector";
-
-// Servicios y áreas son estáticos por ahora, se podrían cargar de la BD en el futuro
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -16,31 +12,30 @@ export const Navbar = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLElement>(null);
-  const { t, language, getLocalizedPath } = useLanguage();
   
   const navigation = [
-    { name: t('nav.services'), href: getLocalizedPath('services') },
-    { name: t('nav.about'), href: getLocalizedPath('about') },
-    { name: t('nav.blog'), href: getLocalizedPath('blog') },
-    { name: t('nav.team'), href: getLocalizedPath('team') },
-    { name: t('nav.careers'), href: getLocalizedPath('careers') },
+    { name: "Servicios", href: "/servicios" },
+    { name: "Nosotros", href: "/nosotros" },
+    { name: "Blog", href: "/blog" },
+    { name: "Equipo", href: "/equipo" },
+    { name: "Carreras", href: "/carreras" },
   ];
 
   const serviciosMenu = [
-    { name: "Empresa Familiar", href: `/${language}/servicios/empresa-familiar` },
-    { name: "Compraventa de empresas", href: `/${language}/servicios/compraventa-empresas` },
-    { name: "Asesoramiento Fiscal", href: `/${language}/servicios/asesoramiento-fiscal` },
-    { name: "Mercantil y derecho societario", href: `/${language}/servicios/mercantil-derecho-societario` },
-    { name: "Asesoramiento Contable y Laboral", href: `/${language}/servicios/asesoramiento-contable-laboral` }
+    { name: "Empresa Familiar", href: "/servicios/empresa-familiar" },
+    { name: "Compraventa de empresas", href: "/servicios/compraventa-empresas" },
+    { name: "Asesoramiento Fiscal", href: "/servicios/asesoramiento-fiscal" },
+    { name: "Mercantil y derecho societario", href: "/servicios/mercantil-derecho-societario" },
+    { name: "Asesoramiento Contable y Laboral", href: "/servicios/asesoramiento-contable-laboral" }
   ];
 
   const areasMenu = [
-    { name: "Procedimiento tributario", href: `/${language}/servicios/procedimiento-tributario` },
-    { name: "Conflicto de Socios", href: `/${language}/servicios/conflicto-socios` },
-    { name: "Capital Riesgo", href: `/${language}/servicios/capital-riesgo` },
-    { name: "Internacionalización de empresas", href: `/${language}/servicios/internacionalizacion` },
-    { name: "Procesal Civil", href: `/${language}/servicios/procesal-civil` },
-    { name: "Valoración de empresas", href: `/${language}/servicios/valoracion-empresas` }
+    { name: "Procedimiento tributario", href: "/servicios/procedimiento-tributario" },
+    { name: "Conflicto de Socios", href: "/servicios/conflicto-socios" },
+    { name: "Capital Riesgo", href: "/servicios/capital-riesgo" },
+    { name: "Internacionalización de empresas", href: "/servicios/internacionalizacion" },
+    { name: "Procesal Civil", href: "/servicios/procesal-civil" },
+    { name: "Valoración de empresas", href: "/servicios/valoracion-empresas" }
   ];
 
   const isActive = (path: string) => {
@@ -55,12 +50,10 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Detectar si el navbar está sobre un fondo oscuro
   useEffect(() => {
     const detectBackgroundColor = () => {
       if (!navRef.current) return;
 
-      // Forzar modo oscuro en páginas de servicios al inicio
       if (location.pathname.startsWith('/servicios') && window.scrollY < 10) {
         setIsLightMode(false);
         return;
@@ -72,7 +65,6 @@ export const Navbar = () => {
         navRect.bottom + 10
       );
 
-      // Buscar el primer elemento con data-dark attribute
       for (const element of elementsBelow) {
         if (element instanceof HTMLElement) {
           const dataDark = element.getAttribute('data-dark');
@@ -83,33 +75,27 @@ export const Navbar = () => {
         }
       }
 
-      // Si no hay data attribute, intentar detectar por color de fondo
       for (const element of elementsBelow) {
         if (element instanceof HTMLElement && element !== navRef.current) {
           const bgColor = window.getComputedStyle(element).backgroundColor;
           if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
-            // Extraer valores RGB
             const rgb = bgColor.match(/\d+/g);
             if (rgb && rgb.length >= 3) {
               const r = parseInt(rgb[0]);
               const g = parseInt(rgb[1]);
               const b = parseInt(rgb[2]);
-              // Calcular luminosidad
               const luminosity = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-              setIsLightMode(luminosity >= 0.5); // Si es claro, usar modo light (blanco)
+              setIsLightMode(luminosity >= 0.5);
               return;
             }
           }
         }
       }
       
-      // Default: modo oscuro (navbar con fondo negro)
       setIsLightMode(false);
     };
 
     detectBackgroundColor();
-    
-    // Ejecutar después del primer pintado para asegurar detección correcta
     requestAnimationFrame(() => detectBackgroundColor());
     setTimeout(detectBackgroundColor, 120);
     
@@ -138,14 +124,11 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
           <Logo variant="compact" color={isLightMode ? "dark" : "light"} className="h-12" />
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex md:items-center md:gap-10 lg:gap-12">
             {navigation.map((item) => {
-              // Si es "Servicios", renderizar el dropdown
-              if (item.name === t('nav.services')) {
+              if (item.name === "Servicios") {
                 return (
                   <div 
                     key={item.name}
@@ -153,11 +136,10 @@ export const Navbar = () => {
                     onMouseEnter={() => setServiciosOpen(true)}
                     onMouseLeave={() => setServiciosOpen(false)}
                   >
-                    {/* Trigger del dropdown */}
                     <button
                       className={cn(
                         "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight flex items-center gap-1",
-                        isActive(getLocalizedPath('services'))
+                        isActive('/servicios')
                           ? isLightMode 
                             ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
                             : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
@@ -166,20 +148,18 @@ export const Navbar = () => {
                             : "text-primary-foreground/75 hover:text-white"
                        )}
                       >
-                        {t('nav.services')}
+                        Servicios
                         <ChevronDown className={cn(
                           "h-4 w-4 transition-transform duration-200",
                           serviciosOpen && "rotate-180"
                         )} />
                     </button>
 
-                    {/* Dropdown Content */}
                     {serviciosOpen && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50 w-screen max-w-6xl">
                         <div className="bg-white rounded-lg shadow-2xl p-10 lg:p-12">
                           <div className="grid grid-cols-3 gap-10 lg:gap-16">
                             
-                            {/* Columna 1: SERVICIOS */}
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
                                 Servicios
@@ -199,7 +179,6 @@ export const Navbar = () => {
                               </ul>
                             </div>
 
-                            {/* Columna 2: AREAS */}
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
                                 Áreas
@@ -219,13 +198,11 @@ export const Navbar = () => {
                               </ul>
                             </div>
 
-                            {/* Columna 3: CONTACT */}
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
                                 Contact
                               </h3>
                               <div className="space-y-4">
-                                {/* Avatar y nombre */}
                                 <div className="flex items-start gap-3">
                                   <div className="w-12 h-12 rounded-full bg-neutral-200 flex-shrink-0 overflow-hidden">
                                     <img 
@@ -242,7 +219,6 @@ export const Navbar = () => {
                                   </div>
                                 </div>
                                 
-                                {/* Información de contacto */}
                                 <div className="space-y-2 text-sm">
                                   <a 
                                     href="tel:+34934593600" 
@@ -269,7 +245,6 @@ export const Navbar = () => {
                 );
               }
               
-              // Para el resto de items, renderizar normalmente
               return (
                 <Link
                   key={item.name}
@@ -289,13 +264,11 @@ export const Navbar = () => {
                 </Link>
               );
             })}
-            <LanguageSelector isLightMode={isLightMode} />
             <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium ml-2">
-              <Link to={getLocalizedPath('contact')}>{t('nav.contact')}</Link>
+              <Link to="/contacto">Contacto</Link>
             </Button>
           </div>
 
-          {/* Mobile toggle */}
           <button
             type="button"
             className={cn(
@@ -314,7 +287,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className={cn(
           "md:hidden border-t shadow-xl",
@@ -340,21 +312,10 @@ export const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <div className="px-4 pt-4 pb-2 border-t border-border/50 mt-2">
-              <div className="flex items-center justify-between">
-                <span className={cn(
-                  "text-sm font-medium",
-                  isLightMode ? "text-foreground/70" : "text-white/70"
-                )}>
-                  Idioma
-                </span>
-                <LanguageSelector isLightMode={isLightMode} />
-              </div>
-            </div>
             <div className="px-4 pt-2">
               <Button asChild size="default" className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-md font-medium">
-                <Link to={getLocalizedPath('contact')} onClick={() => setMobileMenuOpen(false)}>
-                  {t('nav.contact')}
+                <Link to="/contacto" onClick={() => setMobileMenuOpen(false)}>
+                  Contacto
                 </Link>
               </Button>
             </div>

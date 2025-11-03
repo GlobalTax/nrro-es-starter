@@ -1,11 +1,7 @@
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
-import { LanguageSelector } from "./LanguageSelector";
-import { useLanguage } from "@/hooks/useLanguage";
 
 export const LandingNavbar = () => {
-  const { t } = useLanguage();
-  
   const scrollToForm = () => {
     const formElement = document.getElementById('contact-form');
     if (formElement) {
@@ -20,19 +16,14 @@ export const LandingNavbar = () => {
           {/* Logo */}
           <Logo variant="compact" color="light" className="h-10" />
 
-          <div className="flex items-center gap-3">
-            {/* Language Selector */}
-            <LanguageSelector />
-            
-            {/* CTA Button */}
-            <Button 
-              variant="secondary" 
-              onClick={scrollToForm}
-              className="font-medium"
-            >
-              {t('common.contactUs')}
-            </Button>
-          </div>
+          {/* CTA Button */}
+          <Button 
+            variant="secondary" 
+            onClick={scrollToForm}
+            className="font-medium"
+          >
+            Contacto
+          </Button>
         </div>
       </div>
     </nav>

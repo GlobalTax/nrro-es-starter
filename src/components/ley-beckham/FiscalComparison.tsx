@@ -9,10 +9,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
 
 export const FiscalComparison = () => {
-  const { t, tDynamic } = useLanguage();
   const comparisons = [
     {
       income: "60.000 €",
@@ -66,13 +64,13 @@ export const FiscalComparison = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
           <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
-            {t('leyBeckham.fiscalComparison.overline')}
+            Comparativa Fiscal
           </p>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight mb-4">
-            {t('leyBeckham.fiscalComparison.title')}
+            ¿Cuánto Puedes Ahorrar con la Ley Beckham?
           </h2>
           <p className="text-body max-w-2xl mx-auto">
-            {t('leyBeckham.fiscalComparison.description')}
+            Compara la tributación estándar del IRPF con la Ley Beckham según tu nivel de ingresos
           </p>
         </div>
 
@@ -82,20 +80,20 @@ export const FiscalComparison = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="font-normal">{t('leyBeckham.fiscalComparison.tableHeaders.income')}</TableHead>
+                    <TableHead className="font-normal">Ingresos Anuales</TableHead>
                     <TableHead className="text-center">
                       <div className="flex flex-col items-center gap-1">
-                        <span>{t('leyBeckham.fiscalComparison.tableHeaders.irpfGeneral')}</span>
+                        <span>IRPF General</span>
                         <TrendingUp className="w-4 h-4 text-destructive" />
                       </div>
                     </TableHead>
                     <TableHead className="text-center">
                       <div className="flex flex-col items-center gap-1">
-                        <span>{t('leyBeckham.fiscalComparison.tableHeaders.beckham')}</span>
+                        <span>Ley Beckham</span>
                         <TrendingDown className="w-4 h-4 text-primary" />
                       </div>
                     </TableHead>
-                    <TableHead className="text-center font-normal">{t('leyBeckham.fiscalComparison.tableHeaders.savings')}</TableHead>
+                    <TableHead className="text-center font-normal">Ahorro</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -138,12 +136,13 @@ export const FiscalComparison = () => {
               <CardContent className="p-6">
                 <h3 className="text-lg font-normal mb-3 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-destructive" />
-                  {t('leyBeckham.fiscalComparison.irpfCard.title')}
+                  IRPF General
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  {[0, 1, 2, 3].map((i) => (
-                    <li key={i}>• {tDynamic(`leyBeckham.fiscalComparison.irpfCard.items.${i}`)}</li>
-                  ))}
+                  <li>• Tramos progresivos del 19% al 47%</li>
+                  <li>• Tributación sobre rentas mundiales</li>
+                  <li>• Obligaciones de declaración completas</li>
+                  <li>• Régimen estándar de residentes</li>
                 </ul>
               </CardContent>
             </Card>
@@ -152,19 +151,20 @@ export const FiscalComparison = () => {
               <CardContent className="p-6">
                 <h3 className="text-lg font-normal mb-3 flex items-center gap-2">
                   <TrendingDown className="w-5 h-5 text-primary" />
-                  {t('leyBeckham.fiscalComparison.beckhamCard.title')}
+                  Régimen Beckham
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  {[0, 1, 2, 3].map((i) => (
-                    <li key={i}>• {tDynamic(`leyBeckham.fiscalComparison.beckhamCard.items.${i}`)}</li>
-                  ))}
+                  <li>• Tipo fijo del 24% (simplificado)</li>
+                  <li>• Solo rentas españolas hasta 600K€</li>
+                  <li>• Menos obligaciones formales</li>
+                  <li>• Vigencia hasta 6 años</li>
                 </ul>
               </CardContent>
             </Card>
           </div>
 
           <p className="text-sm text-muted-foreground text-center mt-6">
-            {t('leyBeckham.fiscalComparison.disclaimer')}
+            * Cálculos aproximados. La tributación real puede variar según circunstancias personales.
           </p>
         </div>
       </div>
