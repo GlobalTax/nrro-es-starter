@@ -436,6 +436,37 @@ h1 {
     border-color: rgba(12, 30, 33, 0.35);
   }
 
+  /* Hero Title - Para el título principal del hero con fondo oscuro */
+  .hero-title {
+    font-family: 'General Sans', sans-serif;
+    font-size: 40px;
+    line-height: 44px;
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 640px) {
+    .hero-title {
+      font-size: 56px;
+      line-height: 62px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 72px;
+      line-height: 79px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-title {
+      font-size: 88px;
+      line-height: 97px;
+    }
+  }
+
   /* Markdown/Prose Styling */
   .prose {
     color: inherit;
