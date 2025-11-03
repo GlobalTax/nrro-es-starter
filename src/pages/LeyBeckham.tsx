@@ -52,10 +52,10 @@ const LeyBeckham = () => {
 
               <div className="lg:col-span-5 space-y-4">
                 <p className="text-lg font-medium">
-                  La <strong>Ley Beckham</strong> es el nombre popular del régimen especial de tributación para trabajadores desplazados a España, regulado en el artículo 93 de la Ley del IRPF.
+                  La Ley Beckham es el nombre popular del régimen especial de tributación para trabajadores desplazados a España, regulado en el artículo 93 de la Ley del IRPF.
                 </p>
                 <p className="text-body">
-                  Este régimen permite a profesionales extranjeros que se trasladan a España tributar como <strong>no residentes fiscales</strong>, con un tipo fijo del 24% sobre sus rendimientos del trabajo, en lugar del IRPF progresivo que puede llegar hasta el 47%.
+                  Este régimen permite a profesionales extranjeros que se trasladan a España tributar como no residentes fiscales, con un tipo fijo del 24% sobre sus rendimientos del trabajo, en lugar del IRPF progresivo que puede llegar hasta el 47%.
                 </p>
                 <p className="text-body">
                   Establecido en 2005 tras la llegada del futbolista David Beckham al Real Madrid, este régimen busca atraer talento internacional a España ofreciendo importantes ventajas fiscales durante un periodo de hasta 6 años.
@@ -123,7 +123,7 @@ const LeyBeckham = () => {
                         {profile.badge}
                       </Badge>
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">{profile.title}</h3>
+                    <h3 className="text-lg font-normal mb-2">{profile.title}</h3>
                     <p className="text-sm text-muted-foreground">{profile.description}</p>
                   </CardContent>
                 </Card>

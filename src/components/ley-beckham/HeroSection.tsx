@@ -24,7 +24,7 @@ export const HeroSection = () => {
           </h1>
           
           <p className="text-lead mb-8">
-            Tributa al <strong>24% fijo</strong> durante 6 años en España. 
+            Tributa al 24% fijo durante 6 años en España. 
             Especialistas en fiscalidad internacional con más de 25 años de experiencia.
           </p>
 
@@ -54,15 +54,15 @@ export const HeroSection = () => {
           {/* Trust indicators - minimalistas */}
           <div className="flex flex-wrap gap-8 pt-4 border-t border-white/10">
             <div>
-              <div className="text-3xl font-bold mb-1">98%</div>
+              <div className="text-3xl font-normal mb-1">98%</div>
               <div className="text-sm text-white/70">Tasa de éxito</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">25+</div>
+              <div className="text-3xl font-normal mb-1">25+</div>
               <div className="text-sm text-white/70">Años de experiencia</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">24%</div>
+              <div className="text-3xl font-normal mb-1">24%</div>
               <div className="text-sm text-white/70">Tipo fijo vs 47% IRPF</div>
             </div>
           </div>

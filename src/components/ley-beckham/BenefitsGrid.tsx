@@ -54,7 +54,7 @@ export const BenefitsGrid = () => {
                   </div>
                   
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                    <h3 className="text-xl font-normal mb-2">{benefit.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {benefit.description}
                     </p>

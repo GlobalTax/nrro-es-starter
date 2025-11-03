@@ -80,7 +80,7 @@ export const FiscalComparison = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="font-semibold">Ingresos Anuales</TableHead>
+                    <TableHead className="font-normal">Ingresos Anuales</TableHead>
                     <TableHead className="text-center">
                       <div className="flex flex-col items-center gap-1">
                         <span>IRPF General</span>
@@ -93,16 +93,16 @@ export const FiscalComparison = () => {
                         <TrendingDown className="w-4 h-4 text-primary" />
                       </div>
                     </TableHead>
-                    <TableHead className="text-center font-semibold">Ahorro Anual</TableHead>
+                    <TableHead className="text-center font-normal">Ahorro Anual</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {comparisons.map((row, index) => (
                     <TableRow key={index} className="hover:bg-muted/50">
-                      <TableCell className="font-semibold">{row.income}</TableCell>
+                      <TableCell className="font-normal">{row.income}</TableCell>
                       <TableCell className="text-center">
                         <div className="flex flex-col gap-1">
-                          <span className="font-semibold text-destructive">{row.irpfGeneral}</span>
+                          <span className="font-normal text-destructive">{row.irpfGeneral}</span>
                           <Badge variant="outline" className="text-xs">
                             {row.irpfRate}
                           </Badge>
@@ -110,7 +110,7 @@ export const FiscalComparison = () => {
                       </TableCell>
                       <TableCell className="text-center">
                         <div className="flex flex-col gap-1">
-                          <span className="font-semibold text-primary">{row.beckham}</span>
+                          <span className="font-normal text-primary">{row.beckham}</span>
                           <Badge variant="outline" className="text-xs border-primary text-primary">
                             {row.beckhamRate}
                           </Badge>
@@ -118,7 +118,7 @@ export const FiscalComparison = () => {
                       </TableCell>
                       <TableCell className="text-center">
                         <div className="flex flex-col gap-1">
-                          <span className="font-bold text-lg text-primary">{row.savings}</span>
+                          <span className="font-normal text-lg text-primary">{row.savings}</span>
                           <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
                             -{row.savingsPercent}
                           </Badge>
@@ -134,7 +134,7 @@ export const FiscalComparison = () => {
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <Card className="bg-neutral-50 border border-border/50">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                <h3 className="text-lg font-normal mb-3 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-destructive" />
                   IRPF General (Régimen Ordinario)
                 </h3>
@@ -149,7 +149,7 @@ export const FiscalComparison = () => {
 
             <Card className="bg-neutral-50 border border-border/50">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                <h3 className="text-lg font-normal mb-3 flex items-center gap-2">
                   <TrendingDown className="w-5 h-5 text-primary" />
                   Ley Beckham (Régimen Especial)
                 </h3>

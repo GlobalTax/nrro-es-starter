@@ -64,11 +64,11 @@ export const RequirementsChecklist = () => {
                   
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4 mb-2">
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="font-normal text-lg">
                         {index + 1}. {req.title}
                       </h3>
                       {req.important && (
-                        <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
+                        <span className="text-xs font-normal text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
                           Requisito clave
                         </span>
                       )}
@@ -85,7 +85,7 @@ export const RequirementsChecklist = () => {
           <Card className="max-w-2xl mx-auto bg-neutral-50 border border-border/50">
             <CardContent className="p-6">
               <p className="text-lead mb-4">
-                <strong>¿No estás seguro si cumples los requisitos?</strong>
+                ¿No estás seguro si cumples los requisitos?
               </p>
               <p className="text-muted-foreground mb-6">
                 Cada caso es único y existen múltiples excepciones y casuísticas. 
