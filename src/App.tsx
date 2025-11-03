@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { LandingLayout } from "@/components/layout/LandingLayout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -69,7 +70,7 @@ const App = () => (
             <Route path="/legal" element={<Layout><Legal /></Layout>} />
             <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
             <Route path="/talento" element={<Layout><Careers /></Layout>} />
-            <Route path="/ley-beckham" element={<Layout><LeyBeckham /></Layout>} />
+            <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
 
             {/* Admin routes */}

@@ -8,7 +8,7 @@ export const HeroSection = () => {
 
   const handleCTAClick = () => {
     trackCTAClick("solicitar-consulta-hero", "ley-beckham-hero");
-    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (

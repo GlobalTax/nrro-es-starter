@@ -180,7 +180,11 @@ const LeyBeckham = () => {
         </section>
 
         <FAQSection />
-        <LeyBeckhamContactForm />
+        
+        {/* Contact Form */}
+        <div id="contact-form">
+          <LeyBeckhamContactForm />
+        </div>
 
         {/* CTA Final */}
         <section className="py-20 md:py-28 bg-white">
@@ -199,7 +203,7 @@ const LeyBeckham = () => {
                   onClick={() => {
                     const { trackCTAClick } = useAnalytics();
                     trackCTAClick("solicitar-consulta-final", "ley-beckham-cta-final");
-                    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
+                    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
                   }}
                 >
                   Solicitar Consulta Gratuita
