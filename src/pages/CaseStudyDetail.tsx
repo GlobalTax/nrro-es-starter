@@ -86,7 +86,7 @@ export default function CaseStudyDetail() {
   return (
     <>
       <Meta
-        title={caseStudy.meta_title || `${caseStudy.hero_title} - ${t('caseStudies.hero.badge')}`}
+        title={caseStudy.meta_title || `${caseStudy.hero_title} - Casos de Éxito`}
         description={caseStudy.meta_description || caseStudy.hero_subtitle || caseStudy.results_summary}
       />
 
@@ -101,106 +101,111 @@ export default function CaseStudyDetail() {
             />
           </div>
         )}
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <Link to={getLocalizedPath('caseStudies')}>
-            <Button variant="outline" size="sm" className="mb-8 border-white/20 bg-white/10 text-white hover:bg-white/20">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              {t('caseStudyDetail.backButton')}
-            </Button>
-          </Link>
-          
-          {caseStudy.client_logo_url && (
-            <img
-              src={caseStudy.client_logo_url}
-              alt={caseStudy.client_name}
-              className="h-16 mb-6 object-contain"
-            />
-          )}
-          
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <Badge className="bg-white/20 text-white border-white/30">{caseStudy.client_industry}</Badge>
-            {caseStudy.primary_service && (
-              <Badge variant="outline" className="border-white/30 text-white">{caseStudy.primary_service}</Badge>
-            )}
-          </div>
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48">
+          <div className="max-w-4xl">
+            <Link to="/casos-de-exito">
+              <Button variant="ghost" size="sm" className="mb-8 text-white hover:text-white hover:bg-white/10">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Volver a Casos de Éxito
+              </Button>
+            </Link>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal leading-tight mb-6 max-w-4xl">
-            {caseStudy.hero_title}
-          </h1>
-          
-          {caseStudy.hero_subtitle && (
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl mb-8">
+            {caseStudy.client_logo_url && (
+              <img
+                src={caseStudy.client_logo_url}
+                alt={caseStudy.client_name || 'Cliente'}
+                className="h-12 mb-8 brightness-0 invert"
+              />
+            )}
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {caseStudy.industry && (
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/20">
+                  {caseStudy.industry}
+                </Badge>
+              )}
+              {caseStudy.service_type && (
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/20">
+                  {caseStudy.service_type}
+                </Badge>
+              )}
+              {caseStudy.tags?.map((tag: string) => (
+                <Badge key={tag} variant="outline" className="border-white/20 text-white">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight">
+              {caseStudy.hero_title}
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl">
               {caseStudy.hero_subtitle}
             </p>
-          )}
 
-          <div className="flex flex-wrap gap-6 text-sm">
-            <div className="flex items-center gap-2">
-              <Building2 className="h-4 w-4 text-white/60" />
-              <span className="text-white/80">{caseStudy.client_name}</span>
-            </div>
-            {caseStudy.client_size && (
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-white/60" />
-                <span className="text-white/80">{caseStudy.client_size}</span>
-              </div>
-            )}
-            {caseStudy.project_duration && (
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-white/60" />
-                <span className="text-white/80">{caseStudy.project_duration}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Executive Summary */}
-      <section className="bg-white py-20 md:py-28">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            <div>
-              <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 mb-4">
-                {t('caseStudyDetail.challenge')}
-              </h3>
-              <p className="text-base text-foreground/70 leading-relaxed">
-                {caseStudy.challenge}
-              </p>
-            </div>
-            <div>
-              <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 mb-4">
-                {t('caseStudyDetail.solution')}
-              </h3>
-              <p className="text-base text-foreground/70 leading-relaxed">
-                {caseStudy.solution}
-              </p>
-            </div>
-            <div>
-              <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 mb-4">
-                {t('caseStudyDetail.results')}
-              </h3>
-              <p className="text-base text-foreground/70 leading-relaxed">
-                {caseStudy.results_summary}
-              </p>
+            <div className="flex flex-wrap gap-6 mt-8 text-sm">
+              {caseStudy.client_name && (
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-4 w-4 text-white/60" />
+                  <span>{caseStudy.client_name}</span>
+                </div>
+              )}
+              {caseStudy.duration && (
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-white/60" />
+                  <span>{caseStudy.duration}</span>
+                </div>
+              )}
+              {caseStudy.team_size && (
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4 text-white/60" />
+                  <span>{caseStudy.team_size} personas</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Key Metrics */}
-      {caseStudy.metrics && caseStudy.metrics.length > 0 && (
-        <section className="bg-neutral-50 py-20 md:py-28">
+      {/* Challenge Section */}
+      {caseStudy.challenge && (
+        <section className="bg-background py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-normal leading-tight mb-4">
-                {t('caseStudyDetail.metricsTitle')}
-              </h2>
-              <p className="text-base text-foreground/70 leading-relaxed max-w-2xl mx-auto">
-                {t('caseStudyDetail.metricsSubtitle')}
-              </p>
-            </div>
+            <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
+              El Desafío
+            </h2>
+            <div 
+              className="prose prose-lg max-w-4xl mx-auto"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(caseStudy.challenge) }}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Solution Section */}
+      {caseStudy.solution && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
+              Nuestra Solución
+            </h2>
+            <div 
+              className="prose prose-lg max-w-4xl mx-auto"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(caseStudy.solution) }}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Metrics Section */}
+      {caseStudy.metrics && caseStudy.metrics.length > 0 && (
+        <section className="bg-neutral-50 py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-normal text-center mb-12">
+              Resultados Clave
+            </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {caseStudy.metrics.map((metric, index) => (
+              {caseStudy.metrics.map((metric: any, index: number) => (
                 <CaseStudyMetricCard key={index} metric={metric} />
               ))}
             </div>
@@ -208,74 +213,33 @@ export default function CaseStudyDetail() {
         </section>
       )}
 
-      {/* Detailed Content */}
-      {caseStudy.detailed_content && (
-        <section className="bg-white py-20 md:py-28">
+      {/* Testimonial Section */}
+      {caseStudy.testimonial_text && (
+        <section className="bg-background py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto prose prose-base">
-              <div 
-                dangerouslySetInnerHTML={{ 
-                  __html: DOMPurify.sanitize(caseStudy.detailed_content, {
-                    ALLOWED_TAGS: [
-                      "p",
-                      "br",
-                      "strong",
-                      "em",
-                      "u",
-                      "h1",
-                      "h2",
-                      "h3",
-                      "h4",
-                      "h5",
-                      "h6",
-                      "ul",
-                      "ol",
-                      "li",
-                      "a",
-                      "img",
-                      "blockquote",
-                      "code",
-                      "pre",
-                      "table",
-                      "thead",
-                      "tbody",
-                      "tr",
-                      "th",
-                      "td",
-                    ],
-                    ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target", "rel"],
-                    ALLOW_DATA_ATTR: false,
-                  })
-                }} 
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Timeline */}
-      {caseStudy.timeline && caseStudy.timeline.length > 0 && (
-        <section className="bg-neutral-50 py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-normal leading-tight mb-12 text-center">
-                {t('caseStudyDetail.timelineTitle')}
-              </h2>
-              <CaseStudyTimeline timeline={caseStudy.timeline} />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Testimonial */}
-      {caseStudy.testimonial_text && caseStudy.testimonial_author && (
-        <section className="bg-white py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
+              Testimonio del Cliente
+            </h2>
+            <p className="text-body text-center mb-12 max-w-2xl mx-auto">
+              Lo que dicen sobre nosotros
+            </p>
             <CaseStudyTestimonial
               text={caseStudy.testimonial_text}
-              author={caseStudy.testimonial_author}
-              position={caseStudy.testimonial_position || ''}
-              avatarUrl={caseStudy.testimonial_avatar_url}
+              authorName={caseStudy.testimonial_author || ''}
+              authorPosition={caseStudy.testimonial_position || ''}
+              authorImage={caseStudy.testimonial_author_image}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Detailed Content */}
+      {caseStudy.detailed_content && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div 
+              className="prose prose-lg max-w-4xl mx-auto"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(caseStudy.detailed_content) }}
             />
           </div>
         </section>
@@ -283,48 +247,69 @@ export default function CaseStudyDetail() {
 
       {/* Gallery */}
       {caseStudy.gallery && caseStudy.gallery.length > 0 && (
-        <section className="bg-neutral-50 py-20 md:py-28">
+        <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-normal leading-tight mb-12 text-center">
-              {t('caseStudyDetail.galleryTitle')}
+            <CaseStudyGallery images={caseStudy.gallery} />
+          </div>
+        </section>
+      )}
+
+      {/* Timeline */}
+      {caseStudy.timeline && caseStudy.timeline.length > 0 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-normal text-center mb-12">
+              Cronología del Proyecto
             </h2>
-            <CaseStudyGallery gallery={caseStudy.gallery} />
+            <CaseStudyTimeline events={caseStudy.timeline} />
           </div>
         </section>
       )}
 
       {/* Related Services */}
       {caseStudy.related_services && caseStudy.related_services.length > 0 && (
-        <section className="bg-white py-20 md:py-28">
+        <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-normal leading-tight mb-12 text-center">
-              {t('caseStudyDetail.relatedServicesTitle')}
+            <h2 className="text-2xl md:text-3xl font-normal mb-4">
+              Servicios Relacionados
             </h2>
             <RelatedServices serviceIds={caseStudy.related_services} />
           </div>
         </section>
       )}
 
-      {/* CTA Section */}
-      <section className="bg-black text-white py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal leading-tight mb-6">
-            {t('caseStudyDetail.ctaTitle')}
+      {/* Related Cases */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-normal mb-4">
+            Otros Casos de Éxito
           </h2>
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto mb-8">
-            {t('caseStudyDetail.ctaSubtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to={getLocalizedPath('contact')}>
-              <Button variant="secondary" size="lg">
-                {t('caseStudyDetail.ctaButton')}
+          {/* TODO: Add related cases carousel */}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-neutral-50 py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl md:text-3xl font-normal mb-4">
+              ¿Tienes un Proyecto Similar?
+            </h2>
+            <p className="text-body mb-8">
+              Contacta con nosotros y descubre cómo podemos ayudarte
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild>
+                <Link to="/contacto">
+                  Contactar
+                </Link>
               </Button>
-            </Link>
-            <Link to={getLocalizedPath('caseStudies')}>
-              <Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white/20">
-                {t('caseStudyDetail.ctaSecondary')}
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/servicios">
+                  Ver Servicios
+                </Link>
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </section>
