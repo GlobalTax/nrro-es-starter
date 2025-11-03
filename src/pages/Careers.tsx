@@ -1,3 +1,4 @@
+import React from 'react';
 import { Meta } from "@/components/seo/Meta";
 import { CareerApplicationForm } from "@/components/careers/CareerApplicationForm";
 import { OpenPositionsSection } from "@/components/careers/OpenPositionsSection";
@@ -117,10 +118,10 @@ export default function Careers() {
   return (
     <>
       <Meta
-        title="Únete al Equipo - Trabaja con Nosotros"
-        description="Construye tu carrera profesional en NRRO. Únete a nuestro equipo de asesores fiscales, laborales y contables en Barcelona. Envía tu candidatura."
+        title={t('careers.meta.title')}
+        description={t('careers.meta.description')}
         keywords="trabajar nrro, empleo asesoría fiscal barcelona, carrera profesional contable, ofertas trabajo fiscal barcelona, trabajar asesoría laboral"
-        canonicalUrl={`${window.location.origin}/talento`}
+        canonicalUrl={`${window.location.origin}${getLocalizedPath('careers')}`}
       />
 
       {/* Hero Section */}
@@ -128,10 +129,10 @@ export default function Careers() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 leading-tight">
-              Construye tu carrera con nosotros
+              {t('careers.hero.title')}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Forma parte de un equipo comprometido con la excelencia y el desarrollo profesional continuo
+              {t('careers.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -144,7 +145,7 @@ export default function Careers() {
             {/* Columna 1: Overline */}
             <div className="relative">
               <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                Cultura y Valores
+                {t('careers.why.overline')}
               </h3>
               <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
             </div>
@@ -152,32 +153,35 @@ export default function Careers() {
             {/* Columna 2: Título */}
             <div>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
-                ¿Por qué trabajar en NRRO?
+                {t('careers.why.title')}
               </h2>
             </div>
             
             {/* Columna 3: Descripción */}
             <div>
               <p className="text-lg font-normal text-foreground leading-relaxed">
-                Más que un trabajo, es una oportunidad para crecer profesionalmente en un entorno estimulante.
+                {t('careers.why.description')}
               </p>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-            {benefits.map((benefit, index) => (
-              <Card key={index} className="hover-lift border-accent/20">
-                <CardContent className="p-6">
-                  <div className="rounded-full bg-accent/10 w-12 h-12 flex items-center justify-center mb-4">
-                    <benefit.icon className="h-6 w-6 text-accent" />
-                  </div>
-                  <h3 className="text-xl font-normal mb-2">{benefit.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+            {benefits.map((benefit, index) => {
+              const benefitTranslation = (t('careers.benefits') as any)[index];
+              return (
+                <Card key={index} className="hover-lift border-accent/20">
+                  <CardContent className="p-6">
+                    <div className="rounded-full bg-accent/10 w-12 h-12 flex items-center justify-center mb-4">
+                      <benefit.icon className="h-6 w-6 text-accent" />
+                    </div>
+                    <h3 className="text-xl font-normal mb-2">{benefitTranslation.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {benefitTranslation.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -186,21 +190,24 @@ export default function Careers() {
       <section className="bg-neutral-50 py-20 md:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-            Áreas donde podrías trabajar
+            {t('careers.areas.title')}
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {areas.map((area, index) => (
-              <Card key={index} className="hover-lift">
-                <CardContent className="p-6 text-center">
-                  <div className="rounded-full bg-accent/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <area.icon className="h-8 w-8 text-accent" />
-                  </div>
-                  <h3 className="text-lg font-normal mb-2">{area.name}</h3>
-                  <p className="text-sm text-muted-foreground">{area.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {areas.map((area, index) => {
+              const areaTranslation = (t('careers.areas.list') as any)[index];
+              return (
+                <Card key={index} className="hover-lift">
+                  <CardContent className="p-6 text-center">
+                    <div className="rounded-full bg-accent/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <area.icon className="h-8 w-8 text-accent" />
+                    </div>
+                    <h3 className="text-lg font-normal mb-2">{areaTranslation.name}</h3>
+                    <p className="text-sm text-muted-foreground">{areaTranslation.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -214,13 +221,13 @@ export default function Careers() {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
-                Candidatura Espontánea
+                {t('careers.form.overline')}
               </h2>
               <h3 className="text-2xl md:text-3xl font-normal mb-4">
-                Envíanos tu candidatura
+                {t('careers.form.title')}
               </h3>
               <p className="text-body leading-relaxed">
-                ¿No has encontrado ninguna vacante específica? No te preocupes, queremos conocerte igualmente. Envíanos tu CV y te contactaremos cuando surjan oportunidades que encajen con tu perfil.
+                {t('careers.form.description')}
               </p>
             </div>
 

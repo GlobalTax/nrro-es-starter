@@ -62,13 +62,13 @@ export default function CaseStudies() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-6">
-              <BadgeHero>CASOS DE ÉXITO</BadgeHero>
+              <BadgeHero>{t('caseStudies.hero.badge')}</BadgeHero>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight mb-6">
-              Resultados reales, impacto medible
+              {t('caseStudies.hero.title')}
             </h1>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto">
-              Descubre cómo hemos ayudado a empresas de diversos sectores a alcanzar sus objetivos estratégicos y transformar sus negocios.
+              {t('caseStudies.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -83,23 +83,23 @@ export default function CaseStudies() {
                 <div className="text-4xl font-semibold text-accent mb-2">
                   {caseStudies.length}+
                 </div>
-                <div className="text-sm text-foreground/60">Casos de éxito</div>
+                <div className="text-sm text-foreground/60">{t('caseStudies.stats.cases')}</div>
               </div>
               <div>
                 <div className="text-4xl font-semibold text-accent mb-2">
                   {filterOptions?.industries.length || 0}
                 </div>
-                <div className="text-sm text-foreground/60">Sectores</div>
+                <div className="text-sm text-foreground/60">{t('caseStudies.stats.sectors')}</div>
               </div>
               <div>
                 <div className="text-4xl font-semibold text-accent mb-2">
                   {filterOptions?.services.length || 0}
                 </div>
-                <div className="text-sm text-foreground/60">Servicios</div>
+                <div className="text-sm text-foreground/60">{t('caseStudies.stats.services')}</div>
               </div>
               <div>
                 <div className="text-4xl font-semibold text-accent mb-2">98%</div>
-                <div className="text-sm text-foreground/60">Satisfacción</div>
+                <div className="text-sm text-foreground/60">{t('caseStudies.stats.satisfaction')}</div>
               </div>
             </div>
           </div>
@@ -117,32 +117,32 @@ export default function CaseStudies() {
                 <PopoverTrigger asChild>
                   <Button variant="outline" size="sm" className="gap-2">
                     <Filter className="h-4 w-4" />
-                    Filtros
+                    {t('caseStudies.filters.button')}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-80" align="start">
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">Sector</label>
+                      <label className="text-sm font-medium mb-2 block">{t('caseStudies.filters.sector')}</label>
                       <select
                         className="w-full p-2 border rounded-md text-sm"
                         value={activeFilters.industry}
                         onChange={(e) => setActiveFilters({ ...activeFilters, industry: e.target.value })}
                       >
-                        <option value="">Todos los sectores</option>
+                        <option value="">{t('caseStudies.filters.allSectors')}</option>
                         {filterOptions?.industries.map((industry) => (
                           <option key={industry} value={industry}>{industry}</option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">Servicio</label>
+                      <label className="text-sm font-medium mb-2 block">{t('caseStudies.filters.service')}</label>
                       <select
                         className="w-full p-2 border rounded-md text-sm"
                         value={activeFilters.service}
                         onChange={(e) => setActiveFilters({ ...activeFilters, service: e.target.value })}
                       >
-                        <option value="">Todos los servicios</option>
+                        <option value="">{t('caseStudies.filters.allServices')}</option>
                         {filterOptions?.services.map((service) => (
                           <option key={service} value={service}>{service}</option>
                         ))}
@@ -156,7 +156,7 @@ export default function CaseStudies() {
             <div className="relative w-full md:w-96">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
               <Input
-                placeholder="Buscar casos de éxito..."
+                placeholder={t('caseStudies.search')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -167,7 +167,7 @@ export default function CaseStudies() {
           {/* Active Filters */}
           {hasActiveFilters && (
             <div className="flex flex-wrap items-center gap-2 mt-4">
-              <span className="text-sm text-foreground/60">Filtros activos:</span>
+              <span className="text-sm text-foreground/60">{t('caseStudies.filters.activeFilters')}</span>
               {activeFilters.industry && (
                 <BadgeFilter
                   label={activeFilters.industry}
@@ -192,7 +192,7 @@ export default function CaseStudies() {
               ))}
               {searchTerm && (
                 <BadgeFilter
-                  label={`Búsqueda: ${searchTerm}`}
+                  label={`${t('caseStudies.filters.search')} ${searchTerm}`}
                   onRemove={() => setSearchTerm('')}
                 />
               )}
@@ -202,7 +202,7 @@ export default function CaseStudies() {
                 onClick={clearFilters}
                 className="text-xs"
               >
-                Limpiar todos
+                {t('caseStudies.filters.clearAll')}
               </Button>
             </div>
           )}
@@ -224,8 +224,8 @@ export default function CaseStudies() {
           ) : !caseStudies || caseStudies.length === 0 ? (
             <EmptyState
               icon={FileText}
-              title="No se encontraron casos de éxito"
-              description="Intenta ajustar los filtros o la búsqueda para ver más resultados."
+              title={t('caseStudies.empty')}
+              description={t('caseStudies.emptyDescription')}
             />
           ) : (
             <>

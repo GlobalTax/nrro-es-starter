@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { useLanguage } from '@/hooks/useLanguage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
+  const { t, getLocalizedPath } = useLanguage();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -52,8 +54,8 @@ export default function Contact() {
       });
 
       toast({
-        title: 'Mensaje enviado',
-        description: 'Nos pondremos en contacto contigo en breve.',
+        title: t('contact.toast.success'),
+        description: t('contact.toast.successDescription'),
       });
 
       setFormData({
@@ -66,8 +68,8 @@ export default function Contact() {
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
-        title: 'Error al enviar',
-        description: 'Por favor, inténtalo de nuevo más tarde.',
+        title: t('contact.toast.error'),
+        description: t('contact.toast.errorDescription'),
         variant: 'destructive',
       });
     } finally {
@@ -78,19 +80,19 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Teléfono',
+      title: t('contact.info.phone'),
       value: '93 459 36 00',
       href: 'tel:+34934593600',
     },
     {
       icon: Mail,
-      title: 'Email',
+      title: t('contact.info.email'),
       value: 'info@nrro.es',
       href: 'mailto:info@nrro.es',
     },
     {
       icon: MapPin,
-      title: 'Dirección',
+      title: t('contact.info.address'),
       value: 'Carrer Ausias March número 36, 08010 Barcelona',
       href: 'https://maps.app.goo.gl/JjwmToznoU9Vx7zu9',
     },
@@ -99,8 +101,8 @@ export default function Contact() {
   return (
     <>
       <Meta
-        title="Contacto"
-        description="Contacta con NRRO - Navarro Tax Legal. Estamos en Barcelona para ayudarte con tu asesoría fiscal, contable y legal."
+        title={t('contact.meta.title')}
+        description={t('contact.meta.description')}
         keywords="contacto asesoría fiscal Barcelona, contacto navarro tax legal, consulta gratuita fiscal"
       />
 
@@ -109,13 +111,13 @@ export default function Contact() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>Contacto</BadgeHero>
+              <BadgeHero>{t('contact.hero.badge')}</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              Hablemos de tu proyecto
+              {t('contact.hero.title')}
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              Estamos aquí para ayudarte. Contáctanos y descubre cómo podemos impulsar tu negocio.
+              {t('contact.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -127,19 +129,19 @@ export default function Contact() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="animate-slide-up">
-              <Card className="shadow-medium border-border/50">
+                <Card className="shadow-medium border-border/50">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-serif">Envíanos un mensaje</CardTitle>
+                  <CardTitle className="text-2xl font-serif">{t('contact.form.title')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Nombre completo *</Label>
+                      <Label htmlFor="name">{t('contact.form.name')}</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Juan Pérez"
+                        placeholder={t('contact.form.namePlaceholder')}
                         required
                         className="border-border/50 focus:border-accent"
                       />
@@ -147,50 +149,50 @@ export default function Contact() {
 
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email *</Label>
+                        <Label htmlFor="email">{t('contact.form.email')}</Label>
                         <Input
                           id="email"
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="juan@ejemplo.com"
+                          placeholder={t('contact.form.emailPlaceholder')}
                           required
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Teléfono</Label>
+                        <Label htmlFor="phone">{t('contact.form.phone')}</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+34 600 000 000"
+                          placeholder={t('contact.form.phonePlaceholder')}
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="subject">Asunto *</Label>
+                      <Label htmlFor="subject">{t('contact.form.subject')}</Label>
                       <Input
                         id="subject"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="¿En qué podemos ayudarte?"
+                        placeholder={t('contact.form.subjectPlaceholder')}
                         required
                         className="border-border/50 focus:border-accent"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">Mensaje *</Label>
+                      <Label htmlFor="message">{t('contact.form.message')}</Label>
                       <Textarea
                         id="message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Cuéntanos más sobre tu situación..."
+                        placeholder={t('contact.form.messagePlaceholder')}
                         rows={6}
                         required
                         className="border-border/50 focus:border-accent resize-none"
@@ -203,7 +205,7 @@ export default function Contact() {
                       disabled={isSubmitting}
                       className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-soft"
                     >
-                      {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+                      {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
                       <Send className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
@@ -215,10 +217,10 @@ export default function Contact() {
             <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-                  Información de contacto
+                  {t('contact.info.title')}
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Estamos ubicados en el corazón de Barcelona. No dudes en visitarnos o contactarnos por cualquier medio.
+                  {t('contact.info.description')}
                 </p>
               </div>
 
@@ -260,16 +262,16 @@ export default function Contact() {
               <Card className="border-border/50 shadow-soft">
                 <CardContent className="p-6">
                   <h3 className="font-display font-normal text-foreground mb-4">
-                    Horario de atención
+                    {t('contact.hours.title')}
                   </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Lunes - Viernes</span>
-                      <span className="font-medium text-foreground">9:00 - 18:00</span>
+                      <span className="text-muted-foreground">{t('contact.hours.weekdays')}</span>
+                      <span className="font-medium text-foreground">{t('contact.hours.weekdaysTime')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Sábado - Domingo</span>
-                      <span className="font-medium text-foreground">Cerrado</span>
+                      <span className="text-muted-foreground">{t('contact.hours.weekend')}</span>
+                      <span className="font-medium text-foreground">{t('contact.hours.weekendTime')}</span>
                     </div>
                   </div>
                 </CardContent>

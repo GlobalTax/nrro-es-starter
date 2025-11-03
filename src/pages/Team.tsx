@@ -33,18 +33,17 @@ const Team = () => {
         {/* Hero */}
         <section className="bg-black py-32 md:py-48 text-center">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-6">
-                <BadgeHero>Equipo</BadgeHero>
-              </div>
-              <h1 className="service-hero-title mb-8">
-                Nuestro Equipo
-              </h1>
-              <p className="service-hero-subtitle max-w-3xl mx-auto">
-                Profesionales experimentados comprometidos con el éxito de nuestros clientes, 
-                aportando experiencia técnica y visión estratégica en cada proyecto.
-              </p>
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <BadgeHero>{t('team.hero.badge')}</BadgeHero>
             </div>
+            <h1 className="service-hero-title mb-8">
+              {t('team.hero.title')}
+            </h1>
+            <p className="service-hero-subtitle max-w-3xl mx-auto">
+              {t('team.hero.subtitle')}
+            </p>
+          </div>
           </div>
         </section>
 
@@ -56,17 +55,17 @@ const Team = () => {
               {positions.length > 0 && (
                 <div className="mb-6">
                   <label className="text-sm font-medium text-foreground mb-2 block">
-                    Filtrar por categoría:
+                    {t('team.filters.categoryLabel')}
                   </label>
                   <Select
                     value={activePosition || "all"}
                     onValueChange={(value) => setActivePosition(value === "all" ? null : value)}
                   >
                     <SelectTrigger className="w-full sm:w-64">
-                      <SelectValue placeholder="Todas las categorías" />
+                      <SelectValue placeholder={t('team.filters.allCategories')} />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
-                      <SelectItem value="all">Todas las categorías</SelectItem>
+                      <SelectItem value="all">{t('team.filters.allCategories')}</SelectItem>
                       {positions.map((position) => (
                         <SelectItem key={position} value={position}>
                           {position}
@@ -81,9 +80,9 @@ const Team = () => {
               {specializations.length > 0 && (
                 <div>
                   <div className="flex flex-wrap gap-2 items-center justify-center">
-                    <span className="text-sm font-normal text-muted-foreground">Filtrar por área:</span>
+                    <span className="text-sm font-normal text-muted-foreground">{t('team.filters.areaLabel')}</span>
                     <BadgeFilter
-                      label="Todos"
+                      label={t('team.filters.all')}
                       active={activeSpecialization === null}
                       onClick={() => setActiveSpecialization(null)}
                     />
@@ -127,11 +126,11 @@ const Team = () => {
             ) : (
               <EmptyState
                 icon={Users}
-                title="No hay miembros en esta área"
+                title={t('team.empty')}
                 description={
                   activeSpecialization
-                    ? `No se encontraron miembros del equipo en el área de ${activeSpecialization}.`
-                    : "No hay miembros del equipo disponibles en este momento."
+                    ? `${t('team.emptyDescription')} ${activeSpecialization}.`
+                    : t('team.emptyDescription')
                 }
               />
             )}
