@@ -29,12 +29,12 @@ export const LanguageSelector = () => {
           <span className="sm:hidden">{currentLanguage?.flag}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="z-[100] bg-background border-border shadow-xl">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
             onClick={() => setLanguage(lang.code)}
-            className={language === lang.code ? 'bg-accent' : ''}
+            className={language === lang.code ? 'bg-accent text-accent-foreground' : 'hover:bg-muted'}
           >
             <span className="mr-2">{lang.flag}</span>
             {lang.label}
