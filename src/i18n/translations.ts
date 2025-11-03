@@ -577,6 +577,92 @@ export const translations = {
       },
     },
   },
+  
+  // Legal pages CA
+  legal: {
+    meta: {
+      title: 'Avís Legal',
+      description: 'Avís legal i termes d\'ús del lloc web de Navarro Tax & Legal',
+    },
+    hero: {
+      title: 'Avís Legal',
+      subtitle: 'Termes i condicions d\'ús del lloc web',
+    },
+    lastUpdated: 'Última actualització: 1 de novembre de 2025',
+  },
+  
+  privacy: {
+    meta: {
+      title: 'Política de Privacitat',
+      description: 'Política de privacitat i protecció de dades de Navarro Tax & Legal',
+    },
+    hero: {
+      title: 'Política de Privacitat',
+      subtitle: 'Com protegim i tractem les teves dades personals',
+    },
+    lastUpdated: 'Última actualització: 1 de novembre de 2025',
+  },
+  
+  cookies: {
+    meta: {
+      title: 'Política de Cookies',
+      description: 'Informació sobre l\'ús de cookies al lloc web',
+    },
+    hero: {
+      title: 'Política de Cookies',
+      subtitle: 'Informació sobre l\'ús de cookies al nostre lloc web',
+    },
+    lastUpdated: 'Última actualització: 1 de novembre de 2025',
+  },
+  
+  notFound: {
+    meta: {
+      title: 'Pàgina no trobada',
+      description: 'La pàgina que busques no existeix o s\'ha mogut.',
+    },
+    title: 'Pàgina no trobada',
+    message: 'Ho sentim, la pàgina que busques no existeix o s\'ha mogut.',
+    homeButton: 'Anar a l\'inici',
+    contactButton: 'Contactar',
+  },
+  
+  leyBeckham: {
+    meta: {
+      title: 'Llei Beckham 2025 | Règim Impatriats Espanya',
+      description: 'Redueix el teu IRPF fins un 76% amb la Llei Beckham. Especialistes en règim especial d\'impatriats. Consulta gratuïta.',
+    },
+    hero: {
+      badge: 'RÈGIM ESPECIAL D\'IMPATRIATS 2025',
+      title: 'Llei Beckham: Redueix el teu IRPF fins un 76%',
+      ctaPrimary: 'Sol·licitar Consulta Gratuïta',
+      ctaSecondary: 'Veure Requisits',
+    },
+    contactForm: {
+      title: 'Sol·licita la teva Anàlisi d\'Elegibilitat',
+      submitButton: 'Sol·licitar Consulta Gratuïta sobre Llei Beckham',
+      submitting: 'Enviant...',
+    },
+  },
+  
+  orquest: {
+    meta: {
+      title: 'Orquest + KairosHR: Solució integral per a McDonald\'s',
+      description: 'La combinació perfecta per a franquiciats McDonald\'s: planificació intel·ligent amb Orquest i gestió laboral certificada amb KairosHR.',
+    },
+    hero: {
+      title: 'Orquest + KairosHR: La combinació guanyadora per a franquiciats McDonald\'s',
+      cta: 'Veure demo integrada',
+    },
+    benefits: {
+      title: 'Beneficis de la integració',
+    },
+    demoForm: {
+      title: 'Sol·licitar Demo Personalitzada',
+      submitButton: 'Sol·licitar Demo',
+      submitting: 'Enviant...',
+    },
+  },
+},
   en: {
     nav: {
       home: 'Home',
@@ -864,6 +950,251 @@ export const translations = {
         weekend: 'Saturday - Sunday',
         weekendTime: 'Closed',
       },
+    },
+  },
+  
+  // Legal pages EN
+  legal: {
+    meta: {
+      title: 'Legal Notice',
+      description: 'Legal notice and terms of use of Navarro Tax & Legal website',
+    },
+    hero: {
+      title: 'Legal Notice',
+      subtitle: 'Terms and conditions of website use',
+    },
+    lastUpdated: 'Last updated: November 1, 2025',
+  },
+  
+  privacy: {
+    meta: {
+      title: 'Privacy Policy',
+      description: 'Privacy policy and data protection of Navarro Tax & Legal',
+    },
+    hero: {
+      title: 'Privacy Policy',
+      subtitle: 'How we protect and process your personal data',
+    },
+    lastUpdated: 'Last updated: November 1, 2025',
+  },
+  
+  cookies: {
+    meta: {
+      title: 'Cookie Policy',
+      description: 'Information about the use of cookies on the website',
+    },
+    hero: {
+      title: 'Cookie Policy',
+      subtitle: 'Information about the use of cookies on our website',
+    },
+    lastUpdated: 'Last updated: November 1, 2025',
+  },
+  
+  notFound: {
+    meta: {
+      title: 'Page not found',
+      description: 'The page you are looking for does not exist or has been moved.',
+    },
+    title: 'Page not found',
+    message: 'Sorry, the page you are looking for does not exist or has been moved.',
+    homeButton: 'Go to home',
+    contactButton: 'Contact',
+  },
+  
+  leyBeckham: {
+    meta: {
+      title: 'Beckham Law 2025 | Spain Expat Tax Regime',
+      description: 'Reduce your income tax up to 76% with Beckham Law. Specialists in expat tax regime. Free consultation.',
+    },
+    hero: {
+      badge: 'SPECIAL EXPAT TAX REGIME 2025',
+      title: 'Beckham Law: Reduce your income tax up to 76%',
+      ctaPrimary: 'Request Free Consultation',
+      ctaSecondary: 'See Requirements',
+    },
+    contactForm: {
+      title: 'Request Your Eligibility Analysis',
+      submitButton: 'Request Free Consultation about Beckham Law',
+      submitting: 'Sending...',
+    },
+  },
+  
+  orquest: {
+    meta: {
+      title: 'Orquest + KairosHR: Comprehensive solution for McDonald\'s',
+      description: 'The perfect combination for McDonald\'s franchisees: intelligent planning with Orquest and certified HR management with KairosHR.',
+    },
+    hero: {
+      title: 'Orquest + KairosHR: The winning combination for McDonald\'s franchisees',
+      cta: 'View integrated demo',
+    },
+    benefits: {
+      title: 'Integration benefits',
+    },
+    demoForm: {
+      title: 'Request Personalized Demo',
+      submitButton: 'Request Demo',
+      submitting: 'Sending...',
+    },
+  },
+},
+  
+  // Legal pages
+  legal: {
+    meta: {
+      title: 'Aviso Legal',
+      description: 'Aviso legal y términos de uso del sitio web de Navarro Tax & Legal',
+      keywords: 'aviso legal, términos uso, información legal',
+    },
+    hero: {
+      title: 'Aviso Legal',
+      subtitle: 'Términos y condiciones de uso del sitio web',
+    },
+    lastUpdated: 'Última actualización: 1 de noviembre de 2025',
+  },
+  
+  privacy: {
+    meta: {
+      title: 'Política de Privacidad',
+      description: 'Política de privacidad y protección de datos de Navarro Tax & Legal',
+      keywords: 'privacidad, protección datos, RGPD',
+    },
+    hero: {
+      title: 'Política de Privacidad',
+      subtitle: 'Cómo protegemos y tratamos tus datos personales',
+    },
+    lastUpdated: 'Última actualización: 1 de noviembre de 2025',
+  },
+  
+  cookies: {
+    meta: {
+      title: 'Política de Cookies',
+      description: 'Información sobre el uso de cookies en el sitio web',
+      keywords: 'cookies, privacidad, datos navegación',
+    },
+    hero: {
+      title: 'Política de Cookies',
+      subtitle: 'Información sobre el uso de cookies en nuestro sitio web',
+    },
+    lastUpdated: 'Última actualización: 1 de noviembre de 2025',
+  },
+  
+  notFound: {
+    meta: {
+      title: 'Página no encontrada',
+      description: 'La página que buscas no existe o ha sido movida.',
+    },
+    title: 'Página no encontrada',
+    message: 'Lo sentimos, la página que buscas no existe o ha sido movida.',
+    homeButton: 'Ir al inicio',
+    contactButton: 'Contactar',
+  },
+  
+  // Ley Beckham landing page
+  leyBeckham: {
+    meta: {
+      title: 'Ley Beckham 2025 | Régimen Impatriados España',
+      description: 'Reduce tu IRPF hasta un 76% con la Ley Beckham. Especialistas en régimen especial de impatriados. Consulta gratuita. +25 años de experiencia.',
+      keywords: 'ley beckham, régimen impatriados españa, fiscal impatriados, artículo 93 irpf, tributación impatriados',
+    },
+    hero: {
+      badge: 'RÉGIMEN ESPECIAL DE IMPATRIADOS 2025',
+      title: 'Ley Beckham: Reduce tu IRPF hasta un 76%',
+      description: 'Tributa al 24% fijo durante 6 años en España. Especialistas en fiscalidad internacional con más de 25 años de experiencia.',
+      ctaPrimary: 'Solicitar Consulta Gratuita',
+      ctaSecondary: 'Ver Requisitos',
+      stats: {
+        successRate: 'Tasa de éxito',
+        experience: 'Años de experiencia',
+        taxRate: 'Tipo fijo vs 47% IRPF',
+      },
+    },
+    contactForm: {
+      title: 'Solicita tu Análisis de Elegibilidad',
+      description: 'Completa el formulario y te contactaremos en menos de 24 horas para evaluar tu caso sin compromiso',
+      submitButton: 'Solicitar Consulta Gratuita sobre Ley Beckham',
+      submitting: 'Enviando...',
+      confidential: '100% Confidencial',
+      response24h: 'Respuesta en 24h',
+      noCommitment: 'Sin compromiso',
+      disclaimer: 'Este formulario es específico para consultas sobre la Ley Beckham. Para otros servicios, visita nuestra página de contacto.',
+    },
+  },
+  
+  // Orquest KairosHR landing page
+  orquest: {
+    meta: {
+      title: 'Orquest + KairosHR: Solución integral para McDonald\'s',
+      description: 'La combinación perfecta para franquiciados McDonald\'s: planificación inteligente con Orquest y gestión laboral certificada con KairosHR.',
+      keywords: 'Orquest, KairosHR, McDonald\'s, planificación laboral, gestión de personal, firma digital, control de presencia',
+    },
+    hero: {
+      title: 'Orquest + KairosHR: La combinación ganadora para franquiciados McDonald\'s',
+      subtitle: 'Planifica con inteligencia. Gestiona con seguridad. Todo bajo control.',
+      cta: 'Ver demo integrada',
+    },
+    comparison: {
+      title: 'Qué hace cada solución',
+      orquestTitle: 'Orquest',
+      orquestSubtitle: 'Planificación inteligente',
+      kairosTitle: 'KairosHR',
+      kairosSubtitle: 'Gestión laboral certificada',
+    },
+    synergy: {
+      title: 'Cómo se complementan',
+      headers: {
+        phase: 'Fase',
+        orquest: 'Orquest',
+        kairoshr: 'KairosHR',
+        result: 'Resultado',
+      },
+      rows: {
+        planning: 'Planificación',
+        timeTracking: 'Control de presencia',
+        signature: 'Firma digital',
+        payroll: 'Nóminas y asesoría',
+      },
+    },
+    benefits: {
+      title: 'Beneficios de la integración',
+      time: {
+        title: 'Reduce tiempo administrativo',
+        description: 'Automatiza procesos repetitivos y dedica más tiempo a tu negocio.',
+      },
+      compliance: {
+        title: 'Cumple con la normativa',
+        description: 'Registro de jornada legal, firma certificada y trazabilidad completa.',
+      },
+      sanctions: {
+        title: 'Evita sanciones laborales',
+        description: 'Sistema homologado que minimiza riesgos legales y multas.',
+      },
+      integration: {
+        title: 'Integración total',
+        description: 'Planificación y documentación en un mismo flujo de trabajo.',
+      },
+    },
+    demo: {
+      title: 'Solicita una demo combinada',
+      description: 'Descubre cómo Orquest y KairosHR se integran para optimizar la gestión del personal en tu restaurante.',
+      cta: 'Solicitar demo',
+    },
+    footer: {
+      copyright: '© 2025 Navarro Tax Legal. Todos los derechos reservados.',
+    },
+    demoForm: {
+      title: 'Solicitar Demo Personalizada',
+      description: 'Completa el formulario y te contactaremos para mostrarte cómo Orquest + KairosHR pueden transformar la gestión de tu restaurante.',
+      name: 'Nombre completo',
+      email: 'Email corporativo',
+      restaurantName: 'Nombre del restaurante',
+      message: 'Cuéntanos sobre tu restaurante (opcional)',
+      submitButton: 'Solicitar Demo',
+      submitting: 'Enviando...',
+      success: 'Demo solicitada con éxito',
+      successDescription: 'Nos pondremos en contacto contigo pronto para coordinar la demostración.',
+      error: 'Error al enviar',
+      errorDescription: 'Por favor, inténtalo de nuevo más tarde.',
     },
   },
 };
