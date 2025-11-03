@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Input } from "@/components/ui/input";
 import { BadgeFilter } from "@/components/ui/badge-filter";
 import { CustomPagination } from "@/components/ui/custom-pagination";
@@ -17,10 +18,33 @@ import { supabase } from "@/integrations/supabase/client";
 const ITEMS_PER_PAGE = 12;
 
 const Services = () => {
+  const { trackPageView, trackEvent } = useAnalytics();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeArea, setActiveArea] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("servicios");
+  }, []);
+  
+  // Track search (debounced)
+  useEffect(() => {
+    if (searchTerm) {
+      const timer = setTimeout(() => {
+        trackEvent("search", { search_term: searchTerm, search_location: "servicios" });
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [searchTerm]);
+  
+  // Track filter changes
+  useEffect(() => {
+    if (activeArea) {
+      trackEvent("filter_applied", { filter_type: "area", filter_value: activeArea, page: "servicios" });
+    }
+  }, [activeArea]);
 
   // Fetch filter options from database
   const { data: filterOptions, isLoading: isLoadingOptions } = useServicesFilterOptions();
@@ -148,11 +172,18 @@ const Services = () => {
                       : "space-y-6"
                   )}>
                     {services.map((service: any) => (
-                      <ServiceCard
+                      <div 
                         key={service.id}
-                        service={service}
-                        variant={viewMode}
-                      />
+                        onClick={() => trackEvent("service_card_click", { 
+                          service_name: service.name, 
+                          service_slug: service.slug 
+                        })}
+                      >
+                        <ServiceCard
+                          service={service}
+                          variant={viewMode}
+                        />
+                      </div>
                     ))}
                   </div>
 

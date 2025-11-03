@@ -5,9 +5,17 @@ import { BadgeHero } from '@/components/ui/badge-hero';
 import { usePageContent } from '@/hooks/usePageContent';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export default function About() {
+  const { trackPageView, trackCTAClick } = useAnalytics();
   const { data: heroContent } = usePageContent('about', 'hero');
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("nosotros");
+  }, []);
   
   const hero = heroContent?.[0]?.content || {
     overline: 'NOSOTROS',
@@ -322,7 +330,12 @@ export default function About() {
           {/* CTA para ver el equipo completo */}
           <div className="max-w-3xl mx-auto text-center mt-12">
             <Link to="/equipo">
-              <Button variant="outline" size="lg" className="group">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="group"
+                onClick={() => trackCTAClick("Conoce al equipo completo", "nosotros_team_section")}
+              >
                 Conoce al equipo completo
                 <Users className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
@@ -342,7 +355,12 @@ export default function About() {
               25 años de experiencia. Un nuevo despacho. El mismo compromiso.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" asChild>
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                asChild
+                onClick={() => trackCTAClick("Solicitar consulta", "nosotros_final_cta")}
+              >
                 <Link to="/contacto">Solicitar consulta</Link>
               </Button>
               <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20" asChild>

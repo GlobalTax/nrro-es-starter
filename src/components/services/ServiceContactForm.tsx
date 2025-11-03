@@ -1,6 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -32,6 +33,7 @@ interface ServiceContactFormProps {
 }
 
 export const ServiceContactForm = ({ serviceName }: ServiceContactFormProps) => {
+  const { trackFormSubmit } = useAnalytics();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,6 +63,13 @@ export const ServiceContactForm = ({ serviceName }: ServiceContactFormProps) => 
       });
 
       if (error) throw error;
+
+      // Track form submission
+      trackFormSubmit("servicio_consulta", {
+        service_name: serviceName,
+        has_phone: !!values.phone,
+        has_company: !!values.company,
+      });
       
       toast.success("Mensaje enviado", {
         description: "Nos pondremos en contacto contigo pronto.",

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ import { BadgeHero } from '@/components/ui/badge-hero';
 import { supabase } from '@/integrations/supabase/client';
 
 export default function Contact() {
+  const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -20,6 +22,11 @@ export default function Contact() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("contacto");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +44,12 @@ export default function Contact() {
       });
 
       if (error) throw error;
+
+      // Track form submission
+      trackFormSubmit("contacto_general", {
+        subject: formData.subject,
+        has_phone: !!formData.phone,
+      });
 
       toast({
         title: 'Mensaje enviado',
@@ -231,6 +244,7 @@ export default function Contact() {
                               target={item.title === 'Dirección' ? '_blank' : undefined}
                               rel={item.title === 'Dirección' ? 'noopener noreferrer' : undefined}
                               className="text-muted-foreground hover:text-accent transition-colors"
+                              onClick={() => trackCTAClick(item.title, "contacto_info")}
                             >
                               {item.value}
                             </a>

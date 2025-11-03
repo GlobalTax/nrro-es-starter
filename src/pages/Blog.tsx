@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Meta } from "@/components/seo/Meta";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,8 +13,24 @@ import { BlogPostCard } from "@/components/blog/BlogPostCard";
 const ITEMS_PER_PAGE = 9;
 
 const Blog = () => {
+  const { trackPageView, trackEvent } = useAnalytics();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("blog");
+  }, []);
+  
+  // Track search (debounced)
+  useEffect(() => {
+    if (searchQuery) {
+      const timer = setTimeout(() => {
+        trackEvent("search", { search_term: searchQuery, search_location: "blog" });
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [searchQuery]);
 
   const { data, isLoading } = useBlogSearch({
     searchQuery: searchQuery || undefined,
@@ -86,17 +103,25 @@ const Blog = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (
-                  <BlogPostCard
+                  <div 
                     key={post.id}
-                    slug={post.slug_es}
-                    category={post.category}
-                    title={post.title_es}
-                    excerpt={post.excerpt_es}
-                    authorName={post.author_name}
-                    authorSpecialization={post.author_specialization}
-                    publishedAt={post.published_at}
-                    readTime={post.read_time}
-                  />
+                    onClick={() => trackEvent("blog_card_click", { 
+                      post_title: post.title_es, 
+                      post_slug: post.slug_es,
+                      category: post.category 
+                    })}
+                  >
+                    <BlogPostCard
+                      slug={post.slug_es}
+                      category={post.category}
+                      title={post.title_es}
+                      excerpt={post.excerpt_es}
+                      authorName={post.author_name}
+                      authorSpecialization={post.author_specialization}
+                      publishedAt={post.published_at}
+                      readTime={post.read_time}
+                    />
+                  </div>
                 ))}
               </div>
 

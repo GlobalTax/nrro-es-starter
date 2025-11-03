@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,6 +43,7 @@ interface CareerApplicationFormProps {
 }
 
 export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: CareerApplicationFormProps) => {
+  const { trackFormSubmit } = useAnalytics();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -136,6 +138,14 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
         console.error("Insert error:", insertError);
         throw new Error("Error al guardar tu candidatura");
       }
+
+      // Track form submission
+      trackFormSubmit("carrera_aplicacion", {
+        position: data.puesto_solicitado,
+        job_position_id: jobPositionId || null,
+        has_cv: !!publicUrl,
+        has_linkedin: !!data.linkedin_url,
+      });
 
       toast.success("¡Candidatura enviada con éxito!", {
         description: "Revisaremos tu perfil y te contactaremos pronto.",

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,7 +26,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
 
 const Home = () => {
-  const { trackCTAClick } = useAnalytics();
+  const { trackCTAClick, trackPageView } = useAnalytics();
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("home");
+  }, []);
   
   // Fetch dynamic content from DB
   const { data: heroData } = usePageContent('home', 'hero');
@@ -137,7 +143,13 @@ const Home = () => {
                     {heroContent?.cta_primary?.text || "Nuestros Servicios"}
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/20 bg-white/10 text-white hover:bg-white/20">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-white/20 bg-white/10 text-white hover:bg-white/20"
+                  onClick={() => trackCTAClick("Contactar", "home_hero")}
+                >
                   <Link to={heroContent?.cta_secondary?.link || "/contacto"}>
                     {heroContent?.cta_secondary?.text || "Contactar"}
                   </Link>
@@ -341,7 +353,12 @@ const Home = () => {
             )}
 
             <div className="text-center mt-12">
-              <Button asChild variant="outline" size="lg">
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg"
+                onClick={() => trackCTAClick("Ver Todos los Artículos", "home_blog_section")}
+              >
                 <Link to="/blog">Ver Todos los Artículos</Link>
               </Button>
             </div>

@@ -2,8 +2,9 @@ import { Meta } from "@/components/seo/Meta";
 import { CareerApplicationForm } from "@/components/careers/CareerApplicationForm";
 import { OpenPositionsSection } from "@/components/careers/OpenPositionsSection";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { JobPosition } from "@/types/jobPosition";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   Target,
   Users,
@@ -86,11 +87,25 @@ const areas = [
 ];
 
 export default function Careers() {
+  const { trackPageView, trackEvent } = useAnalytics();
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
   const formRef = useRef<HTMLElement>(null);
+  
+  // Track page view
+  useEffect(() => {
+    trackPageView("carreras");
+  }, []);
 
   const handleApplyToPosition = (position: JobPosition) => {
     setSelectedPosition(position);
+    
+    // Track apply click
+    trackEvent("apply_to_position_click", {
+      position_title: position.title,
+      position_id: position.id,
+      location: position.location,
+    });
+    
     // Scroll suave al formulario
     setTimeout(() => {
       formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });

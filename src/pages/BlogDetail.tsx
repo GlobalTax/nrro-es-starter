@@ -1,6 +1,7 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
@@ -14,6 +15,7 @@ import { BlogCTASection } from "@/components/blog/BlogCTASection";
 
 const BlogDetail = () => {
   const { slug } = useParams();
+  const { trackPageView } = useAnalytics();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get("preview");
   const queryClient = useQueryClient();
@@ -86,6 +88,13 @@ const BlogDetail = () => {
   const isLoading = previewToken ? isIdLoading || isPreviewLoading : isDbLoading;
   const post = previewToken ? previewData?.data : dbData;
   const isPreviewMode = !!previewToken && !!previewData;
+  
+  // Track page view when post is loaded
+  useEffect(() => {
+    if (post && !previewToken) {
+      trackPageView("blog_detalle");
+    }
+  }, [post, slug, previewToken]);
 
   if (isLoading) {
     return (

@@ -1,7 +1,9 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { Loader2, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Meta } from "@/components/seo/Meta";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { services as mockServices } from "@/data/mockData";
@@ -18,6 +20,7 @@ import { StatCard } from "@/components/ui/stat-card";
 
 const ServiceDetail = () => {
   const { slug } = useParams();
+  const { trackPageView } = useAnalytics();
 
   // Fetch from database
   const { data: dbService, isLoading } = useQuery({
@@ -37,10 +40,17 @@ const ServiceDetail = () => {
     },
     enabled: !!slug,
   });
-
+  
   // Fallback to mock data
   const mockService = mockServices.find(s => s.slug === slug);
   const service: any = dbService || mockService;
+  
+  // Track page view when service is loaded
+  useEffect(() => {
+    if (service) {
+      trackPageView("servicio_detalle");
+    }
+  }, [service, slug]);
 
   if (isLoading) {
     return (
