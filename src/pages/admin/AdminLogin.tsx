@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,19 +10,30 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, AlertTriangle, Clock } from 'lucide-react';
 import { z } from 'zod';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
 });
 
+const registerSchema = z.object({
+  email: z.string().email('Email inválido'),
+  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Las contraseñas no coinciden",
+  path: ["confirmPassword"],
+});
+
 export const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [remainingAttempts, setRemainingAttempts] = useState<number | null>(null);
   const [lockoutUntil, setLockoutUntil] = useState<string | null>(null);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -108,6 +120,89 @@ export const AdminLogin = () => {
     }
   };
 
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    // Validación con Zod
+    const result = registerSchema.safeParse({ email, password, confirmPassword });
+    if (!result.success) {
+      const fieldErrors: any = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0]] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // 1. Verificar que el email esté pre-registrado
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('id, email')
+        .eq('email', email)
+        .single();
+
+      if (profileError || !profile) {
+        toast({
+          title: 'Email no autorizado',
+          description: 'Este email no está autorizado para registrarse. Contacta al administrador.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // 2. Crear usuario en Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/admin`,
+          data: {
+            profile_id: profile.id,
+          }
+        }
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        // 3. Actualizar el profile con el auth user id
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update({ id: authData.user.id })
+          .eq('email', email);
+
+        if (updateError) {
+          console.error('Error updating profile:', updateError);
+        }
+
+        toast({
+          title: 'Registro exitoso',
+          description: 'Tu cuenta ha sido creada. Revisa tu email para confirmar.',
+        });
+
+        // Limpiar formulario
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      toast({
+        title: 'Error en el registro',
+        description: error.message || 'No se pudo completar el registro',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const isLockedOut = lockoutUntil && new Date(lockoutUntil) > new Date();
   const lockoutMinutes = isLockedOut 
     ? Math.ceil((new Date(lockoutUntil!).getTime() - new Date().getTime()) / 60000)
@@ -123,7 +218,7 @@ export const AdminLogin = () => {
             </div>
           </div>
           <CardTitle className="text-2xl">Admin Panel</CardTitle>
-          <CardDescription>Sign in to access the admin dashboard</CardDescription>
+          <CardDescription>Accede o registra tu cuenta</CardDescription>
         </CardHeader>
         <CardContent>
           {isLockedOut && (
@@ -144,46 +239,122 @@ export const AdminLogin = () => {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@example.com"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrors((prev) => ({ ...prev, email: undefined }));
-                }}
-                required
-                disabled={isLoading || isLockedOut}
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrors((prev) => ({ ...prev, password: undefined }));
-                }}
-                required
-                disabled={isLoading || isLockedOut}
-              />
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password}</p>
-              )}
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading || isLockedOut}>
-              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-            </Button>
-          </form>
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
+              <TabsTrigger value="register">Registrarse</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="login">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="admin@example.com"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrors((prev) => ({ ...prev, email: undefined }));
+                    }}
+                    required
+                    disabled={isLoading || isLockedOut}
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Contraseña</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrors((prev) => ({ ...prev, password: undefined }));
+                    }}
+                    required
+                    disabled={isLoading || isLockedOut}
+                  />
+                  {errors.password && (
+                    <p className="text-sm text-destructive">{errors.password}</p>
+                  )}
+                </div>
+                <Button type="submit" className="w-full" disabled={isLoading || isLockedOut}>
+                  {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="register">
+              <form onSubmit={handleRegister} className="space-y-4">
+                <Alert>
+                  <AlertDescription>
+                    Solo emails autorizados pueden registrarse. Contacta al administrador si necesitas acceso.
+                  </AlertDescription>
+                </Alert>
+                <div className="space-y-2">
+                  <Label htmlFor="register-email">Email</Label>
+                  <Input
+                    id="register-email"
+                    type="email"
+                    placeholder="admin@example.com"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrors((prev) => ({ ...prev, email: undefined }));
+                    }}
+                    required
+                    disabled={isLoading}
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="register-password">Contraseña</Label>
+                  <Input
+                    id="register-password"
+                    type="password"
+                    placeholder="Mínimo 8 caracteres"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrors((prev) => ({ ...prev, password: undefined }));
+                    }}
+                    required
+                    disabled={isLoading}
+                  />
+                  {errors.password && (
+                    <p className="text-sm text-destructive">{errors.password}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirm-password">Confirmar Contraseña</Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Repite tu contraseña"
+                    value={confirmPassword}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                      setErrors((prev) => ({ ...prev, confirmPassword: undefined }));
+                    }}
+                    required
+                    disabled={isLoading}
+                  />
+                  {errors.confirmPassword && (
+                    <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                  )}
+                </div>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? 'Registrando...' : 'Registrarse'}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

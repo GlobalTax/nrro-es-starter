@@ -147,8 +147,8 @@ export const AdminUsers = () => {
       setNewUserRole('editor');
       
       toast({
-        title: 'Usuario creado',
-        description: `Usuario ${data.email} registrado. El usuario debe completar su registro en /admin/login para establecer su contraseña.`,
+        title: 'Usuario pre-registrado',
+        description: `Email ${data.email} autorizado. El usuario puede completar su registro en /admin/login.`,
       });
     },
     onError: (error: any) => {
@@ -274,9 +274,9 @@ export const AdminUsers = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Crear Nuevo Usuario Admin</DialogTitle>
+              <DialogTitle>Pre-registrar Nuevo Usuario</DialogTitle>
               <DialogDescription>
-                Registra un nuevo usuario. El usuario deberá completar su registro en /admin/login.
+                Autoriza un email para que pueda registrarse en /admin/login. El usuario creará su propia contraseña al registrarse.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
