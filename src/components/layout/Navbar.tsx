@@ -4,31 +4,10 @@ import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/hooks/useLanguage";
+import { LanguageSelector } from "./LanguageSelector";
 
-const navigation = [
-  { name: "Servicios", href: "/servicios" },
-  { name: "Sobre Nosotros", href: "/nosotros" },
-  { name: "Blog", href: "/blog" },
-  { name: "Equipo", href: "/equipo" },
-  { name: "Talento", href: "/talento" },
-];
-
-const serviciosMenu = [
-  { name: "Empresa Familiar", href: "/servicios/empresa-familiar" },
-  { name: "Compraventa de empresas", href: "/servicios/compraventa-empresas" },
-  { name: "Asesoramiento Fiscal", href: "/servicios/asesoramiento-fiscal" },
-  { name: "Mercantil y derecho societario", href: "/servicios/mercantil-derecho-societario" },
-  { name: "Asesoramiento Contable y Laboral", href: "/servicios/asesoramiento-contable-laboral" }
-];
-
-const areasMenu = [
-  { name: "Procedimiento tributario", href: "/servicios/procedimiento-tributario" },
-  { name: "Conflicto de Socios", href: "/servicios/conflicto-socios" },
-  { name: "Capital Riesgo", href: "/servicios/capital-riesgo" },
-  { name: "Internacionalización de empresas", href: "/servicios/internacionalizacion" },
-  { name: "Procesal Civil", href: "/servicios/procesal-civil" },
-  { name: "Valoración de empresas", href: "/servicios/valoracion-empresas" }
-];
+// Servicios y áreas son estáticos por ahora, se podrían cargar de la BD en el futuro
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,14 +16,35 @@ export const Navbar = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLElement>(null);
+  const { t, language, getLocalizedPath } = useLanguage();
+  
+  const navigation = [
+    { name: t('nav.services'), href: getLocalizedPath('services') },
+    { name: t('nav.about'), href: getLocalizedPath('about') },
+    { name: t('nav.blog'), href: getLocalizedPath('blog') },
+    { name: t('nav.team'), href: getLocalizedPath('team') },
+    { name: t('nav.careers'), href: getLocalizedPath('careers') },
+  ];
+
+  const serviciosMenu = [
+    { name: "Empresa Familiar", href: `/${language}/servicios/empresa-familiar` },
+    { name: "Compraventa de empresas", href: `/${language}/servicios/compraventa-empresas` },
+    { name: "Asesoramiento Fiscal", href: `/${language}/servicios/asesoramiento-fiscal` },
+    { name: "Mercantil y derecho societario", href: `/${language}/servicios/mercantil-derecho-societario` },
+    { name: "Asesoramiento Contable y Laboral", href: `/${language}/servicios/asesoramiento-contable-laboral` }
+  ];
+
+  const areasMenu = [
+    { name: "Procedimiento tributario", href: `/${language}/servicios/procedimiento-tributario` },
+    { name: "Conflicto de Socios", href: `/${language}/servicios/conflicto-socios` },
+    { name: "Capital Riesgo", href: `/${language}/servicios/capital-riesgo` },
+    { name: "Internacionalización de empresas", href: `/${language}/servicios/internacionalizacion` },
+    { name: "Procesal Civil", href: `/${language}/servicios/procesal-civil` },
+    { name: "Valoración de empresas", href: `/${language}/servicios/valoracion-empresas` }
+  ];
 
   const isActive = (path: string) => {
-    // Para rutas dinámicas, verificar si empieza con el path base
-    if (path === '/servicios' || path === '/blog') {
-      return location.pathname.startsWith(path);
-    }
-    // Comparación exacta para otras rutas
-    return location.pathname === path;
+    return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export const Navbar = () => {
           <div className="hidden md:flex md:items-center md:gap-10 lg:gap-12">
             {navigation.map((item) => {
               // Si es "Servicios", renderizar el dropdown
-              if (item.name === "Servicios") {
+              if (item.name === t('nav.services')) {
                 return (
                   <div 
                     key={item.name}
@@ -157,20 +157,20 @@ export const Navbar = () => {
                     <button
                       className={cn(
                         "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight flex items-center gap-1",
-                        location.pathname.startsWith('/servicios')
+                        isActive(getLocalizedPath('services'))
                           ? isLightMode 
                             ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
                             : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
                           : isLightMode
                             ? "text-foreground/70 hover:text-foreground"
                             : "text-primary-foreground/75 hover:text-white"
-                      )}
-                    >
-                      Servicios
-                      <ChevronDown className={cn(
-                        "h-4 w-4 transition-transform duration-200",
-                        serviciosOpen && "rotate-180"
-                      )} />
+                       )}
+                      >
+                        {t('nav.services')}
+                        <ChevronDown className={cn(
+                          "h-4 w-4 transition-transform duration-200",
+                          serviciosOpen && "rotate-180"
+                        )} />
                     </button>
 
                     {/* Dropdown Content */}
@@ -289,8 +289,9 @@ export const Navbar = () => {
                 </Link>
               );
             })}
+            <LanguageSelector />
             <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium ml-2">
-              <Link to="/contact">Contacto</Link>
+              <Link to={getLocalizedPath('contact')}>{t('nav.contact')}</Link>
             </Button>
           </div>
 
@@ -339,10 +340,13 @@ export const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="px-4 pt-2">
+              <LanguageSelector />
+            </div>
             <div className="px-4 pt-4">
               <Button asChild size="default" className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-md font-medium">
-                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  Contacto
+                <Link to={getLocalizedPath('contact')} onClick={() => setMobileMenuOpen(false)}>
+                  {t('nav.contact')}
                 </Link>
               </Button>
             </div>

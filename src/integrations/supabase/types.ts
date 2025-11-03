@@ -278,6 +278,9 @@ export type Database = {
       case_studies: {
         Row: {
           challenge: string
+          challenge_ca: string | null
+          challenge_en: string | null
+          challenge_es: string | null
           client_industry: string
           client_logo_url: string | null
           client_name: string
@@ -285,37 +288,70 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           detailed_content: string | null
+          detailed_content_ca: string | null
+          detailed_content_en: string | null
+          detailed_content_es: string | null
           display_order: number | null
           gallery: Json | null
           hero_image_url: string | null
           hero_subtitle: string | null
+          hero_subtitle_ca: string | null
+          hero_subtitle_en: string | null
+          hero_subtitle_es: string | null
           hero_title: string
+          hero_title_ca: string | null
+          hero_title_en: string | null
+          hero_title_es: string | null
           id: string
           is_featured: boolean | null
           meta_description: string | null
+          meta_description_ca: string | null
+          meta_description_en: string | null
+          meta_description_es: string | null
           meta_title: string | null
+          meta_title_ca: string | null
+          meta_title_en: string | null
+          meta_title_es: string | null
           metrics: Json | null
           primary_service: string | null
           project_duration: string | null
           published_at: string | null
           related_services: string[] | null
           results_summary: string
+          results_summary_ca: string | null
+          results_summary_en: string | null
+          results_summary_es: string | null
           slug: string
+          slug_ca: string | null
+          slug_en: string | null
+          slug_es: string | null
           solution: string
+          solution_ca: string | null
+          solution_en: string | null
+          solution_es: string | null
           status: Database["public"]["Enums"]["case_study_status"]
           tags: string[] | null
           testimonial_author: string | null
           testimonial_avatar_url: string | null
           testimonial_position: string | null
           testimonial_text: string | null
+          testimonial_text_ca: string | null
+          testimonial_text_en: string | null
+          testimonial_text_es: string | null
           timeline: Json | null
           title: string
+          title_ca: string | null
+          title_en: string | null
+          title_es: string | null
           updated_at: string | null
           updated_by: string | null
           view_count: number | null
         }
         Insert: {
           challenge: string
+          challenge_ca?: string | null
+          challenge_en?: string | null
+          challenge_es?: string | null
           client_industry: string
           client_logo_url?: string | null
           client_name: string
@@ -323,37 +359,70 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           detailed_content?: string | null
+          detailed_content_ca?: string | null
+          detailed_content_en?: string | null
+          detailed_content_es?: string | null
           display_order?: number | null
           gallery?: Json | null
           hero_image_url?: string | null
           hero_subtitle?: string | null
+          hero_subtitle_ca?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_es?: string | null
           hero_title: string
+          hero_title_ca?: string | null
+          hero_title_en?: string | null
+          hero_title_es?: string | null
           id?: string
           is_featured?: boolean | null
           meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
           meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
           metrics?: Json | null
           primary_service?: string | null
           project_duration?: string | null
           published_at?: string | null
           related_services?: string[] | null
           results_summary: string
+          results_summary_ca?: string | null
+          results_summary_en?: string | null
+          results_summary_es?: string | null
           slug: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           solution: string
+          solution_ca?: string | null
+          solution_en?: string | null
+          solution_es?: string | null
           status?: Database["public"]["Enums"]["case_study_status"]
           tags?: string[] | null
           testimonial_author?: string | null
           testimonial_avatar_url?: string | null
           testimonial_position?: string | null
           testimonial_text?: string | null
+          testimonial_text_ca?: string | null
+          testimonial_text_en?: string | null
+          testimonial_text_es?: string | null
           timeline?: Json | null
           title: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
           view_count?: number | null
         }
         Update: {
           challenge?: string
+          challenge_ca?: string | null
+          challenge_en?: string | null
+          challenge_es?: string | null
           client_industry?: string
           client_logo_url?: string | null
           client_name?: string
@@ -361,31 +430,61 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           detailed_content?: string | null
+          detailed_content_ca?: string | null
+          detailed_content_en?: string | null
+          detailed_content_es?: string | null
           display_order?: number | null
           gallery?: Json | null
           hero_image_url?: string | null
           hero_subtitle?: string | null
+          hero_subtitle_ca?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_es?: string | null
           hero_title?: string
+          hero_title_ca?: string | null
+          hero_title_en?: string | null
+          hero_title_es?: string | null
           id?: string
           is_featured?: boolean | null
           meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
           meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
           metrics?: Json | null
           primary_service?: string | null
           project_duration?: string | null
           published_at?: string | null
           related_services?: string[] | null
           results_summary?: string
+          results_summary_ca?: string | null
+          results_summary_en?: string | null
+          results_summary_es?: string | null
           slug?: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           solution?: string
+          solution_ca?: string | null
+          solution_en?: string | null
+          solution_es?: string | null
           status?: Database["public"]["Enums"]["case_study_status"]
           tags?: string[] | null
           testimonial_author?: string | null
           testimonial_avatar_url?: string | null
           testimonial_position?: string | null
           testimonial_text?: string | null
+          testimonial_text_ca?: string | null
+          testimonial_text_en?: string | null
+          testimonial_text_es?: string | null
           timeline?: Json | null
           title?: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
           view_count?: number | null
@@ -785,17 +884,32 @@ export type Database = {
           created_by: string | null
           department: string
           description: string
+          description_ca: string | null
+          description_en: string | null
+          description_es: string | null
           display_order: number | null
           id: string
           is_featured: boolean | null
           location: string
           published_at: string | null
           requirements: string[]
+          requirements_ca: string[] | null
+          requirements_en: string[] | null
+          requirements_es: string[] | null
           responsibilities: string[]
+          responsibilities_ca: string[] | null
+          responsibilities_en: string[] | null
+          responsibilities_es: string[] | null
           salary_range: string | null
           slug: string
+          slug_ca: string | null
+          slug_en: string | null
+          slug_es: string | null
           status: Database["public"]["Enums"]["job_status"]
           title: string
+          title_ca: string | null
+          title_en: string | null
+          title_es: string | null
           updated_at: string | null
           updated_by: string | null
           working_hours: string
@@ -806,17 +920,32 @@ export type Database = {
           created_by?: string | null
           department: string
           description: string
+          description_ca?: string | null
+          description_en?: string | null
+          description_es?: string | null
           display_order?: number | null
           id?: string
           is_featured?: boolean | null
           location: string
           published_at?: string | null
           requirements?: string[]
+          requirements_ca?: string[] | null
+          requirements_en?: string[] | null
+          requirements_es?: string[] | null
           responsibilities?: string[]
+          responsibilities_ca?: string[] | null
+          responsibilities_en?: string[] | null
+          responsibilities_es?: string[] | null
           salary_range?: string | null
           slug: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           status?: Database["public"]["Enums"]["job_status"]
           title: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
           working_hours: string
@@ -827,17 +956,32 @@ export type Database = {
           created_by?: string | null
           department?: string
           description?: string
+          description_ca?: string | null
+          description_en?: string | null
+          description_es?: string | null
           display_order?: number | null
           id?: string
           is_featured?: boolean | null
           location?: string
           published_at?: string | null
           requirements?: string[]
+          requirements_ca?: string[] | null
+          requirements_en?: string[] | null
+          requirements_es?: string[] | null
           responsibilities?: string[]
+          responsibilities_ca?: string[] | null
+          responsibilities_en?: string[] | null
+          responsibilities_es?: string[] | null
           salary_range?: string | null
           slug?: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           status?: Database["public"]["Enums"]["job_status"]
           title?: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
           working_hours?: string
@@ -1465,66 +1609,138 @@ export type Database = {
         Row: {
           area: string
           benefits: string | null
+          benefits_ca: string | null
+          benefits_en: string | null
+          benefits_es: string | null
           created_at: string | null
           created_by: string | null
           description: string
+          description_ca: string | null
+          description_en: string | null
+          description_es: string | null
           display_order: number | null
           features: string[]
+          features_ca: string[] | null
+          features_en: string[] | null
+          features_es: string[] | null
           icon_name: string
           id: string
           is_active: boolean | null
           meta_description: string | null
+          meta_description_ca: string | null
+          meta_description_en: string | null
+          meta_description_es: string | null
           meta_title: string | null
+          meta_title_ca: string | null
+          meta_title_en: string | null
+          meta_title_es: string | null
           metodologia: Json | null
           name: string
+          name_ca: string | null
+          name_en: string | null
+          name_es: string | null
           servicios_transversales: Json | null
           slug: string
+          slug_ca: string | null
+          slug_en: string | null
+          slug_es: string | null
           stats: Json | null
           typical_clients: string[]
+          typical_clients_ca: string[] | null
+          typical_clients_en: string[] | null
+          typical_clients_es: string[] | null
           updated_at: string | null
           updated_by: string | null
         }
         Insert: {
           area: string
           benefits?: string | null
+          benefits_ca?: string | null
+          benefits_en?: string | null
+          benefits_es?: string | null
           created_at?: string | null
           created_by?: string | null
           description: string
+          description_ca?: string | null
+          description_en?: string | null
+          description_es?: string | null
           display_order?: number | null
           features?: string[]
+          features_ca?: string[] | null
+          features_en?: string[] | null
+          features_es?: string[] | null
           icon_name: string
           id?: string
           is_active?: boolean | null
           meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
           meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
           metodologia?: Json | null
           name: string
+          name_ca?: string | null
+          name_en?: string | null
+          name_es?: string | null
           servicios_transversales?: Json | null
           slug: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           stats?: Json | null
           typical_clients?: string[]
+          typical_clients_ca?: string[] | null
+          typical_clients_en?: string[] | null
+          typical_clients_es?: string[] | null
           updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
           area?: string
           benefits?: string | null
+          benefits_ca?: string | null
+          benefits_en?: string | null
+          benefits_es?: string | null
           created_at?: string | null
           created_by?: string | null
           description?: string
+          description_ca?: string | null
+          description_en?: string | null
+          description_es?: string | null
           display_order?: number | null
           features?: string[]
+          features_ca?: string[] | null
+          features_en?: string[] | null
+          features_es?: string[] | null
           icon_name?: string
           id?: string
           is_active?: boolean | null
           meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
           meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
           metodologia?: Json | null
           name?: string
+          name_ca?: string | null
+          name_en?: string | null
+          name_es?: string | null
           servicios_transversales?: Json | null
           slug?: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
           stats?: Json | null
           typical_clients?: string[]
+          typical_clients_ca?: string[] | null
+          typical_clients_en?: string[] | null
+          typical_clients_es?: string[] | null
           updated_at?: string | null
           updated_by?: string | null
         }
@@ -1597,6 +1813,9 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          bio_ca: string | null
+          bio_en: string | null
+          bio_es: string | null
           created_at: string | null
           email: string | null
           id: string
@@ -1605,12 +1824,21 @@ export type Database = {
           name: string
           order_index: number | null
           position: string | null
+          position_ca: string | null
+          position_en: string | null
+          position_es: string | null
           specialization: string | null
+          specialization_ca: string | null
+          specialization_en: string | null
+          specialization_es: string | null
           updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          bio_ca?: string | null
+          bio_en?: string | null
+          bio_es?: string | null
           created_at?: string | null
           email?: string | null
           id?: string
@@ -1619,12 +1847,21 @@ export type Database = {
           name: string
           order_index?: number | null
           position?: string | null
+          position_ca?: string | null
+          position_en?: string | null
+          position_es?: string | null
           specialization?: string | null
+          specialization_ca?: string | null
+          specialization_en?: string | null
+          specialization_es?: string | null
           updated_at?: string | null
         }
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          bio_ca?: string | null
+          bio_en?: string | null
+          bio_es?: string | null
           created_at?: string | null
           email?: string | null
           id?: string
@@ -1633,7 +1870,13 @@ export type Database = {
           name?: string
           order_index?: number | null
           position?: string | null
+          position_ca?: string | null
+          position_en?: string | null
+          position_es?: string | null
           specialization?: string | null
+          specialization_ca?: string | null
+          specialization_en?: string | null
+          specialization_es?: string | null
           updated_at?: string | null
         }
         Relationships: []
