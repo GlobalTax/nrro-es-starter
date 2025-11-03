@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { CaseStudy } from "@/types/caseStudy";
+import { useLanguage } from "./useLanguage";
+import { getLocalizedField } from "@/i18n/utils";
 
 interface CaseStudiesParams {
   searchQuery?: string;
@@ -13,8 +15,10 @@ interface CaseStudiesParams {
 }
 
 export const useCaseStudies = (params: CaseStudiesParams) => {
+  const { language } = useLanguage();
+  
   return useQuery({
-    queryKey: ["case-studies", params],
+    queryKey: ["case-studies", params, language],
     queryFn: async () => {
       const { data, error } = await supabase.rpc("search_case_studies", {
         search_query: params.searchQuery || null,
@@ -27,8 +31,19 @@ export const useCaseStudies = (params: CaseStudiesParams) => {
       });
 
       if (error) throw error;
-      return (data || []).map(item => ({
+      return (data || []).map((item: any) => ({
         ...item,
+        title: getLocalizedField(item, 'title', language) || item.title,
+        slug: getLocalizedField(item, 'slug', language) || item.slug,
+        hero_title: getLocalizedField(item, 'hero_title', language) || item.hero_title,
+        hero_subtitle: getLocalizedField(item, 'hero_subtitle', language) || item.hero_subtitle,
+        challenge: getLocalizedField(item, 'challenge', language) || item.challenge,
+        solution: getLocalizedField(item, 'solution', language) || item.solution,
+        results_summary: getLocalizedField(item, 'results_summary', language) || item.results_summary,
+        detailed_content: getLocalizedField(item, 'detailed_content', language) || item.detailed_content,
+        testimonial_text: getLocalizedField(item, 'testimonial_text', language) || item.testimonial_text,
+        meta_title: getLocalizedField(item, 'meta_title', language) || item.meta_title,
+        meta_description: getLocalizedField(item, 'meta_description', language) || item.meta_description,
         metrics: Array.isArray(item.metrics) ? item.metrics : [],
         tags: Array.isArray(item.tags) ? item.tags : [],
       })) as unknown as CaseStudy[];

@@ -2,13 +2,17 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { JobPosition } from "@/types/jobPosition";
 import { toast } from "sonner";
+import { useLanguage } from "./useLanguage";
+import { getLocalizedField, getLocalizedArray } from "@/i18n/utils";
 
 export const useJobPositions = (filters?: {
   status?: 'draft' | 'published' | 'closed';
   department?: string;
 }) => {
+  const { language } = useLanguage();
+  
   return useQuery({
-    queryKey: ["job-positions", filters],
+    queryKey: ["job-positions", filters, language],
     queryFn: async () => {
       let query = supabase
         .from("job_positions")
@@ -28,23 +32,45 @@ export const useJobPositions = (filters?: {
       const { data, error } = await query;
 
       if (error) throw error;
-      return data as JobPosition[];
+      
+      // Map localized fields
+      return data?.map((job: any) => ({
+        ...job,
+        title: getLocalizedField(job, 'title', language) || job.title,
+        slug: getLocalizedField(job, 'slug', language) || job.slug,
+        description: getLocalizedField(job, 'description', language) || job.description,
+        requirements: getLocalizedArray(job, 'requirements', language),
+        responsibilities: getLocalizedArray(job, 'responsibilities', language),
+      })) as JobPosition[];
     },
   });
 };
 
 export const useJobPosition = (slug: string) => {
+  const { language } = useLanguage();
+  
   return useQuery({
-    queryKey: ["job-position", slug],
+    queryKey: ["job-position", slug, language],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("job_positions")
         .select("*")
-        .eq("slug", slug)
-        .single();
+        .or(`slug_es.eq.${slug},slug_ca.eq.${slug},slug_en.eq.${slug}`);
 
       if (error) throw error;
-      return data as JobPosition;
+      if (!data || data.length === 0) throw new Error("Job position not found");
+      
+      const job = data[0] as any;
+      
+      // Map localized fields
+      return {
+        ...job,
+        title: getLocalizedField(job, 'title', language) || job.title,
+        slug: getLocalizedField(job, 'slug', language) || job.slug,
+        description: getLocalizedField(job, 'description', language) || job.description,
+        requirements: getLocalizedArray(job, 'requirements', language),
+        responsibilities: getLocalizedArray(job, 'responsibilities', language),
+      } as JobPosition;
     },
     enabled: !!slug,
   });

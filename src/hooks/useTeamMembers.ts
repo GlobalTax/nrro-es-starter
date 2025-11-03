@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from './useLanguage';
+import { getLocalizedField } from '@/i18n/utils';
 
 export interface TeamMember {
   id: string;
@@ -15,8 +17,10 @@ export interface TeamMember {
 }
 
 export function useTeamMembers() {
+  const { language } = useLanguage();
+  
   return useQuery({
-    queryKey: ['team-members'],
+    queryKey: ['team-members', language],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('team_members')
@@ -25,7 +29,14 @@ export function useTeamMembers() {
         .order('order_index');
 
       if (error) throw error;
-      return data as TeamMember[];
+      
+      // Map localized fields
+      return data?.map((member: any) => ({
+        ...member,
+        position: getLocalizedField(member, 'position', language) || member.position,
+        bio: getLocalizedField(member, 'bio', language) || member.bio,
+        specialization: getLocalizedField(member, 'specialization', language) || member.specialization,
+      })) as TeamMember[];
     },
   });
 }
