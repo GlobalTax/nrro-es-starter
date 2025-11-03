@@ -25,8 +25,32 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { Loader2 } from 'lucide-react';
+
+// Opciones permitidas para Position (ordenadas por jerarquía)
+const POSITION_OPTIONS = [
+  { value: 'SENIOR', label: 'Senior' },
+  { value: 'ASOCIADO', label: 'Asociado' },
+  { value: 'JUNIOR', label: 'Junior' },
+  { value: 'MASTER SCHOLAR', label: 'Master Scholar' },
+] as const;
+
+// Opciones permitidas para Specialization (ordenadas alfabéticamente)
+const SPECIALIZATION_OPTIONS = [
+  { value: 'CONTABILIDAD', label: 'Contabilidad' },
+  { value: 'FISCALIDAD', label: 'Fiscalidad' },
+  { value: 'LABORAL', label: 'Laboral' },
+  { value: 'M&A', label: 'M&A' },
+  { value: 'SERVICIOS GLOBALES', label: 'Servicios Globales' },
+] as const;
 
 const teamMemberSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -246,9 +270,20 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Position *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Senior Consultant" {...field} />
-                    </FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select position" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {POSITION_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -261,9 +296,20 @@ export function TeamMemberFormDialog({ open, onClose, member, onSuccess }: TeamM
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Specialization</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Tax Law" {...field} />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} value={field.value || undefined}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select specialization" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {SPECIALIZATION_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
