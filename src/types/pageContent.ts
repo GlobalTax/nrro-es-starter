@@ -176,3 +176,61 @@ export interface CTAFinalContent {
   cta_secundario_texto?: string;
   cta_secundario_url?: string;
 }
+
+// About page content types
+export interface StoryContent {
+  overline: string;
+  titulo: string;
+  parrafos: string[];
+  destacado: string;
+}
+
+export interface TimelineHito {
+  periodo: string;
+  titulo: string;
+  descripcion: string;
+  icon: string;
+}
+
+export interface TimelineContent {
+  overline: string;
+  hitos: TimelineHito[];
+}
+
+export interface ValorItem {
+  icon: string;
+  titulo: string;
+  descripcion: string;
+}
+
+export interface AboutValuesContent {
+  overline: string;
+  valores: ValorItem[];
+}
+
+export interface DiferenciacionCard {
+  icon: string;
+  titulo: string;
+  descripcion: string;
+}
+
+export interface DiferenciacionContent {
+  overline: string;
+  cards: DiferenciacionCard[];
+}
+
+export interface AboutStatsContent {
+  overline: string;
+  stats: Array<{
+    valor: string;
+    descripcion: string;
+  }>;
+}
+
+export interface FounderContent {
+  overline: string;
+  nombre: string;
+  parrafos: string[];
+  cta_texto: string;
+  cta_url: string;
+}

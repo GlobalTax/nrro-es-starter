@@ -23,6 +23,11 @@ const sectionTypes = [
   { value: 'kpis', label: 'KPIs (4 items)' },
   { value: 'datos', label: 'Datos/Estadísticas (6 items)' },
   { value: 'about', label: 'About Section' },
+  { value: 'story', label: 'Story (About Page)' },
+  { value: 'timeline', label: 'Timeline (About Page)' },
+  { value: 'values', label: 'Values (About Page)' },
+  { value: 'diferenciacion', label: 'Diferenciación (About Page)' },
+  { value: 'founder', label: 'Founder (About Page)' },
   { value: 'servicios_destacados', label: 'Servicios Destacados (4 cards)' },
   { value: 'introduccion', label: 'Introducción Servicios' },
   { value: 'areas_destacadas', label: 'Áreas Destacadas' },
@@ -33,7 +38,6 @@ const sectionTypes = [
   { value: 'tecnologia', label: 'Tecnología/Logos' },
   { value: 'clientes', label: 'Clientes/Logos Carrusel' },
   { value: 'logos', label: 'Logos Grid' },
-  { value: 'values', label: 'Values/Benefits' },
   { value: 'process', label: 'Process Steps' },
   { value: 'featured_services', label: 'Featured Services' },
   { value: 'custom', label: 'Custom Section' },
@@ -356,6 +360,40 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
         cta_secundario_texto: 'Ver Casos de Éxito',
         cta_secundario_url: '/casos-de-exito'
       },
+      story: {
+        overline: 'Mi trayectoria',
+        titulo: '25 años construyendo relaciones de confianza',
+        parrafos: [
+          'Primer párrafo de la historia...',
+          'Segundo párrafo...',
+          'Tercer párrafo...'
+        ],
+        destacado: 'Frase destacada final'
+      },
+      timeline: {
+        overline: 'Trayectoria',
+        hitos: [
+          { periodo: '2000-2016', titulo: 'Garrigues', descripcion: 'Descripción', icon: 'Briefcase' },
+          { periodo: '16 años', titulo: 'Especialización', descripcion: 'Descripción', icon: 'TrendingUp' }
+        ]
+      },
+      diferenciacion: {
+        overline: 'Diferenciación',
+        cards: [
+          { icon: 'Award', titulo: 'Título 1', descripcion: 'Descripción 1' },
+          { icon: 'Users', titulo: 'Título 2', descripcion: 'Descripción 2' }
+        ]
+      },
+      founder: {
+        overline: 'Fundador',
+        nombre: 'Samuel L. Navarro',
+        parrafos: [
+          'Primer párrafo sobre el fundador...',
+          'Segundo párrafo...'
+        ],
+        cta_texto: 'Conoce al equipo completo',
+        cta_url: '/equipo'
+      }
     };
     return templates[type] || {};
   };
