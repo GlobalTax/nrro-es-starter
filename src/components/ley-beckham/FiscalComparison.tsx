@@ -12,7 +12,7 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export const FiscalComparison = () => {
-  const { t } = useLanguage();
+  const { t, tDynamic } = useLanguage();
   const comparisons = [
     {
       income: "60.000 €",
@@ -142,7 +142,7 @@ export const FiscalComparison = () => {
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {[0, 1, 2, 3].map((i) => (
-                    <li key={i}>• {t(`leyBeckham.fiscalComparison.irpfCard.items.${i}`)}</li>
+                    <li key={i}>• {tDynamic(`leyBeckham.fiscalComparison.irpfCard.items.${i}`)}</li>
                   ))}
                 </ul>
               </CardContent>
@@ -156,7 +156,7 @@ export const FiscalComparison = () => {
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {[0, 1, 2, 3].map((i) => (
-                    <li key={i}>• {t(`leyBeckham.fiscalComparison.beckhamCard.items.${i}`)}</li>
+                    <li key={i}>• {tDynamic(`leyBeckham.fiscalComparison.beckhamCard.items.${i}`)}</li>
                   ))}
                 </ul>
               </CardContent>

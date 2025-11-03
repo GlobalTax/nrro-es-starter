@@ -3,7 +3,7 @@ import { TrendingDown, Calendar, Globe, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export const BenefitsGrid = () => {
-  const { t } = useLanguage();
+  const { t, tDynamic } = useLanguage();
 
   return (
     <section className="py-20 md:py-28 bg-neutral-50">
@@ -37,10 +37,10 @@ export const BenefitsGrid = () => {
                   
                   <div>
                     <h3 className="text-xl font-normal mb-2">
-                      {t(`leyBeckham.benefits.items.${index}.title`)}
+                      {tDynamic(`leyBeckham.benefits.items.${index}.title`)}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {t(`leyBeckham.benefits.items.${index}.description`)}
+                      {tDynamic(`leyBeckham.benefits.items.${index}.description`)}
                     </p>
                   </div>
                 </CardContent>

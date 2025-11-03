@@ -3,7 +3,7 @@ import { CheckCircle, AlertCircle } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export const RequirementsChecklist = () => {
-  const { t } = useLanguage();
+  const { t, tDynamic } = useLanguage();
 
   return (
     <section id="requisitos" className="py-20 md:py-28 bg-white">
@@ -22,7 +22,7 @@ export const RequirementsChecklist = () => {
 
         <div className="max-w-4xl mx-auto space-y-4">
           {[0, 1, 2, 3, 4].map((index) => {
-            const isImportant = t(`leyBeckham.requirements.items.${index}.isKey`) === 'true';
+            const isImportant = tDynamic(`leyBeckham.requirements.items.${index}.isKey`) === 'true';
             
             return (
               <Card key={index} className="border-l-4 border-l-primary bg-card border border-border/50">
@@ -43,7 +43,7 @@ export const RequirementsChecklist = () => {
                     <div className="flex-1">
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <h3 className="font-normal text-lg">
-                          {index + 1}. {t(`leyBeckham.requirements.items.${index}.title`)}
+                          {index + 1}. {tDynamic(`leyBeckham.requirements.items.${index}.title`)}
                         </h3>
                         {isImportant && (
                           <span className="text-xs font-normal text-primary bg-primary/10 px-2 py-1 rounded-full whitespace-nowrap">
@@ -52,7 +52,7 @@ export const RequirementsChecklist = () => {
                         )}
                       </div>
                       <p className="text-muted-foreground">
-                        {t(`leyBeckham.requirements.items.${index}.description`)}
+                        {tDynamic(`leyBeckham.requirements.items.${index}.description`)}
                       </p>
                     </div>
                   </div>
