@@ -12,9 +12,11 @@ export const Meta = ({
   title,
   description,
   keywords,
-  ogImage = "https://lovable.dev/opengraph-image-p98pqg.png",
+  ogImage = "https://nrro.es/og-image.png",
   canonicalUrl,
 }: MetaProps) => {
+  const baseUrl = "https://nrro.es";
+  
   useEffect(() => {
     // Update title
     document.title = `${title} | NRRO`;
@@ -51,15 +53,17 @@ export const Meta = ({
     });
 
     // Update canonical
-    if (canonicalUrl) {
-      let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-      if (!canonical) {
-        canonical = document.createElement("link");
-        canonical.rel = "canonical";
-        document.head.appendChild(canonical);
-      }
-      canonical.href = canonicalUrl;
+    const fullCanonicalUrl = canonicalUrl 
+      ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}`)
+      : `${baseUrl}${window.location.pathname}`;
+      
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
     }
+    canonical.href = fullCanonicalUrl;
   }, [title, description, keywords, ogImage, canonicalUrl]);
 
   return null;
