@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useLanguage } from "./useLanguage";
-import { getLocalizedField, getLocalizedArray } from "@/i18n/utils";
 
 interface ServicesSearchParams {
   searchQuery?: string;
@@ -11,10 +9,8 @@ interface ServicesSearchParams {
 }
 
 export const useServicesSearch = (params: ServicesSearchParams) => {
-  const { language } = useLanguage();
-  
   return useQuery({
-    queryKey: ["services-search", params, language],
+    queryKey: ["services-search", params],
     queryFn: async () => {
       // @ts-ignore - New tables not in types yet
       const supabaseAny = supabase as any;
@@ -23,10 +19,10 @@ export const useServicesSearch = (params: ServicesSearchParams) => {
         .select('*', { count: 'exact' })
         .eq('is_active', true);
 
-      // Apply search filter on localized fields
+      // Apply search filter
       if (params.searchQuery) {
         query = query.or(
-          `name_${language}.ilike.%${params.searchQuery}%,description_${language}.ilike.%${params.searchQuery}%,name_es.ilike.%${params.searchQuery}%,description_es.ilike.%${params.searchQuery}%`
+          `name_es.ilike.%${params.searchQuery}%,description_es.ilike.%${params.searchQuery}%`
         );
       }
 
@@ -51,21 +47,8 @@ export const useServicesSearch = (params: ServicesSearchParams) => {
 
       if (error) throw error;
       
-      // Map localized fields
-      const localizedServices = data?.map((service: any) => ({
-        ...service,
-        name: getLocalizedField(service, 'name', language) || service.name,
-        slug: getLocalizedField(service, 'slug', language) || service.slug,
-        description: getLocalizedField(service, 'description', language) || service.description,
-        features: getLocalizedArray(service, 'features', language),
-        typical_clients: getLocalizedArray(service, 'typical_clients', language),
-        benefits: getLocalizedField(service, 'benefits', language) || service.benefits,
-        meta_title: getLocalizedField(service, 'meta_title', language) || service.meta_title,
-        meta_description: getLocalizedField(service, 'meta_description', language) || service.meta_description,
-      })) || [];
-      
       return {
-        services: localizedServices,
+        services: data || [],
         totalCount: count || 0
       };
     },

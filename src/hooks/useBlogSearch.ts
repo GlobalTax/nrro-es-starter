@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useLanguage } from "./useLanguage";
-import { getLocalizedField } from "@/i18n/utils";
 
 interface BlogSearchParams {
   searchQuery?: string;
@@ -13,10 +11,8 @@ interface BlogSearchParams {
 }
 
 export const useBlogSearch = (params: BlogSearchParams) => {
-  const { language } = useLanguage();
-  
   return useQuery({
-    queryKey: ["blog-search", params, language],
+    queryKey: ["blog-search", params],
     queryFn: async () => {
       // Fetch paginated posts
       const { data: posts, error: postsError } = await supabase.rpc("search_blog_posts", {
@@ -40,19 +36,8 @@ export const useBlogSearch = (params: BlogSearchParams) => {
 
       if (countError) throw countError;
 
-      // Map localized fields
-      const localizedPosts = posts?.map((post: any) => ({
-        ...post,
-        title: getLocalizedField(post, 'title', language) || post.title,
-        slug: getLocalizedField(post, 'slug', language) || post.slug,
-        excerpt: getLocalizedField(post, 'excerpt', language) || post.excerpt,
-        content: getLocalizedField(post, 'content', language) || post.content,
-        seo_title: getLocalizedField(post, 'seo_title', language) || post.seo_title,
-        seo_description: getLocalizedField(post, 'seo_description', language) || post.seo_description,
-      })) || [];
-
       return {
-        posts: localizedPosts,
+        posts: posts || [],
         totalCount: Number(totalCount) || 0,
       };
     },

@@ -2,15 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { LandingLayout } from "@/components/layout/LandingLayout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { LanguageSync } from "@/components/layout/LanguageSync";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -49,82 +47,32 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <LanguageSync />
-            <Routes>
-              {/* Redirect root to Spanish */}
-              <Route path="/" element={<Navigate to="/es" replace />} />
-              
-              {/* Spanish routes */}
-              <Route path="/es" element={<Layout><Home /></Layout>} />
-              <Route path="/es/servicios" element={<Layout><Services /></Layout>} />
-              <Route path="/es/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
-              <Route path="/es/casos-exito" element={<Layout><CaseStudies /></Layout>} />
-              <Route path="/es/casos-exito/:slug" element={<Layout><CaseStudyDetail /></Layout>} />
-              <Route path="/es/nosotros" element={<Layout><About /></Layout>} />
-              <Route path="/es/blog" element={<Layout><Blog /></Layout>} />
-              <Route path="/es/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
-              <Route path="/es/equipo" element={<Layout><Team /></Layout>} />
-              <Route path="/es/metodologia" element={<Layout><Methodology /></Layout>} />
-              <Route path="/es/contacto" element={<Layout><Contact /></Layout>} />
-              <Route path="/es/privacidad" element={<Layout><Privacy /></Layout>} />
-              <Route path="/es/aviso-legal" element={<Layout><Legal /></Layout>} />
-              <Route path="/es/cookies" element={<Layout><Cookies /></Layout>} />
-              <Route path="/es/talento" element={<Layout><Careers /></Layout>} />
-              <Route path="/es/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
-              
-              {/* Catalan routes */}
-              <Route path="/ca" element={<Layout><Home /></Layout>} />
-              <Route path="/ca/serveis" element={<Layout><Services /></Layout>} />
-              <Route path="/ca/serveis/:slug" element={<Layout><ServiceDetail /></Layout>} />
-              <Route path="/ca/casos-exit" element={<Layout><CaseStudies /></Layout>} />
-              <Route path="/ca/casos-exit/:slug" element={<Layout><CaseStudyDetail /></Layout>} />
-              <Route path="/ca/nosaltres" element={<Layout><About /></Layout>} />
-              <Route path="/ca/blog" element={<Layout><Blog /></Layout>} />
-              <Route path="/ca/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
-              <Route path="/ca/equip" element={<Layout><Team /></Layout>} />
-              <Route path="/ca/metodologia" element={<Layout><Methodology /></Layout>} />
-              <Route path="/ca/contacte" element={<Layout><Contact /></Layout>} />
-              <Route path="/ca/privacitat" element={<Layout><Privacy /></Layout>} />
-              <Route path="/ca/avis-legal" element={<Layout><Legal /></Layout>} />
-              <Route path="/ca/cookies" element={<Layout><Cookies /></Layout>} />
-              <Route path="/ca/talent" element={<Layout><Careers /></Layout>} />
-              
-              {/* English routes */}
-              <Route path="/en" element={<Layout><Home /></Layout>} />
-              <Route path="/en/services" element={<Layout><Services /></Layout>} />
-              <Route path="/en/services/:slug" element={<Layout><ServiceDetail /></Layout>} />
-              <Route path="/en/case-studies" element={<Layout><CaseStudies /></Layout>} />
-              <Route path="/en/case-studies/:slug" element={<Layout><CaseStudyDetail /></Layout>} />
-              <Route path="/en/about" element={<Layout><About /></Layout>} />
-              <Route path="/en/blog" element={<Layout><Blog /></Layout>} />
-              <Route path="/en/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
-              <Route path="/en/team" element={<Layout><Team /></Layout>} />
-              <Route path="/en/methodology" element={<Layout><Methodology /></Layout>} />
-              <Route path="/en/contact" element={<Layout><Contact /></Layout>} />
-              <Route path="/en/privacy" element={<Layout><Privacy /></Layout>} />
-              <Route path="/en/legal-notice" element={<Layout><Legal /></Layout>} />
-              <Route path="/en/cookies" element={<Layout><Cookies /></Layout>} />
-              <Route path="/en/talent" element={<Layout><Careers /></Layout>} />
-              
-              {/* Legacy routes - redirect to Spanish */}
-              <Route path="/servicios" element={<Navigate to="/es/servicios" replace />} />
-              <Route path="/servicios/:slug" element={<Navigate to="/es/servicios/:slug" replace />} />
-              <Route path="/casos-de-exito" element={<Navigate to="/es/casos-exito" replace />} />
-              <Route path="/nosotros" element={<Navigate to="/es/nosotros" replace />} />
-              <Route path="/blog" element={<Navigate to="/es/blog" replace />} />
-              <Route path="/equipo" element={<Navigate to="/es/equipo" replace />} />
-              <Route path="/contacto" element={<Navigate to="/es/contacto" replace />} />
-              <Route path="/talento" element={<Navigate to="/es/talento" replace />} />
-              
-              {/* Special landings (no language prefix) */}
-              <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
-              <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            {/* Main routes */}
+            <Route path="/" element={<Layout><Home /></Layout>} />
+            <Route path="/servicios" element={<Layout><Services /></Layout>} />
+            <Route path="/servicios/:slug" element={<Layout><ServiceDetail /></Layout>} />
+            <Route path="/casos-exito" element={<Layout><CaseStudies /></Layout>} />
+            <Route path="/casos-exito/:slug" element={<Layout><CaseStudyDetail /></Layout>} />
+            <Route path="/nosotros" element={<Layout><About /></Layout>} />
+            <Route path="/blog" element={<Layout><Blog /></Layout>} />
+            <Route path="/blog/:slug" element={<Layout><BlogDetail /></Layout>} />
+            <Route path="/equipo" element={<Layout><Team /></Layout>} />
+            <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
+            <Route path="/contacto" element={<Layout><Contact /></Layout>} />
+            <Route path="/privacidad" element={<Layout><Privacy /></Layout>} />
+            <Route path="/aviso-legal" element={<Layout><Legal /></Layout>} />
+            <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
+            <Route path="/talento" element={<Layout><Careers /></Layout>} />
+            
+            {/* Special landings */}
+            <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
+            <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
 
             {/* Admin routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -158,11 +106,10 @@ const App = () => (
               />
             </Route>
 
-              <Route path="*" element={<Layout><NotFound /></Layout>} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </LanguageProvider>
+            <Route path="*" element={<Layout><NotFound /></Layout>} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
