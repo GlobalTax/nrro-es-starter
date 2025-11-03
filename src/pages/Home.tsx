@@ -8,6 +8,7 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
+import { FeaturedServiceCard } from "@/components/home/FeaturedServiceCard";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -242,31 +243,16 @@ const Home = () => {
             )}
 
             {/* Grid de servicios */}
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
               {serviciosDestacados?.services?.map((service, index) => (
-                <div key={index} className="bg-neutral-50 rounded-lg p-8 lg:p-10">
-                  <h3 className="text-3xl lg:text-4xl font-normal mb-4 leading-tight">
-                    {service.title}
-                  </h3>
-                  <p className="service-body mb-6">
-                    {service.description}
-                  </p>
-                  
-                  <div className="mb-6 pb-4 border-b border-border">
-                    <span className="font-mono font-light text-xs tracking-wide uppercase text-foreground/60">
-                      {service.category}
-                    </span>
-                  </div>
-                  
-                  <ul className="space-y-3">
-                    {service.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start gap-3 text-sm text-foreground/70">
-                        <Check className="h-5 w-5 flex-shrink-0 text-foreground/40 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <FeaturedServiceCard
+                  key={index}
+                  title={service.title}
+                  description={service.description}
+                  category={service.category}
+                  features={service.features}
+                  slug={(service as any).slug}
+                />
               ))}
             </div>
           </div>
