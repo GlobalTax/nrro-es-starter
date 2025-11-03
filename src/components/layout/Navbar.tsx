@@ -289,7 +289,7 @@ export const Navbar = () => {
                 </Link>
               );
             })}
-            <LanguageSelector />
+            <LanguageSelector isLightMode={isLightMode} />
             <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium ml-2">
               <Link to={getLocalizedPath('contact')}>{t('nav.contact')}</Link>
             </Button>
@@ -340,10 +340,18 @@ export const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <div className="px-4 pt-2">
-              <LanguageSelector />
+            <div className="px-4 pt-4 pb-2 border-t border-border/50 mt-2">
+              <div className="flex items-center justify-between">
+                <span className={cn(
+                  "text-sm font-medium",
+                  isLightMode ? "text-foreground/70" : "text-white/70"
+                )}>
+                  Idioma
+                </span>
+                <LanguageSelector isLightMode={isLightMode} />
+              </div>
             </div>
-            <div className="px-4 pt-4">
+            <div className="px-4 pt-2">
               <Button asChild size="default" className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-md font-medium">
                 <Link to={getLocalizedPath('contact')} onClick={() => setMobileMenuOpen(false)}>
                   {t('nav.contact')}
