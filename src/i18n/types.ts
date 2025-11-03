@@ -13,6 +13,11 @@ export type RouteTranslations = {
 };
 
 export const routeTranslations: RouteTranslations = {
+  home: {
+    es: '',
+    ca: '',
+    en: '',
+  },
   services: {
     es: 'servicios',
     ca: 'serveis',

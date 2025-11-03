@@ -20,37 +20,41 @@ export const useLanguage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const t = (key: TranslationPath): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
+  // Helper to get value from a specific language
+  const getFrom = (lang: Language, path: string): string | undefined => {
+    const keys = path.split('.');
+    let value: any = translations[lang];
 
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        console.warn(`Translation key not found: ${key} for language: ${language}`);
-        return key;
+        return undefined;
       }
     }
 
-    return typeof value === 'string' ? value : key;
+    return typeof value === 'string' ? value : undefined;
+  };
+
+  const t = (key: TranslationPath): string => {
+    // Try current language first, then fallback to Spanish
+    const val = getFrom(language, key) ?? getFrom('es', key);
+    
+    if (val !== undefined) return val;
+    
+    console.warn(`Translation key not found: ${key} for language: ${language}, and missing in fallback 'es'`);
+    return key;
   };
 
   // Dynamic translation function for template literal keys
   const tDynamic = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
-
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        console.warn(`Translation key not found: ${key} for language: ${language}`);
-        return key;
-      }
-    }
-
-    return typeof value === 'string' ? value : key;
+    // Try current language first, then fallback to Spanish
+    const val = getFrom(language, key) ?? getFrom('es', key);
+    
+    if (val !== undefined) return val;
+    
+    console.warn(`Translation key not found: ${key} for language: ${language}, and missing in fallback 'es'`);
+    return key;
   };
 
   const getLocalizedPath = (routeKey: keyof typeof routeTranslations, lang?: Language): string => {
