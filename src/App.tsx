@@ -39,6 +39,7 @@ import { AdminSettings } from "./pages/admin/AdminSettings";
 import AdminCandidatos from "./pages/admin/AdminCandidatos";
 import AdminJobPositions from "./pages/admin/AdminJobPositions";
 import AdminContactLeads from "./pages/admin/AdminContactLeads";
+import AdminLeyBeckhamLeads from "./pages/admin/AdminLeyBeckhamLeads";
 import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
 import AdminTechnology from "./pages/admin/AdminTechnology";
 
@@ -94,6 +95,7 @@ const App = () => (
               <Route path="job-positions" element={<AdminJobPositions />} />
               <Route path="candidatos" element={<AdminCandidatos />} />
               <Route path="contact-leads" element={<AdminContactLeads />} />
+              <Route path="ley-beckham-leads" element={<AdminLeyBeckhamLeads />} />
               <Route path="demo-requests" element={<AdminDemoRequests />} />
               <Route path="technology" element={<AdminTechnology />} />
               <Route

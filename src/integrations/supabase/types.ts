@@ -988,6 +988,212 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_documents: {
+        Row: {
+          created_at: string | null
+          document_name: string
+          document_type: string
+          file_url: string | null
+          id: string
+          is_received: boolean | null
+          lead_id: string
+          notes: string | null
+          received_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_name: string
+          document_type: string
+          file_url?: string | null
+          id?: string
+          is_received?: boolean | null
+          lead_id: string
+          notes?: string | null
+          received_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_name?: string
+          document_type?: string
+          file_url?: string | null
+          id?: string
+          is_received?: boolean | null
+          lead_id?: string
+          notes?: string | null
+          received_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_documents_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "ley_beckham_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_notes: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          id: string
+          is_internal: boolean | null
+          lead_id: string
+          note: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_internal?: boolean | null
+          lead_id: string
+          note: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          is_internal?: boolean | null
+          lead_id?: string
+          note?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "ley_beckham_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_status_history: {
+        Row: {
+          changed_at: string | null
+          changed_by: string | null
+          from_status:
+            | Database["public"]["Enums"]["ley_beckham_lead_status"]
+            | null
+          id: string
+          lead_id: string
+          notes: string | null
+          to_status: Database["public"]["Enums"]["ley_beckham_lead_status"]
+        }
+        Insert: {
+          changed_at?: string | null
+          changed_by?: string | null
+          from_status?:
+            | Database["public"]["Enums"]["ley_beckham_lead_status"]
+            | null
+          id?: string
+          lead_id: string
+          notes?: string | null
+          to_status: Database["public"]["Enums"]["ley_beckham_lead_status"]
+        }
+        Update: {
+          changed_at?: string | null
+          changed_by?: string | null
+          from_status?:
+            | Database["public"]["Enums"]["ley_beckham_lead_status"]
+            | null
+          id?: string
+          lead_id?: string
+          notes?: string | null
+          to_status?: Database["public"]["Enums"]["ley_beckham_lead_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_status_history_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "ley_beckham_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ley_beckham_leads: {
+        Row: {
+          assigned_to: string | null
+          company: string | null
+          completed_at: string | null
+          contact_lead_id: string | null
+          contacted_at: string | null
+          country: string
+          created_at: string | null
+          current_salary: number | null
+          eligibility_score: number | null
+          email: string
+          estimated_move_date: string | null
+          id: string
+          ip_address: string | null
+          job_situation: string
+          message: string | null
+          name: string
+          phone: string | null
+          priority: Database["public"]["Enums"]["lead_priority"]
+          status: Database["public"]["Enums"]["ley_beckham_lead_status"]
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          company?: string | null
+          completed_at?: string | null
+          contact_lead_id?: string | null
+          contacted_at?: string | null
+          country: string
+          created_at?: string | null
+          current_salary?: number | null
+          eligibility_score?: number | null
+          email: string
+          estimated_move_date?: string | null
+          id?: string
+          ip_address?: string | null
+          job_situation: string
+          message?: string | null
+          name: string
+          phone?: string | null
+          priority?: Database["public"]["Enums"]["lead_priority"]
+          status?: Database["public"]["Enums"]["ley_beckham_lead_status"]
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          company?: string | null
+          completed_at?: string | null
+          contact_lead_id?: string | null
+          contacted_at?: string | null
+          country?: string
+          created_at?: string | null
+          current_salary?: number | null
+          eligibility_score?: number | null
+          email?: string
+          estimated_move_date?: string | null
+          id?: string
+          ip_address?: string | null
+          job_situation?: string
+          message?: string | null
+          name?: string
+          phone?: string | null
+          priority?: Database["public"]["Enums"]["lead_priority"]
+          status?: Database["public"]["Enums"]["ley_beckham_lead_status"]
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ley_beckham_leads_contact_lead_id_fkey"
+            columns: ["contact_lead_id"]
+            isOneToOne: false
+            referencedRelation: "contact_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       media_files: {
         Row: {
           alt_text: string | null
@@ -1947,6 +2153,10 @@ export type Database = {
       }
     }
     Functions: {
+      calculate_lead_priority: {
+        Args: { move_date: string }
+        Returns: Database["public"]["Enums"]["lead_priority"]
+      }
       check_login_rate_limit: {
         Args: {
           p_identifier: string
@@ -1997,6 +2207,18 @@ export type Database = {
           all_tags: string[]
           industries: string[]
           services: string[]
+        }[]
+      }
+      get_ley_beckham_stats: {
+        Args: never
+        Returns: {
+          avg_eligibility_score: number
+          conversion_rate: number
+          leads_by_country: Json
+          leads_by_job_situation: Json
+          leads_by_priority: Json
+          leads_by_status: Json
+          total_leads: number
         }[]
       }
       get_news_filter_options: {
@@ -2165,6 +2387,14 @@ export type Database = {
       case_study_status: "draft" | "review" | "published" | "archived"
       event_severity: "info" | "warn" | "high" | "critical"
       job_status: "draft" | "published" | "closed"
+      lead_priority: "baja" | "media" | "alta" | "urgente"
+      ley_beckham_lead_status:
+        | "nuevo"
+        | "contactado"
+        | "documentacion"
+        | "en_proceso"
+        | "completado"
+        | "descartado"
       security_event_type:
         | "LOGIN_SUCCESS"
         | "LOGIN_FAILED"
@@ -2320,6 +2550,15 @@ export const Constants = {
       case_study_status: ["draft", "review", "published", "archived"],
       event_severity: ["info", "warn", "high", "critical"],
       job_status: ["draft", "published", "closed"],
+      lead_priority: ["baja", "media", "alta", "urgente"],
+      ley_beckham_lead_status: [
+        "nuevo",
+        "contactado",
+        "documentacion",
+        "en_proceso",
+        "completado",
+        "descartado",
+      ],
       security_event_type: [
         "LOGIN_SUCCESS",
         "LOGIN_FAILED",
