@@ -7,7 +7,7 @@ export interface JobPosition {
   contract_type: string;
   working_hours: string;
   salary_range?: string;
-  description: string;
+  description?: string;
   requirements: string[];
   responsibilities: string[];
   status: 'draft' | 'published' | 'closed';

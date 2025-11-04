@@ -65,7 +65,7 @@ export const JobPositionModal = ({
           <div>
             <h4 className="text-lg font-normal mb-3">Sobre el puesto</h4>
             <div className="prose prose-sm max-w-none">
-              <ReactMarkdown>{position.description}</ReactMarkdown>
+              <ReactMarkdown>{position.description || "Descripción no disponible"}</ReactMarkdown>
             </div>
           </div>
 

@@ -10,7 +10,9 @@ interface JobPositionCardProps {
 }
 
 export const JobPositionCard = ({ position, onViewDetails }: JobPositionCardProps) => {
-  const previewText = position.description.substring(0, 120) + "...";
+  const previewText = position.description 
+    ? position.description.substring(0, 120) + "..." 
+    : "Descripción no disponible";
 
   return (
     <Card className="hover-lift h-full">
