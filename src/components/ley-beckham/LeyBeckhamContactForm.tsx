@@ -62,36 +62,48 @@ export const LeyBeckhamContactForm = () => {
     },
   });
 
+  const mapTransferDateToEstimatedDate = (transferDate: string): string => {
+    const today = new Date();
+    let estimatedDate = new Date(today);
+
+    switch (transferDate) {
+      case "ya-estoy":
+        // Ya está en España, usar fecha de hoy
+        break;
+      case "1-3-meses":
+        estimatedDate.setMonth(today.getMonth() + 2); // Promedio de 2 meses
+        break;
+      case "3-6-meses":
+        estimatedDate.setMonth(today.getMonth() + 4); // Promedio de 4 meses
+        break;
+      case "6-12-meses":
+        estimatedDate.setMonth(today.getMonth() + 9); // Promedio de 9 meses
+        break;
+      case "mas-12-meses":
+        estimatedDate.setMonth(today.getMonth() + 18); // Promedio de 18 meses
+        break;
+      default:
+        estimatedDate.setMonth(today.getMonth() + 6); // Default: 6 meses
+    }
+
+    return estimatedDate.toISOString().split('T')[0]; // Formato: YYYY-MM-DD
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
     try {
-      const formattedMessage = `
-=== CONSULTA LEY BECKHAM ===
+      const estimatedMoveDate = mapTransferDateToEstimatedDate(data.transferDate);
 
-Nombre: ${data.name}
-Email: ${data.email}
-Teléfono: ${data.phone}
-País de origen: ${data.country}
-Situación laboral: ${data.jobSituation}
-Fecha estimada de traslado: ${data.transferDate}
-
-Mensaje:
-${data.message || "Sin mensaje adicional"}
-
----
-Fuente: Landing Ley Beckham (Google Ads)
-      `.trim();
-
-      const { error } = await supabase.functions.invoke("submit-contact", {
+      const { error } = await supabase.functions.invoke("process-ley-beckham-lead", {
         body: {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          company: data.country, // Usamos el campo company para guardar el país
-          message: formattedMessage,
-          service: "Ley Beckham - Régimen Especial Impatriados",
-          landingSource: "google-ads-ley-beckham",
+          country: data.country,
+          jobSituation: data.jobSituation,
+          estimatedMoveDate: estimatedMoveDate,
+          message: data.message || "",
         },
       });
 
