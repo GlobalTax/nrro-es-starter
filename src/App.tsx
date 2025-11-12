@@ -27,6 +27,7 @@ import OrquestKairosHR from "./pages/OrquestKairosHR";
 import Privacy from "./pages/Privacy";
 import Legal from "./pages/Legal";
 import Cookies from "./pages/Cookies";
+import Terms from "./pages/Terms";
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { AdminCaseStudies } from "./pages/admin/AdminCaseStudies";
@@ -68,10 +69,11 @@ const App = () => (
             <Route path="/equipo" element={<Layout><Team /></Layout>} />
             <Route path="/metodologia" element={<Layout><Methodology /></Layout>} />
             <Route path="/contacto" element={<Layout><Contact /></Layout>} />
-            <Route path="/privacidad" element={<Layout><Privacy /></Layout>} />
-            <Route path="/aviso-legal" element={<Layout><Legal /></Layout>} />
-            <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
-            <Route path="/carreras" element={<Layout><Careers /></Layout>} />
+          <Route path="/privacidad" element={<Layout><Privacy /></Layout>} />
+          <Route path="/aviso-legal" element={<Layout><Legal /></Layout>} />
+          <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
+          <Route path="/condiciones-contratacion" element={<Layout><Terms /></Layout>} />
+          <Route path="/carreras" element={<Layout><Careers /></Layout>} />
             
             {/* Special landings */}
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />

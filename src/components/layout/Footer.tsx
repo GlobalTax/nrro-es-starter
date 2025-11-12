@@ -300,6 +300,12 @@ export const Footer = () => {
             >
               Cookies
             </Link>
+            <Link 
+              to="/condiciones-contratacion" 
+              className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            >
+              Condiciones
+            </Link>
           </div>
         </div>
       </div>
