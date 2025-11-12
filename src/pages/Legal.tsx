@@ -34,7 +34,7 @@ const Legal = () => {
               
               {/* Last Updated */}
               <div className="text-sm text-muted-foreground">
-                <p>Última actualización: 25 de enero de 2025</p>
+                <p>Última actualización: 12 de noviembre de 2025</p>
               </div>
               
               {/* Identificación */}
@@ -292,10 +292,193 @@ const Legal = () => {
                 </div>
               </div>
 
+              {/* Política de envío y recepción de currículums */}
+              <div className="space-y-4">
+                <h2 className="text-2xl font-display font-normal text-foreground">
+                  11. Política de Envío y Recepción de Currículums
+                </h2>
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    NRRO recibe y gestiona currículums vitae (CV) para procesos de selección de personal. El envío de un currículum a través de cualquiera de nuestros canales oficiales constituye el consentimiento expreso del candidato para el tratamiento de sus datos personales con las finalidades descritas en esta política.
+                  </p>
+                  
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.1. Finalidad del Tratamiento
+                  </h3>
+                  <p>
+                    Los currículums recibidos serán tratados exclusivamente para:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Evaluar la candidatura para procesos de selección activos</li>
+                    <li>Mantener una base de datos de talento para futuras oportunidades laborales</li>
+                    <li>Comunicarnos con los candidatos durante el proceso de selección</li>
+                    <li>Cumplir con obligaciones legales en materia laboral y de igualdad</li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.2. Datos Recopilados
+                  </h3>
+                  <p>
+                    Los datos personales que podemos recopilar incluyen:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong className="text-foreground">Datos identificativos:</strong> Nombre, apellidos, DNI/NIE/Pasaporte, fecha de nacimiento</li>
+                    <li><strong className="text-foreground">Datos de contacto:</strong> Correo electrónico, teléfono, dirección postal</li>
+                    <li><strong className="text-foreground">Formación académica:</strong> Títulos, certificaciones, historial educativo</li>
+                    <li><strong className="text-foreground">Experiencia profesional:</strong> Historial laboral, referencias profesionales</li>
+                    <li><strong className="text-foreground">Competencias:</strong> Idiomas, habilidades técnicas, conocimientos específicos</li>
+                    <li><strong className="text-foreground">Otros datos:</strong> Cualquier información adicional incluida voluntariamente en el CV (foto, carta de presentación, etc.)</li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.3. Base Legal del Tratamiento
+                  </h3>
+                  <p>
+                    El tratamiento de datos personales de candidatos se fundamenta en:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong className="text-foreground">Consentimiento del interesado</strong> (art. 6.1.a RGPD) mediante el envío voluntario del currículum</li>
+                    <li><strong className="text-foreground">Ejecución de medidas precontractuales</strong> (art. 6.1.b RGPD) en el marco del proceso de selección</li>
+                    <li><strong className="text-foreground">Cumplimiento de obligaciones legales</strong> (art. 6.1.c RGPD) en materia laboral e igualdad</li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.4. Período de Conservación
+                  </h3>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>
+                      <strong className="text-foreground">CVs no seleccionados:</strong> Se conservarán durante <strong className="text-foreground">1 año</strong> desde la recepción para considerarlos en futuros procesos de selección
+                    </li>
+                    <li>
+                      <strong className="text-foreground">CVs seleccionados:</strong> Se incorporarán al expediente del empleado y se conservarán según la legislación laboral vigente
+                    </li>
+                    <li>
+                      Transcurrido el plazo de conservación, los datos serán eliminados de forma segura conforme a nuestros protocolos de destrucción de información
+                    </li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.5. Destinatarios de los Datos
+                  </h3>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Los datos serán accesibles únicamente al Departamento de Recursos Humanos de NRRO</li>
+                    <li>No se cederán datos a terceros salvo obligación legal o consentimiento expreso del candidato</li>
+                    <li>En caso de utilizar plataformas de gestión de candidatos (ATS), estas actuarán como encargados del tratamiento bajo contrato</li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.6. Derechos de los Candidatos (ARCO-POL)
+                  </h3>
+                  <p>
+                    Como candidato, tienes derecho a:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong className="text-foreground">Acceso:</strong> Conocer qué datos personales conservamos sobre ti</li>
+                    <li><strong className="text-foreground">Rectificación:</strong> Solicitar la corrección de datos inexactos o incompletos</li>
+                    <li><strong className="text-foreground">Cancelación/Supresión:</strong> Solicitar la eliminación de tus datos de nuestra base de talento</li>
+                    <li><strong className="text-foreground">Oposición:</strong> Oponerte al tratamiento de tus datos personales</li>
+                    <li><strong className="text-foreground">Portabilidad:</strong> Recibir tus datos en formato estructurado, de uso común y lectura mecánica</li>
+                    <li><strong className="text-foreground">Limitación:</strong> Solicitar la restricción del tratamiento en determinadas circunstancias</li>
+                  </ul>
+                  <p className="mt-4">
+                    Para ejercer estos derechos, envía un correo electrónico a{" "}
+                    <a href="mailto:info@nrro.es?subject=Protección de Datos - Candidatos" className="text-accent hover:underline">
+                      info@nrro.es
+                    </a>
+                    {" "}con asunto <strong className="text-foreground">"Protección de Datos - Candidatos"</strong>, adjuntando copia de tu DNI o documento identificativo equivalente.
+                  </p>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.7. Canales de Envío de Currículums
+                  </h3>
+                  <p>
+                    Los canales oficiales para enviar tu currículum son:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>
+                      <strong className="text-foreground">Correo electrónico:</strong>{" "}
+                      <a href="mailto:info@nrro.es" className="text-accent hover:underline">
+                        info@nrro.es
+                      </a>
+                      {" "}con asunto <strong className="text-foreground">"Candidatura - [Nombre del puesto]"</strong>
+                    </li>
+                    <li>
+                      <strong className="text-foreground">Formulario web:</strong> A través de la sección{" "}
+                      <Link to="/carreras" className="text-accent hover:underline">
+                        Carreras
+                      </Link>
+                      {" "}en nrro.es
+                    </li>
+                  </ul>
+                  <p className="mt-4 text-sm italic">
+                    <strong className="text-foreground">Nota importante:</strong> No se aceptarán currículums enviados a través de redes sociales, mensajería instantánea u otros canales no oficiales. Solo se procesarán candidaturas recibidas por los medios indicados anteriormente.
+                  </p>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.8. Principio de No Discriminación
+                  </h3>
+                  <p>
+                    NRRO garantiza procesos de selección transparentes basados exclusivamente en:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Méritos profesionales y académicos</li>
+                    <li>Competencias y habilidades requeridas para el puesto</li>
+                    <li>Experiencia laboral relevante</li>
+                  </ul>
+                  <p className="mt-4">
+                    <strong className="text-foreground">Nos comprometemos a NO discriminar</strong> por razón de:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Edad, género, identidad de género u orientación sexual</li>
+                    <li>Origen racial, étnico o nacionalidad</li>
+                    <li>Religión, creencias o ideología</li>
+                    <li>Discapacidad o estado de salud</li>
+                    <li>Estado civil, situación familiar o cualquier otra característica protegida por la legislación vigente</li>
+                  </ul>
+                  <p className="mt-4 text-sm">
+                    Cumplimos con la <strong className="text-foreground">Ley Orgánica 3/2007</strong> para la igualdad efectiva de mujeres y hombres, y promovemos la diversidad e inclusión en nuestros procesos de selección.
+                  </p>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.9. Confidencialidad y Seguridad
+                  </h3>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Los currículums se almacenan en sistemas seguros con medidas técnicas y organizativas apropiadas</li>
+                    <li>Solo el personal autorizado del Departamento de RRHH tiene acceso a los datos de candidatos</li>
+                    <li>Implementamos cifrado, control de accesos y auditorías periódicas de seguridad</li>
+                    <li>Los datos NO se comparten públicamente ni en plataformas de terceros sin tu consentimiento expreso</li>
+                    <li>Todos los empleados con acceso a datos de candidatos están sujetos a acuerdos de confidencialidad</li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold text-foreground mt-4">
+                    11.10. Derecho a Reclamación
+                  </h3>
+                  <p>
+                    Si consideras que tus derechos en materia de protección de datos han sido vulnerados, tienes derecho a presentar una reclamación ante la autoridad de control:
+                  </p>
+                  <div className="mt-3 pl-4 border-l-4 border-accent/30">
+                    <p className="font-semibold text-foreground">Agencia Española de Protección de Datos (AEPD)</p>
+                    <p>C/ Jorge Juan, 6 - 28001 Madrid</p>
+                    <p>
+                      Web:{" "}
+                      <a 
+                        href="https://www.aepd.es" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-accent hover:underline"
+                      >
+                        www.aepd.es
+                      </a>
+                    </p>
+                    <p>Tel: 901 100 099 / 912 663 517</p>
+                  </div>
+                </div>
+              </div>
+
               {/* Comunicaciones electrónicas */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  11. Comunicaciones Electrónicas
+                  12. Comunicaciones Electrónicas
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -315,7 +498,7 @@ const Legal = () => {
               {/* Servicios profesionales */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  12. Servicios Profesionales
+                  13. Servicios Profesionales
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -339,7 +522,7 @@ const Legal = () => {
               {/* Resolución de conflictos */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  13. Resolución de Conflictos
+                  14. Resolución de Conflictos
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
@@ -364,7 +547,7 @@ const Legal = () => {
               {/* Contacto */}
               <div className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
-                  14. Contacto
+                  15. Contacto
                 </h2>
                 <div className="space-y-3 text-muted-foreground">
                   <p>
