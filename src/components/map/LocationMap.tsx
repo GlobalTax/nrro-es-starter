@@ -18,23 +18,19 @@ interface LocationMapProps {
 
 export const LocationMap = ({ address, lat, lng }: LocationMapProps) => {
   return (
-    <MapContainer
-      center={[lat, lng]}
-      zoom={15}
-      style={{ height: '300px', width: '100%', borderRadius: '8px' }}
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[lat, lng]}>
-        <Popup>
-          <div className="text-sm font-medium">
-            {address}
-          </div>
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div style={{ height: '100%', width: '100%' }}>
+      <MapContainer
+        center={[lat, lng]}
+        zoom={15}
+        style={{ height: '100%', width: '100%', borderRadius: '8px' }}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[lat, lng]} />
+      </MapContainer>
+    </div>
   );
 };
