@@ -9,15 +9,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, Bell } from 'lucide-react';
+import { LogOut, User, Bell, BellOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUnreadContactLeads } from '@/hooks/useUnreadContactLeads';
+import { useBrowserNotifications } from '@/hooks/useBrowserNotifications';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { toast as sonnerToast } from 'sonner';
 
 export const AdminHeader = () => {
   const { adminUser, signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const unreadLeads = useUnreadContactLeads();
+  const { 
+    isEnabled, 
+    isSupported, 
+    permission, 
+    toggleNotifications 
+  } = useBrowserNotifications();
 
   const handleSignOut = async () => {
     try {
@@ -72,6 +82,38 @@ export const AdminHeader = () => {
                   <p className="text-xs text-muted-foreground">{adminUser?.email}</p>
                 </div>
               </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    {isEnabled ? (
+                      <Bell className="h-4 w-4" />
+                    ) : (
+                      <BellOff className="h-4 w-4" />
+                    )}
+                    <Label htmlFor="browser-notifications" className="cursor-pointer">
+                      Notificaciones Push
+                    </Label>
+                  </div>
+                  <Switch
+                    id="browser-notifications"
+                    checked={isEnabled}
+                    onCheckedChange={async () => {
+                      const result = await toggleNotifications();
+                      if (result) {
+                        sonnerToast.success('Notificaciones activadas', {
+                          description: 'Recibirás alertas incluso con el panel cerrado',
+                        });
+                      } else if (permission === 'denied') {
+                        sonnerToast.error('Permisos denegados', {
+                          description: 'Habilita las notificaciones en la configuración del navegador',
+                        });
+                      }
+                    }}
+                    disabled={!isSupported}
+                  />
+                </div>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>
                 <LogOut className="mr-2 h-4 w-4" />

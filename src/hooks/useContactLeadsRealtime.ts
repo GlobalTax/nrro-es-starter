@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useBrowserNotifications } from "./useBrowserNotifications";
 
 export const useContactLeadsRealtime = () => {
   const queryClient = useQueryClient();
+  const { showNotification, isEnabled } = useBrowserNotifications();
 
   useEffect(() => {
     const channel = supabase
@@ -19,7 +21,7 @@ export const useContactLeadsRealtime = () => {
         (payload) => {
           const newLead = payload.new as any;
           
-          // Mostrar notificación toast
+          // Mostrar notificación toast (in-app)
           toast.success('Nuevo contacto recibido', {
             description: `${newLead.name} - ${newLead.subject}`,
             action: {
@@ -30,6 +32,20 @@ export const useContactLeadsRealtime = () => {
             },
             duration: 5000,
           });
+
+          // Mostrar notificación del navegador (system-level)
+          // Solo si el documento no está visible (usuario en otra pestaña/app)
+          if (document.hidden && isEnabled) {
+            showNotification({
+              title: '🔔 Nuevo Contacto - NRRO',
+              body: `${newLead.name}\n${newLead.subject}`,
+              tag: `contact-lead-${newLead.id}`,
+              data: {
+                url: '/admin/contact-leads',
+                leadId: newLead.id,
+              },
+            });
+          }
 
           // Invalidar queries para actualizar la lista
           queryClient.invalidateQueries({ queryKey: ["contact-leads"] });
@@ -43,7 +59,7 @@ export const useContactLeadsRealtime = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient]);
+  }, [queryClient, showNotification, isEnabled]);
 };
 
 const playNotificationSound = () => {
