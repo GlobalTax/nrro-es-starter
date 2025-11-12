@@ -62,7 +62,7 @@ const Legal = () => {
               
               {/* Last Updated */}
               <div className="text-sm text-foreground">
-                <p>Última actualización: 12 de enero de 2025</p>
+                <p>Última actualización: 12 de noviembre de 2025</p>
               </div>
               
               {/* Identificación */}
