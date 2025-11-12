@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Meta } from "@/components/seo/Meta";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,6 +16,12 @@ const Careers = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
+  
+  // Refs para animaciones
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const areasRef = useRef<HTMLDivElement>(null);
+  const isBenefitsInView = useInView(benefitsRef, { once: true, margin: "-100px" });
+  const isAreasInView = useInView(areasRef, { once: true, margin: "-100px" });
 
   const handleApplyToPosition = (position: JobPosition) => {
     setSelectedPosition(position);
@@ -140,19 +147,30 @@ const Careers = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16" ref={benefitsRef}>
               {benefits.map((benefit, index) => (
-                <Card key={index} className="hover-lift border-accent/20">
-                  <CardContent className="p-6">
-                    <div className="rounded-full bg-accent/10 w-12 h-12 flex items-center justify-center mb-4">
-                      <benefit.icon className="h-6 w-6 text-accent" />
-                    </div>
-                    <h3 className="text-xl font-normal mb-2">{benefit.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isBenefitsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                >
+                  <Card className="hover-lift border-accent/20 h-full">
+                    <CardContent className="p-6">
+                      <div className="rounded-full bg-accent/10 w-12 h-12 flex items-center justify-center mb-4">
+                        <benefit.icon className="h-6 w-6 text-accent" />
+                      </div>
+                      <h3 className="text-xl font-normal mb-2">{benefit.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {benefit.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -165,17 +183,28 @@ const Careers = () => {
               Áreas de Trabajo
             </h2>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={areasRef}>
               {areas.map((area, index) => (
-                <Card key={index} className="hover-lift">
-                  <CardContent className="p-6 text-center">
-                    <div className="rounded-full bg-accent/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <area.icon className="h-8 w-8 text-accent" />
-                    </div>
-                    <h3 className="text-lg font-normal mb-2">{area.name}</h3>
-                    <p className="text-sm text-muted-foreground">{area.description}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isAreasInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                >
+                  <Card className="hover-lift h-full">
+                    <CardContent className="p-6 text-center">
+                      <div className="rounded-full bg-accent/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <area.icon className="h-8 w-8 text-accent" />
+                      </div>
+                      <h3 className="text-lg font-normal mb-2">{area.name}</h3>
+                      <p className="text-sm text-muted-foreground">{area.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
