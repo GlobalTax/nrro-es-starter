@@ -15,6 +15,8 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   
+  console.log('OpenPositionsSection - isLoading:', isLoading, 'positions:', positions?.length);
+  
   // Ref para animación
   const positionsRef = useRef<HTMLDivElement>(null);
   const isPositionsInView = useInView(positionsRef, { once: true, margin: "-100px" });
