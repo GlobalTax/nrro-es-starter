@@ -52,7 +52,7 @@ export const CareersFAQSection = () => {
   return (
     <section className="bg-neutral-50 py-20 md:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 mb-12">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 mb-12">
           {/* Columna 1: Overline */}
           <div className="relative">
             <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
@@ -66,13 +66,6 @@ export const CareersFAQSection = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
               ¿Tienes dudas sobre trabajar con nosotros?
             </h2>
-          </div>
-          
-          {/* Columna 3: Descripción */}
-          <div>
-            <p className="text-lg font-normal text-foreground leading-relaxed">
-              Aquí encontrarás respuestas a las preguntas más comunes sobre nuestro proceso de selección y el trabajo en NRRO.
-            </p>
           </div>
         </div>
 
