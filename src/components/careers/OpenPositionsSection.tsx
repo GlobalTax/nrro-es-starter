@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { useJobPositions } from "@/hooks/useJobPositions";
 import { JobPositionCard } from "./JobPositionCard";
 import { JobPositionModal } from "./JobPositionModal";
@@ -13,6 +14,10 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
   const { data: positions, isLoading } = useJobPositions({ status: 'published' });
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  
+  // Ref para animación
+  const positionsRef = useRef<HTMLDivElement>(null);
+  const isPositionsInView = useInView(positionsRef, { once: true, margin: "-100px" });
 
   const handleViewDetails = (position: JobPosition) => {
     setSelectedPosition(position);
@@ -82,13 +87,23 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {positions.map((position) => (
-              <JobPositionCard
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={positionsRef}>
+            {positions.map((position, index) => (
+              <motion.div
                 key={position.id}
-                position={position}
-                onViewDetails={handleViewDetails}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={isPositionsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: "easeOut"
+                }}
+              >
+                <JobPositionCard
+                  position={position}
+                  onViewDetails={handleViewDetails}
+                />
+              </motion.div>
             ))}
           </div>
         </div>
