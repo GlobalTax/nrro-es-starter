@@ -1,4 +1,6 @@
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { legalBreadcrumbs } from "@/lib/seoUtils";
 import { Link } from "react-router-dom";
 import {
   Breadcrumb,
@@ -18,6 +20,7 @@ const Legal = () => {
         keywords="aviso legal, términos condiciones, información legal"
         canonicalUrl={`${window.location.origin}/aviso-legal`}
       />
+      <BreadcrumbSchema items={legalBreadcrumbs.legal} />
 
       {/* Hero Section */}
       <section className="bg-background py-20 md:py-32">

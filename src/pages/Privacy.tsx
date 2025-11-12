@@ -1,4 +1,6 @@
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { legalBreadcrumbs } from "@/lib/seoUtils";
 import { Link } from "react-router-dom";
 import {
   Breadcrumb,
@@ -19,6 +21,7 @@ const Privacy = () => {
         keywords="privacidad, protección datos, RGPD, datos personales"
         canonicalUrl={`${window.location.origin}/privacidad`}
       />
+      <BreadcrumbSchema items={legalBreadcrumbs.privacy} />
 
       {/* Hero Section */}
       <section className="bg-background py-20 md:py-32">

@@ -1,4 +1,6 @@
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { legalBreadcrumbs } from "@/lib/seoUtils";
 import { Scale, FileText, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -19,6 +21,7 @@ export default function Terms() {
         keywords="condiciones contratación, términos servicio, honorarios, asesoría legal, fiscal, contable, laboral, Barcelona"
         canonicalUrl={`${window.location.origin}/condiciones-contratacion`}
       />
+      <BreadcrumbSchema items={legalBreadcrumbs.terms} />
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary via-primary-dark to-primary py-24 sm:py-32">
