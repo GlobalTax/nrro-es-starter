@@ -4,7 +4,7 @@ import { Meta } from "@/components/seo/Meta";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, Lightbulb, Target, Heart, TrendingUp, Code, Scale, Calculator, Building2, UserCheck, Briefcase } from "lucide-react";
 import { OpenPositionsSection } from "@/components/careers/OpenPositionsSection";
-import { SelectionTimeline } from "@/components/careers/SelectionTimeline";
+
 import { CareerApplicationForm } from "@/components/careers/CareerApplicationForm";
 import { JobPositionModal } from "@/components/careers/JobPositionModal";
 import { JobPosition } from "@/types/jobPosition";
@@ -208,8 +208,6 @@ const Careers = () => {
           </div>
         </section>
 
-        {/* Selection Timeline */}
-        <SelectionTimeline />
       </div>
 
       {/* Job Position Modal */}
