@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { LocationMap } from "@/components/map/LocationMap";
 import { MapPin, Train, Car, Clock } from "lucide-react";
@@ -13,6 +14,41 @@ const OFFICE_INFO = {
     { icon: Clock, text: "Lun-Vie: 9:00 - 18:00" }
   ]
 };
+
+class MapErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: any) {
+    console.error("Leaflet map failed to render:", error);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-muted">
+          <div className="text-center px-4">
+            <p className="text-sm text-muted-foreground mb-3">Mapa no disponible en este momento.</p>
+            <Button asChild size="sm">
+              <a 
+                href="https://maps.app.goo.gl/XqKShv7m5kX8xw2r8" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Abrir en Google Maps
+              </a>
+            </Button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 
 export const OfficeSection = () => {
   return (
@@ -58,11 +94,13 @@ export const OfficeSection = () => {
           
           {/* Columna 2: Mapa */}
           <div className="rounded-xl overflow-hidden shadow-medium h-[400px]">
-            <LocationMap 
-              address={OFFICE_INFO.address}
-              lat={OFFICE_INFO.lat}
-              lng={OFFICE_INFO.lng}
-            />
+            <MapErrorBoundary>
+              <LocationMap 
+                address={OFFICE_INFO.address}
+                lat={OFFICE_INFO.lat}
+                lng={OFFICE_INFO.lng}
+              />
+            </MapErrorBoundary>
           </div>
         </div>
       </div>
