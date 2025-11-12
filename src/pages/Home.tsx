@@ -8,8 +8,8 @@ import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { FeaturedServiceCard } from "@/components/home/FeaturedServiceCard";
+import { NewsSection } from "@/components/home/NewsSection";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -88,34 +88,6 @@ const Home = () => {
   });
 
   const serviceLogos = (services || []).map((s) => ({ name: s.name }));
-  
-  // Fetch featured blog posts from Supabase
-  const { data: featuredPosts = [], isLoading: postsLoading } = useQuery({
-    queryKey: ['featured-blog-posts'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select(`id, title_es, slug_es, excerpt_es, category, author_name, author_specialization, read_time, published_at`)
-        .eq('status', 'published')
-        .order('published_at', { ascending: false })
-        .limit(3);
-      
-      if (error) throw error;
-      
-      // Map to consistent format
-      return data?.map((post: any) => ({
-        id: post.id,
-        title: post.title_es,
-        slug: post.slug_es,
-        excerpt: post.excerpt_es,
-        category: post.category,
-        author_name: post.author_name,
-        author_specialization: post.author_specialization,
-        read_time: post.read_time,
-        published_at: post.published_at,
-      })) || [];
-    },
-  });
 
   return (
     <>
@@ -338,49 +310,8 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Blog Preview */}
-        <section className="bg-background py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-            Últimos artículos
-          </h2>
-
-            {postsLoading ? (
-              <div className="grid md:grid-cols-3 gap-8">
-                {[...Array(3)].map((_, i) => (
-                  <Skeleton key={i} className="h-96 rounded-xl" />
-                ))}
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-8">
-                {featuredPosts.map((post) => (
-                  <BlogPostCard
-                    key={post.id}
-                    slug={post.slug}
-                    category={post.category}
-                    title={post.title}
-                    excerpt={post.excerpt}
-                    authorName={post.author_name}
-                    authorSpecialization={post.author_specialization}
-                    publishedAt={post.published_at}
-                    readTime={post.read_time}
-                  />
-                ))}
-              </div>
-            )}
-
-            <div className="text-center mt-12">
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg"
-                onClick={() => trackCTAClick("Ver Todos los Artículos", "home_blog_section")}
-              >
-                <Link to="/blog">Ver todos los artículos</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        {/* News Section */}
+        <NewsSection />
       </div>
     </>
   );
