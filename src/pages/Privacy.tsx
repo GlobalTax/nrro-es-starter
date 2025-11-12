@@ -1,5 +1,13 @@
 import { Meta } from "@/components/seo/Meta";
 import { Link } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 const Privacy = () => {
   
@@ -25,6 +33,31 @@ const Privacy = () => {
           </div>
         </div>
       </section>
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-muted/30 border-b border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Inicio</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/aviso-legal">Legal</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Política de Privacidad</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       {/* Content Sections */}
       <section className="py-16 md:py-24 bg-card">
