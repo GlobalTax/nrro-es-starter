@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Loader2, Upload, FileText } from "lucide-react";
 import {
@@ -33,6 +34,12 @@ const careerFormSchema = z.object({
   puesto_solicitado: z.string().min(2, "Indica el puesto que te interesa").max(200),
   departamento: z.enum(["Fiscal", "Laboral", "Contable", "Legal", "Administración", "Tecnología", "Otro"]).optional(),
   notas: z.string().min(20, "Mínimo 20 caracteres para tu mensaje").max(1000, "Máximo 1000 caracteres"),
+  privacy_consent: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar la política de privacidad para continuar",
+  }),
+  curriculum_policy_consent: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar la política de tratamiento de currículums para continuar",
+  }),
 });
 
 type CareerFormData = z.infer<typeof careerFormSchema>;
@@ -57,6 +64,8 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
     resolver: zodResolver(careerFormSchema),
     defaultValues: {
       puesto_solicitado: prefilledPosition || "",
+      privacy_consent: false,
+      curriculum_policy_consent: false,
     },
   });
 
@@ -315,6 +324,86 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
         </p>
       </div>
 
+      {/* Consentimientos explícitos */}
+      <div className="space-y-4 bg-muted/30 p-4 rounded-lg border border-border/50">
+        <p className="text-sm font-medium text-foreground mb-3">
+          Consentimientos requeridos
+        </p>
+        
+        {/* Checkbox Política de Privacidad */}
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="privacy_consent"
+            {...register("privacy_consent")}
+            disabled={isSubmitting}
+            className="mt-1"
+          />
+          <div className="flex-1 space-y-1">
+            <Label
+              htmlFor="privacy_consent"
+              className="text-sm font-normal cursor-pointer leading-relaxed"
+            >
+              He leído y acepto la{" "}
+              <a
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline font-medium"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Política de Privacidad
+              </a>{" "}
+              de NRRO *
+            </Label>
+            {errors.privacy_consent && (
+              <p className="text-sm text-destructive">
+                {errors.privacy_consent.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Checkbox Política de Currículums */}
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="curriculum_policy_consent"
+            {...register("curriculum_policy_consent")}
+            disabled={isSubmitting}
+            className="mt-1"
+          />
+          <div className="flex-1 space-y-1">
+            <Label
+              htmlFor="curriculum_policy_consent"
+              className="text-sm font-normal cursor-pointer leading-relaxed"
+            >
+              Acepto la{" "}
+              <a
+                href="/legal#politica-curriculum"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline font-medium"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Política de Envío y Recepción de Currículums
+              </a>{" "}
+              y autorizo el tratamiento de mis datos personales para procesos de selección durante 1 año *
+            </Label>
+            {errors.curriculum_policy_consent && (
+              <p className="text-sm text-destructive">
+                {errors.curriculum_policy_consent.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <p className="text-xs text-muted-foreground mt-2">
+          * Campos obligatorios. Puedes ejercer tus derechos ARCO-POL contactando a{" "}
+          <a href="mailto:info@nrro.es" className="text-accent hover:underline">
+            info@nrro.es
+          </a>
+        </p>
+      </div>
+
       {/* Submit Button */}
       <Button type="submit" disabled={isSubmitting} className="w-full" size="lg">
         {isSubmitting ? (
@@ -326,13 +415,6 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
           "Enviar candidatura"
         )}
       </Button>
-
-      <p className="text-xs text-center text-muted-foreground">
-        Al enviar este formulario aceptas nuestra{" "}
-        <a href="/privacy" className="underline hover:text-accent">
-          política de privacidad
-        </a>
-      </p>
     </form>
   );
 };

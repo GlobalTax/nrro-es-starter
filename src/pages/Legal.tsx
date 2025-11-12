@@ -293,7 +293,7 @@ const Legal = () => {
               </div>
 
               {/* Política de envío y recepción de currículums */}
-              <div className="space-y-4">
+              <div id="politica-curriculum" className="space-y-4">
                 <h2 className="text-2xl font-display font-normal text-foreground">
                   11. Política de Envío y Recepción de Currículums
                 </h2>
