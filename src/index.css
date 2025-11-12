@@ -6,6 +6,9 @@
 
 /* Roboto Mono already imported in index.html for monospace code/data display */
 
+/* Leaflet CSS for OpenStreetMap */
+@import 'leaflet/dist/leaflet.css';
+
 /* General Sans Font Family */
 @font-face {
   font-family: 'General Sans';

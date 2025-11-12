@@ -11,6 +11,7 @@ import { Meta } from '@/components/seo/Meta';
 import { useToast } from '@/hooks/use-toast';
 import { BadgeHero } from '@/components/ui/badge-hero';
 import { supabase } from '@/integrations/supabase/client';
+import { LocationMap } from '@/components/map/LocationMap';
 
 export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
@@ -284,15 +285,10 @@ export default function Contact() {
               {/* Map */}
               <Card className="border-border/50 shadow-soft overflow-hidden">
                 <CardContent className="p-0">
-                  <iframe
-                    src="https://maps.google.com/maps?q=Carrer+Ausias+March+36,+08010+Barcelona&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="300"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Ubicación de NRRO"
+                  <LocationMap
+                    address="Carrer Ausias March número 36, 08010 Barcelona"
+                    lat={41.3931}
+                    lng={2.1737}
                   />
                 </CardContent>
               </Card>
