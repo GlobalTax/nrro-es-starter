@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { FeaturedServiceCard } from "@/components/home/FeaturedServiceCard";
+import { NewsPreview } from "@/components/home/NewsPreview";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -337,6 +338,9 @@ const Home = () => {
             </Carousel>
           </div>
         </section>
+
+        {/* News Preview */}
+        <NewsPreview />
 
         {/* Blog Preview */}
         <section className="bg-background py-24">
