@@ -9,12 +9,16 @@ interface LogoProps {
   variant?: "full" | "compact";
   color?: "dark" | "light";
   className?: string;
+  asLink?: boolean;
+  to?: string;
 }
 
 export const Logo = ({ 
   variant = "full", 
   color = "dark", 
-  className 
+  className,
+  asLink = true,
+  to = "/"
 }: LogoProps) => {
   const getLogoSrc = () => {
     if (variant === "full") {
@@ -23,17 +27,29 @@ export const Logo = ({
     return color === "light" ? logoCompactWhite : logoCompact;
   };
 
+  const logoImage = (
+    <img
+      src={getLogoSrc()}
+      alt="Navarro Tax Legal"
+      className="h-full w-auto"
+    />
+  );
+
+  if (!asLink) {
+    return (
+      <div className={cn("inline-block", className)}>
+        {logoImage}
+      </div>
+    );
+  }
+
   return (
     <Link 
-      to="/" 
+      to={to}
       className={cn("inline-block group transition-opacity hover:opacity-80", className)}
       aria-label="Navarro Tax Legal - Inicio"
     >
-      <img
-        src={getLogoSrc()}
-        alt="Navarro Tax Legal"
-        className="h-full w-auto"
-      />
+      {logoImage}
     </Link>
   );
 };

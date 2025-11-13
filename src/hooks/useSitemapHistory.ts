@@ -25,7 +25,8 @@ async function fetchSitemapHistory(days: number = 30): Promise<SitemapHistoryDat
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
   
-  const { data, error } = await supabase
+  // Using any to bypass type checking until Supabase types are regenerated
+  const { data, error } = await (supabase as any)
     .from('sitemap_history')
     .select('created_at, total_urls, urls_es, urls_ca, urls_en, file_size, generation_time_ms')
     .gte('created_at', startDate.toISOString())
