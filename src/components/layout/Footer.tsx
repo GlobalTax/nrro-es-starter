@@ -6,9 +6,11 @@ import { useSiteSettingsMap } from '@/hooks/useSiteSettings';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useServicesSearch } from '@/hooks/useServicesSearch';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export const Footer = () => {
   const { t, language } = useLanguage();
+  const { trackContactClick } = useAnalytics();
   const currentYear = new Date().getFullYear();
   const { settings } = useSiteSettingsMap();
   const { getServicePath } = useLocalizedPath();
@@ -47,6 +49,7 @@ export const Footer = () => {
             <div className="flex flex-wrap gap-6">
               <a
                 href={`tel:${contactInfo.phone}`}
+                onClick={() => trackContactClick('phone', contactInfo.phone, 'footer')}
                 className="flex items-center gap-3 text-primary-foreground/90 hover:text-accent transition-colors group"
               >
                 <div className="rounded-full border-2 border-primary-foreground/20 p-2 group-hover:border-accent transition-colors">
@@ -56,6 +59,7 @@ export const Footer = () => {
               </a>
               <a
                 href={`mailto:${contactInfo.email}`}
+                onClick={() => trackContactClick('email', contactInfo.email, 'footer')}
                 className="flex items-center gap-3 text-primary-foreground/90 hover:text-accent transition-colors group"
               >
                 <div className="rounded-full border-2 border-primary-foreground/20 p-2 group-hover:border-accent transition-colors">

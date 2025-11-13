@@ -6,6 +6,7 @@ import { SectionHeader, Overline } from "@/components/ui/typography";
 import { TechnologyShowcase } from "@/components/home/TechnologyShowcase";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +30,7 @@ import DOMPurify from "dompurify";
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
   const { t, language } = useLanguage();
+  useScrollDepth();
   
   // Track page view
   useEffect(() => {

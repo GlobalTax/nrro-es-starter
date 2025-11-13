@@ -2,6 +2,7 @@ import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom"
 import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ const BlogDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { trackPageView } = useAnalytics();
+  useScrollDepth();
   const { language } = useLanguage();
   const { getBlogPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();

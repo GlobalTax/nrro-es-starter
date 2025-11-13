@@ -5,6 +5,7 @@ import { Loader2, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,7 +25,8 @@ import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 const ServiceDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { trackPageView } = useAnalytics();
+  const { trackPageView, trackContactClick } = useAnalytics();
+  useScrollDepth();
   const { language, t } = useLanguage();
   const { getServicePath } = useLocalizedPath();
 
@@ -200,6 +202,7 @@ const ServiceDetail = () => {
                   <div className="pt-4 space-y-2">
                     <a 
                       href={`tel:${service.metodologia.contacto.telefono}`}
+                      onClick={() => trackContactClick('phone', service.metodologia.contacto.telefono, `service_detail_${service.slug}`)}
                       className="flex items-center gap-2 text-foreground hover:text-accent transition-colors"
                     >
                       <Phone className="h-4 w-4" />
@@ -207,6 +210,7 @@ const ServiceDetail = () => {
                     </a>
                     <a 
                       href={`mailto:${service.metodologia.contacto.email}`}
+                      onClick={() => trackContactClick('email', service.metodologia.contacto.email, `service_detail_${service.slug}`)}
                       className="flex items-center gap-2 text-foreground hover:text-accent transition-colors"
                     >
                       <Mail className="h-4 w-4" />

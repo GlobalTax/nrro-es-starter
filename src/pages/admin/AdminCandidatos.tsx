@@ -3,6 +3,7 @@ import { useCandidatos, useUpdateCandidato, useDeleteCandidato, useCandidatoStat
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   Table,
   TableBody,
@@ -60,6 +61,7 @@ const DEPARTAMENTOS = [
 ];
 
 export default function AdminCandidatos() {
+  const { trackDownload } = useAnalytics();
   const [search, setSearch] = useState("");
   const [estadoFilter, setEstadoFilter] = useState<string>("");
   const [departamentoFilter, setDepartamentoFilter] = useState<string>("");
@@ -282,6 +284,7 @@ export default function AdminCandidatos() {
                                 href={candidato.cv_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() => trackDownload('cv', `cv-${candidato.nombre}`, 'admin_candidatos_table')}
                               >
                                 <Download className="h-4 w-4" />
                               </a>
@@ -404,6 +407,7 @@ export default function AdminCandidatos() {
                         href={selectedCandidato.cv_url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackDownload('cv', `cv-${selectedCandidato.nombre}`, 'admin_candidatos_modal')}
                       >
                         <Download className="mr-2 h-4 w-4" />
                         Descargar CV
