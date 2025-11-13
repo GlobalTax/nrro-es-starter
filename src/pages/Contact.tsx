@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { useScrollDepth } from '@/hooks/useScrollDepth';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { LocationMap } from '@/components/map/LocationMap';
 
 export default function Contact() {
-  const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
+  const { trackPageView, trackFormSubmit, trackCTAClick, trackContactClick } = useAnalytics();
+  useScrollDepth();
   const { t } = useLanguage();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -234,6 +236,9 @@ export default function Contact() {
               <div className="space-y-4">
                 {contactInfo.map((item, index) => {
                   const Icon = item.icon;
+                  const isPhone = item.href.startsWith('tel:');
+                  const isEmail = item.href.startsWith('mailto:');
+                  
                   return (
                     <Card
                       key={index}
@@ -253,7 +258,15 @@ export default function Contact() {
                               target={item.title === 'Dirección' ? '_blank' : undefined}
                               rel={item.title === 'Dirección' ? 'noopener noreferrer' : undefined}
                               className="text-muted-foreground hover:text-accent transition-colors"
-                              onClick={() => trackCTAClick(item.title, "contacto_info")}
+                              onClick={() => {
+                                if (isPhone) {
+                                  trackContactClick('phone', item.value, 'contact_page_info');
+                                } else if (isEmail) {
+                                  trackContactClick('email', item.value, 'contact_page_info');
+                                } else {
+                                  trackCTAClick(item.title, "contacto_info");
+                                }
+                              }}
                             >
                               {item.value}
                             </a>

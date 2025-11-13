@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,6 +17,7 @@ const ITEMS_PER_PAGE = 9;
 const Blog = () => {
   const { t, language } = useLanguage();
   const { trackPageView, trackEvent } = useAnalytics();
+  useScrollDepth();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   

@@ -14,8 +14,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import * as XLSX from 'xlsx';
 import { toast } from "sonner";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export default function AdminLeyBeckhamLeads() {
+  const { trackDownload } = useAnalytics();
   const [filters, setFilters] = useState<{
     status?: string;
     priority?: string;
@@ -64,7 +66,9 @@ export default function AdminLeyBeckhamLeads() {
     const cols = Object.keys(exportData[0]).map(key => ({ wch: Math.max(key.length, 15) }));
     ws['!cols'] = cols;
     
-    XLSX.writeFile(wb, `ley-beckham-leads-${new Date().toISOString().split('T')[0]}.xlsx`);
+    const fileName = `ley-beckham-leads-${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+    trackDownload('excel', fileName, 'admin_ley_beckham_leads');
     toast.success("Leads exportados correctamente");
   };
 

@@ -38,10 +38,50 @@ export const useAnalytics = () => {
     });
   };
 
+  const trackContactClick = (
+    contactType: 'phone' | 'email',
+    contactValue: string,
+    location: string
+  ) => {
+    trackEvent('contact_click', {
+      contact_type: contactType,
+      contact_value: contactValue,
+      page_location: location,
+      timestamp: new Date().toISOString(),
+    });
+  };
+
+  const trackDownload = (
+    fileType: 'cv' | 'csv' | 'excel' | 'pdf',
+    fileName: string,
+    location: string
+  ) => {
+    trackEvent('file_download', {
+      file_type: fileType,
+      file_name: fileName,
+      page_location: location,
+      timestamp: new Date().toISOString(),
+    });
+  };
+
+  const trackScrollDepth = (
+    depth: 25 | 50 | 75 | 90 | 100,
+    pagePath: string
+  ) => {
+    trackEvent('scroll_depth', {
+      scroll_percentage: depth,
+      page_path: pagePath,
+      timestamp: new Date().toISOString(),
+    });
+  };
+
   return {
     trackEvent,
     trackCTAClick,
     trackPageView,
     trackFormSubmit,
+    trackContactClick,
+    trackDownload,
+    trackScrollDepth,
   };
 };

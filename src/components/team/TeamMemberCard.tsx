@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Linkedin, Mail } from "lucide-react";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface TeamMemberCardProps {
   name: string;
@@ -20,6 +21,8 @@ export const TeamMemberCard = ({
   email,
   avatarUrl,
 }: TeamMemberCardProps) => {
+  const { trackContactClick } = useAnalytics();
+
   return (
     <Card className="overflow-hidden border-border hover-lift transition-smooth">
       {/* Photo */}
@@ -74,6 +77,7 @@ export const TeamMemberCard = ({
             {email && (
               <a
                 href={`mailto:${email}`}
+                onClick={() => trackContactClick('email', email, `team_member_${name}`)}
                 className="inline-flex items-center gap-2 text-sm text-foreground hover:text-accent transition-smooth"
                 aria-label={`Enviar email a ${name}`}
               >

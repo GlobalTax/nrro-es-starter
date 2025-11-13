@@ -9,6 +9,7 @@ import { es } from "date-fns/locale";
 import { ContactLeadDetailModal } from "@/components/admin/contact-leads/ContactLeadDetailModal";
 import { ContactLeadFilters, ContactLeadFiltersState } from "@/components/admin/contact-leads/ContactLeadFilters";
 import { exportContactLeadsToCSV, exportContactLeadsToExcel } from "@/lib/exportContactLeads";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +37,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AdminContactLeads() {
+  const { trackDownload } = useAnalytics();
   const [filters, setFilters] = useState<ContactLeadFiltersState>({
     search: "",
     status: "all",
@@ -65,12 +67,14 @@ export default function AdminContactLeads() {
   const handleExportCSV = () => {
     if (leads) {
       exportContactLeadsToCSV(leads);
+      trackDownload('csv', 'contact-leads.csv', 'admin_contact_leads');
     }
   };
 
   const handleExportExcel = () => {
     if (leads) {
       exportContactLeadsToExcel(leads);
+      trackDownload('excel', 'contact-leads.xlsx', 'admin_contact_leads');
     }
   };
 
