@@ -136,5 +136,71 @@ export const useLocalizedPath = () => {
     return `/${language}${servicesBasePath}/${slug}`;
   };
 
-  return { getLocalizedPath, getServicePath };
+  /**
+   * Genera una ruta localizada para un blog post usando su slug según el idioma
+   */
+  const getBlogPath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
+    const blogBasePath = pathTranslations['/blog'][language];
+    let slug = slugEs;
+
+    switch (language) {
+      case 'ca':
+        slug = slugCa || slugEs;
+        break;
+      case 'en':
+        slug = slugEn || slugEs;
+        break;
+    }
+
+    if (language === 'es') {
+      return `${blogBasePath}/${slug}`;
+    }
+    return `/${language}${blogBasePath}/${slug}`;
+  };
+
+  /**
+   * Genera una ruta localizada para un caso de éxito
+   */
+  const getCaseStudyPath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
+    const caseStudiesBasePath = pathTranslations['/casos-exito'][language];
+    let slug = slugEs;
+
+    switch (language) {
+      case 'ca':
+        slug = slugCa || slugEs;
+        break;
+      case 'en':
+        slug = slugEn || slugEs;
+        break;
+    }
+
+    if (language === 'es') {
+      return `${caseStudiesBasePath}/${slug}`;
+    }
+    return `/${language}${caseStudiesBasePath}/${slug}`;
+  };
+
+  /**
+   * Genera una ruta localizada para un insight/noticia
+   */
+  const getInsightPath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
+    const insightsBasePath = pathTranslations['/blog'][language];
+    let slug = slugEs;
+
+    switch (language) {
+      case 'ca':
+        slug = slugCa || slugEs;
+        break;
+      case 'en':
+        slug = slugEn || slugEs;
+        break;
+    }
+
+    if (language === 'es') {
+      return `${insightsBasePath}/${slug}`;
+    }
+    return `/${language}${insightsBasePath}/${slug}`;
+  };
+
+  return { getLocalizedPath, getServicePath, getBlogPath, getCaseStudyPath, getInsightPath };
 };

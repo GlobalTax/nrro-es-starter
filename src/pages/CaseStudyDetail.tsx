@@ -1,5 +1,6 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Meta } from '@/components/seo/Meta';
 import { CaseStudy } from '@/types/caseStudy';
@@ -13,17 +14,22 @@ import { RelatedServices } from '@/components/case-studies/RelatedServices';
 import { ArrowLeft, Calendar, Building2, Users } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import DOMPurify from 'dompurify';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const navigate = useNavigate();
+  const { getCaseStudyPath } = useLocalizedPath();
 
   const { data: caseStudy, isLoading } = useQuery({
-    queryKey: ['case-study', slug],
+    queryKey: ['case-study', slug, language],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('case_studies')
         .select('*')
-        .eq('slug_es', slug)
+        .or(`slug_es.eq.${slug},slug_ca.eq.${slug},slug_en.eq.${slug}`)
         .eq('status', 'published')
         .single();
 
@@ -36,26 +42,48 @@ export default function CaseStudyDetail() {
 
       return {
         ...data,
-        title: data.title_es,
-        slug: data.slug_es,
-        hero_title: data.hero_title_es,
-        hero_subtitle: data.hero_subtitle_es,
-        challenge: data.challenge_es,
-        solution: data.solution_es,
-        results_summary: data.results_summary_es,
-        detailed_content: data.detailed_content_es,
-        testimonial_text: data.testimonial_text_es,
-        meta_title: data.meta_title_es,
-        meta_description: data.meta_description_es,
+        title: data[`title_${language}`] || data.title_es,
+        slug: data[`slug_${language}`] || data.slug_es,
+        hero_title: data[`hero_title_${language}`] || data.hero_title_es,
+        hero_subtitle: data[`hero_subtitle_${language}`] || data.hero_subtitle_es,
+        challenge: data[`challenge_${language}`] || data.challenge_es,
+        solution: data[`solution_${language}`] || data.solution_es,
+        results_summary: data[`results_summary_${language}`] || data.results_summary_es,
+        detailed_content: data[`detailed_content_${language}`] || data.detailed_content_es,
+        testimonial_text: data[`testimonial_text_${language}`] || data.testimonial_text_es,
+        meta_title: data[`meta_title_${language}`] || data.meta_title_es,
+        meta_description: data[`meta_description_${language}`] || data.meta_description_es,
+        // Keep original slugs for URL normalization
+        slug_es: data.slug_es,
+        slug_ca: data.slug_ca,
+        slug_en: data.slug_en,
         metrics: (data.metrics as any) || [],
         timeline: (data.timeline as any) || [],
         gallery: (data.gallery as any) || [],
         related_services: (data.related_services as any) || [],
         tags: (data.tags as any) || [],
-      } as CaseStudy;
+      } as any;
     },
     enabled: !!slug,
   });
+
+  // Normalizar URL cuando se carga el case study
+  useEffect(() => {
+    if (caseStudy) {
+      const correctPath = getCaseStudyPath(
+        caseStudy.slug_es,
+        caseStudy.slug_ca,
+        caseStudy.slug_en
+      );
+      
+      const currentPath = window.location.pathname;
+      
+      if (currentPath !== correctPath) {
+        console.log(`🔄 Normalizing case study URL from ${currentPath} to ${correctPath}`);
+        navigate(correctPath, { replace: true });
+      }
+    }
+  }, [caseStudy, language, navigate, getCaseStudyPath]);
 
   if (isLoading) {
     return (

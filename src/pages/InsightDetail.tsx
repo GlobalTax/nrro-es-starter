@@ -1,4 +1,5 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
@@ -10,10 +11,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { insights } from "@/data/mockData";
 import DOMPurify from "dompurify";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 const InsightDetail = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { language } = useLanguage();
+  const { getInsightPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get('preview');
 
@@ -73,6 +77,24 @@ const InsightDetail = () => {
   const mockInsight = insights.find(i => i.slug === slug);
   const insight = dbInsight || mockInsight;
   const isPreviewMode = !!previewToken && !!previewData;
+
+  // Normalizar URL cuando se carga el insight
+  useEffect(() => {
+    if (dbInsight) {
+      const correctPath = getInsightPath(
+        dbInsight.slug_es,
+        dbInsight.slug_ca,
+        dbInsight.slug_en
+      );
+      
+      const currentPath = window.location.pathname;
+      
+      if (currentPath !== correctPath && !previewToken) {
+        console.log(`🔄 Normalizing insight URL from ${currentPath} to ${correctPath}`);
+        navigate(correctPath, { replace: true });
+      }
+    }
+  }, [dbInsight, language, navigate, getInsightPath, previewToken]);
 
   if (isLoading) {
     return (

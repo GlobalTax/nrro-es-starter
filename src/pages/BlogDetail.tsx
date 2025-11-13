@@ -1,8 +1,9 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
@@ -16,8 +17,10 @@ import { BlogCTASection } from "@/components/blog/BlogCTASection";
 
 const BlogDetail = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { trackPageView } = useAnalytics();
   const { language } = useLanguage();
+  const { getBlogPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get("preview");
   const queryClient = useQueryClient();
@@ -64,7 +67,7 @@ const BlogDetail = () => {
       if (response.error) throw response.error;
       
       // Map with fallback to Spanish
-      const post = response.data;
+      const post: any = response.data;
       return {
         ...post,
         title: post[`title_${language}`] || post.title_es,
@@ -73,7 +76,11 @@ const BlogDetail = () => {
         content: post[`content_${language}`] || post.content_es,
         seo_title: post[`seo_title_${language}`] || post.seo_title_es,
         seo_description: post[`seo_description_${language}`] || post.seo_description_es,
-      };
+        // Keep original slugs for URL normalization
+        slug_es: post.slug_es,
+        slug_ca: post.slug_ca,
+        slug_en: post.slug_en,
+      } as any;
     },
     enabled: !previewToken && !!slug,
   });
@@ -90,6 +97,24 @@ const BlogDetail = () => {
       incrementViewMutation.mutate(dbData.id);
     }
   }, [dbData?.id, previewToken]);
+
+  // Normalizar URL cuando se carga el post
+  useEffect(() => {
+    if (dbData) {
+      const correctPath = getBlogPath(
+        dbData.slug_es,
+        dbData.slug_ca,
+        dbData.slug_en
+      );
+      
+      const currentPath = window.location.pathname;
+      
+      if (currentPath !== correctPath && !previewToken) {
+        console.log(`🔄 Normalizing blog URL from ${currentPath} to ${correctPath}`);
+        navigate(correctPath, { replace: true });
+      }
+    }
+  }, [dbData, language, navigate, getBlogPath, previewToken]);
 
   // Reset queries when slug or language changes
   useEffect(() => {
