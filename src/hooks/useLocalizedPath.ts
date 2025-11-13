@@ -92,6 +92,38 @@ export const useLocalizedPath = () => {
    * @returns Ruta traducida al idioma actual con prefijo de idioma
    */
   const getLocalizedPath = (path: string): string => {
+    // Detectar si la ruta ya tiene un prefijo de idioma (/ca/ o /en/)
+    const hasLanguagePrefix = /^\/(ca|en)\//.test(path);
+    
+    if (hasLanguagePrefix) {
+      // Extraer el prefijo actual
+      const currentPrefix = path.match(/^\/(ca|en)\//)?.[1] as Language;
+      
+      // Si el prefijo coincide con el idioma actual, retornar tal cual
+      if (currentPrefix === language) {
+        return path;
+      }
+      
+      // Si el prefijo NO coincide, reemplazarlo
+      const pathWithoutPrefix = path.substring(currentPrefix.length + 1); // Remover "/ca" o "/en"
+      
+      // Traducir la ruta base si es necesario
+      for (const [basePath, translations] of Object.entries(pathTranslations)) {
+        const translatedBase = translations[currentPrefix]; // Base en idioma del prefijo actual
+        
+        if (pathWithoutPrefix.startsWith(translatedBase)) {
+          // Reemplazar base traducida
+          const newBase = translations[language];
+          const suffix = pathWithoutPrefix.substring(translatedBase.length);
+          return addLanguagePrefix(newBase + suffix);
+        }
+      }
+      
+      // Si no se puede traducir, solo cambiar el prefijo
+      return addLanguagePrefix(pathWithoutPrefix);
+    }
+    
+    // Lógica existente para rutas SIN prefijo
     // Si la ruta está en el mapeo directo, devolverla traducida con prefijo
     if (pathTranslations[path]) {
       return addLanguagePrefix(pathTranslations[path][language]);
