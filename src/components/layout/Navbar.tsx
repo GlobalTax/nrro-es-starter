@@ -163,7 +163,9 @@ export const Navbar = () => {
                         scrolled || isLightMode
                           ? "text-foreground hover:text-accent"
                           : "text-white hover:text-accent",
-                        isActive(item.href) && "text-accent"
+                        isActive(item.href) && (scrolled || isLightMode 
+                          ? "text-accent font-semibold" 
+                          : "text-white font-semibold underline decoration-2 underline-offset-4")
                       )}
                     >
                       {item.name}
@@ -223,7 +225,9 @@ export const Navbar = () => {
                     scrolled || isLightMode
                       ? "text-foreground hover:text-accent"
                       : "text-white hover:text-accent",
-                    isActive(item.href) && "text-accent"
+                    isActive(item.href) && (scrolled || isLightMode 
+                      ? "text-accent font-semibold" 
+                      : "text-white font-semibold underline decoration-2 underline-offset-4")
                   )}
                 >
                   {item.name}
@@ -268,21 +272,21 @@ export const Navbar = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden py-6 border-t border-border animate-in slide-in-from-top-2">
             <div className="flex flex-col gap-4">
-              {navigation.map((item) => (
-                <LanguageLink
-                  key={item.name}
-                  to={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    "font-display text-base px-4 py-2 transition-colors",
-                    isActive(item.href)
-                      ? "text-accent bg-accent/10"
-                      : "text-foreground hover:text-accent hover:bg-accent/5"
-                  )}
-                >
-                  {item.name}
-                </LanguageLink>
-              ))}
+            {navigation.map((item) => (
+              <LanguageLink
+                key={item.name}
+                to={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "font-display text-base px-4 py-2 transition-colors",
+                  isActive(item.href)
+                    ? "text-accent bg-accent/10 font-semibold"
+                    : "text-foreground hover:text-accent hover:bg-accent/5"
+                )}
+              >
+                {item.name}
+              </LanguageLink>
+            ))}
               <LanguageLink to="/contacto" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="default" className="w-full">
                   {t("nav.contact")}
