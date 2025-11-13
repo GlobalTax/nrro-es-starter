@@ -113,7 +113,6 @@ const Home = () => {
         slug: post[`slug_${language}`] || post.slug_es,
         excerpt: post[`excerpt_${language}`] || post.excerpt_es,
         slug_es: post.slug_es,
-        slug_ca: post.slug_ca,
         slug_en: post.slug_en,
         category: post.category,
         author_name: post.author_name,
@@ -364,6 +363,8 @@ const Home = () => {
                   <BlogPostCard
                     key={post.id}
                     slug={post.slug}
+                    slug_es={post.slug_es}
+                    slug_en={post.slug_en}
                     category={post.category}
                     title={post.title}
                     excerpt={post.excerpt}

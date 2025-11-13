@@ -112,7 +112,6 @@ const BlogDetail = () => {
     if (dbData) {
       const correctPath = getBlogPath(
         dbData.slug_es,
-        dbData.slug_ca,
         dbData.slug_en
       );
       

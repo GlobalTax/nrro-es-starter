@@ -48,6 +48,8 @@ export const RelatedBlogPosts = ({ currentPostId, category, tags, language = 'es
             <BlogPostCard
               key={post.id}
               slug={post[`slug_${language}`] || post.slug_es}
+              slug_es={post.slug_es}
+              slug_en={post.slug_en}
               category={post.category}
               title={post[`title_${language}`] || post.title_es}
               excerpt={post[`excerpt_${language}`] || post.excerpt_es}
