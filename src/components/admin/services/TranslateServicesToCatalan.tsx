@@ -53,6 +53,7 @@ export function TranslateServicesToCatalan() {
           </h3>
           <p className="text-sm text-muted-foreground">
             Traduce automáticamente todos los servicios que no tengan traducción al catalán.
+            Se traducen: nombre, descripción, área, metodología, servicios transversales y estadísticas.
           </p>
         </div>
 

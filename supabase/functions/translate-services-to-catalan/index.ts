@@ -39,7 +39,7 @@ serve(async (req) => {
     const { data: services, error: servicesError } = await supabase
       .from('services')
       .select('*')
-      .or('name_ca.is.null,slug_ca.is.null');
+      .or('name_ca.is.null,slug_ca.is.null,metodologia_ca.is.null,servicios_transversales_ca.is.null');
 
     if (servicesError) {
       console.error('Error fetching services:', servicesError);
@@ -52,19 +52,40 @@ serve(async (req) => {
       try {
         console.log(`  Translating: ${service.name_es}`);
 
-        if (service.name_ca && service.slug_ca && service.description_ca) {
+        if (service.name_ca && service.slug_ca && service.description_ca && 
+            service.metodologia_ca && service.servicios_transversales_ca) {
           console.log(`  ⏭️  Skipped (already translated): ${service.name_es}`);
           results.skipped++;
           continue;
         }
 
+        const textToTranslate: any = {
+          name: service.name_es,
+          description: service.description_es,
+          area: service.area_es,
+        };
+
+        // Add metodologia if exists
+        if (service.metodologia_es) {
+          console.log(`    - metodologia (${Object.keys(service.metodologia_es).length} keys)`);
+          textToTranslate.metodologia = service.metodologia_es;
+        }
+
+        // Add servicios_transversales if exists
+        if (service.servicios_transversales_es) {
+          console.log(`    - servicios_transversales (${service.servicios_transversales_es.length} items)`);
+          textToTranslate.servicios_transversales = service.servicios_transversales_es;
+        }
+
+        // Add stats if exists
+        if (service.stats_es) {
+          console.log(`    - stats (${service.stats_es.length} items)`);
+          textToTranslate.stats = service.stats_es;
+        }
+
         const { data: dataCa, error: errorCa } = await supabase.functions.invoke('translate-content', {
           body: { 
-            text: {
-              name: service.name_es,
-              description: service.description_es,
-              area: service.area_es,
-            }, 
+            text: textToTranslate, 
             targetLang: 'ca', 
             sourceLang: 'es' 
           }
@@ -74,15 +95,32 @@ serve(async (req) => {
 
         const translatedCa = dataCa.translatedText;
 
+        const updateData: any = {
+          name_ca: translatedCa.name,
+          description_ca: translatedCa.description,
+          area_ca: translatedCa.area,
+          slug_ca: generateSlug(translatedCa.name),
+          updated_at: new Date().toISOString(),
+        };
+
+        // Add translated metodologia if exists
+        if (translatedCa.metodologia) {
+          updateData.metodologia_ca = translatedCa.metodologia;
+        }
+
+        // Add translated servicios_transversales if exists
+        if (translatedCa.servicios_transversales) {
+          updateData.servicios_transversales_ca = translatedCa.servicios_transversales;
+        }
+
+        // Add translated stats if exists
+        if (translatedCa.stats) {
+          updateData.stats_ca = translatedCa.stats;
+        }
+
         const { error: updateError } = await supabase
           .from('services')
-          .update({
-            name_ca: translatedCa.name,
-            description_ca: translatedCa.description,
-            area_ca: translatedCa.area,
-            slug_ca: generateSlug(translatedCa.name),
-            updated_at: new Date().toISOString(),
-          })
+          .update(updateData)
           .eq('id', service.id);
 
         if (updateError) throw updateError;
