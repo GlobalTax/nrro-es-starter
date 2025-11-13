@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { LanguageSelector } from "@/components/ui/language-selector";
+import { LanguageLink } from "@/components/ui/language-link";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useServicesSearch } from "@/hooks/useServicesSearch";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
   const { t } = useLanguage();
+  const { getLocalizedPath, getServicePath } = useLocalizedPath();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
@@ -16,6 +20,21 @@ export const Navbar = () => {
   const location = useLocation();
   const navRef = useRef<HTMLElement>(null);
   
+  // Obtener servicios dinámicos de la BD
+  const { data: servicesData } = useServicesSearch({ limit: 11 });
+  const services = servicesData?.services || [];
+
+  // Separar servicios y áreas
+  const serviciosMenu = services.slice(0, 5).map(service => ({
+    name: service.name,
+    href: getServicePath(service.slug_es, service.slug_ca, service.slug_en)
+  }));
+
+  const areasMenu = services.slice(5, 11).map(service => ({
+    name: service.name,
+    href: getServicePath(service.slug_es, service.slug_ca, service.slug_en)
+  }));
+
   const navigation = [
     { name: t("nav.services"), href: "/servicios" },
     { name: t("nav.about"), href: "/nosotros" },
@@ -24,25 +43,9 @@ export const Navbar = () => {
     { name: t("nav.careers"), href: "/carreras" },
   ];
 
-  const serviciosMenu = [
-    { name: t("services.familyBusiness"), href: "/servicios/empresa-familiar" },
-    { name: t("services.mergersAcquisitions"), href: "/servicios/compraventa-empresas" },
-    { name: t("services.taxAdvisory"), href: "/servicios/asesoramiento-fiscal" },
-    { name: t("services.corporateLaw"), href: "/servicios/mercantil-derecho-societario" },
-    { name: t("services.accountingLabor"), href: "/servicios/asesoramiento-contable-laboral" }
-  ];
-
-  const areasMenu = [
-    { name: t("services.taxProcedure"), href: "/servicios/procedimiento-tributario" },
-    { name: t("services.shareholderConflict"), href: "/servicios/conflicto-socios" },
-    { name: t("services.ventureCapital"), href: "/servicios/capital-riesgo" },
-    { name: t("services.internationalization"), href: "/servicios/internacionalizacion" },
-    { name: t("services.civilProcedure"), href: "/servicios/procesal-civil" },
-    { name: t("services.businessValuation"), href: "/servicios/valoracion-empresas" }
-  ];
-
   const isActive = (path: string) => {
-    return location.pathname === path || location.pathname.startsWith(path + '/');
+    const localizedPath = getLocalizedPath(path);
+    return location.pathname === localizedPath || location.pathname.startsWith(localizedPath + '/');
   };
 
   useEffect(() => {

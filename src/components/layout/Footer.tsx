@@ -1,14 +1,21 @@
-import { Link } from "react-router-dom";
 import { Linkedin, Instagram, Twitter, Facebook, Mail, Phone } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
+import { LanguageLink } from "@/components/ui/language-link";
 import { useSiteSettingsMap } from '@/hooks/useSiteSettings';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useServicesSearch } from '@/hooks/useServicesSearch';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 export const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
   const { settings } = useSiteSettingsMap();
+  const { getServicePath } = useLocalizedPath();
+  
+  // Obtener servicios dinámicos de la BD
+  const { data: servicesData } = useServicesSearch({ limit: 11 });
+  const services = servicesData?.services || [];
 
   // Valores por defecto (fallback)
   const socialLinks = {
@@ -23,6 +30,10 @@ export const Footer = () => {
     phoneDisplay: settings.contact_phone_display || '934593600',
     email: settings.contact_email || 'info@nrro.es',
   };
+
+  // Separar servicios y áreas
+  const serviciosItems = services.slice(0, 5);
+  const areasItems = services.slice(5, 11);
 
   return (
     <footer className="bg-primary text-primary-foreground">
