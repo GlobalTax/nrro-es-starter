@@ -112,6 +112,18 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', scrollHandler);
   }, [location]);
 
+  // Cerrar dropdown de servicios al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (serviciosOpen && !(event.target as Element).closest('.servicios-dropdown')) {
+        setServiciosOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [serviciosOpen]);
+
   return (
     <nav
       ref={navRef}
@@ -142,11 +154,10 @@ export const Navbar = () => {
                 return (
                   <div
                     key={item.name}
-                    className="relative group"
-                    onMouseEnter={() => setServiciosOpen(true)}
-                    onMouseLeave={() => setServiciosOpen(false)}
+                    className="relative group servicios-dropdown"
                   >
                     <button
+                      onClick={() => setServiciosOpen(!serviciosOpen)}
                       className={cn(
                         "flex items-center gap-1 font-display text-base transition-colors",
                         scrolled || isLightMode
@@ -160,7 +171,7 @@ export const Navbar = () => {
                     </button>
                     
                     {serviciosOpen && (
-                      <div className="absolute top-full left-0 mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden min-w-[500px]">
+                      <div className="absolute top-full left-0 mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden min-w-[500px] z-[100]">
                         <div className="grid grid-cols-2 gap-px bg-border">
                           <div className="bg-background p-4">
                             <h3 className="text-sm font-semibold text-foreground/60 mb-3 uppercase tracking-wider">
@@ -168,13 +179,14 @@ export const Navbar = () => {
                             </h3>
                             <div className="space-y-2">
                               {serviciosMenu.map((service) => (
-                                <Link
+                                <LanguageLink
                                   key={service.href}
                                   to={service.href}
+                                  onClick={() => setServiciosOpen(false)}
                                   className="block px-3 py-2 text-sm text-foreground hover:text-accent hover:bg-accent/10 rounded transition-colors"
                                 >
                                   {service.name}
-                                </Link>
+                                </LanguageLink>
                               ))}
                             </div>
                           </div>
@@ -184,13 +196,14 @@ export const Navbar = () => {
                             </h3>
                             <div className="space-y-2">
                               {areasMenu.map((area) => (
-                                <Link
+                                <LanguageLink
                                   key={area.href}
                                   to={area.href}
+                                  onClick={() => setServiciosOpen(false)}
                                   className="block px-3 py-2 text-sm text-foreground hover:text-accent hover:bg-accent/10 rounded transition-colors"
                                 >
                                   {area.name}
-                                </Link>
+                                </LanguageLink>
                               ))}
                             </div>
                           </div>
@@ -218,7 +231,7 @@ export const Navbar = () => {
               );
             })}
 
-            <LanguageSelector />
+            <LanguageSelector variant={scrolled || isLightMode ? "light" : "dark"} />
 
             <LanguageLink to="/contacto">
               <Button 
@@ -232,7 +245,7 @@ export const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="flex items-center gap-4 lg:hidden">
-            <LanguageSelector />
+            <LanguageSelector variant={scrolled || isLightMode ? "light" : "dark"} />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={cn(
