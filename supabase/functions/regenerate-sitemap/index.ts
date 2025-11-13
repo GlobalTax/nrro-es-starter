@@ -67,6 +67,43 @@ function createUrlEntry(url: SitemapUrl): string {
   return xml;
 }
 
+async function uploadSitemapToStorage(
+  supabase: any, 
+  xmlContent: string
+): Promise<string> {
+  const fileName = 'sitemap.xml';
+  const bucketName = 'public-files';
+  
+  console.log('📤 Subiendo sitemap a Storage...');
+  
+  // Convertir string a Blob
+  const blob = new Blob([xmlContent], { type: 'application/xml' });
+  
+  // Subir a Storage (upsert = true para sobrescribir)
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .upload(fileName, blob, {
+      contentType: 'application/xml',
+      cacheControl: '3600', // 1 hora de cache
+      upsert: true // Sobrescribir archivo existente
+    });
+  
+  if (error) {
+    console.error('❌ Error subiendo sitemap:', error);
+    throw error;
+  }
+  
+  // Obtener URL pública
+  const { data: urlData } = supabase.storage
+    .from(bucketName)
+    .getPublicUrl(fileName);
+  
+  console.log('✅ Sitemap subido exitosamente');
+  console.log('🔗 URL pública:', urlData.publicUrl);
+  
+  return urlData.publicUrl;
+}
+
 async function generateSitemap() {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -280,13 +317,27 @@ Deno.serve(async (req) => {
   try {
     console.log('🔄 Regenerando sitemap...');
     
+    // Generar XML
     const xmlContent = await generateSitemap();
+    
+    // Crear cliente de Supabase para subir a Storage
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // Subir a Storage
+    const publicUrl = await uploadSitemapToStorage(
+      supabase, 
+      xmlContent
+    );
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Sitemap regenerado exitosamente',
-        sitemap: xmlContent 
+        message: 'Sitemap regenerado y almacenado exitosamente',
+        url: publicUrl,
+        size: xmlContent.length,
+        timestamp: new Date().toISOString()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
