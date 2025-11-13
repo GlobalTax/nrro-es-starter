@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.translate-content]
 verify_jwt = true
+
+[functions.run-translation-migration]
+verify_jwt = false
