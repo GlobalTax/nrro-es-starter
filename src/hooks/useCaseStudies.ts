@@ -10,11 +10,14 @@ interface CaseStudiesParams {
   status?: 'draft' | 'review' | 'published' | 'archived';
   limit?: number;
   offset?: number;
+  language?: string;
 }
 
 export const useCaseStudies = (params: CaseStudiesParams) => {
+  const language = params.language || 'es';
+
   return useQuery({
-    queryKey: ["case-studies", params],
+    queryKey: ["case-studies", params, language],
     queryFn: async () => {
       const { data, error } = await supabase.rpc("search_case_studies", {
         search_query: params.searchQuery || null,
@@ -29,6 +32,13 @@ export const useCaseStudies = (params: CaseStudiesParams) => {
       if (error) throw error;
       return (data || []).map((item: any) => ({
         ...item,
+        title: item[`title_${language}`] || item.title_es,
+        slug: item[`slug_${language}`] || item.slug_es,
+        hero_title: item[`hero_title_${language}`] || item.hero_title_es,
+        hero_subtitle: item[`hero_subtitle_${language}`] || item.hero_subtitle_es,
+        challenge: item[`challenge_${language}`] || item.challenge_es,
+        solution: item[`solution_${language}`] || item.solution_es,
+        results_summary: item[`results_summary_${language}`] || item.results_summary_es,
         metrics: Array.isArray(item.metrics) ? item.metrics : [],
         tags: Array.isArray(item.tags) ? item.tags : [],
         slug_es: item.slug_es,

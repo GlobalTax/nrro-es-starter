@@ -6,6 +6,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
+import { TranslateNewsToCatalan } from '@/components/admin/news/TranslateNewsToCatalan';
 
 export const AdminNews = () => {
   const { toast } = useToast();
@@ -60,6 +61,8 @@ export const AdminNews = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">News Articles</h1>
       </div>
+
+      <TranslateNewsToCatalan />
 
       <Card className="p-6">
         <Table>
