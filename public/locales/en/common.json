@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "services": "Services",
+    "about": "About Us",
+    "blog": "Blog",
+    "team": "Team",
+    "careers": "Careers",
+    "contact": "Contact",
+    "areas": "Areas"
+  },
+  "services": {
+    "familyBusiness": "Family Business",
+    "mergersAcquisitions": "Mergers & Acquisitions",
+    "taxAdvisory": "Tax Advisory",
+    "corporateLaw": "Corporate Law",
+    "accountingLabor": "Accounting & Labor Advisory",
+    "taxProcedure": "Tax Procedure",
+    "shareholderConflict": "Shareholder Conflict",
+    "ventureCapital": "Venture Capital",
+    "internationalization": "Business Internationalization",
+    "civilProcedure": "Civil Procedure",
+    "businessValuation": "Business Valuation"
+  },
+  "footer": {
+    "tagline": "Plan the future, with decisions today.",
+    "services": "Services",
+    "areas": "Areas",
+    "other": "Other",
+    "contact": "Contact",
+    "copyright": "© MADE WITH ❤️ BY NAVARRO TEAM",
+    "legal": "Legal Notice",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "terms": "Terms"
+  },
+  "home": {
+    "hero": {
+      "badge": "Navarro",
+      "title": "Plan the future<br />With decisions today.",
+      "subtitle": "We advise business groups and family businesses on their key decisions: taxation, succession, corporate structure and mergers & acquisitions.",
+      "cta_primary": "Our Services",
+      "cta_secondary": "Contact"
+    },
+    "about": {
+      "overline": "About navarro",
+      "title": "Strategic and legal advisory for businesses and groups.",
+      "paragraph1": "At navarro we offer legal, tax and strategic advisory specialized in family businesses and consolidated corporate structures.",
+      "paragraph2": "Our vision comes from a deep understanding of the continuity, governance and growth challenges faced by family companies."
+    },
+    "stats": {
+      "overline": "Our data"
+    },
+    "technology": {
+      "overline": "Technology we use"
+    },
+    "clients": {
+      "overline": "They trust us"
+    },
+    "blog": {
+      "overline": "Latest articles",
+      "cta": "View all articles"
+    }
+  },
+  "contact": {
+    "hero": {
+      "badge": "Contact",
+      "title": "Let's talk",
+      "subtitle": "Tell us how we can help you"
+    },
+    "form": {
+      "title": "Send us a message",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+34 123 456 789",
+      "subject": "Subject",
+      "subjectPlaceholder": "How can we help you?",
+      "message": "Message (minimum 10 characters)",
+      "messagePlaceholder": "Tell us more about your inquiry...",
+      "messageError": "Message must be at least 10 characters",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "successTitle": "Message sent",
+      "successDescription": "We will contact you soon.",
+      "errorTitle": "Error",
+      "errorDescription": "An error occurred. Please try again."
+    },
+    "info": {
+      "title": "Contact information",
+      "subtitle": "We're here to help. Contact us through any of these channels.",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "addressValue": "Ausias March Street number 36, 08010 Barcelona",
+      "hours": "Business hours",
+      "weekdays": "Monday to Friday",
+      "weekdaysValue": "9:00 AM - 6:00 PM",
+      "weekend": "Weekends",
+      "weekendValue": "Closed"
+    }
+  }
+}

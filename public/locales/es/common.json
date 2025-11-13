@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "team": "Equipo",
+    "careers": "Carreras",
+    "contact": "Contacto",
+    "areas": "Áreas"
+  },
+  "services": {
+    "familyBusiness": "Empresa Familiar",
+    "mergersAcquisitions": "Compraventa de empresas",
+    "taxAdvisory": "Asesoramiento Fiscal",
+    "corporateLaw": "Mercantil y derecho societario",
+    "accountingLabor": "Asesoramiento Contable y Laboral",
+    "taxProcedure": "Procedimiento tributario",
+    "shareholderConflict": "Conflicto de Socios",
+    "ventureCapital": "Capital Riesgo",
+    "internationalization": "Internacionalización de empresas",
+    "civilProcedure": "Procesal Civil",
+    "businessValuation": "Valoración de empresas"
+  },
+  "footer": {
+    "tagline": "Planifica el futuro, con decisiones hoy.",
+    "services": "Servicios",
+    "areas": "Áreas",
+    "other": "Otros",
+    "contact": "Contacto",
+    "copyright": "© HECHO CON ❤️ BY NAVARRO TEAM",
+    "legal": "Aviso Legal",
+    "privacy": "Privacidad",
+    "cookies": "Cookies",
+    "terms": "Condiciones"
+  },
+  "home": {
+    "hero": {
+      "badge": "Navarro",
+      "title": "Planifica el futuro<br />Con decisiones hoy.",
+      "subtitle": "Asesoramos a grupos de empresas y empresas familiares en sus decisiones clave: fiscalidad, sucesión, estructura societaria y compraventa de empresas.",
+      "cta_primary": "Nuestros Servicios",
+      "cta_secondary": "Contactar"
+    },
+    "about": {
+      "overline": "Nosotros navarro",
+      "title": "Asesoramiento estratégico y legal para empresas y grupos.",
+      "paragraph1": "En navarro ofrecemos asesoramiento legal, fiscal y estratégico especializado en empresas familiares y estructuras empresariales consolidadas.",
+      "paragraph2": "Nuestra visión parte de la comprensión profunda de los retos de continuidad, gobernanza y crecimiento que enfrentan las compañías familiares."
+    },
+    "stats": {
+      "overline": "Nuestros datos"
+    },
+    "technology": {
+      "overline": "Tecnología que usamos"
+    },
+    "clients": {
+      "overline": "Confían en nosotros"
+    },
+    "blog": {
+      "overline": "Últimos artículos",
+      "cta": "Ver todos los artículos"
+    }
+  },
+  "contact": {
+    "hero": {
+      "badge": "Contacto",
+      "title": "Hablemos",
+      "subtitle": "Cuéntanos cómo podemos ayudarte"
+    },
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+34 123 456 789",
+      "subject": "Asunto",
+      "subjectPlaceholder": "¿En qué podemos ayudarte?",
+      "message": "Mensaje (mínimo 10 caracteres)",
+      "messagePlaceholder": "Cuéntanos más sobre tu consulta...",
+      "messageError": "El mensaje debe tener al menos 10 caracteres",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "successTitle": "Mensaje enviado",
+      "successDescription": "Nos pondremos en contacto contigo pronto.",
+      "errorTitle": "Error",
+      "errorDescription": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
+    },
+    "info": {
+      "title": "Información de contacto",
+      "subtitle": "Estamos aquí para ayudarte. Contáctanos por cualquiera de estos medios.",
+      "phone": "Teléfono",
+      "email": "Email",
+      "address": "Dirección",
+      "addressValue": "Carrer Ausias March número 36, 08010 Barcelona",
+      "hours": "Horario de atención",
+      "weekdays": "Lunes a Viernes",
+      "weekdaysValue": "9:00 - 18:00",
+      "weekend": "Fines de semana",
+      "weekendValue": "Cerrado"
+    }
+  }
+}

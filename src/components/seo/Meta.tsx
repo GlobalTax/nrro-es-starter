@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MetaProps {
   title: string;
@@ -16,8 +17,12 @@ export const Meta = ({
   canonicalUrl,
 }: MetaProps) => {
   const baseUrl = "https://nrro.es";
+  const { language } = useLanguage();
   
   useEffect(() => {
+    // Update html lang attribute
+    document.documentElement.lang = language;
+    
     // Update title
     document.title = `${title} | NRRO`;
 
@@ -28,6 +33,7 @@ export const Meta = ({
       { property: "og:description", content: description },
       { property: "og:image", content: ogImage },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: language === "es" ? "es_ES" : language === "ca" ? "ca_ES" : "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: `${title} | NRRO` },
       { name: "twitter:description", content: description },
@@ -52,6 +58,26 @@ export const Meta = ({
       element.setAttribute("content", content);
     });
 
+    // Add hreflang tags for SEO
+    const hreflangTags = [
+      { lang: "es", href: `${baseUrl}${window.location.pathname}` },
+      { lang: "ca", href: `${baseUrl}/ca${window.location.pathname}` },
+      { lang: "en", href: `${baseUrl}/en${window.location.pathname}` },
+      { lang: "x-default", href: `${baseUrl}${window.location.pathname}` },
+    ];
+
+    // Remove existing hreflang tags
+    document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
+
+    // Add new hreflang tags
+    hreflangTags.forEach(({ lang, href }) => {
+      const link = document.createElement("link");
+      link.rel = "alternate";
+      link.hreflang = lang;
+      link.href = href;
+      document.head.appendChild(link);
+    });
+
     // Update canonical
     const fullCanonicalUrl = canonicalUrl 
       ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}`)
@@ -64,7 +90,7 @@ export const Meta = ({
       document.head.appendChild(canonical);
     }
     canonical.href = fullCanonicalUrl;
-  }, [title, description, keywords, ogImage, canonicalUrl]);
+  }, [title, description, keywords, ogImage, canonicalUrl, language]);
 
   return null;
 };

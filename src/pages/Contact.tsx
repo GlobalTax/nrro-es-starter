@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,6 +16,7 @@ import { LocationMap } from '@/components/map/LocationMap';
 
 export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick } = useAnalytics();
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -54,8 +56,8 @@ export default function Contact() {
       });
 
       toast({
-        title: "Mensaje enviado",
-        description: "Nos pondremos en contacto contigo pronto.",
+        title: t("contact.form.successTitle"),
+        description: t("contact.form.successDescription"),
       });
 
       setFormData({
@@ -68,8 +70,8 @@ export default function Contact() {
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
-        title: "Error",
-        description: "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
+        title: t("contact.form.errorTitle"),
+        description: t("contact.form.errorDescription"),
         variant: 'destructive',
       });
     } finally {
@@ -80,20 +82,20 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Teléfono',
+      title: t("contact.info.phone"),
       value: '93 459 36 00',
       href: 'tel:+34934593600',
     },
     {
       icon: Mail,
-      title: 'Email',
+      title: t("contact.info.email"),
       value: 'info@nrro.es',
       href: 'mailto:info@nrro.es',
     },
     {
       icon: MapPin,
-      title: 'Dirección',
-      value: 'Carrer Ausias March número 36, 08010 Barcelona',
+      title: t("contact.info.address"),
+      value: t("contact.info.addressValue"),
       href: 'https://maps.app.goo.gl/JjwmToznoU9Vx7zu9',
     },
   ];
@@ -112,13 +114,13 @@ export default function Contact() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>Contacto</BadgeHero>
+              <BadgeHero>{t("contact.hero.badge")}</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              Hablemos
+              {t("contact.hero.title")}
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              Cuéntanos cómo podemos ayudarte
+              {t("contact.hero.subtitle")}
             </p>
           </div>
         </div>
@@ -132,17 +134,17 @@ export default function Contact() {
             <div className="animate-slide-up">
                 <Card className="shadow-medium border-border/50">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-serif">Envíanos un mensaje</CardTitle>
+                  <CardTitle className="text-2xl font-serif">{t("contact.form.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Nombre</Label>
+                      <Label htmlFor="name">{t("contact.form.name")}</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Tu nombre"
+                        placeholder={t("contact.form.namePlaceholder")}
                         required
                         className="border-border/50 focus:border-accent"
                       />
@@ -150,57 +152,57 @@ export default function Contact() {
 
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email">{t("contact.form.email")}</Label>
                         <Input
                           id="email"
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="tu@email.com"
+                          placeholder={t("contact.form.emailPlaceholder")}
                           required
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Teléfono</Label>
+                        <Label htmlFor="phone">{t("contact.form.phone")}</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+34 123 456 789"
+                          placeholder={t("contact.form.phonePlaceholder")}
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="subject">Asunto</Label>
+                      <Label htmlFor="subject">{t("contact.form.subject")}</Label>
                       <Input
                         id="subject"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="¿En qué podemos ayudarte?"
+                        placeholder={t("contact.form.subjectPlaceholder")}
                         required
                         className="border-border/50 focus:border-accent"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">Mensaje (mínimo 10 caracteres)</Label>
+                      <Label htmlFor="message">{t("contact.form.message")}</Label>
                       <Textarea
                         id="message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Cuéntanos más sobre tu consulta..."
+                        placeholder={t("contact.form.messagePlaceholder")}
                         rows={6}
                         required
                         minLength={10}
                         className="border-border/50 focus:border-accent resize-none"
                       />
                       {formData.message.length > 0 && formData.message.length < 10 && (
-                        <p className="text-sm text-destructive">El mensaje debe tener al menos 10 caracteres</p>
+                        <p className="text-sm text-destructive">{t("contact.form.messageError")}</p>
                       )}
                     </div>
 
@@ -210,7 +212,7 @@ export default function Contact() {
                       disabled={isSubmitting}
                       className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-soft"
                     >
-                      {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+                      {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
                       <Send className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
@@ -222,10 +224,10 @@ export default function Contact() {
             <div className="space-y-6 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-                  Información de contacto
+                  {t("contact.info.title")}
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Estamos aquí para ayudarte. Contáctanos por cualquiera de estos medios.
+                  {t("contact.info.subtitle")}
                 </p>
               </div>
 
@@ -267,16 +269,16 @@ export default function Contact() {
               <Card className="border-border/50 shadow-soft">
                 <CardContent className="p-6">
                   <h3 className="font-display font-normal text-foreground mb-4">
-                    Horario de atención
+                    {t("contact.info.hours")}
                   </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Lunes a Viernes</span>
-                      <span className="font-medium text-foreground">9:00 - 18:00</span>
+                      <span className="text-muted-foreground">{t("contact.info.weekdays")}</span>
+                      <span className="font-medium text-foreground">{t("contact.info.weekdaysValue")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Fines de semana</span>
-                      <span className="font-medium text-foreground">Cerrado</span>
+                      <span className="text-muted-foreground">{t("contact.info.weekend")}</span>
+                      <span className="font-medium text-foreground">{t("contact.info.weekendValue")}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -286,7 +288,7 @@ export default function Contact() {
               <Card className="border-border/50 shadow-soft overflow-hidden">
                 <CardContent className="p-0">
                   <LocationMap
-                    address="Carrer Ausias March número 36, 08010 Barcelona"
+                    address={t("contact.info.addressValue")}
                     lat={41.3931}
                     lng={2.1737}
                   />

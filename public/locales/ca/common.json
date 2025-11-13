@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "services": "Serveis",
+    "about": "Nosaltres",
+    "blog": "Blog",
+    "team": "Equip",
+    "careers": "Carreres",
+    "contact": "Contacte",
+    "areas": "Àrees"
+  },
+  "services": {
+    "familyBusiness": "Empresa Familiar",
+    "mergersAcquisitions": "Compravenda d'empreses",
+    "taxAdvisory": "Assessorament Fiscal",
+    "corporateLaw": "Mercantil i dret societari",
+    "accountingLabor": "Assessorament Comptable i Laboral",
+    "taxProcedure": "Procediment tributari",
+    "shareholderConflict": "Conflicte de Socis",
+    "ventureCapital": "Capital Risc",
+    "internationalization": "Internacionalització d'empreses",
+    "civilProcedure": "Processal Civil",
+    "businessValuation": "Valoració d'empreses"
+  },
+  "footer": {
+    "tagline": "Planifica el futur, amb decisions avui.",
+    "services": "Serveis",
+    "areas": "Àrees",
+    "other": "Altres",
+    "contact": "Contacte",
+    "copyright": "© FET AMB ❤️ PER L'EQUIP NAVARRO",
+    "legal": "Avís Legal",
+    "privacy": "Privacitat",
+    "cookies": "Cookies",
+    "terms": "Condicions"
+  },
+  "home": {
+    "hero": {
+      "badge": "Navarro",
+      "title": "Planifica el futur<br />Amb decisions avui.",
+      "subtitle": "Assessorem grups d'empreses i empreses familiars en les seves decisions clau: fiscalitat, successió, estructura societària i compravenda d'empreses.",
+      "cta_primary": "Els nostres Serveis",
+      "cta_secondary": "Contactar"
+    },
+    "about": {
+      "overline": "Nosaltres navarro",
+      "title": "Assessorament estratègic i legal per a empreses i grups.",
+      "paragraph1": "A navarro oferim assessorament legal, fiscal i estratègic especialitzat en empreses familiars i estructures empresarials consolidades.",
+      "paragraph2": "La nostra visió parteix de la comprensió profunda dels reptes de continuïtat, governança i creixement que afronten les companyies familiars."
+    },
+    "stats": {
+      "overline": "Les nostres dades"
+    },
+    "technology": {
+      "overline": "Tecnologia que fem servir"
+    },
+    "clients": {
+      "overline": "Confien en nosaltres"
+    },
+    "blog": {
+      "overline": "Últims articles",
+      "cta": "Veure tots els articles"
+    }
+  },
+  "contact": {
+    "hero": {
+      "badge": "Contacte",
+      "title": "Parlem",
+      "subtitle": "Explica'ns com et podem ajudar"
+    },
+    "form": {
+      "title": "Envia'ns un missatge",
+      "name": "Nom",
+      "namePlaceholder": "El teu nom",
+      "email": "Email",
+      "emailPlaceholder": "el.teu@email.com",
+      "phone": "Telèfon",
+      "phonePlaceholder": "+34 123 456 789",
+      "subject": "Assumpte",
+      "subjectPlaceholder": "En què et podem ajudar?",
+      "message": "Missatge (mínim 10 caràcters)",
+      "messagePlaceholder": "Explica'ns més sobre la teva consulta...",
+      "messageError": "El missatge ha de tenir almenys 10 caràcters",
+      "submit": "Enviar missatge",
+      "submitting": "Enviant...",
+      "successTitle": "Missatge enviat",
+      "successDescription": "Ens posarem en contacte amb tu aviat.",
+      "errorTitle": "Error",
+      "errorDescription": "S'ha produït un error. Si us plau, torna-ho a intentar."
+    },
+    "info": {
+      "title": "Informació de contacte",
+      "subtitle": "Som aquí per ajudar-te. Contacta'ns per qualsevol d'aquests mitjans.",
+      "phone": "Telèfon",
+      "email": "Email",
+      "address": "Adreça",
+      "addressValue": "Carrer Ausiàs March número 36, 08010 Barcelona",
+      "hours": "Horari d'atenció",
+      "weekdays": "Dilluns a Divendres",
+      "weekdaysValue": "9:00 - 18:00",
+      "weekend": "Caps de setmana",
+      "weekendValue": "Tancat"
+    }
+  }
+}

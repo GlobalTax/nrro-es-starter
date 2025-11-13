@@ -3,9 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
@@ -14,28 +17,28 @@ export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
   
   const navigation = [
-    { name: "Servicios", href: "/servicios" },
-    { name: "Nosotros", href: "/nosotros" },
-    { name: "Blog", href: "/blog" },
-    { name: "Equipo", href: "/equipo" },
-    { name: "Carreras", href: "/carreras" },
+    { name: t("nav.services"), href: "/servicios" },
+    { name: t("nav.about"), href: "/nosotros" },
+    { name: t("nav.blog"), href: "/blog" },
+    { name: t("nav.team"), href: "/equipo" },
+    { name: t("nav.careers"), href: "/carreras" },
   ];
 
   const serviciosMenu = [
-    { name: "Empresa Familiar", href: "/servicios/empresa-familiar" },
-    { name: "Compraventa de empresas", href: "/servicios/compraventa-empresas" },
-    { name: "Asesoramiento Fiscal", href: "/servicios/asesoramiento-fiscal" },
-    { name: "Mercantil y derecho societario", href: "/servicios/mercantil-derecho-societario" },
-    { name: "Asesoramiento Contable y Laboral", href: "/servicios/asesoramiento-contable-laboral" }
+    { name: t("services.familyBusiness"), href: "/servicios/empresa-familiar" },
+    { name: t("services.mergersAcquisitions"), href: "/servicios/compraventa-empresas" },
+    { name: t("services.taxAdvisory"), href: "/servicios/asesoramiento-fiscal" },
+    { name: t("services.corporateLaw"), href: "/servicios/mercantil-derecho-societario" },
+    { name: t("services.accountingLabor"), href: "/servicios/asesoramiento-contable-laboral" }
   ];
 
   const areasMenu = [
-    { name: "Procedimiento tributario", href: "/servicios/procedimiento-tributario" },
-    { name: "Conflicto de Socios", href: "/servicios/conflicto-socios" },
-    { name: "Capital Riesgo", href: "/servicios/capital-riesgo" },
-    { name: "Internacionalización de empresas", href: "/servicios/internacionalizacion" },
-    { name: "Procesal Civil", href: "/servicios/procesal-civil" },
-    { name: "Valoración de empresas", href: "/servicios/valoracion-empresas" }
+    { name: t("services.taxProcedure"), href: "/servicios/procedimiento-tributario" },
+    { name: t("services.shareholderConflict"), href: "/servicios/conflicto-socios" },
+    { name: t("services.ventureCapital"), href: "/servicios/capital-riesgo" },
+    { name: t("services.internationalization"), href: "/servicios/internacionalizacion" },
+    { name: t("services.civilProcedure"), href: "/servicios/procesal-civil" },
+    { name: t("services.businessValuation"), href: "/servicios/valoracion-empresas" }
   ];
 
   const isActive = (path: string) => {
@@ -126,7 +129,8 @@ export const Navbar = () => {
         <div className="flex h-20 items-center justify-between">
           <Logo variant="compact" color={isLightMode ? "dark" : "light"} className="h-12" />
 
-          <div className="hidden md:flex md:items-center md:gap-10 lg:gap-12">
+          <div className="hidden md:flex md:items-center md:gap-8 lg:gap-10">
+            <div className="flex items-center gap-10 lg:gap-12">
             {navigation.map((item) => {
               if (item.name === "Servicios") {
                 return (
@@ -137,7 +141,7 @@ export const Navbar = () => {
                     onMouseLeave={() => setServiciosOpen(false)}
                   >
                     <button
-                      className={cn(
+                        className={cn(
                         "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight flex items-center gap-1",
                         isActive('/servicios')
                           ? isLightMode 
@@ -148,7 +152,7 @@ export const Navbar = () => {
                             : "text-primary-foreground/75 hover:text-white"
                        )}
                       >
-                        Servicios
+                        {t("nav.services")}
                         <ChevronDown className={cn(
                           "h-4 w-4 transition-transform duration-200",
                           serviciosOpen && "rotate-180"
@@ -162,7 +166,7 @@ export const Navbar = () => {
                             
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                Servicios
+                                {t("nav.services")}
                               </h3>
                               <ul className="space-y-4">
                                 {serviciosMenu.map((servicio) => (
@@ -181,7 +185,7 @@ export const Navbar = () => {
 
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                Áreas
+                                {t("nav.areas")}
                               </h3>
                               <ul className="space-y-4">
                                 {areasMenu.map((area) => (
@@ -200,7 +204,7 @@ export const Navbar = () => {
 
                             <div>
                               <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                Contact
+                                {t("nav.contact")}
                               </h3>
                               <div className="space-y-4">
                                 <div className="flex items-start gap-3">
@@ -264,8 +268,10 @@ export const Navbar = () => {
                 </Link>
               );
             })}
-            <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium ml-2">
-              <Link to="/contacto">Contacto</Link>
+            </div>
+            <LanguageSelector variant={isLightMode ? "light" : "dark"} />
+            <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium">
+              <Link to="/contacto">{t("nav.contact")}</Link>
             </Button>
           </div>
 
@@ -312,10 +318,11 @@ export const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <div className="px-4 pt-2">
+            <div className="px-4 pt-2 space-y-3">
+              <LanguageSelector variant={isLightMode ? "light" : "dark"} />
               <Button asChild size="default" className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-md font-medium">
                 <Link to="/contacto" onClick={() => setMobileMenuOpen(false)}>
-                  Contacto
+                  {t("nav.contact")}
                 </Link>
               </Button>
             </div>

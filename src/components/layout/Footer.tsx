@@ -3,8 +3,10 @@ import { Linkedin, Instagram, Twitter, Facebook, Mail, Phone } from "lucide-reac
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 import { useSiteSettingsMap } from '@/hooks/useSiteSettings';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   const { settings } = useSiteSettingsMap();
 
@@ -29,7 +31,7 @@ export const Footer = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <h3 className="text-2xl md:text-3xl font-display font-normal">
-              Contacto
+              {t("footer.contact")}
             </h3>
             <div className="flex flex-wrap gap-6">
               <a
@@ -62,7 +64,7 @@ export const Footer = () => {
           <div className="space-y-8">
             <Logo variant="compact" color="light" className="h-12" />
             <p className="text-lg text-primary-foreground/80 font-light leading-relaxed">
-              Planifica el futuro, con decisiones hoy.
+              {t("footer.tagline")}
             </p>
             
             {/* Social Media Links */}
@@ -117,7 +119,7 @@ export const Footer = () => {
           {/* Services Column */}
           <div>
             <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
-              Servicios
+              {t("footer.services")}
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
             </h3>
             <ul className="space-y-3">
@@ -126,7 +128,7 @@ export const Footer = () => {
                   to="/servicios/empresa-familiar"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Empresa Familiar
+                  {t("services.familyBusiness")}
                 </Link>
               </li>
               <li>
@@ -134,7 +136,7 @@ export const Footer = () => {
                   to="/servicios/compraventa-empresas"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Compraventa de empresas
+                  {t("services.mergersAcquisitions")}
                 </Link>
               </li>
               <li>
@@ -142,7 +144,7 @@ export const Footer = () => {
                   to="/servicios/asesoramiento-fiscal"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Asesoramiento Fiscal
+                  {t("services.taxAdvisory")}
                 </Link>
               </li>
               <li>
@@ -150,7 +152,7 @@ export const Footer = () => {
                   to="/servicios/mercantil-derecho-societario"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Mercantil y derecho societario
+                  {t("services.corporateLaw")}
                 </Link>
               </li>
               <li>
@@ -158,7 +160,7 @@ export const Footer = () => {
                   to="/servicios/asesoramiento-contable-laboral"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Asesoramiento Contable y Laboral
+                  {t("services.accountingLabor")}
                 </Link>
               </li>
             </ul>
@@ -167,7 +169,7 @@ export const Footer = () => {
           {/* Areas Column */}
           <div>
             <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
-              Áreas
+              {t("footer.areas")}
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
             </h3>
             <ul className="space-y-3">
@@ -176,7 +178,7 @@ export const Footer = () => {
                   to="/servicios/procedimiento-tributario"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Procedimiento tributario
+                  {t("services.taxProcedure")}
                 </Link>
               </li>
               <li>
@@ -184,7 +186,7 @@ export const Footer = () => {
                   to="/servicios/conflicto-socios"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Conflicto de Socios
+                  {t("services.shareholderConflict")}
                 </Link>
               </li>
               <li>
@@ -192,7 +194,7 @@ export const Footer = () => {
                   to="/servicios/capital-riesgo"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Capital Riesgo
+                  {t("services.ventureCapital")}
                 </Link>
               </li>
               <li>
@@ -200,7 +202,7 @@ export const Footer = () => {
                   to="/servicios/internacionalizacion"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Internacionalización de empresas
+                  {t("services.internationalization")}
                 </Link>
               </li>
               <li>
@@ -208,7 +210,7 @@ export const Footer = () => {
                   to="/servicios/procesal-civil"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Procesal Civil
+                  {t("services.civilProcedure")}
                 </Link>
               </li>
               <li>
@@ -216,7 +218,7 @@ export const Footer = () => {
                   to="/servicios/valoracion-empresas"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Valoración de empresas
+                  {t("services.businessValuation")}
                 </Link>
               </li>
             </ul>
@@ -225,7 +227,7 @@ export const Footer = () => {
           {/* Other Links Column */}
           <div>
             <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
-              Otros
+              {t("footer.other")}
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
             </h3>
             <ul className="space-y-3">
@@ -234,7 +236,7 @@ export const Footer = () => {
                   to="/blog"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Blog
+                  {t("nav.blog")}
                 </Link>
               </li>
               <li>
@@ -242,7 +244,7 @@ export const Footer = () => {
                   to="/equipo"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Equipo
+                  {t("nav.team")}
                 </Link>
               </li>
               <li>
@@ -250,7 +252,7 @@ export const Footer = () => {
                   to="/carreras"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Carreras
+                  {t("nav.careers")}
                 </Link>
               </li>
               <li>
@@ -258,7 +260,7 @@ export const Footer = () => {
                   to="/nosotros"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Nosotros
+                  {t("nav.about")}
                 </Link>
               </li>
               <li>
@@ -266,7 +268,7 @@ export const Footer = () => {
                   to="/contacto"
                   className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
                 >
-                  Contacto
+                  {t("nav.contact")}
                 </Link>
               </li>
             </ul>
@@ -279,32 +281,32 @@ export const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm font-mono text-primary-foreground/70">
-            © HECHO CON ❤️ BY NAVARRO TEAM
+            {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
             <Link 
               to="/aviso-legal" 
               className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              Aviso Legal
+              {t("footer.legal")}
             </Link>
             <Link 
               to="/privacidad" 
               className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              Privacidad
+              {t("footer.privacy")}
             </Link>
             <Link 
               to="/cookies" 
               className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              Cookies
+              {t("footer.cookies")}
             </Link>
             <Link 
               to="/condiciones-contratacion" 
               className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              Condiciones
+              {t("footer.terms")}
             </Link>
           </div>
         </div>

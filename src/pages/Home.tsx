@@ -6,6 +6,7 @@ import { SectionHeader, Overline } from "@/components/ui/typography";
 import { TechnologyShowcase } from "@/components/home/TechnologyShowcase";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
@@ -27,6 +28,7 @@ import DOMPurify from "dompurify";
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
+  const { t } = useLanguage();
   
   // Track page view
   useEffect(() => {
@@ -131,13 +133,13 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl text-left">
               <div className="mb-6">
-                <BadgeHero>Navarro</BadgeHero>
+                <BadgeHero>{t("home.hero.badge")}</BadgeHero>
               </div>
               <h1 
                 className="hero-title mb-6"
                 dangerouslySetInnerHTML={{ 
                   __html: DOMPurify.sanitize(
-                    heroContent?.title || "Planifica el futuro<br />Con decisiones hoy.",
+                    heroContent?.title || t("home.hero.title"),
                     {
                       ALLOWED_TAGS: ['br', 'strong', 'em'],
                       ALLOWED_ATTR: [],
@@ -147,7 +149,7 @@ const Home = () => {
                 }}
               />
               <p className="text-lead mb-8">
-                {heroContent?.subtitle || "Asesoramos a grupos de empresas y empresas familiares en sus decisiones clave: fiscalidad, sucesión, estructura societaria y compraventa de empresas."}
+                {heroContent?.subtitle || t("home.hero.subtitle")}
               </p>
               <div className="flex gap-4">
                 <Button
@@ -157,7 +159,7 @@ const Home = () => {
                   onClick={() => trackCTAClick("Ver Servicios", "Hero")}
                 >
                   <Link to={heroContent?.cta_primary?.link || "/servicios"}>
-                    {heroContent?.cta_primary?.text || "Nuestros Servicios"}
+                    {heroContent?.cta_primary?.text || t("home.hero.cta_primary")}
                   </Link>
                 </Button>
                 <Button 
@@ -168,7 +170,7 @@ const Home = () => {
                   onClick={() => trackCTAClick("Contactar", "home_hero")}
                 >
                   <Link to={heroContent?.cta_secondary?.link || "/contacto"}>
-                    {heroContent?.cta_secondary?.text || "Contactar"}
+                    {heroContent?.cta_secondary?.text || t("home.hero.cta_secondary")}
                   </Link>
                 </Button>
               </div>
@@ -183,7 +185,7 @@ const Home = () => {
               {/* Columna 1: Overline con línea */}
               <div className="relative">
                 <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                  {aboutContent?.overline || "Nosotros navarro"}
+                  {aboutContent?.overline || t("home.about.overline")}
                 </h3>
                 {/* Línea horizontal debajo del texto */}
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
@@ -192,7 +194,7 @@ const Home = () => {
               {/* Columna 2: Título principal */}
               <div>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
-                  {aboutContent?.title || "Asesoramiento estratégico y legal para empresas y grupos."}
+                  {aboutContent?.title || t("home.about.title")}
                 </h2>
               </div>
               
@@ -208,10 +210,10 @@ const Home = () => {
                 )) || (
                   <>
                     <p className="text-lg font-medium text-foreground leading-relaxed">
-                      En navarro ofrecemos asesoramiento legal, fiscal y estratégico especializado en empresas familiares y estructuras empresariales consolidadas.
+                      {t("home.about.paragraph1")}
                     </p>
                     <p className="text-body leading-relaxed">
-                      Nuestra visión parte de la comprensión profunda de los retos de continuidad, gobernanza y crecimiento que enfrentan las compañías familiares.
+                      {t("home.about.paragraph2")}
                     </p>
                   </>
                 )}
@@ -236,7 +238,7 @@ const Home = () => {
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              Nuestros datos
+              {t("home.stats.overline")}
             </h2>
             
             {datosLoading ? (
@@ -292,7 +294,7 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {tecnologiaContent?.overline && (
               <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-                {tecnologiaContent.overline}
+                {tecnologiaContent.overline || t("home.technology.overline")}
               </h2>
             )}
             
@@ -305,7 +307,7 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {clientesContent?.overline && (
               <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-                {clientesContent.overline}
+                {clientesContent.overline || t("home.clients.overline")}
               </h2>
             )}
             
@@ -342,7 +344,7 @@ const Home = () => {
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-            Últimos artículos
+            {t("home.blog.overline")}
           </h2>
 
             {postsLoading ? (
@@ -376,7 +378,7 @@ const Home = () => {
                 size="lg"
                 onClick={() => trackCTAClick("Ver Todos los Artículos", "home_blog_section")}
               >
-                <Link to="/blog">Ver todos los artículos</Link>
+                <Link to="/blog">{t("home.blog.cta")}</Link>
               </Button>
             </div>
           </div>
