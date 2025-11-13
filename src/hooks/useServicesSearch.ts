@@ -11,24 +11,29 @@ interface ServicesSearchParams {
 export const useServicesSearch = (params: ServicesSearchParams, language: string = 'es') => {
   return useQuery({
     queryKey: ["services-search", params, language],
+    retry: 1,
     queryFn: async () => {
       let query = supabase
         .from('services')
         .select('*', { count: 'exact' })
         .eq('is_active', true) as any;
 
-      // Apply search filter with language-specific columns
+      // Apply search filter with language-specific columns and fallback
       if (params.searchQuery) {
-        const nameCol = `name_${language}`;
-        const descCol = `description_${language}`;
+        const q = params.searchQuery;
         query = query.or(
-          `${nameCol}.ilike.%${params.searchQuery}%,${descCol}.ilike.%${params.searchQuery}%`
+          `name_${language}.ilike.%${q}%,description_${language}.ilike.%${q}%,name_es.ilike.%${q}%,description_es.ilike.%${q}%`
         );
       }
 
-      // Apply area filter with language-specific column
+      // Apply area filter with language-specific column and fallback
       if (params.area) {
-        query = query.eq(`area_${language}`, params.area);
+        const areaCol = `area_${language}`;
+        if (language === 'es') {
+          query = query.eq('area_es', params.area);
+        } else {
+          query = query.or(`${areaCol}.eq.${params.area},area_es.eq.${params.area}`);
+        }
       }
 
       // Order by display order, then creation date
@@ -45,7 +50,10 @@ export const useServicesSearch = (params: ServicesSearchParams, language: string
 
       const { data, error, count } = await query;
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching services:', error);
+        throw error;
+      }
       
       // Map data to include language-specific fields
       const services = (data || []).map((service: any) => ({
@@ -65,25 +73,32 @@ export const useServicesSearch = (params: ServicesSearchParams, language: string
   });
 };
 
-export const useServicesFilterOptions = () => {
+export const useServicesFilterOptions = (language: string = 'es') => {
   return useQuery({
-    queryKey: ["services-filter-options"],
+    queryKey: ["services-filter-options", language],
     queryFn: async () => {
-      // @ts-ignore - New tables not in types yet
-      const supabaseAny = supabase as any;
-      const { data, error } = await supabaseAny
+      const areaCol = `area_${language}`;
+      const { data, error } = await supabase
         .from('services')
-        .select('area')
+        .select(`${areaCol}, area_es`)
         .eq('is_active', true);
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching service filter options:', error);
+        throw error;
+      }
       
-      const uniqueAreas = Array.from(new Set(data?.map((s: any) => s.area) || []));
+      const areas = Array.from(
+        new Set(
+          (data || [])
+            .map((r: any) => r[areaCol] || r.area_es)
+            .filter(Boolean)
+        )
+      );
       
-      return {
-        areas: uniqueAreas,
-      };
+      return { areas };
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
   });
 };

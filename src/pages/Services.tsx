@@ -50,10 +50,10 @@ const Services = () => {
   }, [activeArea]);
 
   // Fetch filter options from database
-  const { data: filterOptions, isLoading: isLoadingOptions } = useServicesFilterOptions();
+  const { data: filterOptions, isLoading: isLoadingOptions, isError: isErrorOptions } = useServicesFilterOptions(language);
 
   // Fetch services with search and filters
-  const { data: dbServices, isLoading: isLoadingServices } = useServicesSearch({
+  const { data: dbServices, isLoading: isLoadingServices, isError: isErrorServices } = useServicesSearch({
     searchQuery: searchTerm || undefined,
     area: activeArea || undefined,
     limit: ITEMS_PER_PAGE,
@@ -63,9 +63,10 @@ const Services = () => {
   // Use database data
   const services = dbServices?.services || [];
   const totalCount = dbServices?.totalCount || 0;
-  const areas = filterOptions?.areas || ['Fiscal', 'Contable', 'Legal', 'Laboral'];
+  const areas = filterOptions?.areas || [];
 
   const isLoading = isLoadingOptions || isLoadingServices;
+  const hasError = !isLoading && (isErrorOptions || isErrorServices);
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
 
   console.log('Services Debug:', {
@@ -161,6 +162,11 @@ const Services = () => {
                 <div className="flex items-center justify-center py-20">
                   <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
+              ) : hasError ? (
+                <EmptyState
+                  title={t('services.empty.error') || 'Error al cargar servicios'}
+                  description={t('services.empty.errorDescription') || 'Por favor, intenta recargar la página'}
+                />
               ) : services.length === 0 ? (
                 <EmptyState
                   title={t('services.empty.title')}
