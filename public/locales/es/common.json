@@ -161,7 +161,10 @@
       "subtitle": "Análisis, noticias y artículos sobre fiscalidad, contabilidad y asesoría empresarial"
     },
     "search": "Buscar artículos...",
-    "empty": "No se encontraron artículos"
+    "empty": "No se encontraron artículos",
+    "relatedPosts": {
+      "title": "Artículos relacionados"
+    }
   },
   "team": {
     "meta": {

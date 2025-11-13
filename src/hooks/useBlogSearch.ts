@@ -14,6 +14,9 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
   return useQuery({
     queryKey: ["blog-search", params, language],
     queryFn: async () => {
+      // Para catalán, usar inglés como fallback
+      const dbLang = language === 'ca' ? 'en' : language;
+      
       // Fetch paginated posts
       const { data: posts, error: postsError } = await supabase.rpc("search_blog_posts", {
         search_query: params.searchQuery || null,
@@ -22,6 +25,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         filter_status: params.status || 'published',
         limit_count: params.limit || 10,
         offset_count: params.offset || 0,
+        lang: dbLang,
       });
 
       if (postsError) throw postsError;
@@ -32,6 +36,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         filter_category: params.category || null,
         filter_tags: params.tags || null,
         filter_status: params.status || 'published',
+        lang: dbLang,
       });
 
       if (countError) throw countError;

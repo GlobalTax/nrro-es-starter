@@ -1,6 +1,7 @@
 import { useRelatedBlogPosts } from '@/hooks/useRelatedBlogPosts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BlogPostCard } from './BlogPostCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RelatedBlogPostsProps {
   currentPostId: string;
@@ -10,17 +11,20 @@ interface RelatedBlogPostsProps {
 }
 
 export const RelatedBlogPosts = ({ currentPostId, category, tags, language = 'es' }: RelatedBlogPostsProps) => {
+  const { t } = useLanguage();
+  
   const { data: relatedPosts, isLoading } = useRelatedBlogPosts({
     currentPostId,
     category,
     tags: tags || [],
+    language,
   });
 
   if (isLoading) {
     return (
       <section className="py-16 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-normal mb-8">Artículos relacionados</h2>
+          <h2 className="text-2xl md:text-3xl font-normal mb-8">{t('blog.relatedPosts.title')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map(i => (
               <Skeleton key={i} className="h-96" />
@@ -38,7 +42,7 @@ export const RelatedBlogPosts = ({ currentPostId, category, tags, language = 'es
   return (
     <section className="py-16 md:py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl md:text-3xl font-normal mb-8">Artículos relacionados</h2>
+        <h2 className="text-2xl md:text-3xl font-normal mb-8">{t('blog.relatedPosts.title')}</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {relatedPosts.map((post: any) => (
             <BlogPostCard

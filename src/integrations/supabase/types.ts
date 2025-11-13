@@ -2200,15 +2200,26 @@ export type Database = {
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
-      count_blog_posts: {
-        Args: {
-          filter_category?: string
-          filter_status?: string
-          filter_tags?: string[]
-          search_query?: string
-        }
-        Returns: number
-      }
+      count_blog_posts:
+        | {
+            Args: {
+              filter_category?: string
+              filter_status?: string
+              filter_tags?: string[]
+              search_query?: string
+            }
+            Returns: number
+          }
+        | {
+            Args: {
+              filter_category?: string
+              filter_status?: string
+              filter_tags?: string[]
+              lang?: string
+              search_query?: string
+            }
+            Returns: number
+          }
       get_blog_filter_options: {
         Args: never
         Returns: {
@@ -2291,15 +2302,20 @@ export type Database = {
           author_name: string
           author_specialization: string
           category: string
+          content_en: string
+          content_es: string
+          excerpt_en: string
           excerpt_es: string
           featured_image: string
           id: string
           published_at: string
           read_time: number
           relevance: number
+          slug_en: string
           slug_es: string
           status: string
           tags: string[]
+          title_en: string
           title_es: string
           view_count: number
         }[]

@@ -161,7 +161,10 @@
       "subtitle": "Analysis, news and articles about taxation, accounting and business consulting"
     },
     "search": "Search articles...",
-    "empty": "No articles found"
+    "empty": "No articles found",
+    "relatedPosts": {
+      "title": "Related articles"
+    }
   },
   "team": {
     "meta": {

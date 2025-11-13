@@ -39,9 +39,17 @@ const Blog = () => {
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-  });
+  }, language);
 
-  const posts = data?.posts || [];
+  // Procesar posts con fallback según idioma
+  const dbLang = language === 'ca' ? 'en' : language;
+  const posts = (data?.posts || []).map((post: any) => ({
+    ...post,
+    title: post[`title_${dbLang}`] || post.title_es,
+    slug: post[`slug_${dbLang}`] || post.slug_es,
+    excerpt: post[`excerpt_${dbLang}`] || post.excerpt_es,
+  }));
+  
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
@@ -103,21 +111,20 @@ const Blog = () => {
             </div>
           ) : posts && posts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                  {posts.map((post) => (
                   <div 
                     key={post.id}
                     onClick={() => trackEvent("blog_card_click", { 
-                      post_title: post[`title_${language}`] || post.title_es, 
-                      post_slug: post[`slug_${language}`] || post.slug_es,
-                      category: post.category 
+                      blog_title: post.title,
+                      blog_category: post.category 
                     })}
                   >
                     <BlogPostCard
-                      slug={post[`slug_${language}`] || post.slug_es}
+                      slug={post.slug}
                       category={post.category}
-                      title={post[`title_${language}`] || post.title_es}
-                      excerpt={post[`excerpt_${language}`] || post.excerpt_es}
+                      title={post.title}
+                      excerpt={post.excerpt}
                       authorName={post.author_name}
                       authorSpecialization={post.author_specialization}
                       publishedAt={post.published_at}

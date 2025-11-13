@@ -161,7 +161,10 @@
       "subtitle": "Anàlisi, notícies i articles sobre fiscalitat, comptabilitat i assessoria empresarial"
     },
     "search": "Buscar articles...",
-    "empty": "No s'han trobat articles"
+    "empty": "No s'han trobat articles",
+    "relatedPosts": {
+      "title": "Articles relacionats"
+    }
   },
   "team": {
     "meta": {
