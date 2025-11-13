@@ -19,7 +19,12 @@
     "ventureCapital": "Capital Riesgo",
     "internationalization": "Internacionalización de empresas",
     "civilProcedure": "Procesal Civil",
-    "businessValuation": "Valoración de empresas"
+    "businessValuation": "Valoración de empresas",
+    "crossServices": "Servicios transversales",
+    "whatElse": "Qué más podemos hacer por ti",
+    "keyData": "Datos clave",
+    "letsChat": "¿Hablamos?",
+    "howWeWork": "CÓMO TRABAJAMOS"
   },
   "footer": {
     "tagline": "Planifica el futuro, con decisiones hoy.",

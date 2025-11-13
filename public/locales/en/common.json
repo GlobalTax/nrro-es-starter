@@ -19,7 +19,12 @@
     "ventureCapital": "Venture Capital",
     "internationalization": "Business Internationalization",
     "civilProcedure": "Civil Procedure",
-    "businessValuation": "Business Valuation"
+    "businessValuation": "Business Valuation",
+    "crossServices": "Cross-cutting services",
+    "whatElse": "What else can we do for you",
+    "keyData": "Key data",
+    "letsChat": "Let's talk?",
+    "howWeWork": "HOW WE WORK"
   },
   "footer": {
     "tagline": "Plan the future, with decisions today.",

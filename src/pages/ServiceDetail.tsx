@@ -25,7 +25,7 @@ const ServiceDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { trackPageView } = useAnalytics();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const { getServicePath } = useLocalizedPath();
 
   // Fetch from database
@@ -55,6 +55,9 @@ const ServiceDetail = () => {
         benefits: data[`benefits_${language}`] || data.benefits_es,
         meta_title: data[`meta_title_${language}`] || data.meta_title_es,
         meta_description: data[`meta_description_${language}`] || data.meta_description_es,
+        metodologia: data[`metodologia_${language}`] || data.metodologia_es || data.metodologia,
+        servicios_transversales: data[`servicios_transversales_${language}`] || data.servicios_transversales_es || data.servicios_transversales,
+        stats: data[`stats_${language}`] || data.stats_es || data.stats,
       };
     },
     enabled: !!slug,
@@ -227,7 +230,7 @@ const ServiceDetail = () => {
               {/* Columna 1: Overline con línea */}
               <div className="relative">
                 <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                  Servicios transversales
+                  {t('services.crossServices')}
                 </h3>
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
               </div>
@@ -235,7 +238,7 @@ const ServiceDetail = () => {
               {/* Columna 2 y 3: Título + Accordion en 2 columnas */}
               <div className="md:col-span-2 space-y-6">
                 <h2 className="text-[48px] leading-[52.8px] font-normal tracking-normal text-black">
-                  Qué más podemos hacer por ti
+                  {t('services.whatElse')}
                 </h2>
                 
                 {/* Accordion vertical - todos los items uno debajo del otro */}
@@ -265,7 +268,7 @@ const ServiceDetail = () => {
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              Datos clave
+              {t('services.keyData')}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.stats.map((stat: any, index: number) => (
@@ -286,7 +289,7 @@ const ServiceDetail = () => {
       <section className="bg-muted py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
           <h2 className="text-4xl font-normal text-center mb-4">
-            ¿Hablamos?
+            {t('services.letsChat')}
           </h2>
           <p className="service-body text-center mb-12 text-muted-foreground">
             Cuéntanos qué necesitas y te responderemos

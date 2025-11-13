@@ -27,6 +27,30 @@ const translateText = async (text: any, targetLang: 'ca' | 'en'): Promise<any> =
   return data.translatedText;
 };
 
+const cleanWhitespace = (text: string | null): string | null => {
+  return text ? text.trim() : null;
+};
+
+const translateJSONB = async (obj: any, targetLang: 'ca' | 'en'): Promise<any> => {
+  if (typeof obj === 'string') {
+    return await translateText(obj, targetLang);
+  }
+  
+  if (Array.isArray(obj)) {
+    return Promise.all(obj.map(item => translateJSONB(item, targetLang)));
+  }
+  
+  if (typeof obj === 'object' && obj !== null) {
+    const translated: any = {};
+    for (const [key, value] of Object.entries(obj)) {
+      translated[key] = await translateJSONB(value, targetLang);
+    }
+    return translated;
+  }
+  
+  return obj;
+};
+
 const translateServices = async () => {
   console.log('\n🔄 Iniciando traducción de servicios...\n');
 
@@ -65,18 +89,50 @@ const translateServices = async () => {
       const slugCa = generateSlug(nameCa);
       const slugEn = generateSlug(nameEn);
 
+      // Traducir campos JSONB
+      let metodologia_ca = null, metodologia_en = null;
+      let servicios_transversales_ca = null, servicios_transversales_en = null;
+      let stats_ca = null, stats_en = null;
+
+      if (service.metodologia_es) {
+        [metodologia_ca, metodologia_en] = await Promise.all([
+          translateJSONB(service.metodologia_es, 'ca'),
+          translateJSONB(service.metodologia_es, 'en'),
+        ]);
+      }
+
+      if (service.servicios_transversales_es) {
+        [servicios_transversales_ca, servicios_transversales_en] = await Promise.all([
+          translateJSONB(service.servicios_transversales_es, 'ca'),
+          translateJSONB(service.servicios_transversales_es, 'en'),
+        ]);
+      }
+
+      if (service.stats_es) {
+        [stats_ca, stats_en] = await Promise.all([
+          translateJSONB(service.stats_es, 'ca'),
+          translateJSONB(service.stats_es, 'en'),
+        ]);
+      }
+
       // Actualizar servicio
       const { error: updateError } = await supabase
         .from('services')
         .update({
-          name_ca: nameCa,
-          name_en: nameEn,
-          description_ca: descCa,
-          description_en: descEn,
-          area_ca: areaCa,
-          area_en: areaEn,
+          name_ca: cleanWhitespace(nameCa),
+          name_en: cleanWhitespace(nameEn),
+          description_ca: cleanWhitespace(descCa),
+          description_en: cleanWhitespace(descEn),
+          area_ca: cleanWhitespace(areaCa),
+          area_en: cleanWhitespace(areaEn),
           slug_ca: slugCa,
           slug_en: slugEn,
+          metodologia_ca,
+          metodologia_en,
+          servicios_transversales_ca,
+          servicios_transversales_en,
+          stats_ca,
+          stats_en,
           updated_at: new Date().toISOString(),
         })
         .eq('id', service.id);

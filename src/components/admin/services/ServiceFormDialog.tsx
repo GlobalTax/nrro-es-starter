@@ -246,6 +246,10 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
         display_order: data.display_order,
         meta_title: data.meta_title,
         meta_description: data.meta_description,
+        metodologia_es: data.metodologia as any,
+        servicios_transversales_es: data.servicios_transversales as any,
+        stats_es: data.stats as any,
+        // Deprecate old columns (for backward compatibility)
         metodologia: data.metodologia as any,
         servicios_transversales: data.servicios_transversales as any,
         stats: data.stats as any,
