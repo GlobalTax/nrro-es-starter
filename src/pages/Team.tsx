@@ -1,6 +1,7 @@
 import { Meta } from "@/components/seo/Meta";
 import { BadgeHero } from "@/components/ui/badge-hero";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import { useTeamSearch, useTeamFilterOptions, useTeamPositionOptions } from "@/hooks/useTeamSearch";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,6 +12,7 @@ import { Loader2, Users } from "lucide-react";
 import { useState } from "react";
 
 const Team = () => {
+  const { t } = useLanguage();
   const [activeSpecialization, setActiveSpecialization] = useState<string | null>(null);
   const [activePosition, setActivePosition] = useState<string | null>(null);
   const { data: members, isLoading } = useTeamSearch({ 
@@ -23,8 +25,8 @@ const Team = () => {
   return (
     <>
       <Meta
-        title="Equipo"
-        description="Conoce a nuestro equipo de profesionales"
+        title={t('team.meta.title')}
+        description={t('team.meta.description')}
         canonicalUrl={`${window.location.origin}/equipo`}
       />
 
@@ -34,13 +36,13 @@ const Team = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>Equipo</BadgeHero>
+              <BadgeHero>{t('team.hero.badge')}</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              Nuestro equipo
+              {t('team.hero.title')}
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              Profesionales a tu servicio
+              {t('team.hero.subtitle')}
             </p>
           </div>
           </div>
@@ -54,17 +56,17 @@ const Team = () => {
               {positions.length > 0 && (
                 <div className="mb-6">
                   <label className="text-sm font-medium text-foreground mb-2 block">
-                    Categoría
+                    {t('team.filters.category')}
                   </label>
                   <Select
                     value={activePosition || "all"}
                     onValueChange={(value) => setActivePosition(value === "all" ? null : value)}
                   >
                     <SelectTrigger className="w-full sm:w-64">
-                      <SelectValue placeholder="Todas las categorías" />
+                      <SelectValue placeholder={t('team.filters.allCategories')} />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
-                      <SelectItem value="all">Todas las categorías</SelectItem>
+                      <SelectItem value="all">{t('team.filters.allCategories')}</SelectItem>
                       {positions.map((position) => (
                         <SelectItem key={position} value={position}>
                           {position}
@@ -79,9 +81,9 @@ const Team = () => {
               {specializations.length > 0 && (
                 <div>
                   <div className="flex flex-wrap gap-2 items-center justify-center">
-                    <span className="text-sm font-normal text-muted-foreground">Especialización</span>
+                    <span className="text-sm font-normal text-muted-foreground">{t('team.filters.specialization')}</span>
                     <BadgeFilter
-                      label="Todas"
+                      label={t('team.filters.all')}
                       active={activeSpecialization === null}
                       onClick={() => setActiveSpecialization(null)}
                     />
@@ -125,11 +127,11 @@ const Team = () => {
             ) : (
               <EmptyState
                 icon={Users}
-                title="No hay miembros"
+                title={t('team.empty.title')}
                 description={
                   activeSpecialization
-                    ? `No hay miembros con la especialización ${activeSpecialization}.`
-                    : 'No hay miembros que coincidan con los filtros seleccionados'
+                    ? t('team.empty.descriptionWithFilter', { specialization: activeSpecialization })
+                    : t('team.empty.descriptionGeneral')
                 }
               />
             )}

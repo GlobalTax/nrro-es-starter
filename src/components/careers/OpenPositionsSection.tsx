@@ -5,12 +5,14 @@ import { JobPositionCard } from "./JobPositionCard";
 import { JobPositionModal } from "./JobPositionModal";
 import { JobPosition } from "@/types/jobPosition";
 import { Briefcase } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface OpenPositionsSectionProps {
   onApply: (position: JobPosition) => void;
 }
 
 export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => {
+  const { t } = useLanguage();
   const { data: positions, isLoading } = useJobPositions({ status: 'published' });
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -31,7 +33,7 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
       <section className="bg-white py-20 md:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-muted-foreground">Cargando posiciones...</p>
+            <p className="text-muted-foreground">{t('careers.openPositions.loading')}</p>
           </div>
         </div>
       </section>
@@ -48,12 +50,10 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
               <Briefcase className="h-8 w-8 text-accent" />
             </div>
             <h2 className="text-2xl md:text-3xl font-normal mb-4">
-              Posiciones Abiertas
+              {t('careers.openPositions.noPositions.title')}
             </h2>
             <p className="text-body leading-relaxed">
-              Actualmente no tenemos posiciones abiertas, pero siempre estamos
-              buscando talento excepcional. Envíanos tu candidatura espontánea
-              y te contactaremos cuando surjan oportunidades que encajen con tu perfil.
+              {t('careers.openPositions.noPositions.description')}
             </p>
           </div>
         </div>
@@ -69,7 +69,7 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
             {/* Columna 1: Overline */}
             <div className="relative">
               <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                Oportunidades
+                {t('careers.openPositions.overline')}
               </h3>
               <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
             </div>
@@ -77,14 +77,14 @@ export const OpenPositionsSection = ({ onApply }: OpenPositionsSectionProps) => 
             {/* Columna 2: Título */}
             <div>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
-                Posiciones Abiertas
+                {t('careers.openPositions.title')}
               </h2>
             </div>
             
             {/* Columna 3: Descripción */}
             <div>
               <p className="text-lg font-normal text-foreground leading-relaxed">
-                Explora las oportunidades disponibles y encuentra el puesto que mejor se adapte a tu perfil.
+                {t('careers.openPositions.description')}
               </p>
             </div>
           </div>

@@ -7,7 +7,7 @@ type Language = 'es' | 'ca' | 'en';
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, options?: any) => string;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -28,9 +28,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     i18n.changeLanguage(lang);
   };
 
-  // Translation function - supports nested keys with dot notation
-  const t = (key: string): string => {
-    return i18nT(key);
+  // Translation function - supports nested keys with dot notation and interpolation
+  const t = (key: string, options?: any): string => {
+    return i18nT(key, options) as string;
   };
 
   // Set html lang attribute

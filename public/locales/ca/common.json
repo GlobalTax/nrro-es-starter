@@ -100,5 +100,209 @@
       "weekend": "Caps de setmana",
       "weekendValue": "Tancat"
     }
+  },
+  "about": {
+    "meta": {
+      "title": "Sobre Nosaltres - NRRO",
+      "description": "Coneix NRRO: 25 anys d'experiència en assessoria fiscal, comptable i legal a Barcelona",
+      "keywords": "samuel navarro, navarro tax legal, assessoria fiscal barcelona, garrigues, experiència fiscal"
+    },
+    "cta": {
+      "title": "Preparat per treballar junts?",
+      "subtitle": "Parlem sobre com et podem ajudar",
+      "contactButton": "Contactar",
+      "servicesButton": "Veure Serveis"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Serveis",
+      "description": "Assessorament fiscal, legal, comptable i laboral per a empreses"
+    },
+    "hero": {
+      "title": "Serveis",
+      "subtitle": "Assessorament fiscal, legal, comptable i laboral"
+    },
+    "filters": {
+      "filterBy": "Filtrar per",
+      "all": "Tots",
+      "search": "Buscar serveis..."
+    },
+    "empty": {
+      "title": "No hem trobat serveis",
+      "description": "Prova canviant el terme o els filtres"
+    },
+    "card": {
+      "learnMore": "Saber més",
+      "moreInfo": "Més informació"
+    }
+  },
+  "blog": {
+    "meta": {
+      "title": "Blog - NRRO",
+      "description": "Anàlisi, notícies i articles sobre fiscalitat, comptabilitat i assessoria empresarial",
+      "keywords": "blog jurídic, anàlisi legal, notícies fiscals, dret mercantil"
+    },
+    "hero": {
+      "badge": "Insights",
+      "title": "Blog",
+      "subtitle": "Anàlisi, notícies i articles sobre fiscalitat, comptabilitat i assessoria empresarial"
+    },
+    "search": "Buscar articles...",
+    "empty": "No s'han trobat articles"
+  },
+  "team": {
+    "meta": {
+      "title": "Equip",
+      "description": "Coneix el nostre equip de professionals"
+    },
+    "hero": {
+      "badge": "Equip",
+      "title": "El nostre equip",
+      "subtitle": "Professionals al teu servei"
+    },
+    "filters": {
+      "category": "Categoria",
+      "allCategories": "Totes les categories",
+      "specialization": "Especialització",
+      "all": "Totes"
+    },
+    "empty": {
+      "title": "No hi ha membres",
+      "descriptionWithFilter": "No hi ha membres amb l'especialització {{specialization}}.",
+      "descriptionGeneral": "No hi ha membres que coincideixin amb els filtres seleccionats"
+    }
+  },
+  "careers": {
+    "meta": {
+      "title": "Treballa amb Nosaltres - Uneix-te al Nostre Equip",
+      "description": "Uneix-te al nostre equip d'experts i desenvolupa la teva carrera professional en un entorn d'excel·lència"
+    },
+    "hero": {
+      "badge": "Carreres",
+      "title": "Construeix el teu Futur Professional amb Nosaltres",
+      "subtitle": "Uneix-te al nostre equip d'experts i desenvolupa la teva carrera professional en un entorn d'excel·lència."
+    },
+    "whyUs": {
+      "overline": "Per Què Triar-nos",
+      "title": "Un Lloc per Créixer",
+      "description": "A NRRO, creiem en el desenvolupament continu del nostre equip. Oferim un ambient de treball col·laboratiu on l'excel·lència professional es combina amb l'equilibri personal."
+    },
+    "benefits": [
+      {
+        "title": "Excel·lència Professional",
+        "description": "Treballa en projectes d'alt impacte amb clients líders"
+      },
+      {
+        "title": "Equip d'Experts",
+        "description": "Col·labora amb professionals experimentats"
+      },
+      {
+        "title": "Innovació Contínua",
+        "description": "Accés a les últimes tecnologies i metodologies"
+      },
+      {
+        "title": "Desenvolupament Professional",
+        "description": "Formació contínua i plans de carrera personalitzats"
+      },
+      {
+        "title": "Equilibri Vida-Treball",
+        "description": "Horaris flexibles i teletreball"
+      },
+      {
+        "title": "Creixement",
+        "description": "Oportunitats reals de promoció interna"
+      }
+    ],
+    "areas": {
+      "overline": "Àrees de Treball",
+      "items": [
+        {
+          "name": "Legal",
+          "description": "Assessoria jurídica especialitzada"
+        },
+        {
+          "name": "Fiscal",
+          "description": "Planificació i optimització fiscal"
+        },
+        {
+          "name": "Comptable",
+          "description": "Gestió comptable i financera"
+        },
+        {
+          "name": "Laboral",
+          "description": "Recursos humans i relacions laborals"
+        },
+        {
+          "name": "Tecnologia",
+          "description": "Transformació digital i sistemes"
+        },
+        {
+          "name": "Consultoria",
+          "description": "Estratègia empresarial i M&A"
+        }
+      ]
+    },
+    "openPositions": {
+      "overline": "Oportunitats",
+      "title": "Posicions Obertes",
+      "description": "Explora les oportunitats disponibles i troba el lloc que millor s'adapti al teu perfil.",
+      "loading": "Carregant posicions...",
+      "noPositions": {
+        "title": "Posicions Obertes",
+        "description": "Actualment no tenim posicions obertes, però sempre estem buscant talent excepcional. Envia'ns la teva candidatura espontània i et contactarem quan sorgeixin oportunitats que encaixin amb el teu perfil."
+      }
+    },
+    "faq": {
+      "overline": "Preguntes Freqüents",
+      "title": "Tens dubtes sobre treballar amb nosaltres?",
+      "items": [
+        {
+          "question": "Quant dura el procés de selecció?",
+          "answer": "El procés complet sol durar entre 2-3 setmanes des de la recepció de la teva candidatura fins a l'oferta final. Ens esforcem per mantenir una comunicació fluida en cada etapa."
+        },
+        {
+          "question": "Quins documents necessito per aplicar?",
+          "answer": "Necessites enviar el teu CV actualitzat. Si tens carta de presentació, portfolio o certificacions rellevants, també pots adjuntar-los per enriquir la teva candidatura."
+        },
+        {
+          "question": "Oferiu modalitat de treball remot o híbrid?",
+          "answer": "Sí, oferim flexibilitat en la modalitat de treball. Depenent del lloc i les necessitats del projecte, pots treballar de forma remota, híbrida o presencial a les nostres oficines."
+        },
+        {
+          "question": "Com és l'ambient de treball a NRRO?",
+          "answer": "Promovem un ambient col·laboratiu i professional on valorem l'excel·lència, el treball en equip i el desenvolupament continu. Creiem en l'equilibri entre la vida personal i professional."
+        },
+        {
+          "question": "Quines oportunitats de creixement professional oferiu?",
+          "answer": "Comptem amb plans de carrera personalitzats, formació contínua i oportunitats reals de promoció interna. El teu desenvolupament professional és important per a nosaltres."
+        },
+        {
+          "question": "Oferiu programes de formació?",
+          "answer": "Sí, invertim en la formació contínua del nostre equip amb accés a cursos, certificacions, conferències i workshops especialitzats en les últimes tecnologies i metodologies."
+        },
+        {
+          "question": "Quin és l'horari de treball?",
+          "answer": "Oferim horaris flexibles que s'adapten a les necessitats de l'equip i els projectes. Valorem la productivitat i els resultats per sobre de les hores estrictes."
+        },
+        {
+          "question": "Hi ha període de prova?",
+          "answer": "Sí, segons la legislació espanyola apliquem un període de prova que varia segons el tipus de contracte i lloc. Durant aquest temps, avaluem mútuament si hi ha un bon fit professional."
+        },
+        {
+          "question": "Puc aplicar si no tinc experiència?",
+          "answer": "Depenent del lloc, considerem candidats junior amb potencial i ganes d'aprendre. Valorem molt l'actitud, el compromís i la capacitat de desenvolupament."
+        },
+        {
+          "question": "Com em mantinc informat sobre noves oportunitats?",
+          "answer": "Pots revisar regularment la nostra secció de posicions obertes o enviar-nos la teva candidatura espontània. Guardem els perfils interessants per a futures oportunitats."
+        }
+      ]
+    },
+    "application": {
+      "overline": "Aplica Ara",
+      "title": "Uneix-te al Nostre Equip",
+      "description": "Envia'ns la teva candidatura i ens posarem en contacte amb tu"
+    }
   }
 }

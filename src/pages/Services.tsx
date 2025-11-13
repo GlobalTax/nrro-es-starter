@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import { Input } from "@/components/ui/input";
 import { BadgeFilter } from "@/components/ui/badge-filter";
@@ -19,6 +20,7 @@ import { supabase } from "@/integrations/supabase/client";
 const ITEMS_PER_PAGE = 12;
 
 const Services = () => {
+  const { t } = useLanguage();
   const { trackPageView, trackEvent } = useAnalytics();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeArea, setActiveArea] = useState<string | null>(null);
@@ -77,8 +79,8 @@ const Services = () => {
   return (
     <>
       <Meta
-        title="Servicios"
-        description="Asesoramiento fiscal, legal, contable y laboral para empresas"
+        title={t('services.meta.title')}
+        description={t('services.meta.description')}
         canonicalUrl={`${window.location.origin}/servicios`}
       />
 
@@ -88,10 +90,10 @@ const Services = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 leading-tight">
-                Servicios
+                {t('services.hero.title')}
               </h1>
               <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-                Asesoramiento fiscal, legal, contable y laboral
+                {t('services.hero.subtitle')}
               </p>
             </div>
           </div>
@@ -111,9 +113,9 @@ const Services = () => {
                     <ViewToggle value={viewMode} onChange={setViewMode} />
                     
                     <div className="flex flex-wrap gap-2 items-center">
-                      <span className="text-sm font-medium text-muted-foreground">Filtrar por</span>
+                      <span className="text-sm font-medium text-muted-foreground">{t('services.filters.filterBy')}</span>
                       <BadgeFilter
-                        label="Todos"
+                        label={t('services.filters.all')}
                         active={activeArea === null}
                         onClick={() => {
                           setActiveArea(null);
@@ -139,7 +141,7 @@ const Services = () => {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       type="text"
-                      placeholder="Buscar servicios..."
+                      placeholder={t('services.filters.search')}
                       value={searchTerm}
                       onChange={(e) => {
                         setSearchTerm(e.target.value);
@@ -161,8 +163,8 @@ const Services = () => {
                 </div>
               ) : services.length === 0 ? (
                 <EmptyState
-                  title="No hemos encontrado servicios"
-                  description="Prueba cambiando el término o los filtros"
+                  title={t('services.empty.title')}
+                  description={t('services.empty.description')}
                 />
               ) : (
                 <>

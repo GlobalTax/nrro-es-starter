@@ -100,5 +100,209 @@
       "weekend": "Weekends",
       "weekendValue": "Closed"
     }
+  },
+  "about": {
+    "meta": {
+      "title": "About Us - NRRO",
+      "description": "Meet NRRO: 25 years of experience in tax, accounting and legal consulting in Barcelona",
+      "keywords": "samuel navarro, navarro tax legal, tax consulting barcelona, garrigues, tax experience"
+    },
+    "cta": {
+      "title": "Ready to work together?",
+      "subtitle": "Let's talk about how we can help you",
+      "contactButton": "Contact",
+      "servicesButton": "View Services"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Services",
+      "description": "Tax, legal, accounting and labor consulting for companies"
+    },
+    "hero": {
+      "title": "Services",
+      "subtitle": "Tax, legal, accounting and labor consulting"
+    },
+    "filters": {
+      "filterBy": "Filter by",
+      "all": "All",
+      "search": "Search services..."
+    },
+    "empty": {
+      "title": "No services found",
+      "description": "Try changing the search term or filters"
+    },
+    "card": {
+      "learnMore": "Learn more",
+      "moreInfo": "More information"
+    }
+  },
+  "blog": {
+    "meta": {
+      "title": "Blog - NRRO",
+      "description": "Analysis, news and articles about taxation, accounting and business consulting",
+      "keywords": "legal blog, legal analysis, tax news, corporate law"
+    },
+    "hero": {
+      "badge": "Insights",
+      "title": "Blog",
+      "subtitle": "Analysis, news and articles about taxation, accounting and business consulting"
+    },
+    "search": "Search articles...",
+    "empty": "No articles found"
+  },
+  "team": {
+    "meta": {
+      "title": "Team",
+      "description": "Meet our team of professionals"
+    },
+    "hero": {
+      "badge": "Team",
+      "title": "Our team",
+      "subtitle": "Professionals at your service"
+    },
+    "filters": {
+      "category": "Category",
+      "allCategories": "All categories",
+      "specialization": "Specialization",
+      "all": "All"
+    },
+    "empty": {
+      "title": "No members",
+      "descriptionWithFilter": "No members with the {{specialization}} specialization.",
+      "descriptionGeneral": "No members match the selected filters"
+    }
+  },
+  "careers": {
+    "meta": {
+      "title": "Work With Us - Join Our Team",
+      "description": "Join our team of experts and develop your professional career in an environment of excellence"
+    },
+    "hero": {
+      "badge": "Careers",
+      "title": "Build Your Professional Future With Us",
+      "subtitle": "Join our team of experts and develop your professional career in an environment of excellence."
+    },
+    "whyUs": {
+      "overline": "Why Choose Us",
+      "title": "A Place to Grow",
+      "description": "At NRRO, we believe in the continuous development of our team. We offer a collaborative work environment where professional excellence is combined with personal balance."
+    },
+    "benefits": [
+      {
+        "title": "Professional Excellence",
+        "description": "Work on high-impact projects with leading clients"
+      },
+      {
+        "title": "Expert Team",
+        "description": "Collaborate with experienced professionals"
+      },
+      {
+        "title": "Continuous Innovation",
+        "description": "Access to the latest technologies and methodologies"
+      },
+      {
+        "title": "Professional Development",
+        "description": "Continuous training and personalized career plans"
+      },
+      {
+        "title": "Work-Life Balance",
+        "description": "Flexible schedules and remote work"
+      },
+      {
+        "title": "Growth",
+        "description": "Real opportunities for internal promotion"
+      }
+    ],
+    "areas": {
+      "overline": "Work Areas",
+      "items": [
+        {
+          "name": "Legal",
+          "description": "Specialized legal consulting"
+        },
+        {
+          "name": "Tax",
+          "description": "Tax planning and optimization"
+        },
+        {
+          "name": "Accounting",
+          "description": "Accounting and financial management"
+        },
+        {
+          "name": "Labor",
+          "description": "Human resources and labor relations"
+        },
+        {
+          "name": "Technology",
+          "description": "Digital transformation and systems"
+        },
+        {
+          "name": "Consulting",
+          "description": "Business strategy and M&A"
+        }
+      ]
+    },
+    "openPositions": {
+      "overline": "Opportunities",
+      "title": "Open Positions",
+      "description": "Explore available opportunities and find the position that best suits your profile.",
+      "loading": "Loading positions...",
+      "noPositions": {
+        "title": "Open Positions",
+        "description": "We currently have no open positions, but we are always looking for exceptional talent. Send us your spontaneous application and we will contact you when opportunities arise that match your profile."
+      }
+    },
+    "faq": {
+      "overline": "Frequently Asked Questions",
+      "title": "Have questions about working with us?",
+      "items": [
+        {
+          "question": "How long does the selection process take?",
+          "answer": "The complete process usually takes between 2-3 weeks from receiving your application to the final offer. We strive to maintain fluid communication at each stage."
+        },
+        {
+          "question": "What documents do I need to apply?",
+          "answer": "You need to send your updated CV. If you have a cover letter, portfolio or relevant certifications, you can also attach them to enrich your application."
+        },
+        {
+          "question": "Do you offer remote or hybrid work?",
+          "answer": "Yes, we offer flexibility in the work modality. Depending on the position and project needs, you can work remotely, hybrid or in-person at our offices."
+        },
+        {
+          "question": "What is the work environment like at NRRO?",
+          "answer": "We promote a collaborative and professional environment where we value excellence, teamwork and continuous development. We believe in the balance between personal and professional life."
+        },
+        {
+          "question": "What professional growth opportunities do you offer?",
+          "answer": "We have personalized career plans, continuous training and real opportunities for internal promotion. Your professional development is important to us."
+        },
+        {
+          "question": "Do you offer training programs?",
+          "answer": "Yes, we invest in the continuous training of our team with access to courses, certifications, conferences and workshops specialized in the latest technologies and methodologies."
+        },
+        {
+          "question": "What are the working hours?",
+          "answer": "We offer flexible schedules that adapt to the needs of the team and projects. We value productivity and results over strict hours."
+        },
+        {
+          "question": "Is there a probation period?",
+          "answer": "Yes, according to Spanish legislation we apply a probation period that varies depending on the type of contract and position. During this time, we mutually evaluate if there is a good professional fit."
+        },
+        {
+          "question": "Can I apply if I have no experience?",
+          "answer": "Depending on the position, we consider junior candidates with potential and eagerness to learn. We highly value attitude, commitment and development capacity."
+        },
+        {
+          "question": "How do I stay informed about new opportunities?",
+          "answer": "You can regularly check our open positions section or send us your spontaneous application. We keep interesting profiles for future opportunities."
+        }
+      ]
+    },
+    "application": {
+      "overline": "Apply Now",
+      "title": "Join Our Team",
+      "description": "Send us your application and we will contact you"
+    }
   }
 }

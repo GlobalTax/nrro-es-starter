@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function About() {
+  const { t } = useLanguage();
   const { trackPageView, trackCTAClick } = useAnalytics();
   const { data: heroContent } = usePageContent('about', 'hero');
   const { data: storyContent } = usePageContent('about', 'story');
@@ -89,9 +91,9 @@ export default function About() {
   return (
     <>
       <Meta
-        title="Sobre Nosotros - NRRO"
-        description="Conoce a NRRO: 25 años de experiencia en asesoría fiscal, contable y legal en Barcelona"
-        keywords="samuel navarro, navarro tax legal, asesoría fiscal barcelona, garrigues, experiencia fiscal"
+        title={t('about.meta.title')}
+        description={t('about.meta.description')}
+        keywords={t('about.meta.keywords')}
       />
 
       {/* Hero Section */}
@@ -293,22 +295,22 @@ export default function About() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-6 leading-tight">
-              ¿Listo para trabajar juntos?
+              {t('about.cta.title')}
             </h2>
             <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Hablemos sobre cómo podemos ayudarte
+              {t('about.cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 variant="secondary" 
                 asChild
-                onClick={() => trackCTAClick("Contactar", "nosotros_final_cta")}
+                onClick={() => trackCTAClick(t('about.cta.contactButton'), "nosotros_final_cta")}
               >
-                <Link to="/contacto">Contactar</Link>
+                <Link to="/contacto">{t('about.cta.contactButton')}</Link>
               </Button>
               <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20" asChild>
-                <Link to="/servicios">Ver Servicios</Link>
+                <Link to="/servicios">{t('about.cta.servicesButton')}</Link>
               </Button>
             </div>
           </div>

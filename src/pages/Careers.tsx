@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Meta } from "@/components/seo/Meta";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, Lightbulb, Target, Heart, TrendingUp, Code, Scale, Calculator, Building2, UserCheck, Briefcase } from "lucide-react";
 import { OpenPositionsSection } from "@/components/careers/OpenPositionsSection";
@@ -12,6 +13,7 @@ import { JobPosition } from "@/types/jobPosition";
 import { BadgeHero } from "@/components/ui/badge-hero";
 
 const Careers = () => {
+  const { t } = useLanguage();
   const { trackPageView } = useAnalytics();
   const formRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,74 +33,74 @@ const Careers = () => {
   const benefits = [
     {
       icon: Trophy,
-      title: "Excelencia Profesional",
-      description: "Trabaja en proyectos de alto impacto con clientes líderes"
+      title: t('careers.benefits.0.title'),
+      description: t('careers.benefits.0.description')
     },
     {
       icon: Users,
-      title: "Equipo de Expertos",
-      description: "Colabora con profesionales experimentados"
+      title: t('careers.benefits.1.title'),
+      description: t('careers.benefits.1.description')
     },
     {
       icon: Lightbulb,
-      title: "Innovación Continua",
-      description: "Acceso a las últimas tecnologías y metodologías"
+      title: t('careers.benefits.2.title'),
+      description: t('careers.benefits.2.description')
     },
     {
       icon: Target,
-      title: "Desarrollo Profesional",
-      description: "Formación continua y planes de carrera personalizados"
+      title: t('careers.benefits.3.title'),
+      description: t('careers.benefits.3.description')
     },
     {
       icon: Heart,
-      title: "Equilibrio Vida-Trabajo",
-      description: "Horarios flexibles y teletrabajo"
+      title: t('careers.benefits.4.title'),
+      description: t('careers.benefits.4.description')
     },
     {
       icon: TrendingUp,
-      title: "Crecimiento",
-      description: "Oportunidades reales de promoción interna"
+      title: t('careers.benefits.5.title'),
+      description: t('careers.benefits.5.description')
     }
   ];
 
   const areas = [
     {
       icon: Scale,
-      name: "Legal",
-      description: "Asesoría jurídica especializada"
+      name: t('careers.areas.items.0.name'),
+      description: t('careers.areas.items.0.description')
     },
     {
       icon: Calculator,
-      name: "Fiscal",
-      description: "Planificación y optimización fiscal"
+      name: t('careers.areas.items.1.name'),
+      description: t('careers.areas.items.1.description')
     },
     {
       icon: Building2,
-      name: "Contable",
-      description: "Gestión contable y financiera"
+      name: t('careers.areas.items.2.name'),
+      description: t('careers.areas.items.2.description')
     },
     {
       icon: UserCheck,
-      name: "Laboral",
-      description: "Recursos humanos y relaciones laborales"
+      name: t('careers.areas.items.3.name'),
+      description: t('careers.areas.items.3.description')
     },
     {
       icon: Code,
-      name: "Tecnología",
-      description: "Transformación digital y sistemas"
+      name: t('careers.areas.items.4.name'),
+      description: t('careers.areas.items.4.description')
     },
     {
       icon: Briefcase,
-      name: "Consultoría",
-      description: "Estrategia empresarial y M&A"
+      name: t('careers.areas.items.5.name'),
+      description: t('careers.areas.items.5.description')
     }
   ];
 
   return (
     <>
       <Meta
-        title="Trabaja con Nosotros - Únete a Nuestro Equipo"
-        description="Únete a nuestro equipo de expertos y desarrolla tu carrera profesional en un entorno de excelencia"
+        title={t('careers.meta.title')}
+        description={t('careers.meta.description')}
         canonicalUrl={`${window.location.origin}/carreras`}
       />
 
@@ -108,13 +110,13 @@ const Careers = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <div className="mb-6">
-                <BadgeHero>Carreras</BadgeHero>
+                <BadgeHero>{t('careers.hero.badge')}</BadgeHero>
               </div>
               <h1 className="service-hero-title mb-8">
-                Construye tu Futuro Profesional con Nosotros
+                {t('careers.hero.title')}
               </h1>
               <p className="service-hero-subtitle max-w-3xl mx-auto">
-                Únete a nuestro equipo de expertos y desarrolla tu carrera profesional en un entorno de excelencia.
+                {t('careers.hero.subtitle')}
               </p>
             </div>
           </div>
@@ -127,7 +129,7 @@ const Careers = () => {
               {/* Columna 1: Overline */}
               <div className="relative">
                 <h3 className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3">
-                  Por Qué Elegirnos
+                  {t('careers.whyUs.overline')}
                 </h3>
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border"></div>
               </div>
@@ -135,14 +137,14 @@ const Careers = () => {
               {/* Columna 2: Título */}
               <div>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
-                  Un Lugar para Crecer
+                  {t('careers.whyUs.title')}
                 </h2>
               </div>
               
               {/* Columna 3: Descripción */}
               <div>
                 <p className="text-lg font-normal text-foreground leading-relaxed">
-                  En NRRO, creemos en el desarrollo continuo de nuestro equipo. Ofrecemos un ambiente de trabajo colaborativo donde la excelencia profesional se combina con el equilibrio personal.
+                  {t('careers.whyUs.description')}
                 </p>
               </div>
             </div>
@@ -180,7 +182,7 @@ const Careers = () => {
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
-              Áreas de Trabajo
+              {t('careers.areas.overline')}
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={areasRef}>
@@ -222,13 +224,13 @@ const Careers = () => {
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
-                  Aplica Ahora
+                  {t('careers.application.overline')}
                 </h2>
                 <h3 className="text-2xl md:text-3xl font-normal mb-4">
-                  Únete a Nuestro Equipo
+                  {t('careers.application.title')}
                 </h3>
                 <p className="text-body leading-relaxed">
-                  Envíanos tu candidatura y nos pondremos en contacto contigo
+                  {t('careers.application.description')}
                 </p>
               </div>
 

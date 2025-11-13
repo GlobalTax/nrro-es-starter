@@ -100,5 +100,209 @@
       "weekend": "Fines de semana",
       "weekendValue": "Cerrado"
     }
+  },
+  "about": {
+    "meta": {
+      "title": "Sobre Nosotros - NRRO",
+      "description": "Conoce a NRRO: 25 años de experiencia en asesoría fiscal, contable y legal en Barcelona",
+      "keywords": "samuel navarro, navarro tax legal, asesoría fiscal barcelona, garrigues, experiencia fiscal"
+    },
+    "cta": {
+      "title": "¿Listo para trabajar juntos?",
+      "subtitle": "Hablemos sobre cómo podemos ayudarte",
+      "contactButton": "Contactar",
+      "servicesButton": "Ver Servicios"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Servicios",
+      "description": "Asesoramiento fiscal, legal, contable y laboral para empresas"
+    },
+    "hero": {
+      "title": "Servicios",
+      "subtitle": "Asesoramiento fiscal, legal, contable y laboral"
+    },
+    "filters": {
+      "filterBy": "Filtrar por",
+      "all": "Todos",
+      "search": "Buscar servicios..."
+    },
+    "empty": {
+      "title": "No hemos encontrado servicios",
+      "description": "Prueba cambiando el término o los filtros"
+    },
+    "card": {
+      "learnMore": "Saber más",
+      "moreInfo": "Más información"
+    }
+  },
+  "blog": {
+    "meta": {
+      "title": "Blog - NRRO",
+      "description": "Análisis, noticias y artículos sobre fiscalidad, contabilidad y asesoría empresarial",
+      "keywords": "blog jurídico, análisis legal, noticias fiscales, derecho mercantil"
+    },
+    "hero": {
+      "badge": "Insights",
+      "title": "Blog",
+      "subtitle": "Análisis, noticias y artículos sobre fiscalidad, contabilidad y asesoría empresarial"
+    },
+    "search": "Buscar artículos...",
+    "empty": "No se encontraron artículos"
+  },
+  "team": {
+    "meta": {
+      "title": "Equipo",
+      "description": "Conoce a nuestro equipo de profesionales"
+    },
+    "hero": {
+      "badge": "Equipo",
+      "title": "Nuestro equipo",
+      "subtitle": "Profesionales a tu servicio"
+    },
+    "filters": {
+      "category": "Categoría",
+      "allCategories": "Todas las categorías",
+      "specialization": "Especialización",
+      "all": "Todas"
+    },
+    "empty": {
+      "title": "No hay miembros",
+      "descriptionWithFilter": "No hay miembros con la especialización {{specialization}}.",
+      "descriptionGeneral": "No hay miembros que coincidan con los filtros seleccionados"
+    }
+  },
+  "careers": {
+    "meta": {
+      "title": "Trabaja con Nosotros - Únete a Nuestro Equipo",
+      "description": "Únete a nuestro equipo de expertos y desarrolla tu carrera profesional en un entorno de excelencia"
+    },
+    "hero": {
+      "badge": "Carreras",
+      "title": "Construye tu Futuro Profesional con Nosotros",
+      "subtitle": "Únete a nuestro equipo de expertos y desarrolla tu carrera profesional en un entorno de excelencia."
+    },
+    "whyUs": {
+      "overline": "Por Qué Elegirnos",
+      "title": "Un Lugar para Crecer",
+      "description": "En NRRO, creemos en el desarrollo continuo de nuestro equipo. Ofrecemos un ambiente de trabajo colaborativo donde la excelencia profesional se combina con el equilibrio personal."
+    },
+    "benefits": [
+      {
+        "title": "Excelencia Profesional",
+        "description": "Trabaja en proyectos de alto impacto con clientes líderes"
+      },
+      {
+        "title": "Equipo de Expertos",
+        "description": "Colabora con profesionales experimentados"
+      },
+      {
+        "title": "Innovación Continua",
+        "description": "Acceso a las últimas tecnologías y metodologías"
+      },
+      {
+        "title": "Desarrollo Profesional",
+        "description": "Formación continua y planes de carrera personalizados"
+      },
+      {
+        "title": "Equilibrio Vida-Trabajo",
+        "description": "Horarios flexibles y teletrabajo"
+      },
+      {
+        "title": "Crecimiento",
+        "description": "Oportunidades reales de promoción interna"
+      }
+    ],
+    "areas": {
+      "overline": "Áreas de Trabajo",
+      "items": [
+        {
+          "name": "Legal",
+          "description": "Asesoría jurídica especializada"
+        },
+        {
+          "name": "Fiscal",
+          "description": "Planificación y optimización fiscal"
+        },
+        {
+          "name": "Contable",
+          "description": "Gestión contable y financiera"
+        },
+        {
+          "name": "Laboral",
+          "description": "Recursos humanos y relaciones laborales"
+        },
+        {
+          "name": "Tecnología",
+          "description": "Transformación digital y sistemas"
+        },
+        {
+          "name": "Consultoría",
+          "description": "Estrategia empresarial y M&A"
+        }
+      ]
+    },
+    "openPositions": {
+      "overline": "Oportunidades",
+      "title": "Posiciones Abiertas",
+      "description": "Explora las oportunidades disponibles y encuentra el puesto que mejor se adapte a tu perfil.",
+      "loading": "Cargando posiciones...",
+      "noPositions": {
+        "title": "Posiciones Abiertas",
+        "description": "Actualmente no tenemos posiciones abiertas, pero siempre estamos buscando talento excepcional. Envíanos tu candidatura espontánea y te contactaremos cuando surjan oportunidades que encajen con tu perfil."
+      }
+    },
+    "faq": {
+      "overline": "Preguntas Frecuentes",
+      "title": "¿Tienes dudas sobre trabajar con nosotros?",
+      "items": [
+        {
+          "question": "¿Cuánto dura el proceso de selección?",
+          "answer": "El proceso completo suele durar entre 2-3 semanas desde la recepción de tu candidatura hasta la oferta final. Nos esforzamos por mantener una comunicación fluida en cada etapa."
+        },
+        {
+          "question": "¿Qué documentos necesito para aplicar?",
+          "answer": "Necesitas enviar tu CV actualizado. Si tienes carta de presentación, portfolio o certificaciones relevantes, también puedes adjuntarlos para enriquecer tu candidatura."
+        },
+        {
+          "question": "¿Ofrecen modalidad de trabajo remoto o híbrido?",
+          "answer": "Sí, ofrecemos flexibilidad en la modalidad de trabajo. Dependiendo del puesto y las necesidades del proyecto, puedes trabajar de forma remota, híbrida o presencial en nuestras oficinas."
+        },
+        {
+          "question": "¿Cómo es el ambiente de trabajo en NRRO?",
+          "answer": "Promovemos un ambiente colaborativo y profesional donde valoramos la excelencia, el trabajo en equipo y el desarrollo continuo. Creemos en el equilibrio entre la vida personal y profesional."
+        },
+        {
+          "question": "¿Qué oportunidades de crecimiento profesional ofrecen?",
+          "answer": "Contamos con planes de carrera personalizados, formación continua y oportunidades reales de promoción interna. Tu desarrollo profesional es importante para nosotros."
+        },
+        {
+          "question": "¿Ofrecen programas de formación?",
+          "answer": "Sí, invertimos en la formación continua de nuestro equipo con acceso a cursos, certificaciones, conferencias y workshops especializados en las últimas tecnologías y metodologías."
+        },
+        {
+          "question": "¿Cuál es el horario de trabajo?",
+          "answer": "Ofrecemos horarios flexibles que se adaptan a las necesidades del equipo y los proyectos. Valoramos la productividad y los resultados por encima de las horas estrictas."
+        },
+        {
+          "question": "¿Hay periodo de prueba?",
+          "answer": "Sí, según la legislación española aplicamos un periodo de prueba que varía según el tipo de contrato y puesto. Durante este tiempo, evaluamos mutuamente si hay un buen fit profesional."
+        },
+        {
+          "question": "¿Puedo aplicar si no tengo experiencia?",
+          "answer": "Dependiendo del puesto, consideramos candidatos junior con potencial y ganas de aprender. Valoramos mucho la actitud, el compromiso y la capacidad de desarrollo."
+        },
+        {
+          "question": "¿Cómo me mantengo informado sobre nuevas oportunidades?",
+          "answer": "Puedes revisar regularmente nuestra sección de posiciones abiertas o enviarnos tu candidatura espontánea. Guardamos los perfiles interesantes para futuras oportunidades."
+        }
+      ]
+    },
+    "application": {
+      "overline": "Aplica Ahora",
+      "title": "Únete a Nuestro Equipo",
+      "description": "Envíanos tu candidatura y nos pondremos en contacto contigo"
+    }
   }
 }

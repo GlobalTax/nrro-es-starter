@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { BlogPostCard } from "@/components/blog/BlogPostCard";
 const ITEMS_PER_PAGE = 9;
 
 const Blog = () => {
+  const { t } = useLanguage();
   const { trackPageView, trackEvent } = useAnalytics();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,9 +47,9 @@ const Blog = () => {
   return (
     <>
       <Meta
-        title="Blog - NRRO"
-        description="Análisis, noticias y artículos sobre fiscalidad, contabilidad y asesoría empresarial"
-        keywords="blog jurídico, análisis legal, noticias fiscales, derecho mercantil"
+        title={t('blog.meta.title')}
+        description={t('blog.meta.description')}
+        keywords={t('blog.meta.keywords')}
       />
 
       {/* Hero Section */}
@@ -55,13 +57,13 @@ const Blog = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              <BadgeHero>Insights</BadgeHero>
+              <BadgeHero>{t('blog.hero.badge')}</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              Blog
+              {t('blog.hero.title')}
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
-              Análisis, noticias y artículos sobre fiscalidad, contabilidad y asesoría empresarial
+              {t('blog.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -75,7 +77,7 @@ const Blog = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Buscar artículos..."
+                placeholder={t('blog.search')}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -138,7 +140,7 @@ const Blog = () => {
           ) : (
             <div className="text-center py-16">
               <p className="text-muted-foreground text-lg">
-                No se encontraron artículos
+                {t('blog.empty')}
               </p>
             </div>
           )}

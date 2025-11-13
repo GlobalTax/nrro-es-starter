@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import * as LucideIcons from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ServiceCardProps {
   service: {
@@ -30,6 +31,7 @@ const getAreaColor = (area: string) => {
 };
 
 export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => {
+  const { t } = useLanguage();
   // Get the icon dynamically from lucide-react
   const IconComponent = (LucideIcons as any)[service.icon_name] || LucideIcons.FileText;
 
@@ -49,7 +51,7 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
               </div>
               <Link to={`/servicios/${service.slug}`}>
                 <Button variant="outline" size="sm">
-                  Más información
+                  {t('services.card.moreInfo')}
                 </Button>
               </Link>
             </div>
@@ -92,7 +94,7 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
           to={`/servicios/${service.slug}`}
           className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors"
         >
-          Saber más <ArrowRight className="ml-1 h-4 w-4" />
+          {t('services.card.learnMore')} <ArrowRight className="ml-1 h-4 w-4" />
         </Link>
       </div>
     </Card>
