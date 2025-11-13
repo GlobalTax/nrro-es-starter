@@ -8,7 +8,7 @@ import { useServicesSearch } from '@/hooks/useServicesSearch';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 export const Footer = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   const { settings } = useSiteSettingsMap();
   const { getServicePath } = useLocalizedPath();
@@ -127,198 +127,115 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Services Column */}
-          <div>
-            <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
+          {/* Servicios Column */}
+          <div className="space-y-6">
+            <h4 className="text-xl font-display font-normal text-primary-foreground">
               {t("footer.services")}
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link 
-                  to="/servicios/empresa-familiar"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+            </h4>
+            <nav className="flex flex-col gap-3">
+              {serviciosItems.map((service) => (
+                <LanguageLink
+                  key={service.id}
+                  to={getServicePath(service.slug_es, service.slug_ca, service.slug_en)}
+                  className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
                 >
-                  {t("services.familyBusiness")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/compraventa-empresas"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.mergersAcquisitions")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/asesoramiento-fiscal"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.taxAdvisory")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/mercantil-derecho-societario"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.corporateLaw")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/asesoramiento-contable-laboral"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.accountingLabor")}
-                </Link>
-              </li>
-            </ul>
+                  {service.name}
+                </LanguageLink>
+              ))}
+            </nav>
           </div>
 
-          {/* Areas Column */}
-          <div>
-            <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
+          {/* Áreas Column */}
+          <div className="space-y-6">
+            <h4 className="text-xl font-display font-normal text-primary-foreground">
               {t("footer.areas")}
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link 
-                  to="/servicios/procedimiento-tributario"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
+            </h4>
+            <nav className="flex flex-col gap-3">
+              {areasItems.map((service) => (
+                <LanguageLink
+                  key={service.id}
+                  to={getServicePath(service.slug_es, service.slug_ca, service.slug_en)}
+                  className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
                 >
-                  {t("services.taxProcedure")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/conflicto-socios"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.shareholderConflict")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/capital-riesgo"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.ventureCapital")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/internacionalizacion"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.internationalization")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/procesal-civil"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.civilProcedure")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/servicios/valoracion-empresas"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("services.businessValuation")}
-                </Link>
-              </li>
-            </ul>
+                  {service.name}
+                </LanguageLink>
+              ))}
+            </nav>
           </div>
 
-          {/* Other Links Column */}
-          <div>
-            <h3 className="text-sm font-mono font-semibold text-primary-foreground mb-6 uppercase tracking-wider relative inline-block">
-              {t("footer.other")}
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent"></span>
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link 
-                  to="/blog"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("nav.blog")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/equipo"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("nav.team")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/carreras"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("nav.careers")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/nosotros"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("nav.about")}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/contacto"
-                  className="text-sm text-primary-foreground/80 hover:text-accent hover:underline transition-colors"
-                >
-                  {t("nav.contact")}
-                </Link>
-              </li>
-            </ul>
+          {/* Company Column */}
+          <div className="space-y-6">
+            <h4 className="text-xl font-display font-normal text-primary-foreground">
+              {t("footer.company")}
+            </h4>
+            <nav className="flex flex-col gap-3">
+              <LanguageLink
+                to="/nosotros"
+                className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.about")}
+              </LanguageLink>
+              <LanguageLink
+                to="/equipo"
+                className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.team")}
+              </LanguageLink>
+              <LanguageLink
+                to="/blog"
+                className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.blog")}
+              </LanguageLink>
+              <LanguageLink
+                to="/carreras"
+                className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.careers")}
+              </LanguageLink>
+              <LanguageLink
+                to="/contacto"
+                className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.contact")}
+              </LanguageLink>
+            </nav>
           </div>
         </div>
       </div>
 
-      {/* Legal Bottom Bar */}
+      {/* Bottom Bar - Legal & Copyright */}
       <Separator className="bg-primary-foreground/10" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm font-mono text-primary-foreground/70">
-            {t("footer.copyright")}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-sm text-primary-foreground/60 font-light">
+            © {currentYear} Navarro Tax Legal. {t("footer.rights")}
           </p>
-          <div className="flex gap-6">
-            <Link 
-              to="/aviso-legal" 
-              className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+          <div className="flex flex-wrap gap-6">
+            <LanguageLink
+              to="/aviso-legal"
+              className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
             >
               {t("footer.legal")}
-            </Link>
-            <Link 
-              to="/privacidad" 
-              className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            </LanguageLink>
+            <LanguageLink
+              to="/privacidad"
+              className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
             >
               {t("footer.privacy")}
-            </Link>
-            <Link 
-              to="/cookies" 
-              className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            </LanguageLink>
+            <LanguageLink
+              to="/cookies"
+              className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
             >
               {t("footer.cookies")}
-            </Link>
-            <Link 
-              to="/condiciones-contratacion" 
-              className="text-sm font-mono uppercase tracking-wider text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            </LanguageLink>
+            <LanguageLink
+              to="/terminos"
+              className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
             >
               {t("footer.terms")}
-            </Link>
+            </LanguageLink>
           </div>
         </div>
       </div>

@@ -103,146 +103,95 @@ export const Navbar = () => {
 
     detectBackgroundColor();
     requestAnimationFrame(() => detectBackgroundColor());
-    setTimeout(detectBackgroundColor, 120);
-    
-    window.addEventListener('scroll', detectBackgroundColor);
-    window.addEventListener('resize', detectBackgroundColor);
 
-    return () => {
-      window.removeEventListener('scroll', detectBackgroundColor);
-      window.removeEventListener('resize', detectBackgroundColor);
+    const scrollHandler = () => {
+      requestAnimationFrame(detectBackgroundColor);
     };
-  }, [location.pathname]);
+
+    window.addEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, [location]);
 
   return (
-    <nav 
+    <nav
       ref={navRef}
       className={cn(
-        "sticky top-0 z-50 w-full border-b transition-all duration-300",
-        isLightMode 
-          ? "bg-white/95 border-border text-foreground" 
-          : "bg-black border-white/10",
-        scrolled 
-          ? "backdrop-blur-sm shadow-lg" 
-          : (!isLightMode ? "backdrop-blur-0 border-transparent" : "backdrop-blur-sm"),
-        scrolled && (isLightMode ? "border-border/50" : "border-white/20")
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled || mobileMenuOpen
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
+          : isLightMode
+          ? "bg-background/80 backdrop-blur-sm border-b border-border/40"
+          : "bg-transparent border-b border-white/10"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
-          <Logo variant="compact" color={isLightMode ? "dark" : "light"} className="h-12" />
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <LanguageLink to="/" className="flex items-center">
+            <Logo
+              variant="compact"
+              color={scrolled || (isLightMode && !mobileMenuOpen) ? "dark" : "light"}
+              className="h-10"
+            />
+          </LanguageLink>
 
-          <div className="hidden md:flex md:items-center md:gap-8 lg:gap-10">
-            <div className="flex items-center gap-10 lg:gap-12">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8">
             {navigation.map((item) => {
-              if (item.name === "Servicios") {
+              if (item.name === t("nav.services")) {
                 return (
-                  <div 
+                  <div
                     key={item.name}
-                    className="relative"
+                    className="relative group"
                     onMouseEnter={() => setServiciosOpen(true)}
                     onMouseLeave={() => setServiciosOpen(false)}
                   >
                     <button
-                        className={cn(
-                        "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight flex items-center gap-1",
-                        isActive('/servicios')
-                          ? isLightMode 
-                            ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
-                            : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
-                          : isLightMode
-                            ? "text-foreground/70 hover:text-foreground"
-                            : "text-primary-foreground/75 hover:text-white"
-                       )}
-                      >
-                        {t("nav.services")}
-                        <ChevronDown className={cn(
-                          "h-4 w-4 transition-transform duration-200",
-                          serviciosOpen && "rotate-180"
-                        )} />
+                      className={cn(
+                        "flex items-center gap-1 font-display text-base transition-colors",
+                        scrolled || isLightMode
+                          ? "text-foreground hover:text-accent"
+                          : "text-white hover:text-accent",
+                        isActive(item.href) && "text-accent"
+                      )}
+                    >
+                      {item.name}
+                      <ChevronDown className="h-4 w-4" />
                     </button>
-
+                    
                     {serviciosOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50 w-screen max-w-6xl">
-                        <div className="bg-white rounded-lg shadow-2xl p-10 lg:p-12">
-                          <div className="grid grid-cols-3 gap-10 lg:gap-16">
-                            
-                            <div>
-                              <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                {t("nav.services")}
-                              </h3>
-                              <ul className="space-y-4">
-                                {serviciosMenu.map((servicio) => (
-                                  <li key={servicio.href}>
-                                    <Link
-                                      to={servicio.href}
-                                      className="text-base text-foreground/70 hover:text-foreground transition-colors block"
-                                      onClick={() => setServiciosOpen(false)}
-                                    >
-                                      {servicio.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
+                      <div className="absolute top-full left-0 mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden min-w-[500px]">
+                        <div className="grid grid-cols-2 gap-px bg-border">
+                          <div className="bg-background p-4">
+                            <h3 className="text-sm font-semibold text-foreground/60 mb-3 uppercase tracking-wider">
+                              {t("footer.services")}
+                            </h3>
+                            <div className="space-y-2">
+                              {serviciosMenu.map((service) => (
+                                <LanguageLink
+                                  key={service.href}
+                                  to={service.href}
+                                  className="block px-3 py-2 text-sm text-foreground hover:text-accent hover:bg-accent/10 rounded transition-colors"
+                                >
+                                  {service.name}
+                                </LanguageLink>
+                              ))}
                             </div>
-
-                            <div>
-                              <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                {t("nav.areas")}
-                              </h3>
-                              <ul className="space-y-4">
-                                {areasMenu.map((area) => (
-                                  <li key={area.href}>
-                                    <Link
-                                      to={area.href}
-                                      className="text-base text-foreground/70 hover:text-foreground transition-colors block"
-                                      onClick={() => setServiciosOpen(false)}
-                                    >
-                                      {area.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            <div>
-                              <h3 className="font-mono font-light text-xs tracking-wide text-foreground/60 uppercase mb-4 pb-2 border-b border-border">
-                                {t("nav.contact")}
-                              </h3>
-                              <div className="space-y-4">
-                                <div className="flex items-start gap-3">
-                                  <div className="w-12 h-12 rounded-full bg-neutral-200 flex-shrink-0 overflow-hidden">
-                                    <img 
-                                      src="https://zntotcpagkunvkwpubqu.supabase.co/storage/v1/object/public/media-library/team-avatars/0.79906963015602.png" 
-                                      alt="Gemma Zalacain"
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                  <div>
-                                    <p className="font-medium text-foreground text-sm">Gemma</p>
-                                    <p className="text-xs text-foreground/60 uppercase tracking-wide font-mono">
-                                      Adjunta a dirección
-                                    </p>
-                                  </div>
-                                </div>
-                                
-                                <div className="space-y-2 text-sm">
-                                  <a 
-                                    href="tel:+34934593600" 
-                                    className="flex items-center gap-2 text-foreground/70 hover:text-foreground transition-colors"
-                                  >
-                                    <Phone className="h-4 w-4" />
-                                    93 459 36 00
-                                  </a>
-                                  <a 
-                                    href="mailto:info@nrro.es" 
-                                    className="flex items-center gap-2 text-foreground/70 hover:text-foreground transition-colors"
-                                  >
-                                    <Mail className="h-4 w-4" />
-                                    info@nrro.es
-                                  </a>
-                                </div>
-                              </div>
+                          </div>
+                          <div className="bg-background p-4">
+                            <h3 className="text-sm font-semibold text-foreground/60 mb-3 uppercase tracking-wider">
+                              {t("footer.areas")}
+                            </h3>
+                            <div className="space-y-2">
+                              {areasMenu.map((area) => (
+                                <LanguageLink
+                                  key={area.href}
+                                  to={area.href}
+                                  className="block px-3 py-2 text-sm text-foreground hover:text-accent hover:bg-accent/10 rounded transition-colors"
+                                >
+                                  {area.name}
+                                </LanguageLink>
+                              ))}
                             </div>
                           </div>
                         </div>
@@ -251,87 +200,85 @@ export const Navbar = () => {
                   </div>
                 );
               }
-              
+
               return (
-                <Link
+                <LanguageLink
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    "text-[15px] font-medium transition-all duration-200 relative py-2 tracking-tight",
-                    isActive(item.href)
-                      ? isLightMode
-                        ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground after:rounded-full"
-                        : "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
-                      : isLightMode
-                        ? "text-foreground/70 hover:text-foreground hover:translate-y-[-1px]"
-                        : "text-primary-foreground/75 hover:text-white hover:translate-y-[-1px]"
+                    "font-display text-base transition-colors",
+                    scrolled || isLightMode
+                      ? "text-foreground hover:text-accent"
+                      : "text-white hover:text-accent",
+                    isActive(item.href) && "text-accent"
                   )}
                 >
                   {item.name}
-                </Link>
+                </LanguageLink>
               );
             })}
-            </div>
-            <LanguageSelector variant={isLightMode ? "light" : "dark"} />
-            <Button asChild size="default" className="bg-accent hover:bg-accent-hover text-accent-foreground shadow-md hover:shadow-lg transition-all duration-200 font-medium">
-              <Link to="/contacto">{t("nav.contact")}</Link>
-            </Button>
-          </div>
 
-          <button
-            type="button"
-            className={cn(
-              "md:hidden transition-all duration-200 hover:scale-110 active:scale-95 p-2 -mr-2",
-              isLightMode ? "text-foreground hover:text-foreground/70" : "text-primary-foreground hover:text-white"
-            )}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-7 w-7" />
-            ) : (
-              <Menu className="h-7 w-7" />
-            )}
-          </button>
-        </div>
-      </div>
+            <LanguageSelector />
 
-      {mobileMenuOpen && (
-        <div className={cn(
-          "md:hidden border-t shadow-xl",
-          isLightMode ? "border-border bg-white" : "border-white/10 bg-black"
-        )}>
-          <div className="space-y-1 px-4 pb-6 pt-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "block px-4 py-3.5 text-[15px] font-medium rounded-lg transition-all duration-200",
-                  isActive(item.href)
-                    ? isLightMode
-                      ? "text-foreground bg-foreground/10"
-                      : "text-white bg-white/15"
-                    : isLightMode
-                      ? "text-foreground/70 hover:bg-foreground/5 hover:text-foreground"
-                      : "text-primary-foreground/75 hover:bg-white/10 hover:text-white"
-                )}
+            <LanguageLink to="/contacto">
+              <Button 
+                variant={scrolled || isLightMode ? "default" : "secondary"}
+                className="font-medium"
               >
-                {item.name}
-              </Link>
-            ))}
-            <div className="px-4 pt-2 space-y-3">
-              <LanguageSelector variant={isLightMode ? "light" : "dark"} />
-              <Button asChild size="default" className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-md font-medium">
-                <Link to="/contacto" onClick={() => setMobileMenuOpen(false)}>
-                  {t("nav.contact")}
-                </Link>
+                {t("nav.contact")}
               </Button>
-            </div>
+            </LanguageLink>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="flex items-center gap-4 lg:hidden">
+            <LanguageSelector />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={cn(
+                "p-2 rounded-md transition-colors",
+                scrolled || isLightMode
+                  ? "text-foreground hover:text-accent"
+                  : "text-white hover:text-accent"
+              )}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
         </div>
-      )}
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden py-6 border-t border-border animate-in slide-in-from-top-2">
+            <div className="flex flex-col gap-4">
+              {navigation.map((item) => (
+                <LanguageLink
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "font-display text-base px-4 py-2 transition-colors",
+                    isActive(item.href)
+                      ? "text-accent bg-accent/10"
+                      : "text-foreground hover:text-accent hover:bg-accent/5"
+                  )}
+                >
+                  {item.name}
+                </LanguageLink>
+              ))}
+              <LanguageLink to="/contacto" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="default" className="w-full">
+                  {t("nav.contact")}
+                </Button>
+              </LanguageLink>
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
