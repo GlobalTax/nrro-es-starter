@@ -47,6 +47,7 @@ import AdminContactLeads from "./pages/admin/AdminContactLeads";
 import AdminLeyBeckhamLeads from "./pages/admin/AdminLeyBeckhamLeads";
 import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
 import AdminTechnology from "./pages/admin/AdminTechnology";
+import AdminSitemap from "./pages/admin/AdminSitemap";
 
 const queryClient = new QueryClient();
 
@@ -168,6 +169,7 @@ const App = () => {
               <Route path="ley-beckham-leads" element={<AdminLeyBeckhamLeads />} />
               <Route path="demo-requests" element={<AdminDemoRequests />} />
               <Route path="technology" element={<AdminTechnology />} />
+              <Route path="sitemap" element={<AdminSitemap />} />
               <Route
                 path="users"
                 element={

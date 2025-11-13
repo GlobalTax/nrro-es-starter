@@ -14,6 +14,7 @@ import {
   FileText,
   Briefcase,
   Monitor,
+  Map,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -33,6 +34,7 @@ import { Separator } from '@/components/ui/separator';
     { path: '/admin/ley-beckham-leads', icon: Users, label: 'Ley Beckham' },
     { path: '/admin/demo-requests', icon: Users, label: 'Demo Requests' },
     { path: '/admin/technology', icon: Monitor, label: 'Tecnología' },
+    { path: '/admin/sitemap', icon: Map, label: 'Sitemap SEO' },
     { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR', external: true },
   ];
 
