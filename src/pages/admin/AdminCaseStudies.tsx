@@ -28,6 +28,7 @@ import { Pencil, Trash2, Plus, Search, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import { CaseStudyFormDialog } from '@/components/admin/case-studies/CaseStudyFormDialog';
 import { CaseStudyPreviewModal } from '@/components/admin/case-studies/CaseStudyPreviewModal';
+import { TranslateCaseStudiesToCatalan } from '@/components/admin/case-studies/TranslateCaseStudiesToCatalan';
 
 export function AdminCaseStudies() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -136,6 +137,8 @@ export function AdminCaseStudies() {
           Añadir Caso de Éxito
         </Button>
       </div>
+
+      <TranslateCaseStudiesToCatalan />
 
       <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-sm">

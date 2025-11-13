@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Meta } from '@/components/seo/Meta';
 import { useCaseStudies, useCaseStudyFilterOptions } from '@/hooks/useCaseStudies';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { CaseStudyCard } from '@/components/case-studies/CaseStudyCard';
 import { CaseStudySkeleton } from '@/components/case-studies/CaseStudySkeleton';
 import { ViewToggle } from '@/components/ui/view-toggle';
@@ -16,6 +17,7 @@ import { BadgeHero } from '@/components/ui/badge-hero';
 const ITEMS_PER_PAGE = 12;
 
 export default function CaseStudies() {
+  const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -35,6 +37,7 @@ export default function CaseStudies() {
     status: 'published',
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
+    language,
   });
 
   const totalPages = Math.ceil((caseStudies?.length || 0) / ITEMS_PER_PAGE);

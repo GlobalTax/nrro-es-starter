@@ -12,6 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { ServiceFormDialog } from '@/components/admin/services/ServiceFormDialog';
 import { ServicePreviewModal } from '@/components/admin/services/ServicePreviewModal';
+import { TranslateServicesToCatalan } from '@/components/admin/services/TranslateServicesToCatalan';
 import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import * as LucideIcons from 'lucide-react';
@@ -137,6 +138,8 @@ const AdminServices = () => {
           Add Service
         </Button>
       </div>
+
+      <TranslateServicesToCatalan />
 
       {/* Filters */}
       <Card className="p-6">

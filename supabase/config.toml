@@ -32,3 +32,12 @@ verify_jwt = true
 
 [functions.run-translation-migration]
 verify_jwt = false
+
+[functions.translate-services-to-catalan]
+verify_jwt = false
+
+[functions.translate-case-studies-to-catalan]
+verify_jwt = false
+
+[functions.translate-news-to-catalan]
+verify_jwt = false
