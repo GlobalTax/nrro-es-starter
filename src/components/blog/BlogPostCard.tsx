@@ -9,7 +9,6 @@ import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 interface BlogPostCardProps {
   slug: string;
   slug_es?: string;
-  slug_ca?: string;
   slug_en?: string;
   category?: string;
   title: string;
@@ -24,7 +23,6 @@ interface BlogPostCardProps {
 export const BlogPostCard = ({
   slug,
   slug_es,
-  slug_ca,
   slug_en,
   category,
   title,
@@ -36,7 +34,7 @@ export const BlogPostCard = ({
   className = "",
 }: BlogPostCardProps) => {
   const { getBlogPath } = useLocalizedPath();
-  const blogPath = getBlogPath(slug_es, slug_ca, slug_en);
+  const blogPath = getBlogPath(slug_es, slug_en);
   
   return (
     <Link to={blogPath}>

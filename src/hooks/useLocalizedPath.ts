@@ -171,16 +171,17 @@ export const useLocalizedPath = () => {
   /**
    * Genera una ruta localizada para un blog post usando su slug según el idioma
    */
-  const getBlogPath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
+  const getBlogPath = (slugEs?: string, slugEn?: string): string => {
     const blogBasePath = pathTranslations['/blog'][language];
     let slug = slugEs;
 
     switch (language) {
-      case 'ca':
-        slug = slugCa || slugEs;
-        break;
       case 'en':
         slug = slugEn || slugEs;
+        break;
+      // For Catalan, use Spanish slug (blog posts don't have Catalan slugs yet)
+      case 'ca':
+        slug = slugEs;
         break;
     }
 
@@ -215,16 +216,17 @@ export const useLocalizedPath = () => {
   /**
    * Genera una ruta localizada para un insight/noticia
    */
-  const getInsightPath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
+  const getInsightPath = (slugEs?: string, slugEn?: string): string => {
     const insightsBasePath = pathTranslations['/blog'][language];
     let slug = slugEs;
 
     switch (language) {
-      case 'ca':
-        slug = slugCa || slugEs;
-        break;
       case 'en':
         slug = slugEn || slugEs;
+        break;
+      // For Catalan, use Spanish slug (insights don't have Catalan slugs yet)
+      case 'ca':
+        slug = slugEs;
         break;
     }
 

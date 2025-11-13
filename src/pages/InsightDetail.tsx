@@ -83,7 +83,6 @@ const InsightDetail = () => {
     if (dbInsight) {
       const correctPath = getInsightPath(
         dbInsight.slug_es,
-        dbInsight.slug_ca,
         dbInsight.slug_en
       );
       
