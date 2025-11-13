@@ -24,8 +24,8 @@ const pathTranslations: Record<string, Record<Language, string>> = {
     ca: '/blog',
     en: '/blog'
   },
-  '/casos-de-exito': {
-    es: '/casos-de-exito',
+  '/casos-exito': {
+    es: '/casos-exito',
     ca: '/casos-exit',
     en: '/case-studies'
   },
@@ -48,6 +48,26 @@ const pathTranslations: Record<string, Record<Language, string>> = {
     es: '/sectores',
     ca: '/sectors',
     en: '/sectors'
+  },
+  '/privacidad': {
+    es: '/privacidad',
+    ca: '/privacitat',
+    en: '/privacy'
+  },
+  '/aviso-legal': {
+    es: '/aviso-legal',
+    ca: '/avis-legal',
+    en: '/legal-notice'
+  },
+  '/cookies': {
+    es: '/cookies',
+    ca: '/cookies',
+    en: '/cookies'
+  },
+  '/condiciones-contratacion': {
+    es: '/condiciones-contratacion',
+    ca: '/condicions-contractacio',
+    en: '/terms'
   }
 };
 
@@ -59,30 +79,34 @@ export const useLocalizedPath = () => {
   const { language } = useLanguage();
 
   /**
+   * Agrega el prefijo de idioma a una ruta traducida
+   */
+  const addLanguagePrefix = (translatedPath: string): string => {
+    if (language === 'es') return translatedPath;
+    return `/${language}${translatedPath}`;
+  };
+
+  /**
    * Convierte una ruta en español a la ruta correspondiente en el idioma actual
    * @param path - Ruta en español (ej: "/servicios/empresa-familiar")
-   * @returns Ruta traducida al idioma actual
+   * @returns Ruta traducida al idioma actual con prefijo de idioma
    */
   const getLocalizedPath = (path: string): string => {
-    // Si la ruta está en el mapeo directo, devolverla traducida
+    // Si la ruta está en el mapeo directo, devolverla traducida con prefijo
     if (pathTranslations[path]) {
-      return pathTranslations[path][language];
+      return addLanguagePrefix(pathTranslations[path][language]);
     }
 
-    // Si es una ruta de servicio con slug, mantener el formato
-    // Los slugs ya están en la BD en todos los idiomas (slug_es, slug_ca, slug_en)
-    // Por ahora, mantenemos la estructura para que funcione con los links dinámicos
-    
     // Para rutas complejas, traducir solo la parte base
     for (const [basePath, translations] of Object.entries(pathTranslations)) {
       if (path.startsWith(basePath + '/')) {
         const suffix = path.substring(basePath.length);
-        return translations[language] + suffix;
+        return addLanguagePrefix(translations[language] + suffix);
       }
     }
 
-    // Si no hay traducción, devolver la ruta original
-    return path;
+    // Si no hay traducción, devolver la ruta original con prefijo si aplica
+    return addLanguagePrefix(path);
   };
 
   /**
@@ -90,10 +114,10 @@ export const useLocalizedPath = () => {
    * @param slugEs - Slug en español
    * @param slugCa - Slug en catalán
    * @param slugEn - Slug en inglés
-   * @returns Ruta completa localizada
+   * @returns Ruta completa localizada con prefijo de idioma
    */
   const getServicePath = (slugEs?: string, slugCa?: string, slugEn?: string): string => {
-    const basePath = pathTranslations['/servicios'][language];
+    const servicesBasePath = pathTranslations['/servicios'][language];
     let slug = slugEs; // fallback español
 
     switch (language) {
@@ -105,7 +129,11 @@ export const useLocalizedPath = () => {
         break;
     }
 
-    return `${basePath}/${slug}`;
+    // Agregar prefijo de idioma
+    if (language === 'es') {
+      return `${servicesBasePath}/${slug}`;
+    }
+    return `/${language}${servicesBasePath}/${slug}`;
   };
 
   return { getLocalizedPath, getServicePath };
