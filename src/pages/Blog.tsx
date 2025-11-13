@@ -43,13 +43,16 @@ const Blog = () => {
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
   }, language);
 
-  // Procesar posts con fallback según idioma
-  const dbLang = language === 'ca' ? 'en' : language;
+  // Process posts with fallback based on language
   const posts = (data?.posts || []).map((post: any) => ({
     ...post,
-    title: post[`title_${dbLang}`] || post.title_es,
-    slug: post[`slug_${dbLang}`] || post.slug_es,
-    excerpt: post[`excerpt_${dbLang}`] || post.excerpt_es,
+    title: post[`title_${language}`] || post.title_es,
+    slug: post[`slug_${language}`] || post.slug_es,
+    excerpt: post[`excerpt_${language}`] || post.excerpt_es,
+    // Preserve all slugs for BlogPostCard
+    slug_es: post.slug_es,
+    slug_ca: post.slug_ca,
+    slug_en: post.slug_en,
   }));
   
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);

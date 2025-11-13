@@ -12,13 +12,10 @@ export function useRelatedBlogPosts({ currentPostId, category, tags, language = 
   return useQuery({
     queryKey: ['related-blog-posts', currentPostId, category, tags, language],
     queryFn: async () => {
-      // Para catalán, usar inglés como fallback
-      const dbLang = language === 'ca' ? 'en' : language;
-      
       // Get posts from same category (excluding current)
       const { data: categoryPosts, error: categoryError } = await supabase
         .from('blog_posts')
-        .select('id, title_es, title_en, slug_es, slug_en, excerpt_es, excerpt_en, featured_image, category, published_at, read_time, author_name, author_specialization')
+        .select('*')
         .eq('status', 'published')
         .eq('category', category)
         .neq('id', currentPostId)
@@ -30,7 +27,7 @@ export function useRelatedBlogPosts({ currentPostId, category, tags, language = 
       // Get posts with overlapping tags
       const { data: tagPosts, error: tagError } = await supabase
         .from('blog_posts')
-        .select('id, title_es, title_en, slug_es, slug_en, excerpt_es, excerpt_en, featured_image, category, tags, published_at, read_time, author_name, author_specialization')
+        .select('*')
         .eq('status', 'published')
         .neq('id', currentPostId)
         .order('published_at', { ascending: false })
@@ -68,7 +65,7 @@ export function useRelatedBlogPosts({ currentPostId, category, tags, language = 
       if (relatedPosts.length < 3) {
         const { data: recentPosts, error: recentError } = await supabase
           .from('blog_posts')
-          .select('id, title_es, title_en, slug_es, slug_en, excerpt_es, excerpt_en, featured_image, category, published_at, read_time, author_name, author_specialization')
+          .select('*')
           .eq('status', 'published')
           .neq('id', currentPostId)
           .order('published_at', { ascending: false })
@@ -85,14 +82,17 @@ export function useRelatedBlogPosts({ currentPostId, category, tags, language = 
         });
       }
 
-      // Aplicar fallback según idioma
+      // Return posts with all language fields preserved
       return relatedPosts.map((post: any) => ({
         ...post,
         title_es: post.title_es,
+        title_ca: post.title_ca,
         title_en: post.title_en,
         slug_es: post.slug_es,
+        slug_ca: post.slug_ca,
         slug_en: post.slug_en,
         excerpt_es: post.excerpt_es,
+        excerpt_ca: post.excerpt_ca,
         excerpt_en: post.excerpt_en,
       }));
     },

@@ -97,12 +97,9 @@ const Home = () => {
   const { data: featuredPosts = [], isLoading: postsLoading } = useQuery({
     queryKey: ['featured-blog-posts', language],
     queryFn: async () => {
-      // Para catalán, usar inglés como fallback ya que no hay columnas _ca en blog_posts
-      const dbLang = language === 'ca' ? 'en' : language;
-      
       const { data, error } = await supabase
         .from('blog_posts')
-        .select(`id, title_${dbLang}, slug_${dbLang}, excerpt_${dbLang}, title_es, slug_es, excerpt_es, category, author_name, author_specialization, read_time, published_at`)
+        .select('*')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(3);
@@ -112,9 +109,12 @@ const Home = () => {
       // Map to consistent format with fallback to Spanish
       return data?.map((post: any) => ({
         id: post.id,
-        title: post[`title_${dbLang}`] || post.title_es,
-        slug: post[`slug_${dbLang}`] || post.slug_es,
-        excerpt: post[`excerpt_${dbLang}`] || post.excerpt_es,
+        title: post[`title_${language}`] || post.title_es,
+        slug: post[`slug_${language}`] || post.slug_es,
+        excerpt: post[`excerpt_${language}`] || post.excerpt_es,
+        slug_es: post.slug_es,
+        slug_ca: post.slug_ca,
+        slug_en: post.slug_en,
         category: post.category,
         author_name: post.author_name,
         author_specialization: post.author_specialization,

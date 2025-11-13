@@ -34,6 +34,7 @@ import {
 import { BlogStatsCard } from "@/components/admin/blog/BlogStatsCard";
 import { BlogFormDialog } from "@/components/admin/blog/BlogFormDialog";
 import { BlogPreviewModal } from "@/components/admin/blog/BlogPreviewModal";
+import { TranslateBlogToCatalan } from "@/components/admin/blog/TranslateBlogToCatalan";
 import { useBlogSearch } from "@/hooks/useBlogSearch";
 import { Plus, Eye, Edit, Trash2, CheckCircle, Search } from "lucide-react";
 import { format } from "date-fns";
@@ -151,6 +152,8 @@ export const AdminBlog = () => {
       </div>
 
       <BlogStatsCard />
+
+      <TranslateBlogToCatalan />
 
       <Card className="p-6 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
