@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FileText, Globe, Calendar, HardDrive, ExternalLink, RefreshCw } from "lucide-react";
 import { useSitemapMetrics } from "@/hooks/useSitemapMetrics";
+import { SitemapHistoryChart } from "./SitemapHistoryChart";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
