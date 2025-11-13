@@ -1,7 +1,7 @@
 import { usePageContent } from "@/hooks/usePageContent";
 import { CTAContent } from "@/types/pageContent";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { LanguageLink } from "@/components/ui/language-link";
 import { ArrowRight } from "lucide-react";
 
 interface CTASectionProps {
@@ -29,10 +29,10 @@ export const CTASection = ({ sectionKey = "cta_consulta" }: CTASectionProps) => 
           
           <div className="pt-4">
             <Button asChild size="lg" className="group">
-              <Link to={content.cta_url}>
+              <LanguageLink to={content.cta_url}>
                 {content.cta_texto}
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </LanguageLink>
             </Button>
           </div>
         </div>

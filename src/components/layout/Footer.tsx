@@ -1,5 +1,4 @@
 import { Linkedin, Instagram, Twitter, Facebook, Mail, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 import { LanguageLink } from "@/components/ui/language-link";
@@ -135,13 +134,13 @@ export const Footer = () => {
             </h4>
             <nav className="flex flex-col gap-3">
               {serviciosItems.map((service) => (
-                <Link
+                <LanguageLink
                   key={service.id}
                   to={getServicePath(service.slug_es, service.slug_ca, service.slug_en)}
                   className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
                 >
                   {service.name}
-                </Link>
+                </LanguageLink>
               ))}
             </nav>
           </div>
@@ -153,13 +152,13 @@ export const Footer = () => {
             </h4>
             <nav className="flex flex-col gap-3">
               {areasItems.map((service) => (
-                <Link
+                <LanguageLink
                   key={service.id}
                   to={getServicePath(service.slug_es, service.slug_ca, service.slug_en)}
                   className="text-primary-foreground/80 hover:text-accent transition-colors text-base font-light"
                 >
                   {service.name}
-                </Link>
+                </LanguageLink>
               ))}
             </nav>
           </div>

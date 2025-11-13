@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { LanguageLink } from "@/components/ui/language-link";
 import { ArrowRight } from "lucide-react";
 
 export const BlogCTASection = () => {
@@ -17,10 +17,10 @@ export const BlogCTASection = () => {
           
           <div className="pt-4">
             <Button asChild size="lg" className="group">
-              <Link to="/contacto">
+              <LanguageLink to="/contacto">
                 Contacta con nosotros
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </LanguageLink>
             </Button>
           </div>
         </div>

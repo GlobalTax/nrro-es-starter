@@ -1,7 +1,7 @@
 import { usePageContent } from "@/hooks/usePageContent";
 import { CTAFinalContent } from "@/types/pageContent";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { LanguageLink } from "@/components/ui/language-link";
 import { ArrowRight } from "lucide-react";
 
 export const CTAFinalSection = () => {
@@ -30,10 +30,10 @@ export const CTAFinalSection = () => {
               variant="secondary"
               className="group"
             >
-              <Link to={content.cta_primario_url}>
+              <LanguageLink to={content.cta_primario_url}>
                 {content.cta_primario_texto}
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </LanguageLink>
             </Button>
             
             {content.cta_secundario_texto && content.cta_secundario_url && (
@@ -43,9 +43,9 @@ export const CTAFinalSection = () => {
                 variant="outline"
                 className="border-white/20 bg-white/10 text-white hover:bg-white/20"
               >
-                <Link to={content.cta_secundario_url}>
+                <LanguageLink to={content.cta_secundario_url}>
                   {content.cta_secundario_texto}
-                </Link>
+                </LanguageLink>
               </Button>
             )}
           </div>

@@ -1,8 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Calculator, Scale, Users, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LanguageLink } from "@/components/ui/language-link";
 import * as LucideIcons from "lucide-react";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 interface FeaturedServiceCardProps {
   title: string;
@@ -11,6 +12,9 @@ interface FeaturedServiceCardProps {
   features: string[];
   icon_name?: string;
   slug?: string;
+  slug_es?: string;
+  slug_ca?: string;
+  slug_en?: string;
 }
 
 const defaultIcons: Record<string, any> = {
@@ -26,12 +30,20 @@ export const FeaturedServiceCard = ({
   category,
   features,
   icon_name,
-  slug
+  slug,
+  slug_es,
+  slug_ca,
+  slug_en
 }: FeaturedServiceCardProps) => {
+  const { getServicePath } = useLocalizedPath();
+  
   // Resolver icono dinámicamente
   const IconComponent = icon_name 
     ? (LucideIcons as any)[icon_name] || Calculator
     : defaultIcons[title] || Calculator;
+  
+  // Generar path localizado
+  const servicePath = getServicePath(slug_es, slug_ca, slug_en);
 
   const content = (
     <Card className="group p-8 lg:p-10 hover:shadow-lg hover:border-accent/50 transition-all duration-300 h-full flex flex-col">
@@ -67,11 +79,11 @@ export const FeaturedServiceCard = ({
     </Card>
   );
 
-  if (slug) {
+  if (slug_es || slug_ca || slug_en) {
     return (
-      <Link to={`/servicios/${slug}`} className="block h-full">
+      <LanguageLink to={servicePath} className="block h-full">
         {content}
-      </Link>
+      </LanguageLink>
     );
   }
 
