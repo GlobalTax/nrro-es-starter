@@ -22,10 +22,17 @@ const BlogDetail = () => {
   const { trackPageView } = useAnalytics();
   useScrollDepth();
   const { language } = useLanguage();
-  const { getBlogPath } = useLocalizedPath();
+  const { getBlogPath, getLocalizedPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get("preview");
   const queryClient = useQueryClient();
+
+  // Guard: redirect if slug is invalid
+  useEffect(() => {
+    if (!slug || slug === 'undefined') {
+      navigate(getLocalizedPath('/blog'), { replace: true });
+    }
+  }, [slug, navigate, getLocalizedPath]);
 
   // Get article ID from slug for preview mode
   const { data: articleId, isLoading: isIdLoading } = useQuery({
@@ -34,7 +41,7 @@ const BlogDetail = () => {
       const { data, error } = await supabase
         .from("blog_posts")
         .select("id")
-        .or(`slug_es.eq.${slug},slug_ca.eq.${slug},slug_en.eq.${slug}`)
+        .or(`slug_es.eq.${slug},slug_en.eq.${slug}`)
         .single();
 
       if (error) throw error;
@@ -62,7 +69,7 @@ const BlogDetail = () => {
       const response = await supabase
         .from("blog_posts")
         .select("*")
-        .or(`slug_es.eq.${slug},slug_ca.eq.${slug},slug_en.eq.${slug}`)
+        .or(`slug_es.eq.${slug},slug_en.eq.${slug}`)
         .eq("status", "published")
         .single();
 
