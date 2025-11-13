@@ -4,9 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 interface BlogPostCardProps {
   slug: string;
+  slug_es?: string;
+  slug_ca?: string;
+  slug_en?: string;
   category?: string;
   title: string;
   excerpt?: string;
@@ -19,6 +23,9 @@ interface BlogPostCardProps {
 
 export const BlogPostCard = ({
   slug,
+  slug_es,
+  slug_ca,
+  slug_en,
   category,
   title,
   excerpt,
@@ -28,8 +35,11 @@ export const BlogPostCard = ({
   readTime,
   className = "",
 }: BlogPostCardProps) => {
+  const { getBlogPath } = useLocalizedPath();
+  const blogPath = getBlogPath(slug_es, slug_ca, slug_en);
+  
   return (
-    <Link to={`/blog/${slug}`}>
+    <Link to={blogPath}>
       <Card className={`h-full hover-lift transition-smooth group ${className}`}>
         <CardContent className="p-6 flex flex-col h-full">
           {/* Category Badge */}

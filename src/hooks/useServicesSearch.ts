@@ -55,13 +55,16 @@ export const useServicesSearch = (params: ServicesSearchParams, language: string
         throw error;
       }
       
-      // Map data to include language-specific fields
+      // Map data to include language-specific fields AND all slug variants
       const services = (data || []).map((service: any) => ({
         ...service,
         name: service[`name_${language}`] || service.name_es,
         description: service[`description_${language}`] || service.description_es,
         slug: service[`slug_${language}`] || service.slug_es,
         area: service[`area_${language}`] || service.area_es,
+        slug_es: service.slug_es,
+        slug_ca: service.slug_ca,
+        slug_en: service.slug_en,
       }));
       
       return {

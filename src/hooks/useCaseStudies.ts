@@ -31,6 +31,9 @@ export const useCaseStudies = (params: CaseStudiesParams) => {
         ...item,
         metrics: Array.isArray(item.metrics) ? item.metrics : [],
         tags: Array.isArray(item.tags) ? item.tags : [],
+        slug_es: item.slug_es,
+        slug_ca: item.slug_ca,
+        slug_en: item.slug_en,
       })) as unknown as CaseStudy[];
     },
     enabled: true,

@@ -3,6 +3,7 @@ import { CaseStudy } from '@/types/caseStudy';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy;
@@ -10,10 +11,17 @@ interface CaseStudyCardProps {
 }
 
 export const CaseStudyCard = ({ caseStudy, variant = 'grid' }: CaseStudyCardProps) => {
+  const { getCaseStudyPath } = useLocalizedPath();
+  const caseStudyPath = getCaseStudyPath(
+    (caseStudy as any).slug_es,
+    (caseStudy as any).slug_ca,
+    (caseStudy as any).slug_en
+  );
+  
   if (variant === 'list') {
     return (
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
-        <Link to={`/casos-de-exito/${caseStudy.slug}`} className="flex flex-col md:flex-row">
+        <Link to={caseStudyPath} className="flex flex-col md:flex-row">
           {caseStudy.hero_image_url && (
             <div className="md:w-1/3 h-64 md:h-auto relative overflow-hidden">
               <img
@@ -69,7 +77,7 @@ export const CaseStudyCard = ({ caseStudy, variant = 'grid' }: CaseStudyCardProp
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
-      <Link to={`/casos-de-exito/${caseStudy.slug}`}>
+      <Link to={caseStudyPath}>
         {caseStudy.hero_image_url && (
           <div className="aspect-[16/9] relative overflow-hidden bg-muted">
             <img

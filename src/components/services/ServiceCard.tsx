@@ -6,12 +6,16 @@ import * as LucideIcons from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 
 interface ServiceCardProps {
   service: {
     id: string;
     name: string;
     slug: string;
+    slug_es?: string;
+    slug_ca?: string;
+    slug_en?: string;
     description: string;
     icon_name: string;
     area: string;
@@ -32,8 +36,13 @@ const getAreaColor = (area: string) => {
 
 export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => {
   const { t } = useLanguage();
+  const { getServicePath } = useLocalizedPath();
+  
   // Get the icon dynamically from lucide-react
   const IconComponent = (LucideIcons as any)[service.icon_name] || LucideIcons.FileText;
+  
+  // Generate localized path
+  const servicePath = getServicePath(service.slug_es, service.slug_ca, service.slug_en);
 
   if (variant === 'list') {
     return (
@@ -49,7 +58,7 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
                 <h3 className="text-xl font-medium mb-2">{service.name}</h3>
                 <Badge className={getAreaColor(service.area)}>{service.area}</Badge>
               </div>
-              <Link to={`/servicios/${service.slug}`}>
+              <Link to={servicePath}>
                 <Button variant="outline" size="sm">
                   {t('services.card.moreInfo')}
                 </Button>
@@ -91,7 +100,7 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
         
         {/* Link */}
         <Link
-          to={`/servicios/${service.slug}`}
+          to={servicePath}
           className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors"
         >
           {t('services.card.learnMore')} <ArrowRight className="ml-1 h-4 w-4" />
