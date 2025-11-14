@@ -38,8 +38,7 @@ serve(async (req) => {
     console.log('📝 Fetching blog posts...');
     const { data: posts, error: postsError } = await supabase
       .from('blog_posts')
-      .select('*')
-      .or('title_en.is.null,slug_en.is.null');
+      .select('*');
 
     if (postsError) {
       console.error('Error fetching blog posts:', postsError);
@@ -52,12 +51,14 @@ serve(async (req) => {
       try {
         console.log(`  Translating: ${post.title_es}`);
 
-        if (post.title_en && post.slug_en) {
+        // Check if all English fields are present
+        if (post.title_en && post.slug_en && post.content_en && post.excerpt_en && post.seo_title_en && post.seo_description_en) {
           console.log(`  ⏭️  Skipped (already translated): ${post.title_es}`);
           results.skipped++;
           continue;
         }
 
+        // Translate all Spanish fields
         const { data: dataEn, error: errorEn } = await supabase.functions.invoke('translate-content', {
           body: { 
             text: {
@@ -76,6 +77,7 @@ serve(async (req) => {
 
         const translatedEn = dataEn.translatedText;
 
+        // Update with translated content
         const { error: updateError } = await supabase
           .from('blog_posts')
           .update({
