@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useContext, ReactNode, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2 } from 'lucide-react';
 import '@/i18n/config';
@@ -34,14 +34,22 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     );
   }
 
-  const setLanguage = (lang: Language) => {
+  // Memoize setLanguage to prevent unnecessary re-renders
+  const setLanguage = useCallback((lang: Language) => {
     i18n.changeLanguage(lang);
-  };
+  }, [i18n]);
 
-  // Translation function - supports nested keys with dot notation and interpolation
-  const t = (key: string, options?: any): string => {
+  // Memoize translation function to prevent unnecessary re-renders
+  const t = useCallback((key: string, options?: any): string => {
     return i18nT(key, options) as string;
-  };
+  }, [i18nT]);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage,
+    t
+  }), [language, setLanguage, t]);
 
   // Set html lang attribute
   useEffect(() => {
@@ -49,7 +57,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

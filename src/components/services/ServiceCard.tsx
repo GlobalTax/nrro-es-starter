@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -34,7 +35,7 @@ const getAreaColor = (area: string) => {
   return colors[area] || 'bg-gray-100 text-gray-800 border-gray-300';
 };
 
-export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => {
+export const ServiceCard = memo(({ service, variant = 'grid' }: ServiceCardProps) => {
   const { t } = useLanguage();
   const { getServicePath } = useLocalizedPath();
   
@@ -108,4 +109,8 @@ export const ServiceCard = ({ service, variant = 'grid' }: ServiceCardProps) => 
       </div>
     </Card>
   );
-};
+}, (prevProps, nextProps) => {
+  // Only re-render if service id or variant changes
+  return prevProps.service.id === nextProps.service.id && 
+         prevProps.variant === nextProps.variant;
+});

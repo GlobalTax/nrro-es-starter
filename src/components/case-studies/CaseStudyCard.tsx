@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { CaseStudy } from '@/types/caseStudy';
 import { Card } from '@/components/ui/card';
@@ -10,7 +11,7 @@ interface CaseStudyCardProps {
   variant?: 'grid' | 'list';
 }
 
-export const CaseStudyCard = ({ caseStudy, variant = 'grid' }: CaseStudyCardProps) => {
+export const CaseStudyCard = memo(({ caseStudy, variant = 'grid' }: CaseStudyCardProps) => {
   const { getCaseStudyPath } = useLocalizedPath();
   const caseStudyPath = getCaseStudyPath(
     (caseStudy as any).slug_es,
@@ -127,4 +128,8 @@ export const CaseStudyCard = ({ caseStudy, variant = 'grid' }: CaseStudyCardProp
       </Link>
     </Card>
   );
-};
+}, (prevProps, nextProps) => {
+  // Only re-render if case study id or variant changes
+  return prevProps.caseStudy.id === nextProps.caseStudy.id && 
+         prevProps.variant === nextProps.variant;
+});

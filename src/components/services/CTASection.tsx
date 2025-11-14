@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { usePageContent } from "@/hooks/usePageContent";
 import { CTAContent } from "@/types/pageContent";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ interface CTASectionProps {
   sectionKey?: string;
 }
 
-export const CTASection = ({ sectionKey = "cta_consulta" }: CTASectionProps) => {
+export const CTASection = memo(({ sectionKey = "cta_consulta" }: CTASectionProps) => {
   const { data: contentData } = usePageContent("services", sectionKey);
   
   if (!contentData || contentData.length === 0) return null;
@@ -39,4 +40,4 @@ export const CTASection = ({ sectionKey = "cta_consulta" }: CTASectionProps) => 
       </div>
     </section>
   );
-};
+});
