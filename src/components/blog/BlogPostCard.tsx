@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,7 @@ interface BlogPostCardProps {
   className?: string;
 }
 
-export const BlogPostCard = ({
+export const BlogPostCard = memo(({
   slug,
   slug_es,
   slug_en,
@@ -85,4 +86,9 @@ export const BlogPostCard = ({
       </Card>
     </Link>
   );
-};
+}, (prevProps, nextProps) => {
+  // Only re-render if slug or key content changes
+  return prevProps.slug === nextProps.slug && 
+         prevProps.title === nextProps.title &&
+         prevProps.publishedAt === nextProps.publishedAt;
+});

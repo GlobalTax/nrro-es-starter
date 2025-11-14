@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { usePageContent } from "@/hooks/usePageContent";
 import { IntroduccionServiciosContent } from "@/types/pageContent";
 import { Check } from "lucide-react";
 
-export const IntroduccionSection = () => {
+export const IntroduccionSection = memo(() => {
   const { data: contentData } = usePageContent("services", "introduccion");
   
   if (!contentData || contentData.length === 0) return null;
@@ -47,4 +48,4 @@ export const IntroduccionSection = () => {
       </div>
     </section>
   );
-};
+});
