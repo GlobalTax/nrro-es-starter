@@ -1,5 +1,6 @@
 import { createContext, useContext, ReactNode, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Loader2 } from 'lucide-react';
 import '@/i18n/config';
 
 type Language = 'es' | 'ca' | 'en';
@@ -21,8 +22,17 @@ export const useLanguage = () => {
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const { i18n, t: i18nT } = useTranslation();
+  const { i18n, t: i18nT, ready } = useTranslation();
   const language = i18n.language as Language;
+
+  // Show loading state while i18next initializes
+  if (!ready) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   const setLanguage = (lang: Language) => {
     i18n.changeLanguage(lang);
