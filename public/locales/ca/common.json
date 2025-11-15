@@ -44,6 +44,11 @@
     "terms": "Condicions"
   },
   "home": {
+    "meta": {
+      "title": "NRRO - Assessoria Fiscal, Legal i Estratègica a Barcelona",
+      "description": "Assessoria fiscal, legal i estratègica per a empreses familiars a Barcelona. Especialistes en successió empresarial, compravenda i estructura societària. Planifica el teu futur avui.",
+      "keywords": "assessoria fiscal Barcelona, empreses familiars, successió empresarial, compravenda empreses, estructura societària, valoració empreses"
+    },
     "hero": {
       "badge": "Navarro",
       "title": "Planifica el futur<br />Amb decisions avui.",
@@ -121,8 +126,8 @@
   "about": {
     "meta": {
       "title": "Sobre Nosaltres - NRRO",
-      "description": "Coneix NRRO: 25 anys d'experiència en assessoria fiscal, comptable i legal a Barcelona",
-      "keywords": "samuel navarro, navarro tax legal, assessoria fiscal barcelona, garrigues, experiència fiscal"
+      "description": "NRRO: 25 anys assessorant empreses familiars i grups empresarials a Barcelona. Experts en fiscalitat, successió i governança corporativa. Coneix la nostra trajectòria.",
+      "keywords": "samuel navarro, navarro tax legal, assessoria fiscal barcelona, empreses familiars, successió empresarial, governança corporativa"
     },
     "cta": {
       "title": "Preparat per treballar junts?",
@@ -134,7 +139,7 @@
   "services": {
     "meta": {
       "title": "Serveis",
-      "description": "Assessorament fiscal, legal, comptable i laboral per a empreses"
+      "description": "Serveis fiscals, legals i estratègics per a empreses familiars a Barcelona: successió empresarial, compravenda, valoració i reestructuració. Sol·licita consulta."
     },
     "hero": {
       "title": "Serveis",
@@ -159,8 +164,8 @@
   "blog": {
     "meta": {
       "title": "Blog - NRRO",
-      "description": "Anàlisi, notícies i articles sobre fiscalitat, comptabilitat i assessoria empresarial",
-      "keywords": "blog jurídic, anàlisi legal, notícies fiscals, dret mercantil"
+      "description": "Blog jurídic i fiscal: anàlisi experts sobre empreses familiars, compravenda d'empreses, fiscalitat i successió empresarial a Barcelona. Llegeix els nostres insights.",
+      "keywords": "blog jurídic, anàlisi legal, empreses familiars, compravenda empreses, fiscalitat, successió empresarial Barcelona"
     },
     "hero": {
       "badge": "Insights",
@@ -176,7 +181,7 @@
   "team": {
     "meta": {
       "title": "Equip",
-      "description": "Coneix el nostre equip de professionals"
+      "description": "Equip d'advocats i assessors fiscals especialitzats en empreses familiars a Barcelona. Experts en M&A, successió empresarial i dret societari. Coneix-nos."
     },
     "hero": {
       "badge": "Equip",
@@ -198,7 +203,7 @@
   "careers": {
     "meta": {
       "title": "Treballa amb Nosaltres - Uneix-te al Nostre Equip",
-      "description": "Uneix-te al nostre equip d'experts i desenvolupa la teva carrera professional en un entorn d'excel·lència"
+      "description": "Uneix-te a NRRO Barcelona: oportunitats laborals en assessoria fiscal, legal i M&A. Desenvolupa la teva carrera amb experts en empreses familiars. Envia la teva candidatura."
     },
     "hero": {
       "badge": "Carreres",

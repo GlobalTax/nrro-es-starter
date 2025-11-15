@@ -44,6 +44,11 @@
     "terms": "Terms"
   },
   "home": {
+    "meta": {
+      "title": "NRRO - Tax, Legal & Strategic Advisory in Barcelona",
+      "description": "Tax, legal, and strategic advisory for family businesses in Barcelona. Specialists in business succession, M&A, and corporate structure. Plan your future today.",
+      "keywords": "tax advisory Barcelona, family businesses, business succession, M&A, corporate structure, business valuation"
+    },
     "hero": {
       "badge": "Navarro",
       "title": "Plan the future<br />With decisions today.",
@@ -121,8 +126,8 @@
   "about": {
     "meta": {
       "title": "About Us - NRRO",
-      "description": "Meet NRRO: 25 years of experience in tax, accounting and legal consulting in Barcelona",
-      "keywords": "samuel navarro, navarro tax legal, tax consulting barcelona, garrigues, tax experience"
+      "description": "NRRO: 25 years advising family businesses and corporate groups in Barcelona. Experts in taxation, succession, and corporate governance. Learn about our track record.",
+      "keywords": "samuel navarro, navarro tax legal, tax consulting barcelona, family businesses, business succession, corporate governance"
     },
     "cta": {
       "title": "Ready to work together?",
@@ -134,7 +139,7 @@
   "services": {
     "meta": {
       "title": "Services",
-      "description": "Tax, legal, accounting and labor consulting for companies"
+      "description": "Tax, legal, and strategic services for family businesses in Barcelona: business succession, M&A, valuation, and restructuring. Request consultation."
     },
     "hero": {
       "title": "Services",
@@ -159,8 +164,8 @@
   "blog": {
     "meta": {
       "title": "Blog - NRRO",
-      "description": "Analysis, news and articles about taxation, accounting and business consulting",
-      "keywords": "legal blog, legal analysis, tax news, corporate law"
+      "description": "Legal and tax blog: expert analysis on family businesses, M&A, taxation, and business succession in Barcelona. Read our insights.",
+      "keywords": "legal blog, legal analysis, family businesses, M&A, taxation, business succession Barcelona"
     },
     "hero": {
       "badge": "Insights",
@@ -176,7 +181,7 @@
   "team": {
     "meta": {
       "title": "Team",
-      "description": "Meet our team of professionals"
+      "description": "Team of lawyers and tax advisors specialized in family businesses in Barcelona. Experts in M&A, business succession, and corporate law. Meet us."
     },
     "hero": {
       "badge": "Team",
@@ -198,7 +203,7 @@
   "careers": {
     "meta": {
       "title": "Work With Us - Join Our Team",
-      "description": "Join our team of experts and develop your professional career in an environment of excellence"
+      "description": "Join NRRO Barcelona: job opportunities in tax, legal advisory, and M&A. Develop your career with family business experts. Send your application."
     },
     "hero": {
       "badge": "Careers",
