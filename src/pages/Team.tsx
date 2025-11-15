@@ -1,7 +1,18 @@
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { mainBreadcrumbs } from "@/lib/seoUtils";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 import { BadgeHero } from "@/components/ui/badge-hero";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 import { useTeamSearch, useTeamFilterOptions, useTeamPositionOptions } from "@/hooks/useTeamSearch";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,6 +40,7 @@ const Team = () => {
         description={t('team.meta.description')}
         canonicalUrl={`${window.location.origin}/equipo`}
       />
+      <BreadcrumbSchema items={mainBreadcrumbs.team} />
 
       <div className="min-h-screen">
         {/* Hero */}
@@ -47,6 +59,25 @@ const Team = () => {
           </div>
           </div>
         </section>
+
+        {/* Breadcrumb Navigation */}
+        <div className="bg-muted/30 border-b border-border/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Inicio</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Equipo</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </div>
 
         {/* Filters */}
         {(positions.length > 0 || specializations.length > 0) && (

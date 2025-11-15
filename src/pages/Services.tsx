@@ -9,6 +9,16 @@ import { CustomPagination } from "@/components/ui/custom-pagination";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { mainBreadcrumbs } from "@/lib/seoUtils";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 import { useServicesSearch, useServicesFilterOptions } from "@/hooks/useServicesSearch";
 import { Search, Loader2 } from "lucide-react";
 import { ServiceCard } from "@/components/services/ServiceCard";
@@ -84,6 +94,7 @@ const Services = () => {
         description={t('services.meta.description')}
         canonicalUrl={`${window.location.origin}/servicios`}
       />
+      <BreadcrumbSchema items={mainBreadcrumbs.services} />
 
       <div className="min-h-screen">
         {/* Hero Section */}
@@ -99,6 +110,25 @@ const Services = () => {
             </div>
           </div>
         </section>
+
+        {/* Breadcrumb Navigation */}
+        <div className="bg-muted/30 border-b border-border/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Inicio</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Servicios</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </div>
 
         {/* Filters and Results Section */}
         <section className="bg-background pb-20 md:pb-32">

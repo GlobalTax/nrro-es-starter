@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Meta } from "@/components/seo/Meta";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { mainBreadcrumbs } from "@/lib/seoUtils";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -63,6 +74,7 @@ const Blog = () => {
         description={t('blog.meta.description')}
         keywords={t('blog.meta.keywords')}
       />
+      <BreadcrumbSchema items={mainBreadcrumbs.blog} />
 
       {/* Hero Section */}
       <section className="bg-black py-32 md:py-48 text-center">
@@ -79,7 +91,26 @@ const Blog = () => {
             </p>
           </div>
         </div>
-      </section>
+        </section>
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-muted/30 border-b border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Inicio</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Blog</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       <div className="min-h-screen py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

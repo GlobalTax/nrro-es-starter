@@ -1,4 +1,14 @@
 import { Meta } from '@/components/seo/Meta';
+import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { mainBreadcrumbs } from '@/lib/seoUtils';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from '@/components/ui/breadcrumb';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, TrendingUp, Award, Briefcase, Rocket, Zap, Building, Handshake, CheckCircle, Sparkles } from 'lucide-react';
 import { BadgeHero } from '@/components/ui/badge-hero';
@@ -95,6 +105,7 @@ export default function About() {
         description={t('about.meta.description')}
         keywords={t('about.meta.keywords')}
       />
+      <BreadcrumbSchema items={mainBreadcrumbs.about} />
 
       {/* Hero Section */}
       <section className="bg-black py-32 md:py-48 text-center">
@@ -111,7 +122,26 @@ export default function About() {
             </p>
           </div>
         </div>
-      </section>
+        </section>
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-muted/30 border-b border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Inicio</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Nosotros</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       {/* Story Section */}
       {storyData?.is_active && (
