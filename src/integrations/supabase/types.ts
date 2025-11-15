@@ -553,6 +553,111 @@ export type Database = {
           },
         ]
       }
+      company_setup_leads: {
+        Row: {
+          assigned_to: string | null
+          calculator_data: Json | null
+          company_name: string | null
+          company_stage: string | null
+          consultation_date: string | null
+          contacted_at: string | null
+          conversion_type: string | null
+          country_origin: string
+          created_at: string | null
+          email: string
+          estimated_revenue: string | null
+          id: string
+          industry: string | null
+          ip_address: string | null
+          landing_page_url: string | null
+          landing_variant: string
+          lead_score: number | null
+          message: string | null
+          name: string
+          notes: string | null
+          phone: string | null
+          priority: string | null
+          referrer: string | null
+          status: string | null
+          timeline: string | null
+          updated_at: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          calculator_data?: Json | null
+          company_name?: string | null
+          company_stage?: string | null
+          consultation_date?: string | null
+          contacted_at?: string | null
+          conversion_type?: string | null
+          country_origin: string
+          created_at?: string | null
+          email: string
+          estimated_revenue?: string | null
+          id?: string
+          industry?: string | null
+          ip_address?: string | null
+          landing_page_url?: string | null
+          landing_variant: string
+          lead_score?: number | null
+          message?: string | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          priority?: string | null
+          referrer?: string | null
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          calculator_data?: Json | null
+          company_name?: string | null
+          company_stage?: string | null
+          consultation_date?: string | null
+          contacted_at?: string | null
+          conversion_type?: string | null
+          country_origin?: string
+          created_at?: string | null
+          email?: string
+          estimated_revenue?: string | null
+          id?: string
+          industry?: string | null
+          ip_address?: string | null
+          landing_page_url?: string | null
+          landing_variant?: string
+          lead_score?: number | null
+          message?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          priority?: string | null
+          referrer?: string | null
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       comparativas_nomina: {
         Row: {
           bruto_previsto: number | null
