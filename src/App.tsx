@@ -46,8 +46,13 @@ import AdminJobPositions from "./pages/admin/AdminJobPositions";
 import AdminContactLeads from "./pages/admin/AdminContactLeads";
 import AdminLeyBeckhamLeads from "./pages/admin/AdminLeyBeckhamLeads";
 import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
+import { AdminCompanySetupLeads } from "./pages/admin/AdminCompanySetupLeads";
 import AdminTechnology from "./pages/admin/AdminTechnology";
 import AdminSitemap from "./pages/admin/AdminSitemap";
+import { CompanySetupCalculator } from "./pages/CompanySetupCalculator";
+import { NIEServiceSpain } from "./pages/NIEServiceSpain";
+import { TechStartupSetup } from "./pages/TechStartupSetup";
+import { ExpressCompanySetup } from "./pages/ExpressCompanySetup";
 import SitemapXML from "./pages/SitemapXML";
 
 const queryClient = new QueryClient();
@@ -145,7 +150,14 @@ const App = () => {
             
             {/* Special landings */}
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
+            <Route path="/en/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
+            
+            {/* Company Setup Landings */}
+            <Route path="/en/company-setup-calculator" element={<CompanySetupCalculator />} />
+            <Route path="/en/nie-spain-foreigners" element={<NIEServiceSpain />} />
+            <Route path="/en/startup-company-setup-spain" element={<TechStartupSetup />} />
+            <Route path="/en/fast-company-registration-spain" element={<ExpressCompanySetup />} />
 
             {/* Admin routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -169,6 +181,7 @@ const App = () => {
               <Route path="contact-leads" element={<AdminContactLeads />} />
               <Route path="ley-beckham-leads" element={<AdminLeyBeckhamLeads />} />
               <Route path="demo-requests" element={<AdminDemoRequests />} />
+              <Route path="company-setup-leads" element={<AdminCompanySetupLeads />} />
               <Route path="technology" element={<AdminTechnology />} />
               <Route path="sitemap" element={<AdminSitemap />} />
               <Route
