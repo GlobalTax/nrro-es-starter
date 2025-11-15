@@ -115,11 +115,17 @@ const ServiceDetail = () => {
     );
   }
 
+  // Generate dynamic OG image URL
+  const ogImageUrl = service 
+    ? `https://zntotcpagkunvkwpubqu.supabase.co/functions/v1/generate-og-image?type=service&title=${encodeURIComponent(service.name)}&description=${encodeURIComponent(service.description.substring(0, 150))}`
+    : "https://nrro.es/og-image.png";
+
   return (
     <>
       <Meta 
         title={service.meta_title || service.name}
         description={service.meta_description || service.description}
+        ogImage={ogImageUrl}
         canonicalUrl={`${window.location.origin}/servicios/${service.slug}`}
       />
 

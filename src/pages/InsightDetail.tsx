@@ -135,6 +135,13 @@ const InsightDetail = () => {
     );
   }
 
+  const sanitizedContent = DOMPurify.sanitize(insight?.content || '');
+  
+  // Generate dynamic OG image URL
+  const ogImageUrl = insight 
+    ? `https://zntotcpagkunvkwpubqu.supabase.co/functions/v1/generate-og-image?type=blog&title=${encodeURIComponent(insight.title)}&description=${encodeURIComponent((insight.excerpt || '').substring(0, 150))}`
+    : "https://nrro.es/og-image.png";
+
   return (
     <>
       {isPreviewMode && previewData?.preview_info && (
@@ -146,6 +153,7 @@ const InsightDetail = () => {
       <Meta 
         title={insight.title}
         description={insight.excerpt || ''}
+        ogImage={ogImageUrl}
         canonicalUrl={`${window.location.origin}/insights/${insight.slug}`}
       />
 

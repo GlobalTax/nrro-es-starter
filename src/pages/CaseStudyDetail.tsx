@@ -111,11 +111,22 @@ export default function CaseStudyDetail() {
     );
   }
 
+  const hasMetrics = caseStudy.metrics && caseStudy.metrics.length > 0;
+  const hasTestimonial = caseStudy.testimonial_text && caseStudy.testimonial_author;
+  const hasGallery = caseStudy.gallery && caseStudy.gallery.length > 0;
+  const hasTimeline = caseStudy.timeline && caseStudy.timeline.length > 0;
+
+  // Generate dynamic OG image URL
+  const ogImageUrl = caseStudy 
+    ? `https://zntotcpagkunvkwpubqu.supabase.co/functions/v1/generate-og-image?type=case-study&title=${encodeURIComponent(caseStudy.hero_title)}&description=${encodeURIComponent((caseStudy.hero_subtitle || '').substring(0, 150))}`
+    : "https://nrro.es/og-image.png";
+
   return (
     <>
       <Meta
         title={caseStudy.meta_title || `${caseStudy.hero_title} - Casos de Éxito`}
         description={caseStudy.meta_description || caseStudy.hero_subtitle || caseStudy.results_summary}
+        ogImage={ogImageUrl}
       />
 
       {/* Hero Section */}
