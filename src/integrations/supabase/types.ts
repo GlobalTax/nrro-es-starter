@@ -1878,14 +1878,23 @@ export type Database = {
           meta_title_en: string | null
           meta_title_es: string | null
           metodologia: Json | null
+          metodologia_ca: Json | null
+          metodologia_en: Json | null
+          metodologia_es: Json | null
           name_ca: string | null
           name_en: string | null
           name_es: string
           servicios_transversales: Json | null
+          servicios_transversales_ca: Json | null
+          servicios_transversales_en: Json | null
+          servicios_transversales_es: Json | null
           slug_ca: string | null
           slug_en: string | null
           slug_es: string
           stats: Json | null
+          stats_ca: Json | null
+          stats_en: Json | null
+          stats_es: Json | null
           typical_clients: string[]
           typical_clients_ca: string[] | null
           typical_clients_en: string[] | null
@@ -1923,14 +1932,23 @@ export type Database = {
           meta_title_en?: string | null
           meta_title_es?: string | null
           metodologia?: Json | null
+          metodologia_ca?: Json | null
+          metodologia_en?: Json | null
+          metodologia_es?: Json | null
           name_ca?: string | null
           name_en?: string | null
           name_es: string
           servicios_transversales?: Json | null
+          servicios_transversales_ca?: Json | null
+          servicios_transversales_en?: Json | null
+          servicios_transversales_es?: Json | null
           slug_ca?: string | null
           slug_en?: string | null
           slug_es: string
           stats?: Json | null
+          stats_ca?: Json | null
+          stats_en?: Json | null
+          stats_es?: Json | null
           typical_clients?: string[]
           typical_clients_ca?: string[] | null
           typical_clients_en?: string[] | null
@@ -1968,14 +1986,23 @@ export type Database = {
           meta_title_en?: string | null
           meta_title_es?: string | null
           metodologia?: Json | null
+          metodologia_ca?: Json | null
+          metodologia_en?: Json | null
+          metodologia_es?: Json | null
           name_ca?: string | null
           name_en?: string | null
           name_es?: string
           servicios_transversales?: Json | null
+          servicios_transversales_ca?: Json | null
+          servicios_transversales_en?: Json | null
+          servicios_transversales_es?: Json | null
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string
           stats?: Json | null
+          stats_ca?: Json | null
+          stats_en?: Json | null
+          stats_es?: Json | null
           typical_clients?: string[]
           typical_clients_ca?: string[] | null
           typical_clients_en?: string[] | null
@@ -2045,6 +2072,57 @@ export type Database = {
           key?: string
           updated_at?: string | null
           value?: string
+        }
+        Relationships: []
+      }
+      sitemap_history: {
+        Row: {
+          created_at: string
+          file_size: number
+          generation_time_ms: number | null
+          id: string
+          storage_url: string | null
+          total_urls: number
+          trigger_source: string | null
+          urls_blog: number
+          urls_ca: number
+          urls_case_studies: number
+          urls_en: number
+          urls_es: number
+          urls_services: number
+          urls_static: number
+        }
+        Insert: {
+          created_at?: string
+          file_size: number
+          generation_time_ms?: number | null
+          id?: string
+          storage_url?: string | null
+          total_urls: number
+          trigger_source?: string | null
+          urls_blog?: number
+          urls_ca?: number
+          urls_case_studies?: number
+          urls_en?: number
+          urls_es?: number
+          urls_services?: number
+          urls_static?: number
+        }
+        Update: {
+          created_at?: string
+          file_size?: number
+          generation_time_ms?: number | null
+          id?: string
+          storage_url?: string | null
+          total_urls?: number
+          trigger_source?: string | null
+          urls_blog?: number
+          urls_ca?: number
+          urls_case_studies?: number
+          urls_en?: number
+          urls_es?: number
+          urls_services?: number
+          urls_static?: number
         }
         Relationships: []
       }
@@ -2200,6 +2278,7 @@ export type Database = {
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
+      cleanup_old_sitemap_history: { Args: never; Returns: undefined }
       count_blog_posts:
         | {
             Args: {
@@ -2331,11 +2410,20 @@ export type Database = {
           search_query?: string
         }
         Returns: {
+          challenge_ca: string
+          challenge_en: string
+          challenge_es: string
           client_industry: string
           client_logo_url: string
           client_name: string
           hero_image_url: string
           hero_subtitle: string
+          hero_subtitle_ca: string
+          hero_subtitle_en: string
+          hero_subtitle_es: string
+          hero_title_ca: string
+          hero_title_en: string
+          hero_title_es: string
           id: string
           is_featured: boolean
           metrics: Json
@@ -2343,10 +2431,22 @@ export type Database = {
           published_at: string
           relevance: number
           results_summary: string
+          results_summary_ca: string
+          results_summary_en: string
+          results_summary_es: string
           slug: string
+          slug_ca: string
+          slug_en: string
+          slug_es: string
+          solution_ca: string
+          solution_en: string
+          solution_es: string
           status: Database["public"]["Enums"]["case_study_status"]
           tags: string[]
           title: string
+          title_ca: string
+          title_en: string
+          title_es: string
           view_count: number
         }[]
       }

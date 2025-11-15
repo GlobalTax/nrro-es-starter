@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { LandingNavbar } from "./LandingNavbar";
 import { LandingFooter } from "./LandingFooter";
+import { OrganizationSchema } from "@/components/seo/OrganizationSchema";
 
 interface LandingLayoutProps {
   children: ReactNode;
@@ -8,10 +9,13 @@ interface LandingLayoutProps {
 
 export const LandingLayout = ({ children }: LandingLayoutProps) => {
   return (
-    <div className="flex min-h-screen flex-col">
-      <LandingNavbar />
-      <main className="flex-1 pt-20">{children}</main>
-      <LandingFooter />
-    </div>
+    <>
+      <OrganizationSchema />
+      <div className="flex min-h-screen flex-col">
+        <LandingNavbar />
+        <main className="flex-1 pt-20">{children}</main>
+        <LandingFooter />
+      </div>
+    </>
   );
 };
