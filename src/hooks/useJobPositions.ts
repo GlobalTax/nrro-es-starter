@@ -33,15 +33,18 @@ export const useJobPositions = (filters?: {
       return (data || []).map((job: any) => ({
         ...job,
         title: job[`title_${language}`] || job.title_es || job.title,
+        slug: job[`slug_${language}`] || job.slug_es || job.slug,
         description: job[`description_${language}`] || job.description_es || job.description,
+        requirements: job[`requirements_${language}`] || job.requirements_es || job.requirements || [],
+        responsibilities: job[`responsibilities_${language}`] || job.responsibilities_es || job.responsibilities || [],
       })) as JobPosition[];
     },
   });
 };
 
-export const useJobPosition = (slug: string) => {
+export const useJobPosition = (slug: string, language: string = 'es') => {
   return useQuery({
-    queryKey: ["job-position", slug],
+    queryKey: ["job-position", slug, language],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("job_positions")
@@ -51,7 +54,15 @@ export const useJobPosition = (slug: string) => {
       if (error) throw error;
       if (!data || data.length === 0) throw new Error("Job position not found");
       
-      return data[0] as JobPosition;
+      const job = data[0];
+      return {
+        ...job,
+        title: job[`title_${language}`] || job.title_es || job.title,
+        slug: job[`slug_${language}`] || job.slug_es || job.slug,
+        description: job[`description_${language}`] || job.description_es || job.description,
+        requirements: job[`requirements_${language}`] || job.requirements_es || job.requirements || [],
+        responsibilities: job[`responsibilities_${language}`] || job.responsibilities_es || job.responsibilities || [],
+      } as JobPosition;
     },
     enabled: !!slug,
   });
