@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, Lightbulb, Target, Heart, TrendingUp, Code, Scale, Calculator, Building2, UserCheck, Briefcase } from "lucide-react";
@@ -39,6 +40,12 @@ const Careers = () => {
     setSelectedPosition(position);
     setIsModalOpen(true);
   };
+
+  // Generate FAQs for schema
+  const faqs = Array.from({ length: 10 }, (_, i) => ({
+    question: t(`careers.faq.items.${i}.question`),
+    answer: t(`careers.faq.items.${i}.answer`)
+  }));
 
   const benefits = [
     {
@@ -117,6 +124,7 @@ const Careers = () => {
         { name: "Inicio", url: "https://navarrotax.legal/" },
         { name: "Únete al Equipo", url: "https://navarrotax.legal/carreras" }
       ]} />
+      <FAQSchema faqs={faqs} />
 
       <div className="min-h-screen">
         {/* Hero Section */}

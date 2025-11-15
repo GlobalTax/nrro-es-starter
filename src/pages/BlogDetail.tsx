@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -221,6 +222,20 @@ const BlogDetail = () => {
         canonicalUrl={`${window.location.origin}/blog/${post.slug}`}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
+      <ArticleSchema
+        title={post.title}
+        description={post.excerpt || post.seo_description || ""}
+        author={{
+          name: post.author_name || "Navarro Tax Legal",
+          url: "https://navarrotax.legal/equipo"
+        }}
+        publishedDate={post.published_at || post.created_at}
+        modifiedDate={post.updated_at}
+        imageUrl={post.featured_image || ogImageUrl}
+        articleUrl={`https://navarrotax.legal/blog/${post.slug}`}
+        category={post.category}
+        tags={post.tags}
+      />
 
       {/* Breadcrumb Navigation */}
       <div className="bg-muted/30 border-b border-border/50">

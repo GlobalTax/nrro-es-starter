@@ -1,5 +1,6 @@
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 import { HeroSection } from "@/components/ley-beckham/HeroSection";
 import { BenefitsGrid } from "@/components/ley-beckham/BenefitsGrid";
 import { RequirementsChecklist } from "@/components/ley-beckham/RequirementsChecklist";
@@ -33,6 +34,12 @@ const LeyBeckham = () => {
     trackPageView("ley-beckham-landing");
   }, [trackPageView]);
 
+  // Generate FAQs for schema
+  const faqs = Array.from({ length: 8 }, (_, i) => ({
+    question: t(`faq.q${i + 1}`),
+    answer: t(`faq.a${i + 1}`)
+  }));
+
   return (
     <>
       <Meta
@@ -44,6 +51,7 @@ const LeyBeckham = () => {
         { name: "Inicio", url: "https://navarrotax.legal/" },
         { name: "Ley Beckham", url: "https://navarrotax.legal/ley-beckham" }
       ]} />
+      <FAQSchema faqs={faqs} />
 
       <div className="min-h-screen">
         <HeroSection />

@@ -5,6 +5,7 @@ import { Loader2, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ServiceSchema } from "@/components/seo/ServiceSchema";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -144,6 +145,12 @@ const ServiceDetail = () => {
         canonicalUrl={`${window.location.origin}/servicios/${service.slug}`}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
+      <ServiceSchema
+        name={service.name}
+        description={service.description}
+        serviceUrl={`https://navarrotax.legal/servicios/${service.slug}`}
+        serviceType={service.area_es || service.area}
+      />
 
       {/* Hero Section - Black background, centered text */}
       <section 
