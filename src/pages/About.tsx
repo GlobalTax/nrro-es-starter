@@ -1,5 +1,6 @@
 import { Meta } from '@/components/seo/Meta';
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { PersonSchema } from '@/components/seo/PersonSchema';
 import { mainBreadcrumbs } from '@/lib/seoUtils';
 import {
   Breadcrumb,
@@ -106,6 +107,16 @@ export default function About() {
         keywords={t('about.meta.keywords')}
       />
       <BreadcrumbSchema items={mainBreadcrumbs.about} />
+      
+      {/* PersonSchema for founder */}
+      {founder.nombre && (
+        <PersonSchema
+          name={founder.nombre}
+          jobTitle="Fundador"
+          description={founder.parrafos?.[0] || ''}
+          url={`${window.location.origin}/equipo`}
+        />
+      )}
 
       {/* Hero Section */}
       <section className="bg-black py-32 md:py-48 text-center">

@@ -1,5 +1,6 @@
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { PersonSchema } from "@/components/seo/PersonSchema";
 import { mainBreadcrumbs } from "@/lib/seoUtils";
 import {
   Breadcrumb,
@@ -41,6 +42,19 @@ const Team = () => {
         canonicalUrl={`${window.location.origin}/equipo`}
       />
       <BreadcrumbSchema items={mainBreadcrumbs.team} />
+      
+      {/* PersonSchema for each team member */}
+      {members?.map((member) => (
+        <PersonSchema
+          key={member.id}
+          name={member.name}
+          jobTitle={member.position}
+          description={member.bio}
+          email={member.email}
+          imageUrl={member.avatar_url}
+          url={member.linkedin}
+        />
+      ))}
 
       <div className="min-h-screen">
         {/* Hero */}
