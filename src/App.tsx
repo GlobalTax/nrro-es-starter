@@ -55,6 +55,7 @@ import { NIEServiceSpain } from "./pages/NIEServiceSpain";
 import { TechStartupSetup } from "./pages/TechStartupSetup";
 import { ExpressCompanySetup } from "./pages/ExpressCompanySetup";
 import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
+import { DynamicLandingPage } from "./pages/DynamicLandingPage";
 import SitemapXML from "./pages/SitemapXML";
 
 const queryClient = new QueryClient();
@@ -201,6 +202,10 @@ const App = () => {
             {/* Sitemap XML */}
             <Route path="/sitemap.xml" element={<SitemapXML />} />
 
+            {/* Dynamic Landing Pages - Must be before 404 */}
+            <Route path="/:slug" element={<DynamicLandingPage />} />
+
+            {/* 404 - Must be last */}
             <Route path="*" element={<Layout><NotFound /></Layout>} />
           </Routes>
         </BrowserRouter>
