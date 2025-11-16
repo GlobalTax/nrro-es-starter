@@ -33,7 +33,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 interface CompanySetupFormProps {
-  landingVariant: 'calculator' | 'nie-hell' | 'tech-startup' | 'express';
+  landingVariant: 'calculator' | 'nie-hell' | 'tech-startup' | 'express' | 'herencias-barcelona';
   conversionType?: string;
   calculatorData?: any;
   onSuccess?: () => void;
@@ -259,7 +259,7 @@ export const CompanySetupForm = ({
             Submitting...
           </>
         ) : (
-          submitButtonText
+          landingVariant === 'herencias-barcelona' ? 'Solicitar consulta gratuita' : submitButtonText
         )}
       </Button>
 
