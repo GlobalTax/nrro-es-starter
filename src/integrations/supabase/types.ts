@@ -1102,6 +1102,165 @@ export type Database = {
         }
         Relationships: []
       }
+      landing_pages: {
+        Row: {
+          conversion_count: number | null
+          created_at: string | null
+          created_by: string | null
+          custom_navbar: string | null
+          featured_image: string | null
+          id: string
+          is_active: boolean | null
+          keywords: string[] | null
+          layout_type: string | null
+          meta_description: string | null
+          meta_description_ca: string | null
+          meta_description_en: string | null
+          meta_description_es: string | null
+          meta_title: string | null
+          meta_title_ca: string | null
+          meta_title_en: string | null
+          meta_title_es: string | null
+          primary_cta_text: string | null
+          primary_cta_text_ca: string | null
+          primary_cta_text_en: string | null
+          primary_cta_text_es: string | null
+          primary_cta_url: string | null
+          primary_cta_variant: string | null
+          secondary_cta_text: string | null
+          secondary_cta_url: string | null
+          sections: Json
+          slug: string
+          slug_ca: string | null
+          slug_en: string | null
+          slug_es: string | null
+          status: string | null
+          title: string
+          title_ca: string | null
+          title_en: string | null
+          title_es: string | null
+          updated_at: string | null
+          updated_by: string | null
+          use_footer: boolean | null
+          use_navbar: boolean | null
+          view_count: number | null
+        }
+        Insert: {
+          conversion_count?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          custom_navbar?: string | null
+          featured_image?: string | null
+          id?: string
+          is_active?: boolean | null
+          keywords?: string[] | null
+          layout_type?: string | null
+          meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
+          meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
+          primary_cta_text?: string | null
+          primary_cta_text_ca?: string | null
+          primary_cta_text_en?: string | null
+          primary_cta_text_es?: string | null
+          primary_cta_url?: string | null
+          primary_cta_variant?: string | null
+          secondary_cta_text?: string | null
+          secondary_cta_url?: string | null
+          sections?: Json
+          slug: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
+          status?: string | null
+          title: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          use_footer?: boolean | null
+          use_navbar?: boolean | null
+          view_count?: number | null
+        }
+        Update: {
+          conversion_count?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          custom_navbar?: string | null
+          featured_image?: string | null
+          id?: string
+          is_active?: boolean | null
+          keywords?: string[] | null
+          layout_type?: string | null
+          meta_description?: string | null
+          meta_description_ca?: string | null
+          meta_description_en?: string | null
+          meta_description_es?: string | null
+          meta_title?: string | null
+          meta_title_ca?: string | null
+          meta_title_en?: string | null
+          meta_title_es?: string | null
+          primary_cta_text?: string | null
+          primary_cta_text_ca?: string | null
+          primary_cta_text_en?: string | null
+          primary_cta_text_es?: string | null
+          primary_cta_url?: string | null
+          primary_cta_variant?: string | null
+          secondary_cta_text?: string | null
+          secondary_cta_url?: string | null
+          sections?: Json
+          slug?: string
+          slug_ca?: string | null
+          slug_en?: string | null
+          slug_es?: string | null
+          status?: string | null
+          title?: string
+          title_ca?: string | null
+          title_en?: string | null
+          title_es?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          use_footer?: boolean | null
+          use_navbar?: boolean | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      landing_sections: {
+        Row: {
+          component_type: string
+          created_at: string | null
+          default_props: Json | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+        }
+        Insert: {
+          component_type: string
+          created_at?: string | null
+          default_props?: Json | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+        }
+        Update: {
+          component_type?: string
+          created_at?: string | null
+          default_props?: Json | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+        }
+        Relationships: []
+      }
       lead_documents: {
         Row: {
           created_at: string | null
