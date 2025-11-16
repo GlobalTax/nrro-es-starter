@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { AlertCircle, CheckCircle2, Clock, Shield, X } from 'lucide-react';
 import { TrustBar } from '@/components/company-setup/shared/TrustBar';
 import { CompanySetupForm } from '@/components/company-setup/shared/CompanySetupForm';
+import { WhyChooseUs } from '@/components/company-setup/shared/WhyChooseUs';
 
 export const NIEServiceSpain = () => {
   const painPoints = [
@@ -35,7 +36,7 @@ export const NIEServiceSpain = () => {
             <Badge className="mb-4 bg-destructive text-destructive-foreground" variant="default">
               🚨 STOP THE NIE FRUSTRATION
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-normal mb-6">
               Get Your Spanish NIE Without the Bureaucratic Nightmare
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -63,7 +64,7 @@ export const NIEServiceSpain = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <AlertCircle className="h-16 w-16 text-destructive mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-4">Tired of the NIE Nightmare?</h2>
+              <h2 className="text-3xl font-normal mb-4">Tired of the NIE Nightmare?</h2>
               <p className="text-lg text-muted-foreground">
                 Sound familiar? There's a better way.
               </p>
@@ -89,7 +90,7 @@ export const NIEServiceSpain = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <Clock className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-4">Our Express NIE Process</h2>
+              <h2 className="text-3xl font-normal mb-4">Our Express NIE Process</h2>
               <p className="text-lg text-muted-foreground">
                 From application to delivery in just 7 days
               </p>
@@ -132,12 +133,14 @@ export const NIEServiceSpain = () => {
         </div>
       </section>
 
+      <WhyChooseUs />
+
       {/* Pricing Section */}
       <section className="py-16">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Transparent Pricing</h2>
+              <h2 className="text-3xl font-normal mb-4">Transparent Pricing</h2>
               <p className="text-lg text-muted-foreground">
                 No hidden fees. No surprises.
               </p>
@@ -192,7 +195,7 @@ export const NIEServiceSpain = () => {
       <section className="py-16 bg-muted/30">
         <div className="container">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">Who Needs a NIE?</h2>
+            <h2 className="text-3xl font-normal mb-8 text-center">Who Needs a NIE?</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {[
                 'Opening a company in Spain',

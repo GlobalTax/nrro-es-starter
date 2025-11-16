@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { TrustBar } from '@/components/company-setup/shared/TrustBar';
 import { CompanySetupForm } from '@/components/company-setup/shared/CompanySetupForm';
+import { WhyChooseUs } from '@/components/company-setup/shared/WhyChooseUs';
 import { Badge } from '@/components/ui/badge';
 
 export const CompanySetupCalculator = () => {
@@ -79,7 +80,7 @@ export const CompanySetupCalculator = () => {
               <Calculator className="h-4 w-4 mr-2" />
               Free Cost Estimator
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-normal mb-6">
               How Much Does It Cost to Open a Company in Spain?
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -100,7 +101,7 @@ export const CompanySetupCalculator = () => {
                 <CardContent className="p-8">
                   <div className="mb-8">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-2xl font-bold">Company Setup Calculator</h2>
+                      <h2 className="text-2xl font-normal">Company Setup Calculator</h2>
                       <span className="text-sm text-muted-foreground">Step {step} of 4</span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2">
@@ -253,11 +254,13 @@ export const CompanySetupCalculator = () => {
               </Card>
             ) : (
               <div className="space-y-8">
+                <WhyChooseUs />
+
                 <Card className="border-primary">
                   <CardContent className="p-8">
                     <div className="text-center mb-8">
                       <Euro className="h-16 w-16 text-primary mx-auto mb-4" />
-                      <h2 className="text-3xl font-bold mb-2">Your Estimated Cost</h2>
+                      <h2 className="text-3xl font-normal mb-2">Your Estimated Cost</h2>
                       <div className="text-5xl font-bold text-primary">
                         €{estimatedCost.toLocaleString()}
                       </div>
@@ -289,7 +292,7 @@ export const CompanySetupCalculator = () => {
                   <CardContent className="p-8">
                     <div className="text-center mb-6">
                       <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
-                      <h3 className="text-2xl font-bold mb-2">Get Your Full Cost Breakdown</h3>
+                      <h3 className="text-2xl font-normal mb-2">Get Your Full Cost Breakdown</h3>
                       <p className="text-muted-foreground">
                         Download detailed PDF report + Setup checklist
                       </p>
