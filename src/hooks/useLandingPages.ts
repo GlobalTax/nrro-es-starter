@@ -1,0 +1,166 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+
+export interface LandingPage {
+  id: string;
+  slug: string;
+  slug_es?: string | null;
+  slug_ca?: string | null;
+  slug_en?: string | null;
+  title: string;
+  title_es?: string | null;
+  title_ca?: string | null;
+  title_en?: string | null;
+  meta_title?: string | null;
+  meta_title_es?: string | null;
+  meta_title_ca?: string | null;
+  meta_title_en?: string | null;
+  meta_description?: string | null;
+  meta_description_es?: string | null;
+  meta_description_ca?: string | null;
+  meta_description_en?: string | null;
+  keywords?: string[] | null;
+  sections: any[];
+  layout_type?: string | null;
+  use_navbar?: boolean | null;
+  use_footer?: boolean | null;
+  custom_navbar?: string | null;
+  primary_cta_text?: string | null;
+  primary_cta_text_es?: string | null;
+  primary_cta_text_ca?: string | null;
+  primary_cta_text_en?: string | null;
+  primary_cta_url?: string | null;
+  primary_cta_variant?: string | null;
+  secondary_cta_text?: string | null;
+  secondary_cta_url?: string | null;
+  status?: string | null;
+  is_active?: boolean | null;
+  featured_image?: string | null;
+  view_count?: number | null;
+  conversion_count?: number | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+}
+
+interface LandingFilters {
+  status?: string;
+  search?: string;
+}
+
+export const useLandingPages = (filters: LandingFilters = {}) => {
+  return useQuery({
+    queryKey: ['landing-pages', filters],
+    queryFn: async () => {
+      let query = supabase
+        .from('landing_pages')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (filters.status && filters.status !== 'all') {
+        query = query.eq('status', filters.status);
+      }
+      
+      if (filters.search) {
+        query = query.or(`title.ilike.%${filters.search}%,slug.ilike.%${filters.search}%`);
+      }
+      
+      const { data, error } = await query;
+      if (error) throw error;
+      return data as LandingPage[];
+    },
+  });
+};
+
+export const useLandingPageBySlug = (slug: string) => {
+  return useQuery({
+    queryKey: ['landing-page', slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('landing_pages')
+        .select('*')
+        .eq('slug', slug)
+        .single();
+      
+      if (error) throw error;
+      return data as LandingPage;
+    },
+    enabled: !!slug,
+  });
+};
+
+export const useCreateLandingPage = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (landing: Partial<LandingPage>) => {
+      const { data, error } = await supabase
+        .from('landing_pages')
+        .insert([landing as any])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['landing-pages'] });
+      toast.success('Landing page creada correctamente');
+    },
+    onError: (error) => {
+      console.error('Error creating landing page:', error);
+      toast.error('Error al crear la landing page');
+    },
+  });
+};
+
+export const useUpdateLandingPage = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, updates }: { id: string; updates: Partial<LandingPage> }) => {
+      const { data, error } = await supabase
+        .from('landing_pages')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['landing-pages'] });
+      toast.success('Landing page actualizada correctamente');
+    },
+    onError: (error) => {
+      console.error('Error updating landing page:', error);
+      toast.error('Error al actualizar la landing page');
+    },
+  });
+};
+
+export const useDeleteLandingPage = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from('landing_pages')
+        .delete()
+        .eq('id', id);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['landing-pages'] });
+      toast.success('Landing page eliminada correctamente');
+    },
+    onError: (error) => {
+      console.error('Error deleting landing page:', error);
+      toast.error('Error al eliminar la landing page');
+    },
+  });
+};

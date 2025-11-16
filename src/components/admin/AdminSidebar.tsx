@@ -16,6 +16,7 @@ import {
   Monitor,
   Map,
   Building2,
+  Presentation,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -25,6 +26,7 @@ import { Separator } from '@/components/ui/separator';
     { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/admin/settings', icon: Settings, label: 'Site Settings' },
     { path: '/admin/content', icon: FileText, label: 'Gestión de Contenido' },
+    { path: '/admin/landings', icon: Presentation, label: 'Landing Pages' },
     { path: '/admin/case-studies', icon: TrendingUp, label: 'Case Studies' },
     { path: '/admin/services', icon: Settings, label: 'Services' },
     { path: '/admin/blog', icon: Newspaper, label: 'Blog' },
