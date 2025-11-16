@@ -27,6 +27,14 @@ export const TrustBar = () => {
   return (
     <div className="border-y border-border bg-muted/30 py-8">
       <div className="container">
+        <div className="text-center mb-6">
+          <p className="text-sm font-semibold text-muted-foreground mb-2">
+            Trusted by 500+ companies since 1998
+          </p>
+          <div className="text-xs text-muted-foreground">
+            🏛️ Navarro Tax Legal • Barcelona Bar Association • Tax Advisors Registry
+          </div>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;

@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Zap, Clock, CheckCircle2, Shield, ArrowRight } from 'lucide-react';
 import { TrustBar } from '@/components/company-setup/shared/TrustBar';
 import { CompanySetupForm } from '@/components/company-setup/shared/CompanySetupForm';
+import { WhyChooseUs } from '@/components/company-setup/shared/WhyChooseUs';
 import { useState, useEffect } from 'react';
 
 export const ExpressCompanySetup = () => {
@@ -66,7 +67,7 @@ export const ExpressCompanySetup = () => {
               <Zap className="h-4 w-4 mr-2" />
               EXPRESS SERVICE
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-normal mb-6">
               Register Your Spanish Company in 30 Days. Guaranteed.
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -108,7 +109,7 @@ export const ExpressCompanySetup = () => {
       <section className="py-16">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">DIY vs Express Service</h2>
+            <h2 className="text-3xl font-normal mb-12 text-center">DIY vs. Express Service</h2>
 
             <div className="grid md:grid-cols-2 gap-8">
               {/* DIY Column */}
@@ -171,7 +172,7 @@ export const ExpressCompanySetup = () => {
       <section className="py-16 bg-muted/30">
         <div className="container">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">What Makes Us Fast?</h2>
+            <h2 className="text-3xl font-normal mb-12 text-center">What Makes Us Fast?</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
@@ -203,13 +204,15 @@ export const ExpressCompanySetup = () => {
         </div>
       </section>
 
+      <WhyChooseUs />
+
       {/* Guarantee & Pricing */}
       <section className="py-16">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <Shield className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-4">Express Guarantee</h2>
+              <h2 className="text-3xl font-normal mb-4">Express Guarantee</h2>
               <p className="text-lg text-muted-foreground">
                 We stand behind our promise
               </p>
@@ -279,10 +282,10 @@ export const ExpressCompanySetup = () => {
                   <div className="text-4xl">"</div>
                   <div>
                     <p className="text-lg mb-4">
-                      Registered in 28 days. Unbelievable. I was prepared for months of bureaucracy.
+                      Company registered in 28 days. Literally impossible to do it faster. Unbelievable.
                     </p>
-                    <div className="font-semibold">— John Mitchell, UK</div>
-                    <div className="text-sm text-muted-foreground">Tech Startup Founder</div>
+                    <div className="font-semibold">— Laura Schmidt</div>
+                    <div className="text-sm text-muted-foreground">Managing Director (Germany)</div>
                   </div>
                 </div>
               </CardContent>

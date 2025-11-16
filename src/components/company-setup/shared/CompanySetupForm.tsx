@@ -266,6 +266,23 @@ export const CompanySetupForm = ({
       <p className="text-xs text-muted-foreground text-center">
         By submitting, you agree to our privacy policy. We'll never share your data.
       </p>
+
+      {/* Footer with Navarro Tax Legal Branding */}
+      <div className="mt-6 pt-6 border-t text-center">
+        <p className="text-sm text-muted-foreground mb-3">
+          Service provided by:
+        </p>
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <img 
+            src="/assets/logos/navarro-tax-legal.svg" 
+            alt="Navarro Tax Legal" 
+            className="h-8"
+          />
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Barcelona Bar Association • Tax Advisors Registry
+        </p>
+      </div>
     </form>
   );
 };

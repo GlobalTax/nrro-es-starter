@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Rocket, TrendingUp, Globe, DollarSign, CheckCircle2, Users } from 'lucide-react';
 import { TrustBar } from '@/components/company-setup/shared/TrustBar';
 import { CompanySetupForm } from '@/components/company-setup/shared/CompanySetupForm';
+import { WhyChooseUs } from '@/components/company-setup/shared/WhyChooseUs';
 
 export const TechStartupSetup = () => {
   const benefits = [
@@ -78,7 +79,7 @@ export const TechStartupSetup = () => {
               <Rocket className="h-4 w-4 mr-2" />
               FOR TECH FOUNDERS
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-normal mb-6">
               Launch Your Tech Startup in Spain
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -101,7 +102,7 @@ export const TechStartupSetup = () => {
       <section className="py-16">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">Why Spain for Tech Startups?</h2>
+            <h2 className="text-3xl font-normal mb-12 text-center">Why Spain for Tech Startups?</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {benefits.map((benefit, index) => {
                 const Icon = benefit.icon;
@@ -122,6 +123,8 @@ export const TechStartupSetup = () => {
           </div>
         </div>
       </section>
+
+      <WhyChooseUs />
 
       {/* Startup Package */}
       <section className="py-16 bg-muted/30">
@@ -187,7 +190,7 @@ export const TechStartupSetup = () => {
       <section className="py-16">
         <div className="container">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">Tech-Specific FAQs</h2>
+            <h2 className="text-3xl font-normal mb-12 text-center">Tech-Specific FAQs</h2>
             <div className="space-y-6">
               {faqs.map((faq, index) => (
                 <Card key={index}>
