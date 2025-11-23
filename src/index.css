@@ -9,6 +9,10 @@
 /* Leaflet CSS for OpenStreetMap */
 @import 'leaflet/dist/leaflet.css';
 
+/* Design System Utilities */
+@import './styles/utilities.css';
+@import './styles/animations.css';
+
 /* General Sans Font Family */
 @font-face {
   font-family: 'General Sans';

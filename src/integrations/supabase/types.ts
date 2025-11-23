@@ -1102,6 +1102,48 @@ export type Database = {
         }
         Relationships: []
       }
+      knowledge_articles: {
+        Row: {
+          category: string
+          content: string
+          created_at: string | null
+          created_by: string | null
+          featured: boolean | null
+          id: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          video_url: string | null
+          view_count: number | null
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string | null
+          created_by?: string | null
+          featured?: boolean | null
+          id?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          video_url?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string | null
+          created_by?: string | null
+          featured?: boolean | null
+          id?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       landing_pages: {
         Row: {
           conversion_count: number | null
