@@ -29,7 +29,7 @@ import { mainBreadcrumbs, createDynamicBreadcrumb } from '@/lib/seoUtils';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const navigate = useNavigate();
   const { getCaseStudyPath } = useLocalizedPath();
 
@@ -117,9 +117,9 @@ export default function CaseStudyDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-3xl font-normal mb-4">Caso de estudio no encontrado</h1>
-          <Link to="/casos-de-exito">
-            <Button variant="outline">Volver</Button>
+          <h1 className="text-3xl font-normal mb-4">{t('caseStudies.notFound')}</h1>
+          <Link to="/casos-exito">
+            <Button variant="outline">{t('caseStudies.backToCases')}</Button>
           </Link>
         </div>
       </div>
@@ -142,6 +142,12 @@ export default function CaseStudyDetail() {
         title={caseStudy.meta_title || `${caseStudy.hero_title} - Casos de Éxito`}
         description={caseStudy.meta_description || caseStudy.hero_subtitle || caseStudy.results_summary}
         ogImage={ogImageUrl}
+        canonicalUrl={`${window.location.origin}/casos-exito/${caseStudy.slug}`}
+        slugs={{
+          es: caseStudy.slug_es,
+          ca: caseStudy.slug_ca || caseStudy.slug_es,
+          en: caseStudy.slug_en || caseStudy.slug_es,
+        }}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
 
@@ -158,10 +164,10 @@ export default function CaseStudyDetail() {
         )}
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48">
           <div className="max-w-4xl">
-            <Link to="/casos-de-exito">
+            <Link to="/casos-exito">
               <Button variant="ghost" size="sm" className="mb-8 text-white hover:text-white hover:bg-white/10">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Volver a Casos de Éxito
+                {t('caseStudies.backToCases')}
               </Button>
             </Link>
 
@@ -229,13 +235,13 @@ export default function CaseStudyDetail() {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">Inicio</Link>
+                  <Link to="/">{t('breadcrumb.home')}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/casos-exito">Casos de Éxito</Link>
+                  <Link to="/casos-exito">{t('nav.caseStudies')}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -252,7 +258,7 @@ export default function CaseStudyDetail() {
         <section className="bg-background py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
-              El Desafío
+              {t('caseStudies.challenge')}
             </h2>
             <div 
               className="prose prose-lg max-w-4xl mx-auto"
@@ -267,7 +273,7 @@ export default function CaseStudyDetail() {
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
-              Nuestra Solución
+              {t('caseStudies.solution')}
             </h2>
             <div 
               className="prose prose-lg max-w-4xl mx-auto"
@@ -282,7 +288,7 @@ export default function CaseStudyDetail() {
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-12">
-              Resultados Clave
+              {t('caseStudies.results')}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {caseStudy.metrics.map((metric: any, index: number) => (
@@ -298,10 +304,10 @@ export default function CaseStudyDetail() {
         <section className="bg-background py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-4">
-              Testimonio del Cliente
+              {t('caseStudies.testimonial')}
             </h2>
             <p className="text-body text-center mb-12 max-w-2xl mx-auto">
-              Lo que dicen sobre nosotros
+              {t('caseStudies.testimonialSubtitle')}
             </p>
           <CaseStudyTestimonial
             text={caseStudy.testimonial_text}
@@ -339,7 +345,7 @@ export default function CaseStudyDetail() {
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal text-center mb-12">
-              Cronología del Proyecto
+              {t('caseStudies.timeline')}
             </h2>
             <CaseStudyTimeline timeline={caseStudy.timeline} />
           </div>
@@ -351,7 +357,7 @@ export default function CaseStudyDetail() {
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-normal mb-4">
-              Servicios Relacionados
+              {t('caseStudies.relatedServices')}
             </h2>
             <RelatedServices serviceIds={caseStudy.related_services} />
           </div>
@@ -362,7 +368,7 @@ export default function CaseStudyDetail() {
       <section className="bg-white py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-normal mb-4">
-            Otros Casos de Éxito
+            {t('caseStudies.otherCases')}
           </h2>
           {/* TODO: Add related cases carousel */}
         </div>
@@ -373,20 +379,20 @@ export default function CaseStudyDetail() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-normal mb-4">
-              ¿Tienes un Proyecto Similar?
+              {t('caseStudies.similarProject')}
             </h2>
             <p className="text-body mb-8">
-              Contacta con nosotros y descubre cómo podemos ayudarte
+              {t('caseStudies.contactSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
                 <Link to="/contacto">
-                  Contactar
+                  {t('caseStudies.contactUs')}
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link to="/servicios">
-                  Ver Servicios
+                  {t('caseStudies.viewServices')}
                 </Link>
               </Button>
             </div>

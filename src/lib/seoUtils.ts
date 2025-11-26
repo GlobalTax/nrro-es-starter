@@ -1,4 +1,7 @@
-export const getBaseUrl = () => "https://nrro.es";
+// Base domain for all SEO purposes
+export const BASE_DOMAIN = "https://nrro.es";
+
+export const getBaseUrl = () => BASE_DOMAIN;
 
 export const getBreadcrumbUrl = (path: string) => {
   const base = getBaseUrl();

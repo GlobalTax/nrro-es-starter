@@ -1,6 +1,7 @@
 import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { mainBreadcrumbs } from "@/lib/seoUtils";
 import { HeroSection } from "@/components/ley-beckham/HeroSection";
 import { BenefitsGrid } from "@/components/ley-beckham/BenefitsGrid";
 import { RequirementsChecklist } from "@/components/ley-beckham/RequirementsChecklist";
@@ -46,11 +47,9 @@ const LeyBeckham = () => {
         title={t("leyBeckham.seo.title")}
         description={t("leyBeckham.seo.description")}
         keywords={t("leyBeckham.seo.keywords")}
+        canonicalUrl={`${window.location.origin}/ley-beckham`}
       />
-      <BreadcrumbSchema items={[
-        { name: "Inicio", url: "https://navarrotax.legal/" },
-        { name: "Ley Beckham", url: "https://navarrotax.legal/ley-beckham" }
-      ]} />
+      <BreadcrumbSchema items={mainBreadcrumbs.leyBeckham} />
       <FAQSchema faqs={faqs} />
 
       <div className="min-h-screen">
@@ -63,12 +62,12 @@ const LeyBeckham = () => {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to="/">Inicio</Link>
+                    <Link to="/">{t('breadcrumb.home')}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Ley Beckham</BreadcrumbPage>
+                  <BreadcrumbPage>{t('leyBeckham.breadcrumb')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

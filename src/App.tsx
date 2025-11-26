@@ -153,8 +153,11 @@ const App = () => {
             
             {/* Special landings */}
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
-            <Route path="/en/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
-            <Route path="/orquest-kairoshr" element={<OrquestKairosHR />} />
+            <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
+            <Route path="/en/beckham-law" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
+            <Route path="/orquest-kairoshr" element={<LandingLayout><OrquestKairosHR /></LandingLayout>} />
+            <Route path="/ca/orquest-kairoshr" element={<LandingLayout><OrquestKairosHR /></LandingLayout>} />
+            <Route path="/en/orquest-kairoshr" element={<LandingLayout><OrquestKairosHR /></LandingLayout>} />
             
             {/* Company Setup Landings */}
             <Route path="/en/company-setup-calculator" element={<CompanySetupCalculator />} />

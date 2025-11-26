@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BASE_DOMAIN } from "@/lib/seoUtils";
 
 interface ServiceSchemaProps {
   name: string;
@@ -18,7 +19,7 @@ export const ServiceSchema = ({
   serviceUrl,
   provider = {
     name: "Navarro Tax Legal",
-    url: "https://navarrotax.legal"
+    url: BASE_DOMAIN
   },
   areaServed = "Barcelona, España",
   serviceType
@@ -36,7 +37,7 @@ export const ServiceSchema = ({
         "url": provider.url,
         "logo": {
           "@type": "ImageObject",
-          "url": "https://navarrotax.legal/assets/logos/navarro-tax-legal.svg"
+          "url": `${BASE_DOMAIN}/assets/logos/navarro-tax-legal.svg`
         }
       },
       "areaServed": {

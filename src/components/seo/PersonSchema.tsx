@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BASE_DOMAIN } from "@/lib/seoUtils";
 
 interface PersonSchemaProps {
   name: string;
@@ -22,7 +23,7 @@ export const PersonSchema = ({
   url,
   organization = {
     name: "Navarro Tax Legal",
-    url: "https://navarrotax.legal"
+    url: BASE_DOMAIN
   }
 }: PersonSchemaProps) => {
   useEffect(() => {

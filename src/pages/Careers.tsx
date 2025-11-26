@@ -5,6 +5,7 @@ import { Meta } from "@/components/seo/Meta";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { mainBreadcrumbs } from "@/lib/seoUtils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, Lightbulb, Target, Heart, TrendingUp, Code, Scale, Calculator, Building2, UserCheck, Briefcase } from "lucide-react";
 import { OpenPositionsSection } from "@/components/careers/OpenPositionsSection";
@@ -120,10 +121,7 @@ const Careers = () => {
         description={t('careers.meta.description')}
         canonicalUrl={`${window.location.origin}/carreras`}
       />
-      <BreadcrumbSchema items={[
-        { name: "Inicio", url: "https://navarrotax.legal/" },
-        { name: "Únete al Equipo", url: "https://navarrotax.legal/carreras" }
-      ]} />
+      <BreadcrumbSchema items={mainBreadcrumbs.careers} />
       <FAQSchema faqs={faqs} />
 
       <div className="min-h-screen">
@@ -151,12 +149,12 @@ const Careers = () => {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to="/">Inicio</Link>
+                    <Link to="/">{t('breadcrumb.home')}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Únete al Equipo</BreadcrumbPage>
+                  <BreadcrumbPage>{t('careers.breadcrumb')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

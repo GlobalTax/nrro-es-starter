@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BASE_DOMAIN } from "@/lib/seoUtils";
 
 interface ArticleSchemaProps {
   title: string;
@@ -42,7 +43,7 @@ export const ArticleSchema = ({
         "name": "Navarro Tax Legal",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://navarrotax.legal/assets/logos/navarro-tax-legal.svg"
+          "url": `${BASE_DOMAIN}/assets/logos/navarro-tax-legal.svg`
         }
       },
       "datePublished": publishedDate,

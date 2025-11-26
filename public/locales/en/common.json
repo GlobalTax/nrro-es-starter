@@ -6,7 +6,8 @@
     "team": "Team",
     "careers": "Careers",
     "contact": "Contact",
-    "areas": "Areas"
+    "areas": "Areas",
+    "caseStudies": "Case Studies"
   },
   "breadcrumb": {
     "home": "Home"
@@ -231,7 +232,28 @@
     "empty": "No articles found",
     "relatedPosts": {
       "title": "Related articles"
-    }
+    },
+    "backToBlog": "Back to Blog",
+    "notFound": "Article not found",
+    "previewNotAvailable": "Preview not available",
+    "previewExpired": "This preview has expired or is not valid",
+    "tags": "Tags"
+  },
+  "caseStudies": {
+    "challenge": "The Challenge",
+    "solution": "Our Solution",
+    "results": "Key Results",
+    "testimonial": "Client Testimonial",
+    "testimonialSubtitle": "What they say about us",
+    "timeline": "Project Timeline",
+    "relatedServices": "Related Services",
+    "otherCases": "Other Success Stories",
+    "similarProject": "Do You Have a Similar Project?",
+    "contactSubtitle": "Contact us and discover how we can help you",
+    "contactUs": "Contact Us",
+    "viewServices": "View Services",
+    "backToCases": "Back to Case Studies",
+    "notFound": "Case study not found"
   },
   "team": {
     "meta": {
@@ -260,6 +282,7 @@
       "title": "Work With Us - Join Our Team",
       "description": "Join NRRO Barcelona: job opportunities in tax, legal advisory, and M&A. Develop your career with family business experts. Send your application."
     },
+    "breadcrumb": "Join the Team",
     "hero": {
       "badge": "Careers",
       "title": "Build Your Professional Future With Us",
@@ -393,6 +416,7 @@
       "description": "Specialized advisory on Beckham Law: reduce your income tax to 24% for 6 years when moving to Spain. Experts in expat taxation in Barcelona.",
       "keywords": "beckham law, special tax regime expats, 24% income tax, spain taxation, moving to spain, expat taxes barcelona"
     },
+    "breadcrumb": "Beckham Law",
     "hero": {
       "badge": "Beckham Law",
       "title": "Optimize your taxes when moving to Spain",

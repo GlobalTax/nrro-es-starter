@@ -31,7 +31,7 @@ const staticRoutes: RouteConfig[] = [
   { es: '/casos-exito', ca: '/ca/casos-exit', en: '/en/case-studies', priority: '0.9', changefreq: 'weekly' },
   { es: '/blog', ca: '/ca/blog', en: '/en/blog', priority: '0.9', changefreq: 'daily' },
   { es: '/contacto', ca: '/ca/contacte', en: '/en/contact', priority: '0.8', changefreq: 'monthly' },
-  { es: '/talento', ca: '/ca/talent', en: '/en/careers', priority: '0.7', changefreq: 'weekly' },
+  { es: '/carreras', ca: '/ca/carreres', en: '/en/careers', priority: '0.7', changefreq: 'weekly' },
   { es: '/metodologia', ca: '/ca/metodologia', en: '/en/methodology', priority: '0.7', changefreq: 'monthly' },
   { es: '/ley-beckham', ca: '/ca/llei-beckham', en: '/en/beckham-law', priority: '0.8', changefreq: 'monthly' },
   { es: '/orquest-kairoshr', ca: '/ca/orquest-kairoshr', en: '/en/orquest-kairoshr', priority: '0.8', changefreq: 'monthly' },
@@ -201,7 +201,7 @@ async function generateSitemap() {
   console.log('📝 Procesando blog posts...');
   const { data: blogPosts, error: blogError } = await supabase
     .from('blog_posts')
-    .select('slug_es, slug_en, published_at, updated_at')
+    .select('slug_es, slug_ca, slug_en, published_at, updated_at')
     .eq('status', 'published');
   
   if (blogError) {
@@ -209,11 +209,12 @@ async function generateSitemap() {
   } else if (blogPosts) {
     blogPosts.forEach(post => {
       const lastmod = formatDate(post.updated_at || post.published_at);
+      const slugCa = post.slug_ca || post.slug_es;
       const slugEn = post.slug_en || post.slug_es;
       
       const alternates = [
         { lang: 'es', href: `${BASE_URL}/blog/${post.slug_es}` },
-        { lang: 'ca', href: `${BASE_URL}/ca/blog/${post.slug_es}` },
+        { lang: 'ca', href: `${BASE_URL}/ca/blog/${slugCa}` },
         { lang: 'en', href: `${BASE_URL}/en/blog/${slugEn}` }
       ];
       
@@ -226,7 +227,7 @@ async function generateSitemap() {
       });
       
       urls.push({
-        loc: `${BASE_URL}/ca/blog/${post.slug_es}`,
+        loc: `${BASE_URL}/ca/blog/${slugCa}`,
         lastmod,
         changefreq: 'weekly',
         priority: '0.8',

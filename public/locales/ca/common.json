@@ -6,7 +6,8 @@
     "team": "Equip",
     "careers": "Carreres",
     "contact": "Contacte",
-    "areas": "Àrees"
+    "areas": "Àrees",
+    "caseStudies": "Casos d'Èxit"
   },
   "breadcrumb": {
     "home": "Inici"
@@ -231,7 +232,28 @@
     "empty": "No s'han trobat articles",
     "relatedPosts": {
       "title": "Articles relacionats"
-    }
+    },
+    "backToBlog": "Tornar al Blog",
+    "notFound": "Article no trobat",
+    "previewNotAvailable": "Vista prèvia no disponible",
+    "previewExpired": "Aquesta vista prèvia ha caducat o no és vàlida",
+    "tags": "Etiquetes"
+  },
+  "caseStudies": {
+    "challenge": "El Desafiament",
+    "solution": "La Nostra Solució",
+    "results": "Resultats Clau",
+    "testimonial": "Testimoni del Client",
+    "testimonialSubtitle": "Què diuen sobre nosaltres",
+    "timeline": "Cronologia del Projecte",
+    "relatedServices": "Serveis Relacionats",
+    "otherCases": "Altres Casos d'Èxit",
+    "similarProject": "Tens un Projecte Similar?",
+    "contactSubtitle": "Contacta amb nosaltres i descobreix com podem ajudar-te",
+    "contactUs": "Contactar",
+    "viewServices": "Veure Serveis",
+    "backToCases": "Tornar a Casos d'Èxit",
+    "notFound": "Cas d'estudi no trobat"
   },
   "team": {
     "meta": {
@@ -260,6 +282,7 @@
       "title": "Treballa amb Nosaltres - Uneix-te al Nostre Equip",
       "description": "Uneix-te a NRRO Barcelona: oportunitats laborals en assessoria fiscal, legal i M&A. Desenvolupa la teva carrera amb experts en empreses familiars. Envia la teva candidatura."
     },
+    "breadcrumb": "Uneix-te a l'Equip",
     "hero": {
       "badge": "Carreres",
       "title": "Construeix el teu Futur Professional amb Nosaltres",
@@ -393,6 +416,7 @@
       "description": "Assessoria especialitzada en la Llei Beckham: redueix el teu IRPF al 24% durant 6 anys en traslladar-te a Espanya. Experts en fiscalitat per a impatriats a Barcelona.",
       "keywords": "llei beckham, règim fiscal especial impatriats, IRPF 24%, fiscalitat espanya, trasllat a espanya, impostos impatriats barcelona"
     },
+    "breadcrumb": "Llei Beckham",
     "hero": {
       "badge": "Llei Beckham",
       "title": "Optimitza la teva fiscalitat en traslladar-te a Espanya",

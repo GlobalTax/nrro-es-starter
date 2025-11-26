@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAlternateUrls } from "@/hooks/useAlternateUrls";
+import { BASE_DOMAIN } from "@/lib/seoUtils";
 
 interface MetaProps {
   title: string;
@@ -7,17 +9,24 @@ interface MetaProps {
   keywords?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  // Optional slugs for dynamic pages (services, blog, case studies)
+  slugs?: {
+    es?: string;
+    ca?: string;
+    en?: string;
+  };
 }
 
 export const Meta = ({
   title,
   description,
   keywords,
-  ogImage = "https://nrro.es/og-image.png",
+  ogImage = `${BASE_DOMAIN}/og-image.png`,
   canonicalUrl,
+  slugs,
 }: MetaProps) => {
-  const baseUrl = "https://nrro.es";
   const { language } = useLanguage();
+  const alternateUrls = useAlternateUrls(slugs);
   
   useEffect(() => {
     // Update html lang attribute
@@ -58,12 +67,12 @@ export const Meta = ({
       element.setAttribute("content", content);
     });
 
-    // Add hreflang tags for SEO
+    // Add hreflang tags for SEO with proper alternate URLs
     const hreflangTags = [
-      { lang: "es", href: `${baseUrl}${window.location.pathname}` },
-      { lang: "ca", href: `${baseUrl}/ca${window.location.pathname}` },
-      { lang: "en", href: `${baseUrl}/en${window.location.pathname}` },
-      { lang: "x-default", href: `${baseUrl}${window.location.pathname}` },
+      { lang: "es", href: alternateUrls.es },
+      { lang: "ca", href: alternateUrls.ca },
+      { lang: "en", href: alternateUrls.en },
+      { lang: "x-default", href: alternateUrls.es },
     ];
 
     // Remove existing hreflang tags
@@ -80,8 +89,8 @@ export const Meta = ({
 
     // Update canonical
     const fullCanonicalUrl = canonicalUrl 
-      ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}`)
-      : `${baseUrl}${window.location.pathname}`;
+      ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${BASE_DOMAIN}${canonicalUrl}`)
+      : alternateUrls[language as 'es' | 'ca' | 'en'];
       
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonical) {

@@ -32,7 +32,7 @@ const BlogDetail = () => {
   const navigate = useNavigate();
   const { trackPageView } = useAnalytics();
   useScrollDepth();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const { getBlogPath, getLocalizedPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get("preview");
@@ -169,14 +169,14 @@ const BlogDetail = () => {
     return (
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-4">Vista previa no disponible</h1>
+          <h1 className="text-2xl font-bold mb-4">{t('blog.previewNotAvailable')}</h1>
           <p className="text-muted-foreground mb-8">
-            Esta vista previa ha expirado o no es válida
+            {t('blog.previewExpired')}
           </p>
           <Button asChild>
             <Link to="/blog">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al Blog
+              {t('blog.backToBlog')}
             </Link>
           </Button>
         </div>
@@ -188,11 +188,11 @@ const BlogDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Artículo no encontrado</h1>
+          <h1 className="text-2xl font-bold mb-4">{t('blog.notFound')}</h1>
           <Button asChild>
             <Link to="/blog">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al Blog
+              {t('blog.backToBlog')}
             </Link>
           </Button>
         </div>
@@ -220,6 +220,11 @@ const BlogDetail = () => {
         description={post.seo_description || post.excerpt || ""}
         ogImage={ogImageUrl}
         canonicalUrl={`${window.location.origin}/blog/${post.slug}`}
+        slugs={{
+          es: post.slug_es,
+          ca: post.slug_ca || post.slug_es,
+          en: post.slug_en || post.slug_es,
+        }}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <ArticleSchema
@@ -227,12 +232,12 @@ const BlogDetail = () => {
         description={post.excerpt || post.seo_description || ""}
         author={{
           name: post.author_name || "Navarro Tax Legal",
-          url: "https://navarrotax.legal/equipo"
+          url: `${window.location.origin}/equipo`
         }}
         publishedDate={post.published_at || post.created_at}
         modifiedDate={post.updated_at}
         imageUrl={post.featured_image || ogImageUrl}
-        articleUrl={`https://navarrotax.legal/blog/${post.slug}`}
+        articleUrl={`${window.location.origin}/blog/${post.slug}`}
         category={post.category}
         tags={post.tags}
       />
@@ -244,13 +249,13 @@ const BlogDetail = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">Inicio</Link>
+                  <Link to="/">{t('breadcrumb.home')}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/blog">Blog</Link>
+                  <Link to="/blog">{t('nav.blog')}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -267,7 +272,7 @@ const BlogDetail = () => {
           <Button variant="ghost" asChild className="mb-8">
             <Link to="/blog">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al Blog
+              {t('blog.backToBlog')}
             </Link>
           </Button>
 
@@ -336,7 +341,7 @@ const BlogDetail = () => {
 
             {post.tags && post.tags.length > 0 && (
               <div className="mt-12 pt-8 border-t">
-                <h3 className="text-sm font-semibold mb-4">Tags</h3>
+                <h3 className="text-sm font-semibold mb-4">{t('blog.tags')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag: string) => (
                     <span

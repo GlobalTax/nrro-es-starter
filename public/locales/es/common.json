@@ -6,7 +6,8 @@
     "team": "Equipo",
     "careers": "Carreras",
     "contact": "Contacto",
-    "areas": "Áreas"
+    "areas": "Áreas",
+    "caseStudies": "Casos de Éxito"
   },
   "breadcrumb": {
     "home": "Inicio"
@@ -231,7 +232,28 @@
     "empty": "No se encontraron artículos",
     "relatedPosts": {
       "title": "Artículos relacionados"
-    }
+    },
+    "backToBlog": "Volver al Blog",
+    "notFound": "Artículo no encontrado",
+    "previewNotAvailable": "Vista previa no disponible",
+    "previewExpired": "Esta vista previa ha expirado o no es válida",
+    "tags": "Tags"
+  },
+  "caseStudies": {
+    "challenge": "El Desafío",
+    "solution": "Nuestra Solución",
+    "results": "Resultados Clave",
+    "testimonial": "Testimonio del Cliente",
+    "testimonialSubtitle": "Lo que dicen sobre nosotros",
+    "timeline": "Cronología del Proyecto",
+    "relatedServices": "Servicios Relacionados",
+    "otherCases": "Otros Casos de Éxito",
+    "similarProject": "¿Tienes un Proyecto Similar?",
+    "contactSubtitle": "Contacta con nosotros y descubre cómo podemos ayudarte",
+    "contactUs": "Contactar",
+    "viewServices": "Ver Servicios",
+    "backToCases": "Volver a Casos de Éxito",
+    "notFound": "Caso de estudio no encontrado"
   },
   "team": {
     "meta": {
@@ -260,6 +282,7 @@
       "title": "Trabaja con Nosotros - Únete a Nuestro Equipo",
       "description": "Únete a NRRO Barcelona: oportunidades laborales en asesoría fiscal, legal y M&A. Desarrolla tu carrera con expertos en empresas familiares. Envía tu candidatura."
     },
+    "breadcrumb": "Únete al Equipo",
     "hero": {
       "badge": "Carreras",
       "title": "Construye tu Futuro Profesional con Nosotros",
@@ -393,6 +416,7 @@
       "description": "Asesoría especializada en la Ley Beckham: reduce tu IRPF al 24% durante 6 años al trasladarte a España. Expertos en fiscalidad para impatriados en Barcelona.",
       "keywords": "ley beckham, régimen fiscal especial impatriados, IRPF 24%, fiscalidad españa, traslado a españa, impuestos impatriados barcelona"
     },
+    "breadcrumb": "Ley Beckham",
     "hero": {
       "badge": "Ley Beckham",
       "title": "Optimiza tu fiscalidad al trasladarte a España",
