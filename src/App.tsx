@@ -59,25 +59,26 @@ import SitemapXML from "./pages/SitemapXML";
 
 const queryClient = new QueryClient();
 
+// Componente para manejar redirecciones de idioma - debe estar fuera de App
+const LanguageRedirect = () => {
+  const location = useLocation();
+  const { setLanguage } = useLanguage();
+
+  useEffect(() => {
+    // Detectar el idioma de la URL actual y sincronizar
+    if (location.pathname.startsWith('/ca/')) {
+      setLanguage('ca');
+    } else if (location.pathname.startsWith('/en/')) {
+      setLanguage('en');
+    } else {
+      setLanguage('es');
+    }
+  }, [location.pathname, setLanguage]);
+
+  return null;
+};
+
 const App = () => {
-  // Componente interno para manejar redirecciones de idioma
-  const LanguageRedirect = () => {
-    const location = useLocation();
-    const { setLanguage } = useLanguage();
-
-    useEffect(() => {
-      // Detectar el idioma de la URL actual y sincronizar
-      if (location.pathname.startsWith('/ca/')) {
-        setLanguage('ca');
-      } else if (location.pathname.startsWith('/en/')) {
-        setLanguage('en');
-      } else {
-        setLanguage('es');
-      }
-    }, [location.pathname, setLanguage]);
-
-    return null;
-  };
 
   return (
   <QueryClientProvider client={queryClient}>
