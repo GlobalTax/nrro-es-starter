@@ -12,6 +12,7 @@ const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name too long"),
   email: z.string().trim().email("Invalid email address").max(255, "Email too long"),
   company: z.string().trim().max(100, "Company name too long").optional().default(""),
+  phone: z.string().trim().max(20, "Phone number too long").optional().default(""),
   subject: z.string().trim().min(1, "Subject is required").max(100, "Subject too long"),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(5000, "Message too long"),
 });
@@ -104,6 +105,7 @@ async function sendNotificationEmail(
                   <p><strong>Nombre:</strong> ${contactData.name}</p>
                   <p><strong>Email:</strong> <a href="mailto:${contactData.email}">${contactData.email}</a></p>
                   ${contactData.company ? `<p><strong>Empresa:</strong> ${contactData.company}</p>` : ''}
+                  ${contactData.phone ? `<p><strong>Teléfono:</strong> ${contactData.phone}</p>` : ''}
                   <p><strong>Asunto:</strong> ${contactData.subject}</p>
                   <p><strong>Tipo de servicio:</strong> ${contactData.service_type}</p>
                 </div>
@@ -178,7 +180,7 @@ serve(async (req: Request) => {
       );
     }
 
-    const { name, email, company, subject, message } = validation.data;
+    const { name, email, company, phone, subject, message } = validation.data;
 
     // Extract IP address and user agent
     const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
@@ -340,6 +342,7 @@ serve(async (req: Request) => {
           name,
           email,
           company,
+          phone,
           subject,
           message,
           service_type: serviceType,

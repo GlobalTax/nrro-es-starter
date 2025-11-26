@@ -128,24 +128,24 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
         .from("cvs")
         .getPublicUrl(filePath);
 
-      // Insert candidate into database
-      const { error: insertError } = await supabase.from("candidatos").insert({
-        nombre: data.nombre,
-        email: data.email,
-        telefono: data.telefono || null,
-        linkedin_url: data.linkedin_url || null,
-        puesto_solicitado: data.puesto_solicitado,
-        departamento: data.departamento || null,
-        notas: data.notas,
-        cv_url: publicUrl,
-        estado: "nuevo",
-        fuente: "web",
-        job_position_id: jobPositionId || null,
+      // Submit application via edge function
+      const { error: submitError } = await supabase.functions.invoke('submit-career-application', {
+        body: {
+          nombre: data.nombre,
+          email: data.email,
+          telefono: data.telefono || undefined,
+          linkedin_url: data.linkedin_url || undefined,
+          puesto_solicitado: data.puesto_solicitado,
+          departamento: data.departamento || undefined,
+          notas: data.notas,
+          cv_url: publicUrl,
+          job_position_id: jobPositionId || undefined,
+        },
       });
 
-      if (insertError) {
-        console.error("Insert error:", insertError);
-        throw new Error("Error al guardar tu candidatura");
+      if (submitError) {
+        console.error("Submit error:", submitError);
+        throw new Error(submitError.message || "Error al enviar tu candidatura");
       }
 
       // Track form submission
@@ -157,7 +157,7 @@ export const CareerApplicationForm = ({ prefilledPosition, jobPositionId }: Care
       });
 
       toast.success("¡Candidatura enviada con éxito!", {
-        description: "Revisaremos tu perfil y te contactaremos pronto.",
+        description: "Hemos recibido tu CV y te contactaremos pronto. Revisa tu email para más información.",
       });
 
       // Reset form

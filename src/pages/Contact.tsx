@@ -43,7 +43,8 @@ export default function Contact() {
         body: {
           name: formData.name,
           email: formData.email,
-          company: formData.phone, // Using phone field as company for compatibility
+          company: '', // Company field - can be added to form if needed
+          phone: formData.phone,
           subject: formData.subject,
           message: formData.message,
         },

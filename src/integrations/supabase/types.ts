@@ -748,6 +748,7 @@ export type Database = {
           ip_address: string | null
           message: string
           name: string
+          phone: string | null
           responded_at: string | null
           responded_by: string | null
           response_notes: string | null
@@ -765,6 +766,7 @@ export type Database = {
           ip_address?: string | null
           message: string
           name: string
+          phone?: string | null
           responded_at?: string | null
           responded_by?: string | null
           response_notes?: string | null
@@ -782,6 +784,7 @@ export type Database = {
           ip_address?: string | null
           message?: string
           name?: string
+          phone?: string | null
           responded_at?: string | null
           responded_by?: string | null
           response_notes?: string | null

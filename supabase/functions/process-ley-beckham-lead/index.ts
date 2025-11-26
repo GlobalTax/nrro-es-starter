@@ -313,6 +313,102 @@ const handler = async (req: Request): Promise<Response> => {
 
     const contactData: LeyBeckhamContactData = await req.json();
 
+    // Extract IP address and user agent
+    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+    const userAgent = req.headers.get('user-agent') || 'unknown';
+
+    console.log('[LEY_BECKHAM] Processing lead:', { email: contactData.email });
+
+    // Check rate limiting by email (5 requests per hour, fail-closed)
+    const { data: emailRateLimitOk, error: emailRateLimitError } = await supabaseClient.rpc(
+      'check_rate_limit_enhanced_safe',
+      {
+        p_identifier: contactData.email,
+        p_category: 'ley_beckham_lead',
+        p_max_requests: 5,
+        p_window_minutes: 60,
+      }
+    );
+
+    if (emailRateLimitError || emailRateLimitOk === false) {
+      console.warn('[LEY_BECKHAM] Rate limit exceeded:', { email: contactData.email });
+      
+      await supabaseClient.from('security_events').insert({
+        event_type: 'RATE_LIMIT_EXCEEDED',
+        severity: 'high',
+        table_name: 'ley_beckham_leads',
+        operation: 'INSERT',
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        details: {
+          email: contactData.email,
+          category: 'ley_beckham_lead',
+          timestamp: new Date().toISOString(),
+        },
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: 3600 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Retry-After': '3600',
+          } 
+        }
+      );
+    }
+
+    // Check rate limiting by IP (10 requests per hour, fail-closed)
+    const { data: ipRateLimitOk, error: ipRateLimitError } = await supabaseClient.rpc(
+      'check_rate_limit_enhanced_safe',
+      {
+        p_identifier: ipAddress,
+        p_category: 'ley_beckham_lead_ip',
+        p_max_requests: 10,
+        p_window_minutes: 60,
+      }
+    );
+
+    if (ipRateLimitError || ipRateLimitOk === false) {
+      console.warn('[LEY_BECKHAM] IP rate limit exceeded:', { ip: ipAddress });
+      
+      await supabaseClient.from('security_events').insert({
+        event_type: 'RATE_LIMIT_EXCEEDED',
+        severity: 'high',
+        table_name: 'ley_beckham_leads',
+        operation: 'INSERT',
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        details: {
+          ip: ipAddress,
+          category: 'ley_beckham_lead_ip',
+          timestamp: new Date().toISOString(),
+        },
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: 3600 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Retry-After': '3600',
+          } 
+        }
+      );
+    }
+
     // Calculate eligibility score and priority
     const eligibilityScore = calculateEligibilityScore(contactData);
     const priority = calculatePriority(contactData.estimatedMoveDate);
