@@ -116,8 +116,22 @@ export default function Terms() {
                   <ul className="list-none space-y-1 text-sm">
                     <li><strong className="text-foreground">CIF:</strong> B02721918</li>
                     <li><strong className="text-foreground">Forma jurídica:</strong> Sociedad Limitada</li>
-                    <li><strong className="text-foreground">Actividad:</strong> Originación e intermediación de operaciones</li>
+                    <li><strong className="text-foreground">Actividad:</strong> Originación e intermediación de operaciones de M&A (fusiones y adquisiciones)</li>
                   </ul>
+                  <div className="mt-3 p-3 bg-muted/20 rounded text-sm">
+                    <p className="mb-2">
+                      <strong>Modelo de servicio:</strong> Capittal actúa como intermediario independiente, 
+                      poniendo en contacto a compradores y vendedores de empresas.
+                    </p>
+                    <p className="mb-2">
+                      Los honorarios se pactan mediante un <strong>mandato de compra o mandato de venta</strong>, 
+                      formalizado previamente con cada cliente.
+                    </p>
+                    <p>
+                      <strong>Libertad del cliente:</strong> El cliente conserva plena libertad para aceptar o 
+                      rechazar cualquier propuesta presentada, sin obligación de cerrar ninguna operación.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Empresa 3: Navarro Empresarial */}
@@ -240,6 +254,68 @@ export default function Terms() {
               </div>
             </div>
 
+            {/* Section 2.1: Servicios de Intermediación M&A (Capittal) */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-display font-normal text-foreground">
+                2.1. Servicios de Intermediación M&A (Capittal)
+              </h2>
+              <div className="space-y-3 text-foreground">
+                <p>
+                  <strong>Capittal Transacciones S.L.</strong> presta servicios especializados de intermediación en operaciones de fusiones y adquisiciones (M&A), actuando como nexo entre compradores y vendedores de empresas.
+                </p>
+
+                {/* Mandato de Venta */}
+                <div className="border-l-4 border-accent pl-4 mb-4">
+                  <h4 className="font-semibold text-foreground mb-2">Mandato de Venta</h4>
+                  <p className="text-sm">
+                    Para empresarios que desean vender su empresa o participaciones societarias. 
+                    Capittal se encarga de buscar compradores potenciales, presentar la empresa al mercado de forma confidencial, 
+                    y gestionar el proceso hasta el cierre de la operación.
+                  </p>
+                </div>
+
+                {/* Mandato de Compra */}
+                <div className="border-l-4 border-blue-500 pl-4 mb-4">
+                  <h4 className="font-semibold text-foreground mb-2">Mandato de Compra</h4>
+                  <p className="text-sm">
+                    Para inversores o grupos empresariales que buscan adquirir empresas en sectores específicos. 
+                    Capittal identifica oportunidades de inversión, analiza su viabilidad y facilita la negociación con los vendedores.
+                  </p>
+                </div>
+
+                {/* Características del servicio */}
+                <div className="bg-muted/30 p-4 rounded-lg border border-border/50 mt-4">
+                  <h4 className="font-semibold text-foreground mb-3">Características del servicio</h4>
+                  <ul className="list-disc list-inside space-y-2 text-sm">
+                    <li>
+                      <strong>Honorarios por éxito (success fee):</strong> Salvo pacto en contrario, los honorarios se devengan únicamente si la operación se cierra exitosamente. 
+                      El porcentaje y condiciones se especifican en el mandato firmado con cada cliente.
+                    </li>
+                    <li>
+                      <strong>Independencia del cliente:</strong> El cliente mantiene total libertad para aceptar o rechazar cualquier propuesta, 
+                      sin obligación de cerrar ninguna operación presentada por Capittal.
+                    </li>
+                    <li>
+                      <strong>Confidencialidad:</strong> Todo el proceso se gestiona bajo estricta confidencialidad, 
+                      con acuerdos de no divulgación (NDA) firmados con todas las partes interesadas.
+                    </li>
+                    <li>
+                      <strong>Asesoramiento integral:</strong> Capittal coordina con asesores legales, fiscales y financieros 
+                      para facilitar el cierre exitoso de la operación.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mt-4">
+                  <p className="text-sm text-foreground">
+                    <strong>Nota importante:</strong> Los mandatos de intermediación M&A son contratos independientes y específicos 
+                    para cada operación. Las condiciones particulares de honorarios, exclusividad, duración y otros términos 
+                    se negocian y formalizan en el mandato correspondiente.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Section 3: Honorarios y Facturación */}
             <div className="space-y-4">
               <h2 className="text-2xl font-display font-normal text-foreground">
@@ -266,6 +342,15 @@ export default function Terms() {
                   <li className="flex gap-3">
                     <span className="text-accent font-bold">3.5</span>
                     <span>Los gastos y suplidos (notariales, registrales, procuradores, tasas administrativas, mensajería, etc.) serán asumidos por el cliente, pudiendo requerirse provisión de fondos para su gestión.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-accent font-bold">3.6</span>
+                    <span>
+                      En los servicios de intermediación M&A prestados por <strong>Capittal Transacciones S.L.</strong>, 
+                      los honorarios se pactan específicamente en el mandato de compra o venta correspondiente. 
+                      Salvo pacto en contrario, dichos honorarios se devengarán exclusivamente en caso de cierre exitoso 
+                      de la operación (<strong>success fee</strong>), según los términos y condiciones establecidos en el mandato.
+                    </span>
                   </li>
                 </ul>
 
