@@ -421,6 +421,488 @@
       "description": "Envia'ns la teva candidatura i ens posarem en contacte amb tu"
     }
   },
+  "shared": {
+    "trustBar": {
+      "heading": "Més de 500 empreses confien en nosaltres des de 1998",
+      "subtitle": "🏛️ Navarro Tax Legal • Il·lustre Col·legi d'Advocats de Barcelona • Registre d'Assessors Fiscals"
+    },
+    "whyChooseUs": {
+      "title": "Per què Navarro Tax Legal?",
+      "subtitle": "No només advocats. Els teus socis de confiança a Espanya.",
+      "experience": {
+        "stat": "1998",
+        "title": "25+ Anys d'Experiència",
+        "desc": "Especialitzats en dret corporatiu internacional des de 1998"
+      },
+      "professionals": {
+        "stat": "70+",
+        "title": "70+ Professionals",
+        "desc": "Equip multidisciplinari: advocats, assessors fiscals, comptables"
+      },
+      "international": {
+        "stat": "40%",
+        "title": "Clients Internacionals",
+        "desc": "El 40% dels nostres clients són empreses estrangeres"
+      },
+      "success": {
+        "stat": "99%",
+        "title": "500+ Empreses Constituïdes",
+        "desc": "99% d'èxit en registres empresarials"
+      },
+      "certifications": {
+        "title": "Certificat per:",
+        "barAssociation": "🏛️ Il·lustre Col·legi d'Advocats de Barcelona",
+        "taxRegistry": "📋 Registre d'Assessors Fiscals",
+        "network": "🌍 Xarxa Legal Internacional"
+      }
+    },
+    "form": {
+      "fullName": "Nom complet *",
+      "fullNamePlaceholder": "Joan Garcia",
+      "email": "Email *",
+      "emailPlaceholder": "joan@example.com",
+      "phone": "Telèfon",
+      "phonePlaceholder": "+34 600 000 000",
+      "companyName": "Nom de l'empresa",
+      "companyNamePlaceholder": "Acme Inc",
+      "country": "País d'origen *",
+      "countryPlaceholder": "Selecciona el teu país",
+      "timeline": "Termini",
+      "timelinePlaceholder": "Quan ho necessites?",
+      "timelineOptions": {
+        "immediate": "Immediat (ASAP)",
+        "1month": "En 1 mes",
+        "3months": "En 3 mesos",
+        "6months": "En 6 mesos",
+        "exploring": "Només estic explorant"
+      },
+      "companyStage": "Etapa de l'Empresa",
+      "companyStagePlaceholder": "La teva situació actual",
+      "companyStageOptions": {
+        "idea": "Només una idea",
+        "registeredAbroad": "Registrada a l'estranger",
+        "readyToRegister": "A punt per registrar",
+        "relocating": "Traslladant empresa existent"
+      },
+      "message": "Informació Addicional",
+      "messagePlaceholder": "Explica'ns sobre el teu projecte...",
+      "submit": "Enviar",
+      "submitting": "Enviant...",
+      "privacy": "En enviar, acceptes la nostra política de privacitat. Mai compartim les teves dades.",
+      "providedBy": "Servei proporcionat per:",
+      "certifications": "Il·lustre Col·legi d'Advocats de Barcelona • Registre d'Assessors Fiscals",
+      "herenciasButton": "Sol·licitar consulta gratuïta",
+      "success": {
+        "title": "Èxit!",
+        "description": "Gràcies pel teu interès. Ens posarem en contacte aviat."
+      },
+      "error": {
+        "title": "Error",
+        "description": "Alguna cosa ha anat malament. Si us plau, torna-ho a provar."
+      },
+      "validation": {
+        "nameMin": "El nom ha de tenir almenys 2 caràcters",
+        "emailInvalid": "Adreça d'email invàlida",
+        "countryRequired": "Si us plau, selecciona el teu país"
+      }
+    }
+  },
+  "landings": {
+    "calculator": {
+      "meta": {
+        "title": "Calculadora de Costos de Constitució d'Empresa a Espanya | Estimació Gratuïta",
+        "description": "Calcula els costos exactes per obrir la teva empresa a Espanya. Tarifes legals, càrrecs governamentals i serveis professionals. Obté una estimació instantània + guia gratuïta."
+      },
+      "hero": {
+        "badge": "Estimador de Costos Gratuït",
+        "title": "Quant Costa Obrir una Empresa a Espanya?",
+        "subtitle": "Obté el teu pressupost personalitzat en 2 minuts. Sense tarifes ocultes, sense sorpreses."
+      },
+      "calculator": {
+        "title": "Calculadora de Constitució d'Empresa",
+        "step": "Pas {{current}} de {{total}}",
+        "selectStructure": "Selecciona l'Estructura Legal",
+        "structures": {
+          "sl": {
+            "name": "Sociedad Limitada (SL)",
+            "desc": "La més comuna per a PIMES",
+            "capital": "€3,000"
+          },
+          "sa": {
+            "name": "Sociedad Anónima (SA)",
+            "desc": "Per a grans empreses",
+            "capital": "€60,000"
+          },
+          "autonomo": {
+            "name": "Autònom",
+            "desc": "Treballador per compte propi",
+            "capital": "Cap"
+          },
+          "sucursal": {
+            "name": "Sucursal",
+            "desc": "Sucursal d'empresa estrangera",
+            "capital": "Cap"
+          }
+        },
+        "capitalInvestment": "Inversió de Capital",
+        "capitalPlaceholder": "Selecciona el capital inicial",
+        "capitalOptions": {
+          "3000": "€3,000 (Mínim per SL)",
+          "10000": "€10,000",
+          "25000": "€25,000",
+          "60000": "€60,000 (Necessari per SA)",
+          "100000": "€100,000+"
+        },
+        "additionalServices": "Serveis Addicionals Necessaris",
+        "services": {
+          "nie": {
+            "label": "NIE (ID Fiscal) per fundadors",
+            "price": "+€350"
+          },
+          "tax": {
+            "label": "Registre fiscal",
+            "price": "+€150"
+          },
+          "bookkeeping": {
+            "label": "Comptabilitat primer any",
+            "price": "+€200/mes"
+          },
+          "office": {
+            "label": "Adreça d'oficina virtual",
+            "price": "+€500/any"
+          }
+        },
+        "timeline": "Quan ho necessites?",
+        "timelinePlaceholder": "Selecciona el teu termini",
+        "nextStep": "Següent Pas",
+        "back": "Enrere",
+        "calculate": "Calcular Cost"
+      },
+      "results": {
+        "title": "El Teu Cost Estimat",
+        "complete": "Constitució completa incloent totes les tarifes professionals",
+        "breakdown": {
+          "government": "Tarifes governamentals i notarials",
+          "professional": "Serveis professionals",
+          "included": "Inclòs"
+        },
+        "downloadReport": {
+          "title": "Obté el Teu Desglossament Complet de Costos",
+          "subtitle": "Descarrega informe PDF detallat + Llista de verificació de constitució",
+          "button": "Descarregar Informe Complet"
+        },
+        "startOver": "Començar de Nou"
+      }
+    },
+    "express": {
+      "meta": {
+        "title": "Registre Ràpid d'Empresa a Espanya | Garantia de 30 Dies",
+        "description": "Servei de constitució express. Registrada en 30 dies o reemborsament del 50%. Sense retards, sense complicacions. Places limitades disponibles."
+      },
+      "hero": {
+        "badge": "SERVEI EXPRESS",
+        "title": "Registra la Teva Empresa Espanyola en 30 Dies. Garantit.",
+        "subtitle": "Registre accelerat. Sense retards. Garantia de devolució de diners.",
+        "timer": {
+          "label": "El Següent Lot Express Comença:",
+          "days": "Dies",
+          "hours": "Hores",
+          "minutes": "Minuts",
+          "warning": "⚠️ Només queden 5 places aquest mes"
+        }
+      },
+      "comparison": {
+        "title": "Fer-ho Tu Mateix vs. Servei Express",
+        "diy": {
+          "title": "Fer-ho Tu Mateix",
+          "duration": "60-90 Dies",
+          "steps": {
+            "week12": "Setmanes 1-2",
+            "week34": "Setmanes 3-4",
+            "week56": "Setmanes 5-6",
+            "week78": "Setmanes 7-8",
+            "week912": "Setmanes 9-12"
+          },
+          "issues": {
+            "nie": "Sol·licitud NIE - Esperar cita",
+            "name": "Nom de l'empresa - Rebuig probable",
+            "bank": "Compte bancari - Complicat per estrangers",
+            "notary": "Escriptura notarial - Problemes de traducció",
+            "tax": "Registre fiscal - Formularis complexos"
+          }
+        },
+        "express": {
+          "title": "Servei Express",
+          "duration": "30 Dies",
+          "week1": {
+            "title": "Setmana 1",
+            "tasks": ["NIE", "Registre de nom", "Estructura empresarial"]
+          },
+          "week2": {
+            "title": "Setmana 2",
+            "tasks": ["Compte bancari", "Depòsit de capital"]
+          },
+          "week3": {
+            "title": "Setmana 3",
+            "tasks": ["Escriptura pública", "Signatura notarial"]
+          },
+          "week4": {
+            "title": "Setmana 4",
+            "tasks": ["Registre fiscal", "Seguretat Social"]
+          }
+        }
+      },
+      "advantages": {
+        "title": "Què Ens Fa Ràpids?",
+        "relationships": {
+          "title": "Relacions Pre-existents",
+          "desc": "Contactes directes amb notaris, bancs i registre mercantil"
+        },
+        "manager": {
+          "title": "Gestor Express Dedicat",
+          "desc": "El teu gestor personal disponible 24/7 via WhatsApp"
+        },
+        "digital": {
+          "title": "Procés Digital-First",
+          "desc": "No cal viatjar a Espanya. Signa documents online de forma segura."
+        },
+        "priority": {
+          "title": "Tractament Prioritari",
+          "desc": "El teu cas rep atenció immediata en cada pas"
+        }
+      },
+      "guarantee": {
+        "title": "Garantia Express",
+        "subtitle": "Respaldem la nostra promesa",
+        "package": "Paquet Express",
+        "price": "€2,999",
+        "included": "Tot inclòs",
+        "features": [
+          "Registre complet d'empresa",
+          "NIE per 2 fundadors",
+          "Configuració de compte bancari",
+          "Registre fiscal i seguretat social",
+          "Compliment del primer any",
+          "Gestor Express Dedicat",
+          "Suport WhatsApp 24/7"
+        ],
+        "moneyBack": {
+          "title": "Registre en 30 Dies o Reemborsament del 50%",
+          "desc": "Si no registrem la teva empresa en 30 dies, recuperes el 50%. Sense preguntes."
+        },
+        "superExpress": {
+          "title": "Super-Express Disponible",
+          "desc": "Ho necessites encara més ràpid? <strong>+€500</strong> per registre en 20 dies"
+        },
+        "button": "Reservar Servei Express Ara",
+        "confirmation": "Obté confirmació en 2 hores"
+      },
+      "testimonial": {
+        "quote": "Empresa registrada en 28 dies. Literalment impossible fer-ho més ràpid. Increïble.",
+        "author": "Laura Schmidt",
+        "role": "Directora General (Alemanya)"
+      }
+    },
+    "nie": {
+      "meta": {
+        "title": "Obté el Teu NIE Espanyol en 7 Dies | Servei Express",
+        "description": "Evita les cues i la burocràcia. Servei NIE express per estrangers. 99% d'èxit. Garantia de devolució de diners. Reserva ara."
+      },
+      "hero": {
+        "badge": "🚨 ATURA LA FRUSTRACIÓ DEL NIE",
+        "title": "Obté el Teu NIE Espanyol Sense el Malson Burocràtic",
+        "subtitle": "Servei express de 7 dies. Sense cues. Sense rebutjos. Garantit.",
+        "stats": [
+          "500+ NIEs processats",
+          "99% taxa d'èxit"
+        ]
+      },
+      "painPoints": {
+        "title": "Cansat del Malson del NIE?",
+        "subtitle": "Et sona familiar? Hi ha una manera millor.",
+        "points": [
+          "Cues de 3+ hores a l'oficina d'immigració",
+          "Cites a 2 mesos vista",
+          "Sol·licituds rebutjades (documents incorrectes)",
+          "Barreres idiomàtiques",
+          "Temps perdut = oportunitats de negoci perdudes"
+        ]
+      },
+      "process": {
+        "title": "El Nostre Procés NIE Express",
+        "subtitle": "De la sol·licitud al lliurament en només 7 dies",
+        "day1": {
+          "label": "Dia 1",
+          "action": "Revisió i preparació de documents",
+          "status": "Ho revisem tot"
+        },
+        "day23": {
+          "label": "Dies 2-3",
+          "action": "Cita assegurada",
+          "status": "Utilitzant els nostres contactes"
+        },
+        "day45": {
+          "label": "Dies 4-5",
+          "action": "Presentació de sol·licitud",
+          "status": "Anem per tu"
+        },
+        "day67": {
+          "label": "Dies 6-7",
+          "action": "NIE lliurat",
+          "status": "A la teva porta"
+        },
+        "youDo": "Tu fas:",
+        "youDoDesc": "Enviar-nos documents escanejats",
+        "weDo": "Nosaltres fem:",
+        "weDoDesc": "Tot la resta"
+      },
+      "pricing": {
+        "title": "Preus Transparents",
+        "subtitle": "Sense tarifes ocultes. Sense sorpreses.",
+        "package": "Servei NIE Express",
+        "price": "€350",
+        "label": "Servei complet",
+        "includes": [
+          "Revisió i preparació de documents",
+          "Cita assegurada en 48h",
+          "Presentació de sol·licitud",
+          "NIE lliurat a la teva porta"
+        ],
+        "guarantee": {
+          "title": "Garantia de Devolució de Diners",
+          "desc": "Si no aconseguim el teu NIE, reemborsament complet"
+        },
+        "button": "Assegurar el Meu Servei NIE"
+      },
+      "whoNeeds": {
+        "title": "Qui Necessita un NIE?",
+        "reasons": [
+          "Obrir una empresa a Espanya",
+          "Comprar propietat",
+          "Obrir un compte bancari",
+          "Contractar empleats",
+          "Signar contractes",
+          "Registrar-se per impostos"
+        ]
+      }
+    },
+    "techStartup": {
+      "meta": {
+        "title": "Llança la Teva Startup Tech a Espanya | Paquet de Constitució Complet",
+        "description": "Constitució tot en un per startups: Registre d'empresa, estratègia fiscal, suport de visat. Dissenyat per fundadors tech. Paquet de €3,500. 30 dies."
+      },
+      "hero": {
+        "badge": "PER FUNDADORS TECH",
+        "title": "Llança la Teva Startup Tech a Espanya",
+        "subtitle": "Constitució legal + Estratègia fiscal + Suport de visat. Dissenyat per fundadors.",
+        "partners": {
+          "techCity": "🤝 Soci de Barcelona Tech City",
+          "accio": "🚀 Certificat per ACCIÓ",
+          "mwc": "📱 Mobile World Capital"
+        }
+      },
+      "whySpain": {
+        "title": "Per Què Espanya per Startups Tech?",
+        "gateway": {
+          "title": "Porta al Mercat de la UE",
+          "desc": "500M consumidors, accés al mercat únic",
+          "stat": "500M"
+        },
+        "costs": {
+          "title": "40% Costos Més Baixos",
+          "desc": "Que Londres/Berlín/París",
+          "stat": "-40%"
+        },
+        "talent": {
+          "title": "Talent + Estil de Vida",
+          "desc": "Menor rotació d'empleats, equips feliços",
+          "stat": "95%"
+        },
+        "ecosystem": {
+          "title": "Ecosistema en Creixement",
+          "desc": "4,000+ startups només a Barcelona",
+          "stat": "4,000+"
+        }
+      },
+      "package": {
+        "title": "Paquet Complet de Constitució de Startup",
+        "subtitle": "Tot el que necessites per llançar-te correctament",
+        "price": "€3,500",
+        "duration": "Constitució completa en 30 dies",
+        "payment": "💳 50% per endavant • 💳 50% en el registre",
+        "includes": [
+          "Registre d'empresa SL",
+          "NIE per 2 fundadors",
+          "Estratègia d'optimització fiscal",
+          "Suport de sol·licitud de préstec ENISA",
+          "Estructura de cap table amigable per fundadors",
+          "Plantilla de pla d'opcions sobre accions",
+          "Compliment fiscal primer any",
+          "Intro a inversors i acceleradores"
+        ],
+        "ecosystem": {
+          "title": "Accés a l'Ecosistema Tech",
+          "subtitle": "No som només advocats, som part de l'ecosistema. Obté intros a:",
+          "spaces": ["22@ Barcelona", "Pier01", "IESE Angels", "Antai Venture Builder", "Barcelona Activa"]
+        },
+        "button": "Obtenir Pressupost de Startup"
+      },
+      "faqs": {
+        "title": "FAQs Específics de Tech",
+        "fundraising": {
+          "q": "Puc recaptar finançament abans de registrar-me?",
+          "a": "Sí! Pots signar term sheets i LOIs. Ajudem a estructurar el cap table correctament des del primer dia."
+        },
+        "stockOptions": {
+          "q": "Com funcionen les opcions sobre accions a Espanya?",
+          "a": "Configurem un ESOP (Pla d'Opcions sobre Accions per Empleats) adequat que és amigable per inversors i fiscalment eficient per als empleats."
+        },
+        "beckham": {
+          "q": "Què passa amb la Llei Beckham?",
+          "a": "Els fundadors estrangers poden pagar només el 24% d'impostos (vs 47%) durant els primers 6 anys. Gestionem la sol·licitud."
+        },
+        "remote": {
+          "q": "Pot el meu equip treballar de forma remota?",
+          "a": "Sí! Espanya ofereix visats de nòmada digital. Ajudem amb el paperassa per al teu equip internacional."
+        }
+      },
+      "caseStudy": {
+        "badge": "Història d'Èxit",
+        "title": "Del Regne Unit a Barcelona en 30 Dies",
+        "client": "Client: Startup SaaS, 3 fundadors del Regne Unit",
+        "problem": "Problema: Cap table complex amb compromisos d'inversors, necessitava estructura preparada per inversors",
+        "solution": "Solució: Constitució SL neta + SOPs + €500k ENISA assegurats",
+        "result": "Resultat: Sèrie A en 18 mesos, ara 25 empleats"
+      }
+    },
+    "herencias": {
+      "meta": {
+        "title": "Advocats d'Herències a Barcelona | Experts en Successions Catalunya",
+        "description": "Advocats especialitzats en herències a Barcelona. Tramitació completa d'herències segons el Codi Civil Català. Legítima catalana, impostos, conflictes. Consulta gratuïta."
+      },
+      "hero": {
+        "badge": "Experts en Dret Successori Català",
+        "title": "Advocats d'Herències a Barcelona. Experts en Successions a Catalunya.",
+        "subtitle": "Tramitem la teva herència de principi a fi: declaració d'hereus, repartiment, legítima catalana, impostos i conflictes familiars.",
+        "calculateButton": "Calcular la meva herència a Catalunya",
+        "contactButton": "Parlar amb un advocat ara"
+      },
+      "calculator": {
+        "title": "Calcula ara quant et correspon segons el Codi Civil Català",
+        "subtitle": "En menys de 3 minuts, estimació automàtica del repartiment entre hereus",
+        "comingSoon": "Calculadora interactiva disponible properament",
+        "requestButton": "Sol·licitar càlcul personalitzat ara"
+      },
+      "faq": {
+        "title": "Preguntes freqüents sobre herències a Catalunya"
+      },
+      "contact": {
+        "title": "Necessites assessorament sobre la teva herència?",
+        "subtitle": "Primera consulta gratuïta. Resol els teus dubtes sense compromís.",
+        "button": "Sol·licitar consulta gratuïta"
+      }
+    }
+  },
   "leyBeckham": {
     "seo": {
       "title": "Llei Beckham - Règim Fiscal Especial per a Impatriats a Espanya",

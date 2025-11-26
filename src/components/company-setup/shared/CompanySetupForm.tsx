@@ -16,6 +16,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -46,11 +47,12 @@ export const CompanySetupForm = ({
   conversionType,
   calculatorData,
   onSuccess,
-  submitButtonText = 'Submit',
+  submitButtonText,
   showAllFields = true,
 }: CompanySetupFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   const {
     register,
@@ -93,8 +95,8 @@ export const CompanySetupForm = ({
       if (error) throw error;
 
       toast({
-        title: 'Success!',
-        description: 'Thank you for your interest. We\'ll contact you soon.',
+        title: t('shared.form.success.title'),
+        description: t('shared.form.success.description'),
       });
 
       // Track conversion event
@@ -113,8 +115,8 @@ export const CompanySetupForm = ({
     } catch (error: any) {
       console.error('Error submitting lead:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Something went wrong. Please try again.',
+        title: t('shared.form.error.title'),
+        description: error.message || t('shared.form.error.description'),
         variant: 'destructive',
       });
     } finally {
@@ -122,15 +124,17 @@ export const CompanySetupForm = ({
     }
   };
 
+  const buttonText = submitButtonText || (landingVariant === 'herencias-barcelona' ? t('shared.form.herenciasButton') : t('shared.form.submit'));
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="name">Full Name *</Label>
+          <Label htmlFor="name">{t('shared.form.fullName')}</Label>
           <Input
             id="name"
             {...register('name')}
-            placeholder="John Smith"
+            placeholder={t('shared.form.fullNamePlaceholder')}
             className="mt-1"
           />
           {errors.name && (
@@ -139,12 +143,12 @@ export const CompanySetupForm = ({
         </div>
 
         <div>
-          <Label htmlFor="email">Email *</Label>
+          <Label htmlFor="email">{t('shared.form.email')}</Label>
           <Input
             id="email"
             type="email"
             {...register('email')}
-            placeholder="john@example.com"
+            placeholder={t('shared.form.emailPlaceholder')}
             className="mt-1"
           />
           {errors.email && (
@@ -157,31 +161,31 @@ export const CompanySetupForm = ({
         <>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="phone">Phone</Label>
+              <Label htmlFor="phone">{t('shared.form.phone')}</Label>
               <Input
                 id="phone"
                 {...register('phone')}
-                placeholder="+34 600 000 000"
+                placeholder={t('shared.form.phonePlaceholder')}
                 className="mt-1"
               />
             </div>
 
             <div>
-              <Label htmlFor="company_name">Company Name</Label>
+              <Label htmlFor="company_name">{t('shared.form.companyName')}</Label>
               <Input
                 id="company_name"
                 {...register('company_name')}
-                placeholder="Acme Inc"
+                placeholder={t('shared.form.companyNamePlaceholder')}
                 className="mt-1"
               />
             </div>
           </div>
 
           <div>
-            <Label htmlFor="country_origin">Country of Origin *</Label>
+            <Label htmlFor="country_origin">{t('shared.form.country')}</Label>
             <Select onValueChange={(value) => setValue('country_origin', value)}>
               <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Select your country" />
+                <SelectValue placeholder={t('shared.form.countryPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="UK">United Kingdom</SelectItem>
@@ -204,43 +208,43 @@ export const CompanySetupForm = ({
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="timeline">Timeline</Label>
+              <Label htmlFor="timeline">{t('shared.form.timeline')}</Label>
               <Select onValueChange={(value) => setValue('timeline', value)}>
                 <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="When do you need this?" />
+                  <SelectValue placeholder={t('shared.form.timelinePlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="immediate">Immediate (ASAP)</SelectItem>
-                  <SelectItem value="1-month">Within 1 month</SelectItem>
-                  <SelectItem value="3-months">Within 3 months</SelectItem>
-                  <SelectItem value="6-months">Within 6 months</SelectItem>
-                  <SelectItem value="exploring">Just exploring</SelectItem>
+                  <SelectItem value="immediate">{t('shared.form.timelineOptions.immediate')}</SelectItem>
+                  <SelectItem value="1-month">{t('shared.form.timelineOptions.1month')}</SelectItem>
+                  <SelectItem value="3-months">{t('shared.form.timelineOptions.3months')}</SelectItem>
+                  <SelectItem value="6-months">{t('shared.form.timelineOptions.6months')}</SelectItem>
+                  <SelectItem value="exploring">{t('shared.form.timelineOptions.exploring')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="company_stage">Company Stage</Label>
+              <Label htmlFor="company_stage">{t('shared.form.companyStage')}</Label>
               <Select onValueChange={(value) => setValue('company_stage', value)}>
                 <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Your current situation" />
+                  <SelectValue placeholder={t('shared.form.companyStagePlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="idea">Just an idea</SelectItem>
-                  <SelectItem value="registered-abroad">Registered abroad</SelectItem>
-                  <SelectItem value="ready-to-register">Ready to register</SelectItem>
-                  <SelectItem value="relocating">Relocating existing company</SelectItem>
+                  <SelectItem value="idea">{t('shared.form.companyStageOptions.idea')}</SelectItem>
+                  <SelectItem value="registered-abroad">{t('shared.form.companyStageOptions.registeredAbroad')}</SelectItem>
+                  <SelectItem value="ready-to-register">{t('shared.form.companyStageOptions.readyToRegister')}</SelectItem>
+                  <SelectItem value="relocating">{t('shared.form.companyStageOptions.relocating')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div>
-            <Label htmlFor="message">Additional Information</Label>
+            <Label htmlFor="message">{t('shared.form.message')}</Label>
             <Textarea
               id="message"
               {...register('message')}
-              placeholder="Tell us about your project..."
+              placeholder={t('shared.form.messagePlaceholder')}
               className="mt-1 min-h-[100px]"
             />
           </div>
@@ -256,21 +260,21 @@ export const CompanySetupForm = ({
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Submitting...
+            {t('shared.form.submitting')}
           </>
         ) : (
-          landingVariant === 'herencias-barcelona' ? 'Solicitar consulta gratuita' : submitButtonText
+          buttonText
         )}
       </Button>
 
       <p className="text-xs text-muted-foreground text-center">
-        By submitting, you agree to our privacy policy. We'll never share your data.
+        {t('shared.form.privacy')}
       </p>
 
       {/* Footer with Navarro Tax Legal Branding */}
       <div className="mt-6 pt-6 border-t text-center">
         <p className="text-sm text-muted-foreground mb-3">
-          Service provided by:
+          {t('shared.form.providedBy')}
         </p>
         <div className="flex items-center justify-center gap-2 mb-3">
           <img 
@@ -280,7 +284,7 @@ export const CompanySetupForm = ({
           />
         </div>
         <p className="text-xs text-muted-foreground">
-          Barcelona Bar Association • Tax Advisors Registry
+          {t('shared.form.certifications')}
         </p>
       </div>
     </form>

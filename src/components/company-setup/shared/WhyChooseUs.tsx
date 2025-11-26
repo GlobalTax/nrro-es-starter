@@ -1,31 +1,34 @@
 import { Building2, Users, Globe, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const WhyChooseUs = () => {
+  const { t } = useLanguage();
+
   const credentials = [
     {
       icon: Building2,
-      title: '25+ Years Experience',
-      description: 'Specialized in international corporate law since 1998',
-      stat: '1998',
+      title: t('shared.whyChooseUs.experience.title'),
+      description: t('shared.whyChooseUs.experience.desc'),
+      stat: t('shared.whyChooseUs.experience.stat'),
     },
     {
       icon: Users,
-      title: '70+ Professionals',
-      description: 'Multidisciplinary team: lawyers, tax advisors, accountants',
-      stat: '70+',
+      title: t('shared.whyChooseUs.professionals.title'),
+      description: t('shared.whyChooseUs.professionals.desc'),
+      stat: t('shared.whyChooseUs.professionals.stat'),
     },
     {
       icon: Globe,
-      title: 'International Clients',
-      description: '40% of our clients are foreign companies',
-      stat: '40%',
+      title: t('shared.whyChooseUs.international.title'),
+      description: t('shared.whyChooseUs.international.desc'),
+      stat: t('shared.whyChooseUs.international.stat'),
     },
     {
       icon: CheckCircle2,
-      title: '500+ Companies Formed',
-      description: '99% success rate in business registrations',
-      stat: '99%',
+      title: t('shared.whyChooseUs.success.title'),
+      description: t('shared.whyChooseUs.success.desc'),
+      stat: t('shared.whyChooseUs.success.stat'),
     },
   ];
 
@@ -34,9 +37,9 @@ export const WhyChooseUs = () => {
       <div className="container">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-normal mb-4">Why Navarro Tax Legal?</h2>
+            <h2 className="text-3xl font-normal mb-4">{t('shared.whyChooseUs.title')}</h2>
             <p className="text-lg text-muted-foreground">
-              Not just lawyers. Your trusted partners in Spain.
+              {t('shared.whyChooseUs.subtitle')}
             </p>
           </div>
 
@@ -62,13 +65,13 @@ export const WhyChooseUs = () => {
 
           {/* Certifications */}
           <div className="mt-12 text-center">
-            <p className="text-sm text-muted-foreground mb-4">Certified by:</p>
+            <p className="text-sm text-muted-foreground mb-4">{t('shared.whyChooseUs.certifications.title')}</p>
             <div className="flex flex-wrap items-center justify-center gap-8 text-xs text-muted-foreground">
-              <div>🏛️ Barcelona Bar Association</div>
+              <div>{t('shared.whyChooseUs.certifications.barAssociation')}</div>
               <div>•</div>
-              <div>📋 Tax Advisors Registry</div>
+              <div>{t('shared.whyChooseUs.certifications.taxRegistry')}</div>
               <div>•</div>
-              <div>🌍 International Legal Network</div>
+              <div>{t('shared.whyChooseUs.certifications.network')}</div>
             </div>
           </div>
         </div>

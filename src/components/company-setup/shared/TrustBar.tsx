@@ -1,4 +1,5 @@
 import { Building2, Users, Award, Clock } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TrustBarProps {
   heading?: string;
@@ -10,16 +11,22 @@ interface TrustBarProps {
 }
 
 export const TrustBar = ({ 
-  heading = 'Trusted by 500+ companies since 1998',
-  subtitle = '🏛️ Navarro Tax Legal • Barcelona Bar Association • Tax Advisors Registry',
-  stats = [
+  heading,
+  subtitle,
+  stats
+}: TrustBarProps) => {
+  const { t } = useLanguage();
+  
+  const defaultHeading = heading || t('shared.trustBar.heading');
+  const defaultSubtitle = subtitle || t('shared.trustBar.subtitle');
+  const defaultStats = stats || [
     { value: '500+', label: 'Companies Registered' },
     { value: '25', label: 'Years Experience' },
     { value: '50+', label: 'Countries Served' },
     { value: '99%', label: 'Success Rate' },
-  ]
-}: TrustBarProps) => {
-  const statsWithIcons = stats.map((stat, index) => ({
+  ];
+
+  const statsWithIcons = defaultStats.map((stat, index) => ({
     ...stat,
     icon: [Building2, Clock, Users, Award][index] || Building2,
   }));
@@ -29,10 +36,10 @@ export const TrustBar = ({
       <div className="container">
         <div className="text-center mb-6">
           <p className="text-sm font-semibold text-muted-foreground mb-2">
-            {heading}
+            {defaultHeading}
           </p>
           <div className="text-xs text-muted-foreground">
-            {subtitle}
+            {defaultSubtitle}
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

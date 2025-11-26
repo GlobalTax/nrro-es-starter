@@ -421,6 +421,488 @@
       "description": "Send us your application and we will contact you"
     }
   },
+  "shared": {
+    "trustBar": {
+      "heading": "Trusted by 500+ companies since 1998",
+      "subtitle": "🏛️ Navarro Tax Legal • Barcelona Bar Association • Tax Advisors Registry"
+    },
+    "whyChooseUs": {
+      "title": "Why Navarro Tax Legal?",
+      "subtitle": "Not just lawyers. Your trusted partners in Spain.",
+      "experience": {
+        "stat": "1998",
+        "title": "25+ Years Experience",
+        "desc": "Specialized in international corporate law since 1998"
+      },
+      "professionals": {
+        "stat": "70+",
+        "title": "70+ Professionals",
+        "desc": "Multidisciplinary team: lawyers, tax advisors, accountants"
+      },
+      "international": {
+        "stat": "40%",
+        "title": "International Clients",
+        "desc": "40% of our clients are foreign companies"
+      },
+      "success": {
+        "stat": "99%",
+        "title": "500+ Companies Formed",
+        "desc": "99% success rate in business registrations"
+      },
+      "certifications": {
+        "title": "Certified by:",
+        "barAssociation": "🏛️ Barcelona Bar Association",
+        "taxRegistry": "📋 Tax Advisors Registry",
+        "network": "🌍 International Legal Network"
+      }
+    },
+    "form": {
+      "fullName": "Full Name *",
+      "fullNamePlaceholder": "John Smith",
+      "email": "Email *",
+      "emailPlaceholder": "john@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+34 600 000 000",
+      "companyName": "Company Name",
+      "companyNamePlaceholder": "Acme Inc",
+      "country": "Country of Origin *",
+      "countryPlaceholder": "Select your country",
+      "timeline": "Timeline",
+      "timelinePlaceholder": "When do you need this?",
+      "timelineOptions": {
+        "immediate": "Immediate (ASAP)",
+        "1month": "Within 1 month",
+        "3months": "Within 3 months",
+        "6months": "Within 6 months",
+        "exploring": "Just exploring"
+      },
+      "companyStage": "Company Stage",
+      "companyStagePlaceholder": "Your current situation",
+      "companyStageOptions": {
+        "idea": "Just an idea",
+        "registeredAbroad": "Registered abroad",
+        "readyToRegister": "Ready to register",
+        "relocating": "Relocating existing company"
+      },
+      "message": "Additional Information",
+      "messagePlaceholder": "Tell us about your project...",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "privacy": "By submitting, you agree to our privacy policy. We'll never share your data.",
+      "providedBy": "Service provided by:",
+      "certifications": "Barcelona Bar Association • Tax Advisors Registry",
+      "herenciasButton": "Request free consultation",
+      "success": {
+        "title": "Success!",
+        "description": "Thank you for your interest. We'll contact you soon."
+      },
+      "error": {
+        "title": "Error",
+        "description": "Something went wrong. Please try again."
+      },
+      "validation": {
+        "nameMin": "Name must be at least 2 characters",
+        "emailInvalid": "Invalid email address",
+        "countryRequired": "Please select your country"
+      }
+    }
+  },
+  "landings": {
+    "calculator": {
+      "meta": {
+        "title": "Company Setup Cost Calculator Spain | Free Estimate",
+        "description": "Calculate exact costs to open your company in Spain. Legal fees, government charges, and professional services. Get instant estimate + free guide."
+      },
+      "hero": {
+        "badge": "Free Cost Estimator",
+        "title": "How Much Does It Cost to Open a Company in Spain?",
+        "subtitle": "Get your personalized cost estimate in 2 minutes. No hidden fees, no surprises."
+      },
+      "calculator": {
+        "title": "Company Setup Calculator",
+        "step": "Step {{current}} of {{total}}",
+        "selectStructure": "Select Legal Structure",
+        "structures": {
+          "sl": {
+            "name": "Sociedad Limitada (SL)",
+            "desc": "Most common for SMEs",
+            "capital": "€3,000"
+          },
+          "sa": {
+            "name": "Sociedad Anónima (SA)",
+            "desc": "For larger companies",
+            "capital": "€60,000"
+          },
+          "autonomo": {
+            "name": "Autónomo",
+            "desc": "Self-employed",
+            "capital": "None"
+          },
+          "sucursal": {
+            "name": "Branch Office",
+            "desc": "Foreign company branch",
+            "capital": "None"
+          }
+        },
+        "capitalInvestment": "Capital Investment",
+        "capitalPlaceholder": "Select initial capital",
+        "capitalOptions": {
+          "3000": "€3,000 (Minimum for SL)",
+          "10000": "€10,000",
+          "25000": "€25,000",
+          "60000": "€60,000 (Required for SA)",
+          "100000": "€100,000+"
+        },
+        "additionalServices": "Additional Services Needed",
+        "services": {
+          "nie": {
+            "label": "NIE (Tax ID) for founders",
+            "price": "+€350"
+          },
+          "tax": {
+            "label": "Tax registration",
+            "price": "+€150"
+          },
+          "bookkeeping": {
+            "label": "1st year bookkeeping",
+            "price": "+€200/mo"
+          },
+          "office": {
+            "label": "Virtual office address",
+            "price": "+€500/yr"
+          }
+        },
+        "timeline": "When do you need this?",
+        "timelinePlaceholder": "Select your timeline",
+        "nextStep": "Next Step",
+        "back": "Back",
+        "calculate": "Calculate Cost"
+      },
+      "results": {
+        "title": "Your Estimated Cost",
+        "complete": "Complete setup including all professional fees",
+        "breakdown": {
+          "government": "Government & notary fees",
+          "professional": "Professional services",
+          "included": "Included"
+        },
+        "downloadReport": {
+          "title": "Get Your Full Cost Breakdown",
+          "subtitle": "Download detailed PDF report + Setup checklist",
+          "button": "Download Full Report"
+        },
+        "startOver": "Start Over"
+      }
+    },
+    "express": {
+      "meta": {
+        "title": "Fast Company Registration Spain | 30-Day Guarantee",
+        "description": "Express company setup service. Registered in 30 days or 50% refund. No delays, no hassle. Limited slots available."
+      },
+      "hero": {
+        "badge": "EXPRESS SERVICE",
+        "title": "Register Your Spanish Company in 30 Days. Guaranteed.",
+        "subtitle": "Fast-track registration. No delays. Money-back guarantee.",
+        "timer": {
+          "label": "Next Express Batch Starts:",
+          "days": "Days",
+          "hours": "Hours",
+          "minutes": "Minutes",
+          "warning": "⚠️ Only 5 slots left this month"
+        }
+      },
+      "comparison": {
+        "title": "DIY vs. Express Service",
+        "diy": {
+          "title": "DIY Approach",
+          "duration": "60-90 Days",
+          "steps": {
+            "week12": "Week 1-2",
+            "week34": "Week 3-4",
+            "week56": "Week 5-6",
+            "week78": "Week 7-8",
+            "week912": "Week 9-12"
+          },
+          "issues": {
+            "nie": "NIE application - Wait for appointment",
+            "name": "Company name - Rejection likely",
+            "bank": "Bank account - Complicated for foreigners",
+            "notary": "Notary deed - Translation issues",
+            "tax": "Tax registration - Complex forms"
+          }
+        },
+        "express": {
+          "title": "Express Service",
+          "duration": "30 Days",
+          "week1": {
+            "title": "Week 1",
+            "tasks": ["NIE", "Name registration", "Business structure"]
+          },
+          "week2": {
+            "title": "Week 2",
+            "tasks": ["Bank account", "Capital deposit"]
+          },
+          "week3": {
+            "title": "Week 3",
+            "tasks": ["Public deed", "Notary signing"]
+          },
+          "week4": {
+            "title": "Week 4",
+            "tasks": ["Tax registration", "Social Security"]
+          }
+        }
+      },
+      "advantages": {
+        "title": "What Makes Us Fast?",
+        "relationships": {
+          "title": "Pre-existing Relationships",
+          "desc": "Direct contacts at notaries, banks, and registro mercantil"
+        },
+        "manager": {
+          "title": "Dedicated Express Manager",
+          "desc": "Your personal manager available 24/7 via WhatsApp"
+        },
+        "digital": {
+          "title": "Digital-First Process",
+          "desc": "No need to travel to Spain. Sign docs online securely."
+        },
+        "priority": {
+          "title": "Priority Handling",
+          "desc": "Your case gets immediate attention at every step"
+        }
+      },
+      "guarantee": {
+        "title": "Express Guarantee",
+        "subtitle": "We stand behind our promise",
+        "package": "Express Package",
+        "price": "€2,999",
+        "included": "Everything included",
+        "features": [
+          "Complete company registration",
+          "NIE for 2 founders",
+          "Bank account setup",
+          "Tax & social security registration",
+          "1st year compliance",
+          "Dedicated Express Manager",
+          "WhatsApp support 24/7"
+        ],
+        "moneyBack": {
+          "title": "30-Day Registration or 50% Refund",
+          "desc": "If we don't register your company in 30 days, you get 50% back. No questions asked."
+        },
+        "superExpress": {
+          "title": "Super-Express Available",
+          "desc": "Need it even faster? <strong>+€500</strong> for 20-day registration"
+        },
+        "button": "Book Express Service Now",
+        "confirmation": "Get confirmation in 2 hours"
+      },
+      "testimonial": {
+        "quote": "Company registered in 28 days. Literally impossible to do it faster. Unbelievable.",
+        "author": "Laura Schmidt",
+        "role": "Managing Director (Germany)"
+      }
+    },
+    "nie": {
+      "meta": {
+        "title": "Get Your Spanish NIE in 7 Days | Express Service",
+        "description": "Skip the queues and bureaucracy. Express NIE service for foreigners. 99% success rate. Money-back guarantee. Book now."
+      },
+      "hero": {
+        "badge": "🚨 STOP THE NIE FRUSTRATION",
+        "title": "Get Your Spanish NIE Without the Bureaucratic Nightmare",
+        "subtitle": "7-day express service. No queues. No rejections. Guaranteed.",
+        "stats": [
+          "500+ NIEs processed",
+          "99% success rate"
+        ]
+      },
+      "painPoints": {
+        "title": "Tired of the NIE Nightmare?",
+        "subtitle": "Sound familiar? There's a better way.",
+        "points": [
+          "3+ hour queues at immigration office",
+          "Appointments 2 months away",
+          "Rejected applications (incorrect docs)",
+          "Language barriers",
+          "Lost time = lost business opportunities"
+        ]
+      },
+      "process": {
+        "title": "Our Express NIE Process",
+        "subtitle": "From application to delivery in just 7 days",
+        "day1": {
+          "label": "Day 1",
+          "action": "Document review & preparation",
+          "status": "We check everything"
+        },
+        "day23": {
+          "label": "Day 2-3",
+          "action": "Appointment secured",
+          "status": "Using our contacts"
+        },
+        "day45": {
+          "label": "Day 4-5",
+          "action": "Application submission",
+          "status": "We go for you"
+        },
+        "day67": {
+          "label": "Day 6-7",
+          "action": "NIE delivered",
+          "status": "To your door"
+        },
+        "youDo": "You do:",
+        "youDoDesc": "Send us scanned docs",
+        "weDo": "We do:",
+        "weDoDesc": "Everything else"
+      },
+      "pricing": {
+        "title": "Transparent Pricing",
+        "subtitle": "No hidden fees. No surprises.",
+        "package": "NIE Express Service",
+        "price": "€350",
+        "label": "Complete service",
+        "includes": [
+          "Document review & preparation",
+          "Appointment secured within 48h",
+          "Application submission",
+          "NIE delivered to your door"
+        ],
+        "guarantee": {
+          "title": "Money-Back Guarantee",
+          "desc": "If we don't get your NIE, full refund"
+        },
+        "button": "Secure My NIE Service"
+      },
+      "whoNeeds": {
+        "title": "Who Needs a NIE?",
+        "reasons": [
+          "Opening a company in Spain",
+          "Buying property",
+          "Opening a bank account",
+          "Hiring employees",
+          "Signing contracts",
+          "Registering for taxes"
+        ]
+      }
+    },
+    "techStartup": {
+      "meta": {
+        "title": "Launch Your Tech Startup in Spain | Complete Setup Package",
+        "description": "All-in-one startup setup: Company registration, tax strategy, visa support. Built for tech founders. €3,500 package. 30 days."
+      },
+      "hero": {
+        "badge": "FOR TECH FOUNDERS",
+        "title": "Launch Your Tech Startup in Spain",
+        "subtitle": "Legal setup + Tax strategy + Visa support. Built for founders.",
+        "partners": {
+          "techCity": "🤝 Partner of Barcelona Tech City",
+          "accio": "🚀 ACCIÓ Certified",
+          "mwc": "📱 Mobile World Capital"
+        }
+      },
+      "whySpain": {
+        "title": "Why Spain for Tech Startups?",
+        "gateway": {
+          "title": "Gateway to EU Market",
+          "desc": "500M consumers, single market access",
+          "stat": "500M"
+        },
+        "costs": {
+          "title": "40% Lower Costs",
+          "desc": "Than London/Berlin/Paris",
+          "stat": "-40%"
+        },
+        "talent": {
+          "title": "Talent + Lifestyle",
+          "desc": "Lower employee churn, happy teams",
+          "stat": "95%"
+        },
+        "ecosystem": {
+          "title": "Growing Ecosystem",
+          "desc": "4,000+ startups in Barcelona alone",
+          "stat": "4,000+"
+        }
+      },
+      "package": {
+        "title": "Complete Startup Setup Package",
+        "subtitle": "Everything you need to launch properly",
+        "price": "€3,500",
+        "duration": "Complete setup in 30 days",
+        "payment": "💳 50% upfront • 💳 50% at registration",
+        "includes": [
+          "SL company registration",
+          "NIE for 2 founders",
+          "Tax optimization strategy",
+          "ENISA loan application support",
+          "Founder-friendly cap table structure",
+          "Stock options plan template",
+          "1st year tax compliance",
+          "Intro to investors & accelerators"
+        ],
+        "ecosystem": {
+          "title": "Tech Ecosystem Access",
+          "subtitle": "We're not just lawyers, we're part of the ecosystem. Get intros to:",
+          "spaces": ["22@ Barcelona", "Pier01", "IESE Angels", "Antai Venture Builder", "Barcelona Activa"]
+        },
+        "button": "Get Startup Quote"
+      },
+      "faqs": {
+        "title": "Tech-Specific FAQs",
+        "fundraising": {
+          "q": "Can I raise funding before registering?",
+          "a": "Yes! You can sign term sheets and LOIs. We help structure the cap table correctly from day one."
+        },
+        "stockOptions": {
+          "q": "How do stock options work in Spain?",
+          "a": "We set up a proper ESOP (Employee Stock Option Plan) that's investor-friendly and tax-efficient for employees."
+        },
+        "beckham": {
+          "q": "What about the Beckham Law?",
+          "a": "Foreign founders can pay just 24% tax (vs 47%) for the first 6 years. We handle the application."
+        },
+        "remote": {
+          "q": "Can my team work remotely?",
+          "a": "Yes! Spain offers digital nomad visas. We help with the paperwork for your international team."
+        }
+      },
+      "caseStudy": {
+        "badge": "Success Story",
+        "title": "From UK to Barcelona in 30 Days",
+        "client": "Client: SaaS startup, 3 UK founders",
+        "problem": "Problem: Complex cap table with investor commitments, needed investor-ready structure",
+        "solution": "Solution: Clean SL setup + SOPs + ENISA €500k secured",
+        "result": "Result: Series A within 18 months, now 25 employees"
+      }
+    },
+    "herencias": {
+      "meta": {
+        "title": "Inheritance Lawyers in Barcelona | Succession Experts Catalonia",
+        "description": "Lawyers specialized in inheritances in Barcelona. Complete inheritance processing according to the Catalan Civil Code. Catalan legitimate portion, taxes, conflicts. Free consultation."
+      },
+      "hero": {
+        "badge": "Experts in Catalan Succession Law",
+        "title": "Inheritance Lawyers in Barcelona. Succession Experts in Catalonia.",
+        "subtitle": "We handle your inheritance from start to finish: declaration of heirs, distribution, Catalan legitimate portion, taxes and family conflicts.",
+        "calculateButton": "Calculate my inheritance in Catalonia",
+        "contactButton": "Speak with a lawyer now"
+      },
+      "calculator": {
+        "title": "Calculate now how much corresponds to you according to the Catalan Civil Code",
+        "subtitle": "In less than 3 minutes, automatic estimate of distribution among heirs",
+        "comingSoon": "Interactive calculator coming soon",
+        "requestButton": "Request personalized calculation now"
+      },
+      "faq": {
+        "title": "Frequently asked questions about inheritances in Catalonia"
+      },
+      "contact": {
+        "title": "Need advice on your inheritance?",
+        "subtitle": "First free consultation. Resolve your doubts without commitment.",
+        "button": "Request free consultation"
+      }
+    }
+  },
   "leyBeckham": {
     "seo": {
       "title": "Beckham Law - Special Tax Regime for Expats in Spain",
