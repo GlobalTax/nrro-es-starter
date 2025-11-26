@@ -234,12 +234,12 @@ export const Footer = () => {
             >
               {t("footer.cookies")}
             </LanguageLink>
-            <LanguageLink
-              to="/terminos"
-              className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
-            >
-              {t("footer.terms")}
-            </LanguageLink>
+                  <LanguageLink
+                    to="/condiciones-contratacion"
+                    className="text-sm text-primary-foreground/60 hover:text-accent transition-colors font-light"
+                  >
+                    {t("footer.terms")}
+                  </LanguageLink>
           </div>
         </div>
       </div>
