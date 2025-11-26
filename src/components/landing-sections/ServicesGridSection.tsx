@@ -15,20 +15,20 @@ interface ServicesGridSectionProps {
 
 export const ServicesGridSection = ({ title, subtitle, services }: ServicesGridSectionProps) => {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-20 md:py-28 bg-white">
       <div className="container">
-        <h2 className="text-3xl font-normal text-center mb-4 text-foreground">
+        {subtitle && (
+          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-3 text-center">
+            {subtitle}
+          </h2>
+        )}
+        <h2 className="text-3xl md:text-4xl font-normal text-center mb-16 text-foreground">
           {title}
         </h2>
-        {subtitle && (
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            {subtitle}
-          </p>
-        )}
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {services.map((service, index) => (
-            <Card key={index} className="bg-background">
+            <Card key={index} className="border-border/50 hover:border-primary/30 transition-colors">
               <CardHeader>
                 <CardTitle className="text-xl font-normal">{service.title}</CardTitle>
               </CardHeader>
@@ -38,7 +38,7 @@ export const ServicesGridSection = ({ title, subtitle, services }: ServicesGridS
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
+                      <span className="text-sm text-foreground/80">{feature}</span>
                     </li>
                   ))}
                 </ul>

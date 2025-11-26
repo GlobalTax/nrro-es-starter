@@ -16,41 +16,46 @@ interface WhyChooseUsSectionProps {
 
 export const WhyChooseUsSection = ({ title, subtitle, credentials }: WhyChooseUsSectionProps) => {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-20 md:py-28 bg-neutral-50">
       <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-normal mb-4 text-foreground">
+        {subtitle && (
+          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-3 text-center">
+            {subtitle}
+          </h2>
+        )}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-normal text-foreground">
             {title}
           </h2>
-          {subtitle && (
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-          )}
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {credentials.map((credential, index) => {
             const Icon = credential.icon;
             return (
-              <Card key={index} className="border-2 hover:border-primary transition-colors">
-                <CardContent className="pt-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Icon className="h-8 w-8 text-primary" />
+              <div 
+                key={index} 
+                className="flex flex-col gap-4 p-8 rounded-xl bg-white border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="h-5 w-5 text-primary" />
                   </div>
-                  <div className="text-3xl font-semibold text-foreground mb-2">
+                  <div className="text-2xl font-normal text-foreground">
                     {credential.value}
                   </div>
-                  <div className="text-sm font-medium text-foreground mb-2">
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground mb-1">
                     {credential.label}
                   </div>
                   {credential.description && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/70">
                       {credential.description}
                     </p>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             );
           })}
         </div>

@@ -35,10 +35,26 @@ export const SetupCompanySpain = () => {
   };
 
   const trustBarStats = [
-    { value: '70+', label: 'Professionals' },
-    { value: '87%', label: 'Recurring Clients' },
-    { value: '2', label: 'Office Locations' },
-    { value: '100%', label: 'Confidentiality' }
+    { 
+      value: '300+', 
+      label: 'Companies Established',
+      description: 'Successful company formations across Spain supporting international entrepreneurs'
+    },
+    { 
+      value: '15+', 
+      label: 'Years Experience',
+      description: 'Specialized expertise in Spanish corporate law and business setup procedures'
+    },
+    { 
+      value: '50+', 
+      label: 'Countries Served',
+      description: 'International clients from Europe, Americas, Asia and beyond trust our services'
+    },
+    { 
+      value: '98%', 
+      label: 'Client Satisfaction',
+      description: 'Exceptional service quality with dedicated support throughout the entire process'
+    }
   ];
 
   const problemStatement = {
@@ -240,23 +256,23 @@ export const SetupCompanySpain = () => {
       />
       <FAQSchema faqs={faqs} />
 
-      <HeroSection {...heroData} />
-      <TrustBarSection stats={trustBarStats} />
+      <HeroSection {...heroData} background="dark" />
+      <TrustBarSection overline="Our Impact" stats={trustBarStats} />
       <ProblemStatementSection {...problemStatement} />
       <ServicesGridSection 
         title="What We Do"
-        subtitle="Comprehensive legal, tax and corporate support for your Spanish operations"
+        subtitle="Our Services"
         services={services}
       />
       <WhyChooseUsSection
         title="Why Navarro"
-        subtitle="Trusted advisors for international companies and family businesses"
+        subtitle="Why Choose Us"
         credentials={whyNavarroCredentials}
       />
       <ClientLogosCarouselSection />
       <ProcessStepsSection
         title="Our Process"
-        subtitle="A structured approach from consultation to post-incorporation support"
+        subtitle="How We Work"
         steps={processSteps}
       />
       <TestimonialsSection

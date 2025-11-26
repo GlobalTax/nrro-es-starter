@@ -15,37 +15,33 @@ interface ProcessStepsSectionProps {
 
 export const ProcessStepsSection = ({ title, subtitle, steps }: ProcessStepsSectionProps) => {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-20 md:py-28 bg-white">
       <div className="container">
-        <h2 className="text-3xl font-normal text-center mb-4 text-foreground">
+        {subtitle && (
+          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-3 text-center">
+            {subtitle}
+          </h2>
+        )}
+        <h2 className="text-3xl md:text-4xl font-normal text-center mb-16 text-foreground">
           {title}
         </h2>
-        {subtitle && (
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            {subtitle}
-          </p>
-        )}
         
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-8">
           {steps.map((step) => (
-            <Card key={step.number} className="border-2 hover:border-primary transition-colors">
-              <CardHeader>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 text-xl font-semibold">
-                    {step.number}
-                  </div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl font-normal mb-2">{step.title}</CardTitle>
-                    {step.duration && (
-                      <span className="text-sm text-muted-foreground">{step.duration}</span>
-                    )}
-                  </div>
+            <div key={step.number} className="flex gap-6 group">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-lg font-normal">
+                  {step.number}
                 </div>
-              </CardHeader>
-              <CardContent className="pl-20">
-                <p className="text-muted-foreground">{step.description}</p>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="flex-1 pb-8 border-b border-border/50 last:border-0">
+                <h3 className="text-xl font-normal mb-2 text-foreground">{step.title}</h3>
+                {step.duration && (
+                  <span className="text-sm text-primary font-mono mb-3 inline-block">{step.duration}</span>
+                )}
+                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
