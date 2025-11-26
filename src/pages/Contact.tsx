@@ -106,9 +106,9 @@ export default function Contact() {
   return (
     <>
       <Meta
-        title="Contacto"
-        description="Ponte en contacto con nuestro equipo de asesores fiscales, legales y laborales"
-        keywords="contacto asesoría fiscal Barcelona, contacto navarro tax legal, consulta gratuita fiscal"
+        title={t("contact.meta.title")}
+        description={t("contact.meta.description")}
+        keywords={t("contact.meta.keywords")}
         canonicalUrl={`${window.location.origin}/contacto`}
       />
 

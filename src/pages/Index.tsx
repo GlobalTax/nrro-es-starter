@@ -3,9 +3,11 @@ import { ArrowRight, Building2, FileText, Shield, TrendingUp } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Meta } from '@/components/seo/Meta';
+import { useLanguage } from '@/contexts/LanguageContext';
 import officeHero from '@/assets/office-hero.jpg';
 
 export default function Index() {
+  const { t } = useLanguage();
   const services = [
     {
       icon: FileText,
@@ -51,9 +53,8 @@ export default function Index() {
   return (
     <>
       <Meta
-        title="Inicio"
-        description="NRRO - Navarro Tax Legal. Asesoría fiscal, contable y legal en Barcelona. Transformamos la gestión en impulso para tu negocio."
-        keywords="asesoría fiscal Barcelona, gestoría Barcelona, consultoría legal, navarro tax legal, nrro"
+        title={t("index.meta.title")}
+        description={t("index.meta.description")}
       />
 
       {/* Hero Section */}

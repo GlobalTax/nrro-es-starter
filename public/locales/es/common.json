@@ -131,6 +131,11 @@
     }
   },
   "contact": {
+    "meta": {
+      "title": "Contacto",
+      "description": "Ponte en contacto con nuestro equipo de asesores fiscales, legales y laborales",
+      "keywords": "contacto asesoría fiscal Barcelona, contacto navarro tax legal, consulta gratuita fiscal"
+    },
     "hero": {
       "badge": "Contacto",
       "title": "Hablemos",
@@ -168,6 +173,12 @@
       "weekdaysValue": "9:00 - 18:00",
       "weekend": "Fines de semana",
       "weekendValue": "Cerrado"
+    }
+  },
+  "index": {
+    "meta": {
+      "title": "Asesoría Fiscal, Legal y Laboral en Barcelona",
+      "description": "Soluciones integrales de asesoría fiscal, legal y laboral para empresas y particulares en Barcelona. Expertos en derecho tributario y gestión empresarial."
     }
   },
   "notFound": {

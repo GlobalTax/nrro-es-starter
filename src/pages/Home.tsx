@@ -126,8 +126,8 @@ const Home = () => {
   return (
     <>
       <Meta
-        title="Navarro — Asesoría fiscal, legal y contable para empresas"
-        description="Asesoramiento fiscal, legal, contable y laboral especializado para empresas y grupos empresariales en Barcelona"
+        title={t("index.meta.title")}
+        description={t("index.meta.description")}
         canonicalUrl={window.location.href}
       />
 

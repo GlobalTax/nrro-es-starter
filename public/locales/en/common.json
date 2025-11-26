@@ -131,6 +131,11 @@
     }
   },
   "contact": {
+    "meta": {
+      "title": "Contact",
+      "description": "Get in touch with our team of tax, legal and labor advisors",
+      "keywords": "contact tax advisory Barcelona, contact navarro tax legal, free tax consultation"
+    },
     "hero": {
       "badge": "Contact",
       "title": "Let's talk",
@@ -168,6 +173,12 @@
       "weekdaysValue": "9:00 AM - 6:00 PM",
       "weekend": "Weekends",
       "weekendValue": "Closed"
+    }
+  },
+  "index": {
+    "meta": {
+      "title": "Tax, Legal and Labor Advisory in Barcelona",
+      "description": "Comprehensive tax, legal and labor advisory solutions for companies and individuals in Barcelona. Experts in tax law and business management."
     }
   },
   "notFound": {
