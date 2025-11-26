@@ -1149,6 +1149,8 @@ export type Database = {
       }
       landing_pages: {
         Row: {
+          ads_campaigns: string | null
+          category: string | null
           conversion_count: number | null
           created_at: string | null
           created_by: string | null
@@ -1166,12 +1168,14 @@ export type Database = {
           meta_title_ca: string | null
           meta_title_en: string | null
           meta_title_es: string | null
+          notes: string | null
           primary_cta_text: string | null
           primary_cta_text_ca: string | null
           primary_cta_text_en: string | null
           primary_cta_text_es: string | null
           primary_cta_url: string | null
           primary_cta_variant: string | null
+          qr_code: string | null
           secondary_cta_text: string | null
           secondary_cta_url: string | null
           sections: Json
@@ -1186,11 +1190,16 @@ export type Database = {
           title_es: string | null
           updated_at: string | null
           updated_by: string | null
+          url: string | null
           use_footer: boolean | null
           use_navbar: boolean | null
+          utm_url: string | null
+          version: number | null
           view_count: number | null
         }
         Insert: {
+          ads_campaigns?: string | null
+          category?: string | null
           conversion_count?: number | null
           created_at?: string | null
           created_by?: string | null
@@ -1208,12 +1217,14 @@ export type Database = {
           meta_title_ca?: string | null
           meta_title_en?: string | null
           meta_title_es?: string | null
+          notes?: string | null
           primary_cta_text?: string | null
           primary_cta_text_ca?: string | null
           primary_cta_text_en?: string | null
           primary_cta_text_es?: string | null
           primary_cta_url?: string | null
           primary_cta_variant?: string | null
+          qr_code?: string | null
           secondary_cta_text?: string | null
           secondary_cta_url?: string | null
           sections?: Json
@@ -1228,11 +1239,16 @@ export type Database = {
           title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
+          url?: string | null
           use_footer?: boolean | null
           use_navbar?: boolean | null
+          utm_url?: string | null
+          version?: number | null
           view_count?: number | null
         }
         Update: {
+          ads_campaigns?: string | null
+          category?: string | null
           conversion_count?: number | null
           created_at?: string | null
           created_by?: string | null
@@ -1250,12 +1266,14 @@ export type Database = {
           meta_title_ca?: string | null
           meta_title_en?: string | null
           meta_title_es?: string | null
+          notes?: string | null
           primary_cta_text?: string | null
           primary_cta_text_ca?: string | null
           primary_cta_text_en?: string | null
           primary_cta_text_es?: string | null
           primary_cta_url?: string | null
           primary_cta_variant?: string | null
+          qr_code?: string | null
           secondary_cta_text?: string | null
           secondary_cta_url?: string | null
           sections?: Json
@@ -1270,8 +1288,11 @@ export type Database = {
           title_es?: string | null
           updated_at?: string | null
           updated_by?: string | null
+          url?: string | null
           use_footer?: boolean | null
           use_navbar?: boolean | null
+          utm_url?: string | null
+          version?: number | null
           view_count?: number | null
         }
         Relationships: []

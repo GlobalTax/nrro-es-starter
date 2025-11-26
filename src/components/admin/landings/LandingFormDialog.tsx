@@ -8,9 +8,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Plus, Trash2, GripVertical } from 'lucide-react';
+import { Loader2, Plus, Trash2, GripVertical, Link, QrCode, RefreshCw } from 'lucide-react';
 import { LandingPage, useCreateLandingPage, useUpdateLandingPage } from '@/hooks/useLandingPages';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { generateUTM, generateQRCode, incrementVersion, generateSlug } from '@/lib/landingUtils';
+import { toast } from 'sonner';
+
+const CATEGORIES = [
+  'Tax',
+  'Legal',
+  'Payroll',
+  'Corporate',
+  'M&A',
+  'International',
+  'Family Business',
+  'Contact',
+  'Other',
+];
 
 interface LandingFormDialogProps {
   open: boolean;
@@ -31,6 +45,10 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
     custom_navbar: 'default',
     layout_type: 'default',
     sections: [],
+    category: 'Other',
+    url: '',
+    notes: '',
+    version: 1,
   });
   
   const createMutation = useCreateLandingPage();
@@ -52,6 +70,10 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
         custom_navbar: 'default',
         layout_type: 'default',
         sections: [],
+        category: 'Other',
+        url: '',
+        notes: '',
+        version: 1,
       });
     }
   }, [landing, open]);
@@ -60,13 +82,18 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
     e.preventDefault();
     
     try {
+      // Increment version if updating
+      const dataToSave = landing?.id 
+        ? { ...formData, version: incrementVersion(formData.version || 1) }
+        : formData;
+        
       if (landing?.id) {
         await updateMutation.mutateAsync({
           id: landing.id,
-          updates: formData,
+          updates: dataToSave,
         });
       } else {
-        await createMutation.mutateAsync(formData);
+        await createMutation.mutateAsync(dataToSave);
       }
       onOpenChange(false);
     } catch (error) {
@@ -89,6 +116,34 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
     handleChange('title', title);
     if (!landing) {
       handleChange('slug', generateSlug(title));
+    }
+  };
+  
+  const handleGenerateUTM = () => {
+    if (!formData.url) {
+      toast.error('Por favor, introduce primero una URL');
+      return;
+    }
+    const campaign = formData.slug || 'landing';
+    const utmUrl = generateUTM(formData.url, campaign);
+    handleChange('utm_url', utmUrl);
+    toast.success('URL con UTM generada');
+  };
+  
+  const handleGenerateQR = async () => {
+    const urlToUse = formData.utm_url || formData.url;
+    if (!urlToUse) {
+      toast.error('Por favor, introduce primero una URL');
+      return;
+    }
+    
+    toast.info('Generando código QR...');
+    const qrCode = await generateQRCode(urlToUse);
+    if (qrCode) {
+      handleChange('qr_code', qrCode);
+      toast.success('Código QR generado');
+    } else {
+      toast.error('Error al generar el código QR');
     }
   };
   
@@ -120,11 +175,12 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <Tabs defaultValue="general" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="general">General</TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
+              <TabsTrigger value="marketing">Marketing</TabsTrigger>
               <TabsTrigger value="sections">Secciones</TabsTrigger>
-              <TabsTrigger value="config">Configuración</TabsTrigger>
+              <TabsTrigger value="config">Config</TabsTrigger>
             </TabsList>
             
             {/* General Tab */}
@@ -164,7 +220,35 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
                 </p>
               </div>
               
+              <div className="space-y-2">
+                <Label htmlFor="url">URL Completa</Label>
+                <Input
+                  id="url"
+                  value={formData.url || ''}
+                  onChange={(e) => handleChange('url', e.target.value)}
+                  placeholder="https://navarro.es/abogados-herencias-barcelona"
+                  type="url"
+                />
+              </div>
+              
               <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="category">Categoría</Label>
+                  <Select 
+                    value={formData.category || 'Other'} 
+                    onValueChange={(value) => handleChange('category', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map(cat => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
                 <div className="space-y-2">
                   <Label htmlFor="status">Estado</Label>
                   <Select 
@@ -177,11 +261,24 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
                     <SelectContent>
                       <SelectItem value="draft">Borrador</SelectItem>
                       <SelectItem value="published">Publicada</SelectItem>
+                      <SelectItem value="needs_review">Needs Review</SelectItem>
                       <SelectItem value="archived">Archivada</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="featured_image">Imagen Destacada (URL)</Label>
+                  <Input
+                    id="featured_image"
+                    value={formData.featured_image || ''}
+                    onChange={(e) => handleChange('featured_image', e.target.value)}
+                    placeholder="https://..."
+                  />
+                </div>
+              
                 <div className="space-y-2">
                   <Label htmlFor="is_active" className="flex items-center gap-2">
                     Página Activa
@@ -200,12 +297,13 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="featured_image">Imagen Destacada (URL)</Label>
-                <Input
-                  id="featured_image"
-                  value={formData.featured_image || ''}
-                  onChange={(e) => handleChange('featured_image', e.target.value)}
-                  placeholder="https://..."
+                <Label htmlFor="notes">Notas Internas</Label>
+                <Textarea
+                  id="notes"
+                  value={formData.notes || ''}
+                  onChange={(e) => handleChange('notes', e.target.value)}
+                  placeholder="Notas internas sobre esta landing..."
+                  rows={3}
                 />
               </div>
             </TabsContent>
@@ -263,6 +361,81 @@ export const LandingFormDialog = ({ open, onOpenChange, landing }: LandingFormDi
                 />
                 <p className="text-xs text-muted-foreground">
                   Separa las keywords con comas
+                </p>
+              </div>
+            </TabsContent>
+            
+            {/* Marketing Tab */}
+            <TabsContent value="marketing" className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="utm_url">URL con UTM</Label>
+                  <Button 
+                    type="button" 
+                    size="sm" 
+                    variant="outline"
+                    onClick={handleGenerateUTM}
+                  >
+                    <Link className="h-4 w-4 mr-1" />
+                    Generar UTM
+                  </Button>
+                </div>
+                <Input
+                  id="utm_url"
+                  value={formData.utm_url || ''}
+                  onChange={(e) => handleChange('utm_url', e.target.value)}
+                  placeholder="https://navarro.es/landing?utm_source=navarro&utm_medium=landing&utm_campaign=..."
+                />
+                <p className="text-xs text-muted-foreground">
+                  URL con parámetros UTM para tracking de campañas
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Código QR</Label>
+                  <Button 
+                    type="button" 
+                    size="sm" 
+                    variant="outline"
+                    onClick={handleGenerateQR}
+                  >
+                    <QrCode className="h-4 w-4 mr-1" />
+                    Generar QR
+                  </Button>
+                </div>
+                {formData.qr_code ? (
+                  <div className="border rounded-lg p-4 bg-muted/30">
+                    <img 
+                      src={formData.qr_code} 
+                      alt="QR Code" 
+                      className="w-48 h-48 mx-auto"
+                    />
+                    <p className="text-xs text-center text-muted-foreground mt-2">
+                      QR generado para: {formData.utm_url || formData.url}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="border border-dashed rounded-lg p-8 text-center">
+                    <QrCode className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+                    <p className="text-sm text-muted-foreground">
+                      No hay código QR generado aún
+                    </p>
+                  </div>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="ads_campaigns">Campañas de Ads</Label>
+                <Textarea
+                  id="ads_campaigns"
+                  value={formData.ads_campaigns || ''}
+                  onChange={(e) => handleChange('ads_campaigns', e.target.value)}
+                  placeholder="Google Ads Q1 2025&#10;Meta Ads - Herencias BCN&#10;LinkedIn Campaign"
+                  rows={4}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Lista de campañas publicitarias asociadas a esta landing
                 </p>
               </div>
             </TabsContent>

@@ -43,11 +43,20 @@ export interface LandingPage {
   updated_at?: string | null;
   created_by?: string | null;
   updated_by?: string | null;
+  // New LMS fields
+  category?: string | null;
+  url?: string | null;
+  utm_url?: string | null;
+  qr_code?: string | null;
+  ads_campaigns?: string | null;
+  notes?: string | null;
+  version?: number | null;
 }
 
 interface LandingFilters {
   status?: string;
   search?: string;
+  category?: string;
 }
 
 export const useLandingPages = (filters: LandingFilters = {}) => {
@@ -61,6 +70,10 @@ export const useLandingPages = (filters: LandingFilters = {}) => {
       
       if (filters.status && filters.status !== 'all') {
         query = query.eq('status', filters.status);
+      }
+      
+      if (filters.category && filters.category !== 'all') {
+        query = query.eq('category', filters.category);
       }
       
       if (filters.search) {
@@ -164,3 +177,55 @@ export const useDeleteLandingPage = () => {
     },
   });
 };
+
+export const useLandingPageById = (id: string) => {
+  return useQuery({
+    queryKey: ['landing-page', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('landing_pages')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      return data as LandingPage;
+    },
+    enabled: !!id,
+  });
+};
+
+export const useDuplicateLanding = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (landing: LandingPage) => {
+      const { id, created_at, updated_at, ...landingData } = landing;
+      const duplicate = {
+        ...landingData,
+        title: `${landing.title} (Copia)`,
+        slug: `${landing.slug}-copia`,
+        status: 'draft',
+        version: 1,
+      };
+      
+      const { data, error } = await supabase
+        .from('landing_pages')
+        .insert([duplicate as any])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['landing-pages'] });
+      toast.success('Landing page duplicada correctamente');
+    },
+    onError: (error) => {
+      console.error('Error duplicating landing page:', error);
+      toast.error('Error al duplicar la landing page');
+    },
+  });
+};
+

@@ -45,6 +45,7 @@ import AdminCandidatos from "./pages/admin/AdminCandidatos";
 import AdminJobPositions from "./pages/admin/AdminJobPositions";
 import AdminContactLeads from "./pages/admin/AdminContactLeads";
 import AdminLandings from "./pages/admin/AdminLandings";
+import LandingDetailPage from "./pages/admin/LandingDetailPage";
 import AdminLeyBeckhamLeads from "./pages/admin/AdminLeyBeckhamLeads";
 import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
 import { AdminCompanySetupLeads } from "./pages/admin/AdminCompanySetupLeads";
@@ -183,6 +184,7 @@ const App = () => {
               <Route path="settings" element={<AdminSettings />} />
               <Route path="content" element={<AdminContent />} />
               <Route path="landings" element={<AdminLandings />} />
+              <Route path="landings/:id" element={<LandingDetailPage />} />
               <Route path="case-studies" element={<AdminCaseStudies />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="blog" element={<AdminBlog />} />
