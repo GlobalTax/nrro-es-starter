@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -96,33 +95,28 @@ const LandingDetailPage = () => {
 
   if (isLoading) {
     return (
-      <AdminLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-muted-foreground">Cargando landing...</p>
-        </div>
-      </AdminLayout>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">Cargando landing...</p>
+      </div>
     );
   }
 
   if (!landing) {
     return (
-      <AdminLayout>
-        <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-          <p className="text-muted-foreground">Landing no encontrada</p>
-          <Button asChild variant="outline">
-            <Link to="/admin/landings">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver a Landings
-            </Link>
-          </Button>
-        </div>
-      </AdminLayout>
+      <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+        <p className="text-muted-foreground">Landing no encontrada</p>
+        <Button asChild variant="outline">
+          <Link to="/admin/landings">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Volver a Landings
+          </Link>
+        </Button>
+      </div>
     );
   }
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
@@ -414,7 +408,6 @@ const LandingDetailPage = () => {
           landing={landing}
         />
       </div>
-    </AdminLayout>
   );
 };
 
