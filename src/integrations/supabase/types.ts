@@ -1156,6 +1156,7 @@ export type Database = {
           created_by: string | null
           custom_navbar: string | null
           featured_image: string | null
+          health_score: number | null
           id: string
           is_active: boolean | null
           keywords: string[] | null
@@ -1205,6 +1206,7 @@ export type Database = {
           created_by?: string | null
           custom_navbar?: string | null
           featured_image?: string | null
+          health_score?: number | null
           id?: string
           is_active?: boolean | null
           keywords?: string[] | null
@@ -1254,6 +1256,7 @@ export type Database = {
           created_by?: string | null
           custom_navbar?: string | null
           featured_image?: string | null
+          health_score?: number | null
           id?: string
           is_active?: boolean | null
           keywords?: string[] | null
@@ -1326,6 +1329,44 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      landing_versions: {
+        Row: {
+          change_summary: string | null
+          created_at: string | null
+          created_by: string | null
+          id: string
+          landing_id: string
+          snapshot_json: Json
+          version_number: number
+        }
+        Insert: {
+          change_summary?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          landing_id: string
+          snapshot_json: Json
+          version_number: number
+        }
+        Update: {
+          change_summary?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          landing_id?: string
+          snapshot_json?: Json
+          version_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "landing_versions_landing_id_fkey"
+            columns: ["landing_id"]
+            isOneToOne: false
+            referencedRelation: "landing_pages"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       lead_documents: {
         Row: {

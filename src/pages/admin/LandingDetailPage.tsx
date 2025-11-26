@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,6 +26,9 @@ import {
 import { LandingStatusBadge } from '@/components/admin/landings/LandingStatusBadge';
 import { LandingCategoryBadge } from '@/components/admin/landings/LandingCategoryBadge';
 import { LandingFormDialog } from '@/components/admin/landings/LandingFormDialog';
+import { LandingHealthCheck } from '@/components/admin/landings/LandingHealthCheck';
+import { LandingQuickActions } from '@/components/admin/landings/LandingQuickActions';
+import { LandingVersionHistory } from '@/components/admin/landings/LandingVersionHistory';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -40,6 +43,8 @@ const LandingDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
+  const healthCheckRef = useRef<{ runCheck: () => void }>(null);
   
   const { data: landing, isLoading } = useLandingPageById(id!);
   const duplicateMutation = useDuplicateLanding();
@@ -79,9 +84,27 @@ const LandingDetailPage = () => {
       await updateMutation.mutateAsync({
         id: landing.id,
         updates: { status: newStatus },
+        skipVersion: true, // Skip versioning for simple status changes
       });
     } catch (error) {
       // Error handled by mutation
+    }
+  };
+
+  const handleRestoreVersion = async (snapshot: any) => {
+    if (!landing) return;
+    
+    try {
+      // Restaurar desde snapshot sin crear nueva versión
+      const { id, created_at, updated_at, version, health_score, ...restoreData } = snapshot;
+      await updateMutation.mutateAsync({
+        id: landing.id,
+        updates: restoreData,
+        skipVersion: false, // Crear versión al restaurar
+      });
+      toast.success('Versión restaurada correctamente');
+    } catch (error) {
+      toast.error('Error al restaurar versión');
     }
   };
 
@@ -284,6 +307,18 @@ const LandingDetailPage = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Quick Actions */}
+            <LandingQuickActions
+              landing={landing}
+              onStatusChange={handleStatusChange}
+              onDuplicate={handleDuplicate}
+              onRunHealthCheck={() => healthCheckRef.current?.runCheck()}
+              onViewVersions={() => setVersionHistoryOpen(true)}
+            />
+
+            {/* Health Check */}
+            <LandingHealthCheck landing={landing} />
+
             {/* Metadata Card */}
             <Card>
               <CardHeader>
@@ -337,67 +372,6 @@ const LandingDetailPage = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Quick Actions Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Acciones Rápidas</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-muted-foreground">
-                    Cambiar Estado
-                  </label>
-                  <Select
-                    value={landing.status || 'draft'}
-                    onValueChange={handleStatusChange}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="draft">Borrador</SelectItem>
-                      <SelectItem value="published">Publicada</SelectItem>
-                      <SelectItem value="needs_review">Needs Review</SelectItem>
-                      <SelectItem value="archived">Archivada</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Health Check Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Health Check</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${landing.meta_title ? 'bg-green-500' : 'bg-yellow-500'}`} />
-                  <span className="text-muted-foreground">
-                    {landing.meta_title ? '✓' : '⚠'} Meta Title
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${landing.meta_description ? 'bg-green-500' : 'bg-yellow-500'}`} />
-                  <span className="text-muted-foreground">
-                    {landing.meta_description ? '✓' : '⚠'} Meta Description
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${landing.url ? 'bg-green-500' : 'bg-red-500'}`} />
-                  <span className="text-muted-foreground">
-                    {landing.url ? '✓' : '✗'} URL Configurada
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${landing.qr_code ? 'bg-green-500' : 'bg-yellow-500'}`} />
-                  <span className="text-muted-foreground">
-                    {landing.qr_code ? '✓' : '⚠'} QR Code
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
@@ -406,6 +380,14 @@ const LandingDetailPage = () => {
           open={editDialogOpen}
           onOpenChange={setEditDialogOpen}
           landing={landing}
+        />
+
+        {/* Version History Modal */}
+        <LandingVersionHistory
+          landingId={landing.id}
+          open={versionHistoryOpen}
+          onOpenChange={setVersionHistoryOpen}
+          onRestore={handleRestoreVersion}
         />
       </div>
   );

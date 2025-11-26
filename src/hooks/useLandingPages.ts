@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { shouldCreateVersion, generateChangeSummary } from './useLandingVersions';
 
 export interface LandingPage {
   id: string;
@@ -51,6 +52,7 @@ export interface LandingPage {
   ads_campaigns?: string | null;
   notes?: string | null;
   version?: number | null;
+  health_score?: number | null;
 }
 
 interface LandingFilters {
@@ -133,10 +135,37 @@ export const useUpdateLandingPage = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: async ({ id, updates }: { id: string; updates: Partial<LandingPage> }) => {
+    mutationFn: async ({ id, updates, skipVersion = false }: { id: string; updates: Partial<LandingPage>; skipVersion?: boolean }) => {
+      // 1. Obtener estado actual
+      const { data: current, error: fetchError } = await supabase
+        .from('landing_pages')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (fetchError) throw fetchError;
+      
+      // 2. Crear snapshot si hay cambios significativos
+      if (!skipVersion && shouldCreateVersion(current, updates)) {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        await supabase.from('landing_versions').insert({
+          landing_id: id,
+          version_number: current.version || 1,
+          snapshot_json: current,
+          change_summary: generateChangeSummary(current, updates),
+          created_by: user?.id,
+        });
+      }
+      
+      // 3. Aplicar updates con versión incrementada
+      const finalUpdates = skipVersion 
+        ? updates 
+        : { ...updates, version: (current.version || 1) + 1 };
+      
       const { data, error } = await supabase
         .from('landing_pages')
-        .update(updates)
+        .update(finalUpdates)
         .eq('id', id)
         .select()
         .single();
@@ -144,8 +173,10 @@ export const useUpdateLandingPage = () => {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['landing-pages'] });
+      queryClient.invalidateQueries({ queryKey: ['landing-page', variables.id] });
+      queryClient.invalidateQueries({ queryKey: ['landing-versions', variables.id] });
       toast.success('Landing page actualizada correctamente');
     },
     onError: (error) => {
