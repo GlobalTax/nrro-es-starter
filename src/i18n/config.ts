@@ -1,7 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import Backend from 'i18next-localstorage-backend';
 
 import translationES from '../../public/locales/es/common.json';
 import translationCA from '../../public/locales/ca/common.json';
@@ -20,7 +19,6 @@ const resources = {
 };
 
 i18n
-  .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -29,12 +27,6 @@ i18n
     supportedLngs: ['es', 'ca', 'en'],
     returnNull: false,
     returnEmptyString: false,
-    backend: {
-      expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 días
-      defaultVersion: 'v1.0',
-      prefix: 'i18next_res_',
-      store: typeof window !== 'undefined' ? window.localStorage : null
-    },
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
