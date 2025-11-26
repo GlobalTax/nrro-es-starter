@@ -421,6 +421,460 @@
       "description": "Envíanos tu candidatura y nos pondremos en contacto contigo"
     }
   },
+  "shared": {
+    "trustBar": {
+      "heading": "Confianza de más de 500 empresas desde 1998",
+      "subtitle": "🏛️ Navarro Tax Legal • Colegio de Abogados de Barcelona • Registro de Asesores Fiscales"
+    },
+    "whyChooseUs": {
+      "title": "¿Por qué Navarro Tax Legal?",
+      "subtitle": "No solo abogados. Tus socios de confianza en España.",
+      "experience": {
+        "title": "25+ Años de Experiencia",
+        "description": "Especializados en derecho corporativo internacional desde 1998",
+        "stat": "1998"
+      },
+      "professionals": {
+        "title": "70+ Profesionales",
+        "description": "Equipo multidisciplinar: abogados, asesores fiscales, contables",
+        "stat": "70+"
+      },
+      "international": {
+        "title": "Clientes Internacionales",
+        "description": "40% de nuestros clientes son empresas extranjeras",
+        "stat": "40%"
+      },
+      "companies": {
+        "title": "500+ Empresas Constituidas",
+        "description": "99% de tasa de éxito en registros mercantiles",
+        "stat": "99%"
+      },
+      "certifications": "Certificados por:",
+      "barAssociation": "🏛️ Colegio de Abogados de Barcelona",
+      "taxRegistry": "📋 Registro de Asesores Fiscales",
+      "legalNetwork": "🌍 Red Legal Internacional"
+    },
+    "form": {
+      "fullName": "Nombre completo *",
+      "fullNamePlaceholder": "Juan Pérez",
+      "email": "Email *",
+      "emailPlaceholder": "juan@ejemplo.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+34 600 000 000",
+      "companyName": "Nombre de la empresa",
+      "companyNamePlaceholder": "Acme Inc",
+      "country": "País de origen *",
+      "countryPlaceholder": "Selecciona tu país",
+      "timeline": "Plazo",
+      "timelinePlaceholder": "¿Cuándo lo necesitas?",
+      "companyStage": "Fase de la empresa",
+      "companyStagePlaceholder": "Tu situación actual",
+      "message": "Información adicional",
+      "messagePlaceholder": "Cuéntanos sobre tu proyecto...",
+      "submit": "Enviar",
+      "submitting": "Enviando...",
+      "privacy": "Al enviar, aceptas nuestra política de privacidad. Nunca compartiremos tus datos.",
+      "providedBy": "Servicio proporcionado por:",
+      "barRegistration": "Colegio de Abogados de Barcelona • Registro de Asesores Fiscales",
+      "validation": {
+        "nameMin": "El nombre debe tener al menos 2 caracteres",
+        "emailInvalid": "Email inválido",
+        "countryRequired": "Por favor selecciona tu país"
+      }
+    }
+  },
+  "landings": {
+    "calculator": {
+      "meta": {
+        "title": "Calculadora de Costes de Constitución España | Presupuesto Gratis",
+        "description": "Calcula los costes exactos para abrir tu empresa en España. Tasas legales, gastos gubernamentales y servicios profesionales. Obtén presupuesto instantáneo + guía gratuita."
+      },
+      "hero": {
+        "badge": "Calculadora de Costes Gratuita",
+        "title": "¿Cuánto Cuesta Abrir una Empresa en España?",
+        "subtitle": "Obtén tu presupuesto personalizado en 2 minutos. Sin tarifas ocultas, sin sorpresas."
+      },
+      "title": "Calculadora de Constitución de Empresa",
+      "step": "Paso {{current}} de {{total}}",
+      "selectStructure": "Selecciona Estructura Legal",
+      "structures": {
+        "sl": {
+          "name": "Sociedad Limitada (SL)",
+          "desc": "Más común para PYMEs",
+          "capital": "€3,000"
+        },
+        "sa": {
+          "name": "Sociedad Anónima (SA)",
+          "desc": "Para grandes empresas",
+          "capital": "€60,000"
+        },
+        "autonomo": {
+          "name": "Autónomo",
+          "desc": "Trabajador por cuenta propia",
+          "capital": "Ninguno"
+        },
+        "sucursal": {
+          "name": "Sucursal",
+          "desc": "Sucursal de empresa extranjera",
+          "capital": "Ninguno"
+        }
+      },
+      "capitalInvestment": "Inversión de Capital",
+      "capitalPlaceholder": "Selecciona capital inicial",
+      "additionalServices": "Servicios Adicionales Necesarios",
+      "services": {
+        "nie": {
+          "label": "NIE (NIF) para fundadores",
+          "price": "+€350"
+        },
+        "tax": {
+          "label": "Registro fiscal",
+          "price": "+€150"
+        },
+        "bookkeeping": {
+          "label": "Contabilidad primer año",
+          "price": "+€200/mes"
+        },
+        "office": {
+          "label": "Dirección de oficina virtual",
+          "price": "+€500/año"
+        }
+      },
+      "timeline": "¿Cuándo lo necesitas?",
+      "timelinePlaceholder": "Selecciona tu plazo",
+      "next": "Siguiente Paso",
+      "back": "Atrás",
+      "calculate": "Calcular Coste",
+      "results": {
+        "title": "Tu Coste Estimado",
+        "complete": "Constitución completa incluyendo todos los honorarios profesionales",
+        "breakdown": "Desglose de costes",
+        "government": "Tasas gubernamentales y notaría",
+        "professional": "Servicios profesionales",
+        "included": "Incluido"
+      },
+      "download": {
+        "title": "Obtén Tu Desglose Completo de Costes",
+        "subtitle": "Descarga informe PDF detallado + Lista de verificación de constitución",
+        "button": "Descargar Informe Completo"
+      },
+      "startOver": "Empezar de Nuevo"
+    },
+    "express": {
+      "meta": {
+        "title": "Registro Rápido de Empresa España | Garantía de 30 Días",
+        "description": "Servicio express de constitución de empresa. Registrada en 30 días o reembolso del 50%. Sin retrasos, sin complicaciones. Plazas limitadas disponibles."
+      },
+      "hero": {
+        "badge": "SERVICIO EXPRESS",
+        "title": "Registra Tu Empresa Española en 30 Días. Garantizado.",
+        "subtitle": "Registro acelerado. Sin retrasos. Garantía de devolución del dinero.",
+        "nextBatch": "Próximo lote Express comienza:",
+        "days": "Días",
+        "hours": "Horas",
+        "minutes": "Minutos",
+        "slotsLeft": "⚠️ Solo quedan 5 plazas este mes"
+      },
+      "comparison": {
+        "title": "DIY vs. Servicio Express",
+        "diy": "Enfoque DIY",
+        "diyDays": "60-90 Días",
+        "express": "Servicio Express",
+        "expressDays": "30 Días"
+      },
+      "whatMakesFast": {
+        "title": "¿Qué Nos Hace Rápidos?",
+        "relationships": {
+          "title": "Relaciones Preexistentes",
+          "desc": "Contactos directos en notarías, bancos y registro mercantil"
+        },
+        "manager": {
+          "title": "Gestor Express Dedicado",
+          "desc": "Tu gestor personal disponible 24/7 vía WhatsApp"
+        },
+        "digital": {
+          "title": "Proceso Digital",
+          "desc": "No necesitas viajar a España. Firma documentos online de forma segura."
+        },
+        "priority": {
+          "title": "Tramitación Prioritaria",
+          "desc": "Tu caso recibe atención inmediata en cada paso"
+        }
+      },
+      "guarantee": {
+        "title": "Garantía Express",
+        "subtitle": "Respaldamos nuestra promesa",
+        "package": "Paquete Express",
+        "price": "€2,999",
+        "everything": "Todo incluido",
+        "includes": {
+          "registration": "Registro completo de empresa",
+          "nie": "NIE para 2 fundadores",
+          "bank": "Configuración de cuenta bancaria",
+          "tax": "Registro fiscal y seguridad social",
+          "compliance": "Cumplimiento primer año",
+          "manager": "Gestor Express dedicado",
+          "support": "Soporte WhatsApp 24/7"
+        },
+        "moneyBack": "Registro en 30 Días o Reembolso del 50%",
+        "moneyBackDesc": "Si no registramos tu empresa en 30 días, recuperas el 50%. Sin preguntas.",
+        "superExpress": "Super-Express Disponible",
+        "superExpressDesc": "¿Lo necesitas aún más rápido? +€500 por registro en 20 días",
+        "button": "Reservar Servicio Express Ahora",
+        "confirmation": "Confirmación en 2 horas"
+      }
+    },
+    "nie": {
+      "meta": {
+        "title": "Obtén Tu NIE Español en 7 Días | Servicio Express",
+        "description": "Evita colas y burocracia. Servicio express de NIE para extranjeros. 99% de tasa de éxito. Garantía de devolución del dinero. Reserva ahora."
+      },
+      "hero": {
+        "badge": "🚨 DETÉN LA FRUSTRACIÓN DEL NIE",
+        "title": "Obtén Tu NIE Español Sin la Pesadilla Burocrática",
+        "subtitle": "Servicio express de 7 días. Sin colas. Sin rechazos. Garantizado.",
+        "processed": "500+ NIEs procesados",
+        "successRate": "99% tasa de éxito"
+      },
+      "painPoints": {
+        "title": "¿Cansado de la Pesadilla del NIE?",
+        "subtitle": "¿Te suena familiar? Hay una mejor manera.",
+        "points": {
+          "queues": "Colas de más de 3 horas en la oficina de inmigración",
+          "appointments": "Citas a 2 meses vista",
+          "rejections": "Solicitudes rechazadas (documentación incorrecta)",
+          "language": "Barreras idiomáticas",
+          "opportunity": "Tiempo perdido = oportunidades de negocio perdidas"
+        }
+      },
+      "process": {
+        "title": "Nuestro Proceso Express de NIE",
+        "subtitle": "De la solicitud a la entrega en solo 7 días",
+        "day1": {
+          "action": "Revisión y preparación de documentos",
+          "status": "Verificamos todo"
+        },
+        "day23": {
+          "action": "Cita asegurada",
+          "status": "Usando nuestros contactos"
+        },
+        "day45": {
+          "action": "Presentación de solicitud",
+          "status": "Vamos por ti"
+        },
+        "day67": {
+          "action": "NIE entregado",
+          "status": "A tu puerta"
+        },
+        "youDo": "Tú haces:",
+        "youDoDesc": "Enviarnos documentos escaneados",
+        "weDo": "Nosotros hacemos:",
+        "weDoDesc": "Todo lo demás"
+      },
+      "pricing": {
+        "title": "Precios Transparentes",
+        "subtitle": "Sin tarifas ocultas. Sin sorpresas.",
+        "service": "Servicio Express de NIE",
+        "price": "€350",
+        "complete": "Servicio completo",
+        "includes": {
+          "review": "Revisión y preparación de documentos",
+          "appointment": "Cita asegurada en 48h",
+          "submission": "Presentación de solicitud",
+          "delivery": "NIE entregado a tu puerta"
+        },
+        "guarantee": "Garantía de Devolución del Dinero",
+        "guaranteeDesc": "Si no conseguimos tu NIE, reembolso completo",
+        "button": "Asegurar Mi Servicio de NIE"
+      },
+      "whoNeeds": {
+        "title": "¿Quién Necesita un NIE?",
+        "reasons": {
+          "company": "Abrir una empresa en España",
+          "property": "Comprar propiedad",
+          "bank": "Abrir una cuenta bancaria",
+          "hiring": "Contratar empleados",
+          "contracts": "Firmar contratos",
+          "taxes": "Registrarse para impuestos"
+        }
+      }
+    },
+    "techStartup": {
+      "meta": {
+        "title": "Lanza Tu Startup Tecnológica en España | Paquete de Constitución Completo",
+        "description": "Constitución todo en uno para startups: Registro de empresa, estrategia fiscal, soporte de visado. Diseñado para fundadores tech. Paquete de €3,500. 30 días."
+      },
+      "hero": {
+        "badge": "PARA FUNDADORES TECH",
+        "title": "Lanza Tu Startup Tecnológica en España",
+        "subtitle": "Constitución legal + Estrategia fiscal + Soporte de visado. Diseñado para fundadores.",
+        "partners": {
+          "techCity": "🤝 Socio de Barcelona Tech City",
+          "accio": "🚀 Certificado por ACCIÓ",
+          "mwc": "📱 Mobile World Capital"
+        }
+      },
+      "whySpain": {
+        "title": "¿Por Qué España para Startups Tecnológicas?",
+        "gateway": {
+          "title": "Puerta al Mercado de la UE",
+          "desc": "500M consumidores, acceso al mercado único",
+          "stat": "500M"
+        },
+        "costs": {
+          "title": "40% Costes Más Bajos",
+          "desc": "Que Londres/Berlín/París",
+          "stat": "-40%"
+        },
+        "talent": {
+          "title": "Talento + Estilo de Vida",
+          "desc": "Menor rotación de empleados, equipos felices",
+          "stat": "95%"
+        },
+        "ecosystem": {
+          "title": "Ecosistema en Crecimiento",
+          "desc": "4,000+ startups solo en Barcelona",
+          "stat": "4,000+"
+        }
+      },
+      "package": {
+        "title": "Paquete Completo de Constitución de Startup",
+        "subtitle": "Todo lo que necesitas para lanzarte correctamente",
+        "price": "€3,500",
+        "duration": "Constitución completa en 30 días",
+        "payment": "💳 50% por adelantado • 💳 50% en el registro",
+        "includes": {
+          "sl": "Registro de empresa SL",
+          "nie": "NIE para 2 fundadores",
+          "tax": "Estrategia de optimización fiscal",
+          "enisa": "Soporte de solicitud de préstamo ENISA",
+          "capTable": "Estructura de cap table amigable para fundadores",
+          "esop": "Plantilla de plan de opciones sobre acciones",
+          "compliance": "Cumplimiento fiscal primer año",
+          "intro": "Intro a inversores y aceleradoras"
+        },
+        "ecosystem": {
+          "title": "Acceso al Ecosistema Tech",
+          "subtitle": "No somos solo abogados, somos parte del ecosistema. Obtén intros a:",
+          "spaces": ["22@ Barcelona", "Pier01", "IESE Angels", "Antai Venture Builder", "Barcelona Activa"]
+        },
+        "button": "Obtener Presupuesto de Startup"
+      },
+      "faqs": {
+        "title": "FAQs Específicos de Tech",
+        "fundraising": {
+          "q": "¿Puedo recaudar financiación antes de registrarme?",
+          "a": "¡Sí! Puedes firmar term sheets y LOIs. Ayudamos a estructurar el cap table correctamente desde el primer día."
+        },
+        "stockOptions": {
+          "q": "¿Cómo funcionan las opciones sobre acciones en España?",
+          "a": "Configuramos un ESOP (Plan de Opciones sobre Acciones para Empleados) adecuado que es amigable para inversores y fiscalmente eficiente para los empleados."
+        },
+        "beckham": {
+          "q": "¿Qué pasa con la Ley Beckham?",
+          "a": "Los fundadores extranjeros pueden pagar solo el 24% de impuestos (vs 47%) durante los primeros 6 años. Gestionamos la solicitud."
+        },
+        "remote": {
+          "q": "¿Puede mi equipo trabajar de forma remota?",
+          "a": "¡Sí! España ofrece visados de nómada digital. Ayudamos con el papeleo para tu equipo internacional."
+        }
+      },
+      "caseStudy": {
+        "badge": "Historia de Éxito",
+        "title": "Del Reino Unido a Barcelona en 30 Días",
+        "client": "Cliente: Startup SaaS, 3 fundadores del Reino Unido",
+        "problem": "Problema: Cap table complejo con compromisos de inversores, necesitaba estructura lista para inversores",
+        "solution": "Solución: Constitución SL limpia + SOPs + €500k ENISA asegurados",
+        "result": "Resultado: Serie A en 18 meses, ahora 25 empleados"
+      }
+    },
+    "herencias": {
+      "meta": {
+        "title": "Abogados de Herencias en Barcelona | Expertos en Sucesiones Cataluña",
+        "description": "Abogados especializados en herencias en Barcelona. Tramitación completa de herencias según el Codi Civil Català. Legítima catalana, impuestos, conflictos. Consulta gratuita."
+      },
+      "hero": {
+        "badge": "Expertos en Derecho Sucesorio Catalán",
+        "title": "Abogados de Herencias en Barcelona. Expertos en Sucesiones en Cataluña.",
+        "subtitle": "Tramitamos tu herencia de principio a fin: declaración de herederos, reparto, legítima catalana, impuestos y conflictos familiares.",
+        "calculateButton": "Calcular mi herencia en Cataluña",
+        "contactButton": "Hablar con un abogado ahora"
+      },
+      "calculator": {
+        "title": "Calcula ahora cuánto te corresponde según el Codi Civil Català",
+        "subtitle": "En menos de 3 minutos, estimación automática del reparto entre herederos",
+        "comingSoon": "Calculadora interactiva próximamente disponible",
+        "requestButton": "Solicitar cálculo personalizado ahora"
+      },
+      "faq": {
+        "title": "Preguntas frecuentes sobre herencias en Cataluña"
+      },
+      "contact": {
+        "title": "¿Necesitas asesoramiento sobre tu herencia?",
+        "subtitle": "Primera consulta gratuita. Resuelve tus dudas sin compromiso.",
+        "button": "Solicitar consulta gratuita"
+      }
+    },
+    "orquest": {
+      "meta": {
+        "title": "Orquest + KairosHR - Solución Integral de Gestión Laboral",
+        "description": "La combinación perfecta de Orquest para optimización de turnos y KairosHR para gestión de recursos humanos"
+      },
+      "hero": {
+        "title": "Orquest + KairosHR: La combinación ganadora",
+        "titleLine2": "para franquiciados McDonald's",
+        "subtitle": "Planifica con inteligencia. Gestiona con seguridad. Todo bajo control.",
+        "ctaButton": "Ver demo integrada ↓"
+      },
+      "comparison": {
+        "title": "Qué hace cada solución",
+        "orquest": {
+          "title": "Orquest",
+          "subtitle": "Planificación y optimización de plantilla",
+          "features": {
+            "forecasting": "Forecasting inteligente de demanda",
+            "scheduling": "Scheduling automatizado",
+            "optimization": "Optimización de costes laborales",
+            "analytics": "Análisis predictivo"
+          }
+        },
+        "kairos": {
+          "title": "KairosHR",
+          "subtitle": "Gestión laboral y cumplimiento normativo",
+          "features": {
+            "biometric": "Control de presencia biométrico",
+            "signature": "Firma digital certificada",
+            "documentation": "Documentación laboral completa",
+            "integration": "Integración con asesoría"
+          }
+        }
+      },
+      "benefits": {
+        "title": "Beneficios de la integración",
+        "time": {
+          "title": "Reduce tiempo administrativo",
+          "desc": "Automatiza procesos repetitivos y dedica más tiempo a tu negocio."
+        },
+        "compliance": {
+          "title": "Cumple con la normativa",
+          "desc": "Registro de jornada legal, firma certificada y trazabilidad completa."
+        },
+        "sanctions": {
+          "title": "Evita sanciones laborales",
+          "desc": "Sistema homologado que minimiza riesgos legales y multas."
+        },
+        "integration": {
+          "title": "Integración total",
+          "desc": "Planificación y documentación en un mismo flujo de trabajo."
+        }
+      },
+      "demo": {
+        "title": "Solicita una demo combinada",
+        "subtitle": "Descubre cómo Orquest y KairosHR se integran para optimizar la gestión del personal en tu restaurante.",
+        "button": "Solicitar demo →"
+      }
+    }
+  },
   "leyBeckham": {
     "seo": {
       "title": "Ley Beckham - Régimen Fiscal Especial para Impatriados en España",
