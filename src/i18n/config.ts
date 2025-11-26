@@ -27,6 +27,8 @@ i18n
     resources,
     fallbackLng: 'es',
     supportedLngs: ['es', 'ca', 'en'],
+    returnNull: false,
+    returnEmptyString: false,
     backend: {
       expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 días
       defaultVersion: 'v1.0',
@@ -39,6 +41,13 @@ i18n
     },
     interpolation: {
       escapeValue: false
+    },
+    debug: import.meta.env.DEV,
+    saveMissing: import.meta.env.DEV,
+    missingKeyHandler: (lng, ns, key) => {
+      if (import.meta.env.DEV) {
+        console.warn(`⚠️ Missing i18n key: ${key} in ${lng}`);
+      }
     }
   });
 

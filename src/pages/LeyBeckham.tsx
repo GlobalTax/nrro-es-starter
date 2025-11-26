@@ -36,16 +36,16 @@ const LeyBeckham = () => {
 
   // Generate FAQs for schema
   const faqs = Array.from({ length: 8 }, (_, i) => ({
-    question: t(`faq.q${i + 1}`),
-    answer: t(`faq.a${i + 1}`)
+    question: t(`leyBeckham.faq.q${i + 1}`),
+    answer: t(`leyBeckham.faq.a${i + 1}`)
   }));
 
   return (
     <>
       <Meta
-        title={t("seo.title")}
-        description={t("seo.description")}
-        keywords={t("seo.keywords")}
+        title={t("leyBeckham.seo.title")}
+        description={t("leyBeckham.seo.description")}
+        keywords={t("leyBeckham.seo.keywords")}
       />
       <BreadcrumbSchema items={[
         { name: "Inicio", url: "https://navarrotax.legal/" },
@@ -83,25 +83,25 @@ const LeyBeckham = () => {
             <div className="grid lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
               <div className="lg:col-span-3">
                 <p className="font-mono font-light text-sm md:text-base tracking-tight text-foreground/70 pb-3 border-b border-border/50">
-                  {t("whatIs.eyebrow")}
+                  {t("leyBeckham.whatIs.eyebrow")}
                 </p>
               </div>
 
               <div className="lg:col-span-4">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight">
-                  {t("whatIs.title")}
+                  {t("leyBeckham.whatIs.title")}
                 </h2>
               </div>
 
               <div className="lg:col-span-5 space-y-4">
                 <p className="text-lg font-medium">
-                  {t("whatIs.p1")}
+                  {t("leyBeckham.whatIs.p1")}
                 </p>
                 <p className="text-body">
-                  {t("whatIs.p2")}
+                  {t("leyBeckham.whatIs.p2")}
                 </p>
                 <p className="text-body">
-                  {t("whatIs.p3")}
+                  {t("leyBeckham.whatIs.p3")}
                 </p>
               </div>
             </div>
@@ -183,39 +183,39 @@ const LeyBeckham = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
               <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
-                {t("whyUs.eyebrow")}
+                {t("leyBeckham.whyUs.eyebrow")}
               </p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight mb-4">
-                {t("whyUs.title")}
+                {t("leyBeckham.whyUs.title")}
               </h2>
               <p className="text-body max-w-2xl mx-auto">
-                {t("whyUs.subtitle")}
+                {t("leyBeckham.whyUs.subtitle")}
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
               <StatCard
-                label={t("whyUs.stat1.label")}
-                value={t("whyUs.stat1.value")}
-                description={t("whyUs.stat1.description")}
+                label={t("leyBeckham.whyUs.stat1.label")}
+                value={t("leyBeckham.whyUs.stat1.value")}
+                description={t("leyBeckham.whyUs.stat1.description")}
                 delay={0}
               />
               <StatCard
-                label={t("whyUs.stat2.label")}
-                value={t("whyUs.stat2.value")}
-                description={t("whyUs.stat2.description")}
+                label={t("leyBeckham.whyUs.stat2.label")}
+                value={t("leyBeckham.whyUs.stat2.value")}
+                description={t("leyBeckham.whyUs.stat2.description")}
                 delay={100}
               />
               <StatCard
-                label={t("whyUs.stat3.label")}
-                value={t("whyUs.stat3.value")}
-                description={t("whyUs.stat3.description")}
+                label={t("leyBeckham.whyUs.stat3.label")}
+                value={t("leyBeckham.whyUs.stat3.value")}
+                description={t("leyBeckham.whyUs.stat3.description")}
                 delay={200}
               />
               <StatCard
-                label={t("whyUs.stat4.label")}
-                value={t("whyUs.stat4.value")}
-                description={t("whyUs.stat4.description")}
+                label={t("leyBeckham.whyUs.stat4.label")}
+                value={t("leyBeckham.whyUs.stat4.value")}
+                description={t("leyBeckham.whyUs.stat4.description")}
                 delay={300}
               />
             </div>
@@ -234,10 +234,10 @@ const LeyBeckham = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight mb-4">
-                {t("finalCta.title")}
+                {t("leyBeckham.finalCta.title")}
               </h2>
               <p className="text-lead mb-8">
-                {t("finalCta.subtitle")}
+                {t("leyBeckham.finalCta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -249,11 +249,11 @@ const LeyBeckham = () => {
                     document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
                   }}
                 >
-                  {t("finalCta.button")}
+                  {t("leyBeckham.finalCta.button")}
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-6">
-                {t("finalCta.footer")}
+                {t("leyBeckham.finalCta.footer")}
               </p>
             </div>
           </div>

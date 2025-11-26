@@ -41,7 +41,8 @@
     "legal": "Avís Legal",
     "privacy": "Privacitat",
     "cookies": "Cookies",
-    "terms": "Condicions"
+    "terms": "Condicions",
+    "rights": "Tots els drets reservats"
   },
   "home": {
     "meta": {
@@ -152,7 +153,9 @@
     },
     "empty": {
       "title": "No hem trobat serveis",
-      "description": "Prova canviant el terme o els filtres"
+      "description": "Prova canviant el terme o els filtres",
+      "error": "Error en carregar serveis",
+      "errorDescription": "Si us plau, intenta recarregar la pàgina"
     },
     "card": {
       "learnMore": "Saber més",
@@ -330,6 +333,327 @@
       "overline": "Aplica Ara",
       "title": "Uneix-te al Nostre Equip",
       "description": "Envia'ns la teva candidatura i ens posarem en contacte amb tu"
+    }
+  },
+  "leyBeckham": {
+    "seo": {
+      "title": "Llei Beckham - Règim Fiscal Especial per a Impatriats a Espanya",
+      "description": "Assessoria especialitzada en la Llei Beckham: redueix el teu IRPF al 24% durant 6 anys en traslladar-te a Espanya. Experts en fiscalitat per a impatriats a Barcelona.",
+      "keywords": "llei beckham, règim fiscal especial impatriats, IRPF 24%, fiscalitat espanya, trasllat a espanya, impostos impatriats barcelona"
+    },
+    "hero": {
+      "badge": "Llei Beckham",
+      "title": "Optimitza la teva fiscalitat en traslladar-te a Espanya",
+      "subtitle": "Redueix la teva càrrega fiscal al 24% d'IRPF durant 6 anys amb el règim especial per a impatriats. T'acompanyem en tot el procés.",
+      "cta": {
+        "consult": "Sol·licitar Consulta Gratuïta",
+        "requirements": "Veure Requisits"
+      },
+      "stat": {
+        "success": "Taxa d'èxit",
+        "years": "anys",
+        "experience": "d'experiència",
+        "tax": "Tipus fix IRPF"
+      }
+    },
+    "benefits": {
+      "eyebrow": "Avantatges",
+      "title": "Beneficis del Règim Beckham",
+      "subtitle": "Descobreix els principals avantatges fiscals d'aquest règim especial",
+      "tax": {
+        "title": "Tipus fix del 24%",
+        "description": "Tributaràs al 24% sobre els primers 600.000€ de rendiments del treball en lloc del tipus progressiu general"
+      },
+      "duration": {
+        "title": "Fins a 6 anys",
+        "description": "Podràs beneficiar-te del règim durant l'any de canvi de residència i els 5 anys següents"
+      },
+      "worldwide": {
+        "title": "Rendes mundials exemptes",
+        "description": "Només tributaràs per rendes obtingudes a Espanya, quedant exemptes les rendes de l'estranger"
+      },
+      "security": {
+        "title": "Seguretat jurídica",
+        "description": "Règim recolzat per normativa específica i consolidada jurisprudència"
+      }
+    },
+    "whatIs": {
+      "eyebrow": "Què és?",
+      "title": "Règim Fiscal Especial per a Impatriats",
+      "p1": "La Llei Beckham és un règim fiscal especial dissenyat per atreure talent internacional a Espanya.",
+      "p2": "Permet als professionals que traslladen la seva residència a Espanya tributar com a no residents durant un període màxim de 6 anys, aplicant un tipus fix del 24% sobre els rendiments del treball obtinguts a Espanya.",
+      "p3": "Aquest règim representa un important estalvi fiscal front a l'escala progressiva general de l'IRPF, que pot arribar fins al 47% en algunes comunitats autònomes."
+    },
+    "requirements": {
+      "eyebrow": "Requisits",
+      "title": "Pots acollir-te a la Llei Beckham?",
+      "subtitle": "Verifica si compleixes els requisits necessaris per beneficiar-te d'aquest règim",
+      "req1": {
+        "title": "No haver estat resident fiscal a Espanya",
+        "description": "No has d'haver estat resident fiscal a Espanya durant els 10 anys anteriors al trasllat"
+      },
+      "req2": {
+        "title": "Trasllat per motius laborals",
+        "description": "El desplaçament a Espanya ha de produir-se com a conseqüència d'un contracte de treball, nomenament com a administrador o inici d'activitat econòmica"
+      },
+      "req3": {
+        "title": "Convertir-se en resident fiscal a Espanya",
+        "description": "Hauràs d'adquirir la residència fiscal a Espanya segons els criteris de l'IRPF (més de 183 dies l'any o centre d'interessos econòmics)"
+      },
+      "req4": {
+        "title": "Treballs realitzats en territori espanyol",
+        "description": "Els treballs han de ser realitzats efectivament a Espanya per a una empresa o entitat establerta en territori espanyol"
+      },
+      "req5": {
+        "title": "Sol·licitud en termini",
+        "description": "Has de presentar la sol·licitud dins dels 6 mesos següents a l'inici de la teva activitat laboral a Espanya"
+      },
+      "req6": {
+        "title": "No realitzar activitats a través d'Establiment Permanent",
+        "description": "Si ets empresari o professional, no pots realitzar la teva activitat a través d'un establiment permanent que ja estigués a Espanya abans del teu trasllat"
+      },
+      "req7": {
+        "title": "Contracte de treball o nomenament",
+        "description": "Necessites tenir un contracte de treball, ser nomenat administrador d'una societat o iniciar una activitat econòmica a Espanya"
+      },
+      "req8": {
+        "title": "No estar en situacions d'incompatibilitat",
+        "description": "No pots estar en situacions específiques que la llei considera incompatibles amb aquest règim"
+      },
+      "cta": {
+        "text": "No estàs segur si compleixes els requisits? Podem ajudar-te a avaluar-ho",
+        "button": "Consultar el meu cas"
+      }
+    },
+    "profiles": {
+      "eyebrow": "Perfils",
+      "title": "Qui pot beneficiar-se?",
+      "subtitle": "Perfils professionals que solen acollir-se al règim Beckham",
+      "executives": {
+        "title": "Executius internacionals",
+        "description": "Directius de multinacionals que traslladen la seva residència a Espanya per ocupar llocs d'alta responsabilitat",
+        "badge": "Alt impacte"
+      },
+      "tech": {
+        "title": "Professionals tecnològics",
+        "description": "Desenvolupadors, enginyers i especialistes en tecnologia que s'incorporen a empreses espanyoles o startups",
+        "badge": "Alta demanda"
+      },
+      "financial": {
+        "title": "Sector financer",
+        "description": "Professionals del sector financer, banca d'inversió i gestió d'actius que es traslladen a Espanya",
+        "badge": "Especialitzat"
+      },
+      "consultants": {
+        "title": "Consultors i assessors",
+        "description": "Consultors estratègics i assessors especialitzats que presten serveis des d'Espanya",
+        "badge": "Flexible"
+      },
+      "entrepreneurs": {
+        "title": "Emprenedors",
+        "description": "Fundadors de startups i empresaris que estableixen la seva activitat econòmica a Espanya",
+        "badge": "Innovador"
+      },
+      "researchers": {
+        "title": "Investigadors",
+        "description": "Professionals d'I+D+i i sector acadèmic que s'incorporen a centres espanyols",
+        "badge": "Qualificat"
+      }
+    },
+    "comparison": {
+      "eyebrow": "Comparativa",
+      "title": "Estalvi fiscal real amb la Llei Beckham",
+      "subtitle": "Compara quant pagaries amb l'IRPF general front al règim Beckham",
+      "table": {
+        "income": "Ingressos anuals",
+        "generalTax": "IRPF General",
+        "beckhamTax": "Llei Beckham",
+        "savings": "Estalvi anual",
+        "rate": "Tipus efectiu"
+      },
+      "irpf": {
+        "title": "IRPF General (Escala progressiva)",
+        "description": "Règim fiscal ordinari a Espanya",
+        "point1": "Tipus des del 19% fins al 47% segons trams",
+        "point2": "Tributació per renda mundial",
+        "point3": "Complexitat en la declaració",
+        "point4": "Deduccions i reduccions limitades"
+      },
+      "beckham": {
+        "title": "Llei Beckham (Tipus fix 24%)",
+        "description": "Règim especial per a impatriats",
+        "point1": "Tipus fix del 24% fins a 600.000€",
+        "point2": "Només rendes de font espanyola",
+        "point3": "Declaració simplificada",
+        "point4": "Estalvi fiscal significatiu"
+      }
+    },
+    "process": {
+      "eyebrow": "Procés",
+      "title": "Com t'ajudem a aplicar la Llei Beckham",
+      "subtitle": "Procés complet d'assessorament i tramitació",
+      "step1": {
+        "title": "Anàlisi de viabilitat",
+        "description": "Avaluem el teu cas personal i verifiquem el compliment de tots els requisits",
+        "duration": "1-2 dies",
+        "point1": "Revisió de la teva situació personal i professional",
+        "point2": "Verificació de requisits legals",
+        "point3": "Estimació de l'estalvi fiscal potencial",
+        "point4": "Identificació de possibles obstacles"
+      },
+      "step2": {
+        "title": "Planificació fiscal",
+        "description": "Dissenyem l'estratègia òptima per maximitzar els beneficis del règim",
+        "duration": "3-5 dies",
+        "point1": "Planificació de l'estructura laboral",
+        "point2": "Optimització de rendes i patrimoni",
+        "point3": "Coordinació amb altres règims fiscals",
+        "point4": "Timeline d'implementació"
+      },
+      "step3": {
+        "title": "Preparació documentació",
+        "description": "Recopilem i preparem tota la documentació necessària per a la sol·licitud",
+        "duration": "5-7 dies",
+        "point1": "Recopilació de documents justificatius",
+        "point2": "Preparació de contractes i acords",
+        "point3": "Certificats de residència fiscal",
+        "point4": "Memòries i documents addicionals"
+      },
+      "step4": {
+        "title": "Presentació davant Hisenda",
+        "description": "Gestionem la presentació formal de la teva sol·licitud davant l'Agència Tributària",
+        "duration": "1-2 dies",
+        "point1": "Presentació telemàtica del model 149",
+        "point2": "Adjuntar documentació justificativa",
+        "point3": "Seguiment del registre",
+        "point4": "Confirmació de recepció"
+      },
+      "step5": {
+        "title": "Seguiment i resolució",
+        "description": "Fem seguiment del teu expedient i gestionem qualsevol requeriment",
+        "duration": "2-4 mesos",
+        "point1": "Monitorització de l'estat de l'expedient",
+        "point2": "Resposta a requeriments d'Hisenda",
+        "point3": "Aportació de documentació addicional",
+        "point4": "Resolució final de la sol·licitud"
+      },
+      "step6": {
+        "title": "Assessorament continu",
+        "description": "T'acompanyem durant tot el període de vigència del règim",
+        "duration": "6 anys",
+        "point1": "Declaracions anuals d'IRNR",
+        "point2": "Optimització fiscal contínua",
+        "point3": "Compliment d'obligacions",
+        "point4": "Planificació de sortida del règim"
+      },
+      "cta": {
+        "title": "Preparat per començar?",
+        "description": "Sol·licita una consulta gratuïta i t'explicarem el teu cas particular",
+        "button": "Sol·licitar consulta"
+      }
+    },
+    "faq": {
+      "eyebrow": "Preguntes freqüents",
+      "title": "Dubtes sobre la Llei Beckham",
+      "subtitle": "Respostes a les preguntes més comunes sobre el règim d'impatriats",
+      "q1": "Què és exactament la Llei Beckham?",
+      "a1": "És un règim fiscal especial que permet als professionals que traslladen la seva residència a Espanya tributar com a no residents durant un màxim de 6 anys, aplicant un tipus fix del 24% sobre els rendiments del treball obtinguts a Espanya, en lloc de l'escala progressiva general de l'IRPF que pot arribar fins al 47%.",
+      "q2": "Quant temps puc beneficiar-me de la Llei Beckham?",
+      "a2": "Pots acollir-te a aquest règim durant el període impositiu en què adquireixis la residència fiscal a Espanya i els 5 períodes impositius següents, el que suposa un màxim de 6 anys naturals complets.",
+      "q3": "Quin tipus de rendes tributen al 24%?",
+      "a3": "El tipus del 24% s'aplica sobre els rendiments del treball i d'activitats econòmiques obtinguts a Espanya fins a 600.000€. Per sobre d'aquesta quantitat, el tipus és del 47%. Els rendiments del capital i guanys patrimonials tributen al 19-26% segons normativa de no residents.",
+      "q4": "He de tributar per les meves rendes de l'estranger?",
+      "a4": "No. Un dels principals avantatges de la Llei Beckham és que només tributaràs per les rendes de font espanyola. Les rendes obtingudes a l'estranger (dividends, interessos, lloguers, etc.) queden exemptes de tributació a Espanya, encara que has de declarar-les com a renda exempta.",
+      "q5": "Quan he de presentar la sol·licitud?",
+      "a5": "Has de presentar la sol·licitud (model 149) en el termini de 6 mesos des de l'inici de la teva activitat laboral a Espanya. És fonamental complir aquest termini perquè, en cas contrari, perdràs la possibilitat d'acollir-te al règim.",
+      "q6": "Puc acollir-me si ja porto temps a Espanya?",
+      "a6": "No. Un dels requisits és no haver estat resident fiscal a Espanya durant els 10 anys anteriors. Si ja ets resident, no pots acollir-te a aquest règim. És important planificar el trasllat amb antelació.",
+      "q7": "Què passa si treballo per a una empresa estrangera?",
+      "a7": "Pots acollir-te al règim sempre que els treballs es realitzin efectivament en territori espanyol i per a empreses o entitats residents a Espanya. Si treballes en remot per a una empresa estrangera, la situació és més complexa i s'ha d'analitzar cas per cas.",
+      "q8": "Puc ser administrador d'una empresa i acollir-me al règim?",
+      "a8": "Sí, el règim permet acollir-se a qui són nomenats administradors d'entitats a Espanya, sempre que es compleixin la resta de requisits. És una opció molt utilitzada per directius internacionals i emprenedors.",
+      "cta": {
+        "text": "Tens més dubtes sobre el teu cas particular?",
+        "button": "Contactar amb un expert"
+      }
+    },
+    "form": {
+      "eyebrow": "Contacte",
+      "title": "Sol·licita la teva consulta gratuïta",
+      "subtitle": "Explica'ns el teu cas i t'assessorarem sobre la teva elegibilitat i el procés",
+      "name": "Nom complet",
+      "namePlaceholder": "El teu nom",
+      "email": "Email",
+      "emailPlaceholder": "el.teu@email.com",
+      "phone": "Telèfon",
+      "phonePlaceholder": "+34 / +1 / etc.",
+      "country": "País d'origen",
+      "countryPlaceholder": "Selecciona el teu país actual",
+      "jobSituation": "Situació laboral",
+      "jobSituationPlaceholder": "Selecciona una opció",
+      "jobOptions": {
+        "employee": "Empleat per compte aliè",
+        "freelance": "Autònom / Freelance",
+        "business_owner": "Propietari d'empresa",
+        "executive": "Executiu / Administrador",
+        "looking": "Buscant feina a Espanya"
+      },
+      "transferDate": "Data prevista de trasllat",
+      "transferDatePlaceholder": "Quan planegues traslladar-te?",
+      "transferOptions": {
+        "immediate": "Immediat (ja sóc a Espanya)",
+        "1_3_months": "1-3 mesos",
+        "3_6_months": "3-6 mesos",
+        "6_12_months": "6-12 mesos",
+        "12_plus_months": "Més de 12 mesos",
+        "undecided": "Encara no decidit"
+      },
+      "message": "Missatge (opcional)",
+      "messagePlaceholder": "Explica'ns més sobre la teva situació, dubtes específics, etc.",
+      "privacy": "Accepto la política de privacitat i el tractament de les meves dades",
+      "submit": "Enviar sol·licitud",
+      "submitting": "Enviant...",
+      "success": {
+        "title": "Sol·licitud enviada!",
+        "description": "Hem rebut la teva consulta. El nostre equip especialitzat en Llei Beckham es posarà en contacte amb tu en les properes 24-48 hores."
+      },
+      "error": {
+        "title": "Error en enviar",
+        "description": "Ha ocorregut un error. Si us plau, torna-ho a intentar o contacta'ns directament."
+      },
+      "confidentiality": "Tota la informació proporcionada és estrictament confidencial i serà utilitzada únicament per avaluar el teu cas.",
+      "responseTime": "Temps de resposta: 24-48 hores laborables"
+    },
+    "whyUs": {
+      "eyebrow": "Per què triar-nos",
+      "title": "Experts en Llei Beckham",
+      "subtitle": "Més de 25 anys d'experiència assessorant en fiscalitat internacional i règim d'impatriats",
+      "stat1": {
+        "label": "Taxa d'èxit",
+        "value": "98%",
+        "description": "de sol·licituds aprovades"
+      },
+      "stat2": {
+        "label": "Anys d'experiència",
+        "value": "25+",
+        "description": "en fiscalitat internacional"
+      },
+      "stat3": {
+        "label": "Estalvi mitjà",
+        "value": "24%",
+        "description": "front a IRPF general"
+      },
+      "stat4": {
+        "label": "Temps mitjà",
+        "value": "45 dies",
+        "description": "des de consulta a presentació"
+      }
+    },
+    "finalCta": {
+      "title": "Preparat per optimitzar la teva fiscalitat a Espanya?",
+      "subtitle": "Sol·licita una consulta gratuïta i descobreix quant pots estalviar amb la Llei Beckham",
+      "button": "Sol·licitar consulta gratuïta",
+      "footer": "Consulta inicial sense compromís • Resposta en 24-48h • Assessorament personalitzat"
     }
   }
 }

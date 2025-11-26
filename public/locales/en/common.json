@@ -41,7 +41,8 @@
     "legal": "Legal Notice",
     "privacy": "Privacy",
     "cookies": "Cookies",
-    "terms": "Terms"
+    "terms": "Terms",
+    "rights": "All rights reserved"
   },
   "home": {
     "meta": {
@@ -152,7 +153,9 @@
     },
     "empty": {
       "title": "No services found",
-      "description": "Try changing the search term or filters"
+      "description": "Try changing the search term or filters",
+      "error": "Error loading services",
+      "errorDescription": "Please try reloading the page"
     },
     "card": {
       "learnMore": "Learn more",
@@ -330,6 +333,327 @@
       "overline": "Apply Now",
       "title": "Join Our Team",
       "description": "Send us your application and we will contact you"
+    }
+  },
+  "leyBeckham": {
+    "seo": {
+      "title": "Beckham Law - Special Tax Regime for Expats in Spain",
+      "description": "Specialized advisory on Beckham Law: reduce your income tax to 24% for 6 years when moving to Spain. Experts in expat taxation in Barcelona.",
+      "keywords": "beckham law, special tax regime expats, 24% income tax, spain taxation, moving to spain, expat taxes barcelona"
+    },
+    "hero": {
+      "badge": "Beckham Law",
+      "title": "Optimize your taxes when moving to Spain",
+      "subtitle": "Reduce your tax burden to 24% income tax for 6 years with the special regime for expats. We guide you through the entire process.",
+      "cta": {
+        "consult": "Request Free Consultation",
+        "requirements": "View Requirements"
+      },
+      "stat": {
+        "success": "Success rate",
+        "years": "years",
+        "experience": "of experience",
+        "tax": "Fixed income tax"
+      }
+    },
+    "benefits": {
+      "eyebrow": "Benefits",
+      "title": "Beckham Regime Advantages",
+      "subtitle": "Discover the main tax benefits of this special regime",
+      "tax": {
+        "title": "Fixed 24% rate",
+        "description": "You'll pay 24% on the first €600,000 of employment income instead of the progressive general rate"
+      },
+      "duration": {
+        "title": "Up to 6 years",
+        "description": "You can benefit from the regime during the year of residence change and the following 5 years"
+      },
+      "worldwide": {
+        "title": "Foreign income exempt",
+        "description": "You'll only pay taxes on Spanish-sourced income, with foreign income being exempt"
+      },
+      "security": {
+        "title": "Legal certainty",
+        "description": "Regime backed by specific regulations and established case law"
+      }
+    },
+    "whatIs": {
+      "eyebrow": "What is it?",
+      "title": "Special Tax Regime for Expats",
+      "p1": "The Beckham Law is a special tax regime designed to attract international talent to Spain.",
+      "p2": "It allows professionals who transfer their residence to Spain to be taxed as non-residents for a maximum period of 6 years, applying a fixed rate of 24% on employment income obtained in Spain.",
+      "p3": "This regime represents significant tax savings compared to the general progressive income tax scale, which can reach up to 47% in some autonomous communities."
+    },
+    "requirements": {
+      "eyebrow": "Requirements",
+      "title": "Can you apply for the Beckham Law?",
+      "subtitle": "Check if you meet the necessary requirements to benefit from this regime",
+      "req1": {
+        "title": "Not having been a tax resident in Spain",
+        "description": "You must not have been a tax resident in Spain during the 10 years prior to the transfer"
+      },
+      "req2": {
+        "title": "Transfer for work reasons",
+        "description": "The move to Spain must occur as a result of an employment contract, appointment as director, or start of economic activity"
+      },
+      "req3": {
+        "title": "Become a tax resident in Spain",
+        "description": "You must acquire tax residence in Spain according to income tax criteria (more than 183 days per year or center of economic interests)"
+      },
+      "req4": {
+        "title": "Work performed in Spanish territory",
+        "description": "Work must be effectively performed in Spain for a company or entity established in Spanish territory"
+      },
+      "req5": {
+        "title": "Application within deadline",
+        "description": "You must submit the application within 6 months following the start of your work activity in Spain"
+      },
+      "req6": {
+        "title": "Not conducting activities through a Permanent Establishment",
+        "description": "If you're a business owner or professional, you can't conduct your activity through a permanent establishment that was already in Spain before your transfer"
+      },
+      "req7": {
+        "title": "Employment contract or appointment",
+        "description": "You need to have an employment contract, be appointed as a company director, or start an economic activity in Spain"
+      },
+      "req8": {
+        "title": "Not in incompatibility situations",
+        "description": "You cannot be in specific situations that the law considers incompatible with this regime"
+      },
+      "cta": {
+        "text": "Not sure if you meet the requirements? We can help you evaluate",
+        "button": "Consult my case"
+      }
+    },
+    "profiles": {
+      "eyebrow": "Profiles",
+      "title": "Who can benefit?",
+      "subtitle": "Professional profiles that typically apply for the Beckham regime",
+      "executives": {
+        "title": "International executives",
+        "description": "Multinational executives who transfer their residence to Spain to occupy high-responsibility positions",
+        "badge": "High impact"
+      },
+      "tech": {
+        "title": "Tech professionals",
+        "description": "Developers, engineers and technology specialists joining Spanish companies or startups",
+        "badge": "High demand"
+      },
+      "financial": {
+        "title": "Financial sector",
+        "description": "Financial sector professionals, investment banking and asset management moving to Spain",
+        "badge": "Specialized"
+      },
+      "consultants": {
+        "title": "Consultants and advisors",
+        "description": "Strategic consultants and specialized advisors providing services from Spain",
+        "badge": "Flexible"
+      },
+      "entrepreneurs": {
+        "title": "Entrepreneurs",
+        "description": "Startup founders and business owners establishing their economic activity in Spain",
+        "badge": "Innovative"
+      },
+      "researchers": {
+        "title": "Researchers",
+        "description": "R&D professionals and academics joining Spanish centers",
+        "badge": "Qualified"
+      }
+    },
+    "comparison": {
+      "eyebrow": "Comparison",
+      "title": "Real tax savings with the Beckham Law",
+      "subtitle": "Compare how much you'd pay with general income tax versus the Beckham regime",
+      "table": {
+        "income": "Annual income",
+        "generalTax": "General Income Tax",
+        "beckhamTax": "Beckham Law",
+        "savings": "Annual savings",
+        "rate": "Effective rate"
+      },
+      "irpf": {
+        "title": "General Income Tax (Progressive scale)",
+        "description": "Ordinary tax regime in Spain",
+        "point1": "Rates from 19% to 47% depending on brackets",
+        "point2": "Worldwide income taxation",
+        "point3": "Complex tax return",
+        "point4": "Limited deductions and reductions"
+      },
+      "beckham": {
+        "title": "Beckham Law (Fixed 24% rate)",
+        "description": "Special regime for expats",
+        "point1": "Fixed 24% rate up to €600,000",
+        "point2": "Only Spanish-sourced income",
+        "point3": "Simplified tax return",
+        "point4": "Significant tax savings"
+      }
+    },
+    "process": {
+      "eyebrow": "Process",
+      "title": "How we help you apply for the Beckham Law",
+      "subtitle": "Complete advisory and processing service",
+      "step1": {
+        "title": "Feasibility analysis",
+        "description": "We evaluate your personal case and verify compliance with all requirements",
+        "duration": "1-2 days",
+        "point1": "Review of your personal and professional situation",
+        "point2": "Verification of legal requirements",
+        "point3": "Estimation of potential tax savings",
+        "point4": "Identification of possible obstacles"
+      },
+      "step2": {
+        "title": "Tax planning",
+        "description": "We design the optimal strategy to maximize regime benefits",
+        "duration": "3-5 days",
+        "point1": "Employment structure planning",
+        "point2": "Income and assets optimization",
+        "point3": "Coordination with other tax regimes",
+        "point4": "Implementation timeline"
+      },
+      "step3": {
+        "title": "Documentation preparation",
+        "description": "We collect and prepare all necessary documentation for the application",
+        "duration": "5-7 days",
+        "point1": "Collection of supporting documents",
+        "point2": "Preparation of contracts and agreements",
+        "point3": "Tax residence certificates",
+        "point4": "Reports and additional documents"
+      },
+      "step4": {
+        "title": "Submission to Tax Authority",
+        "description": "We manage the formal submission of your application to the Tax Agency",
+        "duration": "1-2 days",
+        "point1": "Electronic submission of form 149",
+        "point2": "Attach supporting documentation",
+        "point3": "Registration tracking",
+        "point4": "Receipt confirmation"
+      },
+      "step5": {
+        "title": "Follow-up and resolution",
+        "description": "We track your file and handle any requirements",
+        "duration": "2-4 months",
+        "point1": "File status monitoring",
+        "point2": "Response to Tax Authority requirements",
+        "point3": "Submission of additional documentation",
+        "point4": "Final application resolution"
+      },
+      "step6": {
+        "title": "Ongoing advisory",
+        "description": "We support you throughout the entire period of regime validity",
+        "duration": "6 years",
+        "point1": "Annual non-resident tax returns",
+        "point2": "Continuous tax optimization",
+        "point3": "Compliance with obligations",
+        "point4": "Exit strategy planning"
+      },
+      "cta": {
+        "title": "Ready to start?",
+        "description": "Request a free consultation and we'll explain your particular case",
+        "button": "Request consultation"
+      }
+    },
+    "faq": {
+      "eyebrow": "Frequently asked questions",
+      "title": "Questions about the Beckham Law",
+      "subtitle": "Answers to the most common questions about the expat regime",
+      "q1": "What exactly is the Beckham Law?",
+      "a1": "It's a special tax regime that allows professionals who transfer their residence to Spain to be taxed as non-residents for a maximum of 6 years, applying a fixed rate of 24% on employment income obtained in Spain, instead of the general progressive income tax scale that can reach up to 47%.",
+      "q2": "How long can I benefit from the Beckham Law?",
+      "a2": "You can apply for this regime during the tax period in which you acquire tax residence in Spain and the following 5 tax periods, which represents a maximum of 6 complete calendar years.",
+      "q3": "What types of income are taxed at 24%?",
+      "a3": "The 24% rate applies to employment and business income obtained in Spain up to €600,000. Above this amount, the rate is 47%. Capital income and capital gains are taxed at 19-26% according to non-resident regulations.",
+      "q4": "Do I have to pay taxes on my foreign income?",
+      "a4": "No. One of the main advantages of the Beckham Law is that you'll only pay taxes on Spanish-sourced income. Income obtained abroad (dividends, interest, rent, etc.) is exempt from taxation in Spain, although you must declare it as exempt income.",
+      "q5": "When should I submit the application?",
+      "a5": "You must submit the application (form 149) within 6 months from the start of your work activity in Spain. It's essential to meet this deadline because otherwise you'll lose the possibility of applying for the regime.",
+      "q6": "Can I apply if I've already been in Spain for some time?",
+      "a6": "No. One of the requirements is not having been a tax resident in Spain during the previous 10 years. If you're already a resident, you cannot apply for this regime. It's important to plan the transfer in advance.",
+      "q7": "What if I work for a foreign company?",
+      "a7": "You can apply for the regime as long as the work is effectively performed in Spanish territory and for companies or entities resident in Spain. If you work remotely for a foreign company, the situation is more complex and must be analyzed case by case.",
+      "q8": "Can I be a company director and apply for the regime?",
+      "a8": "Yes, the regime allows those appointed as directors of entities in Spain to apply, as long as they meet the other requirements. It's a widely used option by international executives and entrepreneurs.",
+      "cta": {
+        "text": "Have more questions about your particular case?",
+        "button": "Contact an expert"
+      }
+    },
+    "form": {
+      "eyebrow": "Contact",
+      "title": "Request your free consultation",
+      "subtitle": "Tell us about your case and we'll advise you on your eligibility and the process",
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+34 / +1 / etc.",
+      "country": "Country of origin",
+      "countryPlaceholder": "Select your current country",
+      "jobSituation": "Employment situation",
+      "jobSituationPlaceholder": "Select an option",
+      "jobOptions": {
+        "employee": "Employee",
+        "freelance": "Self-employed / Freelance",
+        "business_owner": "Business owner",
+        "executive": "Executive / Director",
+        "looking": "Looking for employment in Spain"
+      },
+      "transferDate": "Expected transfer date",
+      "transferDatePlaceholder": "When do you plan to move?",
+      "transferOptions": {
+        "immediate": "Immediate (already in Spain)",
+        "1_3_months": "1-3 months",
+        "3_6_months": "3-6 months",
+        "6_12_months": "6-12 months",
+        "12_plus_months": "More than 12 months",
+        "undecided": "Not yet decided"
+      },
+      "message": "Message (optional)",
+      "messagePlaceholder": "Tell us more about your situation, specific questions, etc.",
+      "privacy": "I accept the privacy policy and the processing of my data",
+      "submit": "Submit request",
+      "submitting": "Sending...",
+      "success": {
+        "title": "Request submitted!",
+        "description": "We've received your inquiry. Our Beckham Law specialized team will contact you within the next 24-48 hours."
+      },
+      "error": {
+        "title": "Submission error",
+        "description": "An error occurred. Please try again or contact us directly."
+      },
+      "confidentiality": "All information provided is strictly confidential and will be used solely to evaluate your case.",
+      "responseTime": "Response time: 24-48 business hours"
+    },
+    "whyUs": {
+      "eyebrow": "Why choose us",
+      "title": "Beckham Law Experts",
+      "subtitle": "Over 25 years of experience advising on international taxation and expat regime",
+      "stat1": {
+        "label": "Success rate",
+        "value": "98%",
+        "description": "of approved applications"
+      },
+      "stat2": {
+        "label": "Years of experience",
+        "value": "25+",
+        "description": "in international taxation"
+      },
+      "stat3": {
+        "label": "Average savings",
+        "value": "24%",
+        "description": "vs general income tax"
+      },
+      "stat4": {
+        "label": "Average time",
+        "value": "45 days",
+        "description": "from consultation to submission"
+      }
+    },
+    "finalCta": {
+      "title": "Ready to optimize your taxation in Spain?",
+      "subtitle": "Request a free consultation and discover how much you can save with the Beckham Law",
+      "button": "Request free consultation",
+      "footer": "Initial consultation with no commitment • Response in 24-48h • Personalized advisory"
     }
   }
 }

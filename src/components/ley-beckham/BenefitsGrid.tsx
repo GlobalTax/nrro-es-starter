@@ -8,23 +8,23 @@ export const BenefitsGrid = () => {
   const benefits = [
     {
       icon: TrendingDown,
-      title: t("benefits.tax.title"),
-      description: t("benefits.tax.description")
+      title: t("leyBeckham.benefits.tax.title"),
+      description: t("leyBeckham.benefits.tax.description")
     },
     {
       icon: Calendar,
-      title: t("benefits.duration.title"),
-      description: t("benefits.duration.description")
+      title: t("leyBeckham.benefits.duration.title"),
+      description: t("leyBeckham.benefits.duration.description")
     },
     {
       icon: Globe,
-      title: t("benefits.worldwide.title"),
-      description: t("benefits.worldwide.description")
+      title: t("leyBeckham.benefits.worldwide.title"),
+      description: t("leyBeckham.benefits.worldwide.description")
     },
     {
       icon: ShieldCheck,
-      title: t("benefits.security.title"),
-      description: t("benefits.security.description")
+      title: t("leyBeckham.benefits.security.title"),
+      description: t("leyBeckham.benefits.security.description")
     }
   ];
 
@@ -33,13 +33,13 @@ export const BenefitsGrid = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
           <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
-            {t("benefits.eyebrow")}
+            {t("leyBeckham.benefits.eyebrow")}
           </p>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight mb-4">
-            {t("benefits.title")}
+            {t("leyBeckham.benefits.title")}
           </h2>
           <p className="text-body max-w-2xl mx-auto">
-            {t("benefits.subtitle")}
+            {t("leyBeckham.benefits.subtitle")}
           </p>
         </div>
 

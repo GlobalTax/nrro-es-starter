@@ -41,7 +41,8 @@
     "legal": "Aviso Legal",
     "privacy": "Privacidad",
     "cookies": "Cookies",
-    "terms": "Condiciones"
+    "terms": "Condiciones",
+    "rights": "Todos los derechos reservados"
   },
   "home": {
     "meta": {
@@ -152,7 +153,9 @@
     },
     "empty": {
       "title": "No hemos encontrado servicios",
-      "description": "Prueba cambiando el término o los filtros"
+      "description": "Prueba cambiando el término o los filtros",
+      "error": "Error al cargar servicios",
+      "errorDescription": "Por favor, intenta recargar la página"
     },
     "card": {
       "learnMore": "Saber más",
@@ -330,6 +333,327 @@
       "overline": "Aplica Ahora",
       "title": "Únete a Nuestro Equipo",
       "description": "Envíanos tu candidatura y nos pondremos en contacto contigo"
+    }
+  },
+  "leyBeckham": {
+    "seo": {
+      "title": "Ley Beckham - Régimen Fiscal Especial para Impatriados en España",
+      "description": "Asesoría especializada en la Ley Beckham: reduce tu IRPF al 24% durante 6 años al trasladarte a España. Expertos en fiscalidad para impatriados en Barcelona.",
+      "keywords": "ley beckham, régimen fiscal especial impatriados, IRPF 24%, fiscalidad españa, traslado a españa, impuestos impatriados barcelona"
+    },
+    "hero": {
+      "badge": "Ley Beckham",
+      "title": "Optimiza tu fiscalidad al trasladarte a España",
+      "subtitle": "Reduce tu carga fiscal al 24% de IRPF durante 6 años con el régimen especial para impatriados. Te acompañamos en todo el proceso.",
+      "cta": {
+        "consult": "Solicitar Consulta Gratuita",
+        "requirements": "Ver Requisitos"
+      },
+      "stat": {
+        "success": "Tasa de éxito",
+        "years": "años",
+        "experience": "de experiencia",
+        "tax": "Tipo fijo IRPF"
+      }
+    },
+    "benefits": {
+      "eyebrow": "Ventajas",
+      "title": "Beneficios del Régimen Beckham",
+      "subtitle": "Descubre las principales ventajas fiscales de este régimen especial",
+      "tax": {
+        "title": "Tipo fijo del 24%",
+        "description": "Tributarás al 24% sobre los primeros 600.000€ de rendimientos del trabajo en lugar del tipo progresivo general"
+      },
+      "duration": {
+        "title": "Hasta 6 años",
+        "description": "Podrás beneficiarte del régimen durante el año de cambio de residencia y los 5 años siguientes"
+      },
+      "worldwide": {
+        "title": "Rentas mundiales exentas",
+        "description": "Solo tributarás por rentas obtenidas en España, quedando exentas las rentas del extranjero"
+      },
+      "security": {
+        "title": "Seguridad jurídica",
+        "description": "Régimen respaldado por normativa específica y consolidada jurisprudencia"
+      }
+    },
+    "whatIs": {
+      "eyebrow": "¿Qué es?",
+      "title": "Régimen Fiscal Especial para Impatriados",
+      "p1": "La Ley Beckham es un régimen fiscal especial diseñado para atraer talento internacional a España.",
+      "p2": "Permite a los profesionales que trasladan su residencia a España tributar como no residentes durante un periodo máximo de 6 años, aplicando un tipo fijo del 24% sobre los rendimientos del trabajo obtenidos en España.",
+      "p3": "Este régimen representa un importante ahorro fiscal frente a la escala progresiva general del IRPF, que puede alcanzar hasta el 47% en algunas comunidades autónomas."
+    },
+    "requirements": {
+      "eyebrow": "Requisitos",
+      "title": "¿Puedes acogerte a la Ley Beckham?",
+      "subtitle": "Verifica si cumples los requisitos necesarios para beneficiarte de este régimen",
+      "req1": {
+        "title": "No haber sido residente fiscal en España",
+        "description": "No debes haber sido residente fiscal en España durante los 10 años anteriores al traslado"
+      },
+      "req2": {
+        "title": "Traslado por motivos laborales",
+        "description": "El desplazamiento a España debe producirse como consecuencia de un contrato de trabajo, nombramiento como administrador o inicio de actividad económica"
+      },
+      "req3": {
+        "title": "Convertirse en residente fiscal en España",
+        "description": "Deberás adquirir la residencia fiscal en España según los criterios del IRPF (más de 183 días al año o centro de intereses económicos)"
+      },
+      "req4": {
+        "title": "Trabajos realizados en territorio español",
+        "description": "Los trabajos deben ser realizados efectivamente en España para una empresa o entidad establecida en territorio español"
+      },
+      "req5": {
+        "title": "Solicitud en plazo",
+        "description": "Debes presentar la solicitud dentro de los 6 meses siguientes al inicio de tu actividad laboral en España"
+      },
+      "req6": {
+        "title": "No realizar actividades a través de Establecimiento Permanente",
+        "description": "Si eres empresario o profesional, no puedes realizar tu actividad a través de un establecimiento permanente que ya estuviese en España antes de tu traslado"
+      },
+      "req7": {
+        "title": "Contrato de trabajo o nombramiento",
+        "description": "Necesitas tener un contrato de trabajo, ser nombrado administrador de una sociedad o iniciar una actividad económica en España"
+      },
+      "req8": {
+        "title": "No estar en situaciones de incompatibilidad",
+        "description": "No puedes estar en situaciones específicas que la ley considera incompatibles con este régimen"
+      },
+      "cta": {
+        "text": "¿No estás seguro si cumples los requisitos? Podemos ayudarte a evaluarlo",
+        "button": "Consultar mi caso"
+      }
+    },
+    "profiles": {
+      "eyebrow": "Perfiles",
+      "title": "¿Quién puede beneficiarse?",
+      "subtitle": "Perfiles profesionales que suelen acogerse al régimen Beckham",
+      "executives": {
+        "title": "Ejecutivos internacionales",
+        "description": "Directivos de multinacionales que trasladan su residencia a España para ocupar puestos de alta responsabilidad",
+        "badge": "Alto impacto"
+      },
+      "tech": {
+        "title": "Profesionales tecnológicos",
+        "description": "Desarrolladores, ingenieros y especialistas en tecnología que se incorporan a empresas españolas o startups",
+        "badge": "Alta demanda"
+      },
+      "financial": {
+        "title": "Sector financiero",
+        "description": "Profesionales del sector financiero, banca de inversión y gestión de activos que se trasladan a España",
+        "badge": "Especializado"
+      },
+      "consultants": {
+        "title": "Consultores y asesores",
+        "description": "Consultores estratégicos y asesores especializados que prestan servicios desde España",
+        "badge": "Flexible"
+      },
+      "entrepreneurs": {
+        "title": "Emprendedores",
+        "description": "Fundadores de startups y empresarios que establecen su actividad económica en España",
+        "badge": "Innovador"
+      },
+      "researchers": {
+        "title": "Investigadores",
+        "description": "Profesionales de I+D+i y sector académico que se incorporan a centros españoles",
+        "badge": "Cualificado"
+      }
+    },
+    "comparison": {
+      "eyebrow": "Comparativa",
+      "title": "Ahorro fiscal real con la Ley Beckham",
+      "subtitle": "Compara cuánto pagarías con el IRPF general frente al régimen Beckham",
+      "table": {
+        "income": "Ingresos anuales",
+        "generalTax": "IRPF General",
+        "beckhamTax": "Ley Beckham",
+        "savings": "Ahorro anual",
+        "rate": "Tipo efectivo"
+      },
+      "irpf": {
+        "title": "IRPF General (Escala progresiva)",
+        "description": "Régimen fiscal ordinario en España",
+        "point1": "Tipos desde 19% hasta 47% según tramos",
+        "point2": "Tributación por renta mundial",
+        "point3": "Complejidad en la declaración",
+        "point4": "Deducciones y reducciones limitadas"
+      },
+      "beckham": {
+        "title": "Ley Beckham (Tipo fijo 24%)",
+        "description": "Régimen especial para impatriados",
+        "point1": "Tipo fijo del 24% hasta 600.000€",
+        "point2": "Solo rentas de fuente española",
+        "point3": "Declaración simplificada",
+        "point4": "Ahorro fiscal significativo"
+      }
+    },
+    "process": {
+      "eyebrow": "Proceso",
+      "title": "Cómo te ayudamos a aplicar la Ley Beckham",
+      "subtitle": "Proceso completo de asesoramiento y tramitación",
+      "step1": {
+        "title": "Análisis de viabilidad",
+        "description": "Evaluamos tu caso personal y verificamos el cumplimiento de todos los requisitos",
+        "duration": "1-2 días",
+        "point1": "Revisión de tu situación personal y profesional",
+        "point2": "Verificación de requisitos legales",
+        "point3": "Estimación del ahorro fiscal potencial",
+        "point4": "Identificación de posibles obstáculos"
+      },
+      "step2": {
+        "title": "Planificación fiscal",
+        "description": "Diseñamos la estrategia óptima para maximizar los beneficios del régimen",
+        "duration": "3-5 días",
+        "point1": "Planificación de la estructura laboral",
+        "point2": "Optimización de rentas y patrimonio",
+        "point3": "Coordinación con otros regímenes fiscales",
+        "point4": "Timeline de implementación"
+      },
+      "step3": {
+        "title": "Preparación documentación",
+        "description": "Recopilamos y preparamos toda la documentación necesaria para la solicitud",
+        "duration": "5-7 días",
+        "point1": "Recopilación de documentos justificativos",
+        "point2": "Preparación de contratos y acuerdos",
+        "point3": "Certificados de residencia fiscal",
+        "point4": "Memorias y documentos adicionales"
+      },
+      "step4": {
+        "title": "Presentación ante Hacienda",
+        "description": "Gestionamos la presentación formal de tu solicitud ante la Agencia Tributaria",
+        "duration": "1-2 días",
+        "point1": "Presentación telemática del modelo 149",
+        "point2": "Adjuntar documentación justificativa",
+        "point3": "Seguimiento del registro",
+        "point4": "Confirmación de recepción"
+      },
+      "step5": {
+        "title": "Seguimiento y resolución",
+        "description": "Hacemos seguimiento de tu expediente y gestionamos cualquier requerimiento",
+        "duration": "2-4 meses",
+        "point1": "Monitorización del estado del expediente",
+        "point2": "Respuesta a requerimientos de Hacienda",
+        "point3": "Aportación de documentación adicional",
+        "point4": "Resolución final de la solicitud"
+      },
+      "step6": {
+        "title": "Asesoramiento continuo",
+        "description": "Te acompañamos durante todo el periodo de vigencia del régimen",
+        "duration": "6 años",
+        "point1": "Declaraciones anuales de IRNR",
+        "point2": "Optimización fiscal continua",
+        "point3": "Cumplimiento de obligaciones",
+        "point4": "Planificación de salida del régimen"
+      },
+      "cta": {
+        "title": "¿Listo para comenzar?",
+        "description": "Solicita una consulta gratuita y te explicaremos tu caso particular",
+        "button": "Solicitar consulta"
+      }
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Dudas sobre la Ley Beckham",
+      "subtitle": "Respuestas a las preguntas más comunes sobre el régimen de impatriados",
+      "q1": "¿Qué es exactamente la Ley Beckham?",
+      "a1": "Es un régimen fiscal especial que permite a los profesionales que trasladan su residencia a España tributar como no residentes durante un máximo de 6 años, aplicando un tipo fijo del 24% sobre los rendimientos del trabajo obtenidos en España, en lugar de la escala progresiva general del IRPF que puede llegar hasta el 47%.",
+      "q2": "¿Cuánto tiempo puedo beneficiarme de la Ley Beckham?",
+      "a2": "Puedes acogerte a este régimen durante el periodo impositivo en el que adquieras la residencia fiscal en España y los 5 periodos impositivos siguientes, lo que supone un máximo de 6 años naturales completos.",
+      "q3": "¿Qué tipo de rentas tributan al 24%?",
+      "a3": "El tipo del 24% se aplica sobre los rendimientos del trabajo y de actividades económicas obtenidos en España hasta 600.000€. Por encima de esta cantidad, el tipo es del 47%. Los rendimientos del capital y ganancias patrimoniales tributan al 19-26% según normativa de no residentes.",
+      "q4": "¿Tengo que tributar por mis rentas del extranjero?",
+      "a4": "No. Una de las principales ventajas de la Ley Beckham es que solo tributarás por las rentas de fuente española. Las rentas obtenidas en el extranjero (dividendos, intereses, alquileres, etc.) quedan exentas de tributación en España, aunque debes declararlas como renta exenta.",
+      "q5": "¿Cuándo debo presentar la solicitud?",
+      "a5": "Debes presentar la solicitud (modelo 149) en el plazo de 6 meses desde el inicio de tu actividad laboral en España. Es fundamental cumplir este plazo porque, de lo contrario, perderás la posibilidad de acogerte al régimen.",
+      "q6": "¿Puedo acogerme si ya llevo tiempo en España?",
+      "a6": "No. Uno de los requisitos es no haber sido residente fiscal en España durante los 10 años anteriores. Si ya eres residente, no puedes acogerte a este régimen. Es importante planificar el traslado con antelación.",
+      "q7": "¿Qué pasa si trabajo para una empresa extranjera?",
+      "a7": "Puedes acogerte al régimen siempre que los trabajos se realicen efectivamente en territorio español y para empresas o entidades residentes en España. Si trabajas en remoto para una empresa extranjera, la situación es más compleja y debe analizarse caso por caso.",
+      "q8": "¿Puedo ser administrador de una empresa y acogerme al régimen?",
+      "a8": "Sí, el régimen permite acogerse a quienes son nombrados administradores de entidades en España, siempre que se cumplan el resto de requisitos. Es una opción muy utilizada por directivos internacionales y emprendedores.",
+      "cta": {
+        "text": "¿Tienes más dudas sobre tu caso particular?",
+        "button": "Contactar con un experto"
+      }
+    },
+    "form": {
+      "eyebrow": "Contacto",
+      "title": "Solicita tu consulta gratuita",
+      "subtitle": "Cuéntanos tu caso y te asesoraremos sobre tu elegibilidad y el proceso",
+      "name": "Nombre completo",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+34 / +1 / etc.",
+      "country": "País de origen",
+      "countryPlaceholder": "Selecciona tu país actual",
+      "jobSituation": "Situación laboral",
+      "jobSituationPlaceholder": "Selecciona una opción",
+      "jobOptions": {
+        "employee": "Empleado por cuenta ajena",
+        "freelance": "Autónomo / Freelance",
+        "business_owner": "Propietario de empresa",
+        "executive": "Ejecutivo / Administrador",
+        "looking": "Buscando empleo en España"
+      },
+      "transferDate": "Fecha prevista de traslado",
+      "transferDatePlaceholder": "¿Cuándo planeas trasladarte?",
+      "transferOptions": {
+        "immediate": "Inmediato (ya estoy en España)",
+        "1_3_months": "1-3 meses",
+        "3_6_months": "3-6 meses",
+        "6_12_months": "6-12 meses",
+        "12_plus_months": "Más de 12 meses",
+        "undecided": "Aún no decidido"
+      },
+      "message": "Mensaje (opcional)",
+      "messagePlaceholder": "Cuéntanos más sobre tu situación, dudas específicas, etc.",
+      "privacy": "Acepto la política de privacidad y el tratamiento de mis datos",
+      "submit": "Enviar solicitud",
+      "submitting": "Enviando...",
+      "success": {
+        "title": "¡Solicitud enviada!",
+        "description": "Hemos recibido tu consulta. Nuestro equipo especializado en Ley Beckham se pondrá en contacto contigo en las próximas 24-48 horas."
+      },
+      "error": {
+        "title": "Error al enviar",
+        "description": "Ha ocurrido un error. Por favor, inténtalo de nuevo o contáctanos directamente."
+      },
+      "confidentiality": "Toda la información proporcionada es estrictamente confidencial y será utilizada únicamente para evaluar tu caso.",
+      "responseTime": "Tiempo de respuesta: 24-48 horas laborables"
+    },
+    "whyUs": {
+      "eyebrow": "Por qué elegirnos",
+      "title": "Expertos en Ley Beckham",
+      "subtitle": "Más de 25 años de experiencia asesorando en fiscalidad internacional y régimen de impatriados",
+      "stat1": {
+        "label": "Tasa de éxito",
+        "value": "98%",
+        "description": "de solicitudes aprobadas"
+      },
+      "stat2": {
+        "label": "Años de experiencia",
+        "value": "25+",
+        "description": "en fiscalidad internacional"
+      },
+      "stat3": {
+        "label": "Ahorro medio",
+        "value": "24%",
+        "description": "frente a IRPF general"
+      },
+      "stat4": {
+        "label": "Tiempo medio",
+        "value": "45 días",
+        "description": "desde consulta a presentación"
+      }
+    },
+    "finalCta": {
+      "title": "¿Listo para optimizar tu fiscalidad en España?",
+      "subtitle": "Solicita una consulta gratuita y descubre cuánto puedes ahorrar con la Ley Beckham",
+      "button": "Solicitar consulta gratuita",
+      "footer": "Consulta inicial sin compromiso • Respuesta en 24-48h • Asesoramiento personalizado"
     }
   }
 }
