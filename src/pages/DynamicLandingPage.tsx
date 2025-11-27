@@ -15,6 +15,8 @@ import { ProcessStepsSection } from '@/components/landing-sections/ProcessStepsS
 import { FAQSection } from '@/components/landing-sections/FAQSection';
 import { ContactFormSection } from '@/components/landing-sections/ContactFormSection';
 import { CTAFinalSection } from '@/components/landing-sections/CTAFinalSection';
+import { TestimonialsSection } from '@/components/landing-sections/TestimonialsSection';
+import { DifferencesSection } from '@/components/landing-sections/DifferencesSection';
 
 const SECTION_COMPONENTS: Record<string, React.ComponentType<any>> = {
   'hero': HeroSection,
@@ -22,10 +24,14 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType<any>> = {
   'value-props': ValuePropsSection,
   'calculator-cta': CalculatorCTASection,
   'services-grid': ServicesGridSection,
+  'services-list': ServicesGridSection, // Alias
   'process-steps': ProcessStepsSection,
   'faq': FAQSection,
   'contact-form': ContactFormSection,
   'cta-final': CTAFinalSection,
+  'final-cta': CTAFinalSection, // Alias
+  'testimonials': TestimonialsSection,
+  'differences-section': DifferencesSection,
 };
 
 export const DynamicLandingPage = () => {

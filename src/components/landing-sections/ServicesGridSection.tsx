@@ -27,7 +27,7 @@ export const ServicesGridSection = ({ title, subtitle, services }: ServicesGridS
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {services.map((service, index) => (
+          {(services || []).map((service, index) => (
             <Card key={index} className="border-border/50 hover:border-primary/30 transition-colors">
               <CardHeader>
                 <CardTitle className="text-xl font-normal">{service.title}</CardTitle>
@@ -35,7 +35,7 @@ export const ServicesGridSection = ({ title, subtitle, services }: ServicesGridS
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">{service.description}</p>
                 <ul className="space-y-2">
-                  {service.features.map((feature, idx) => (
+                  {(service.features || []).map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                       <span className="text-sm text-foreground/80">{feature}</span>

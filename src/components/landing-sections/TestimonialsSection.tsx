@@ -3,10 +3,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Quote } from 'lucide-react';
 
 interface Testimonial {
-  quote: string;
+  quote?: string; // Formato nuevo
+  text?: string; // Formato legacy
   author: string;
-  position: string;
-  company: string;
+  position?: string; // Formato nuevo
+  role?: string; // Formato legacy
+  company?: string;
   avatarUrl?: string;
   country?: string;
 }
@@ -33,36 +35,43 @@ export const TestimonialsSection = ({ title, subtitle, testimonials }: Testimoni
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-2">
-              <CardContent className="pt-6">
-                <Quote className="h-8 w-8 text-primary/20 mb-4" />
-                <p className="text-muted-foreground mb-6 italic">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <Avatar>
-                    <AvatarImage src={testimonial.avatarUrl} />
-                    <AvatarFallback>
-                      {testimonial.author.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <div className="font-semibold text-foreground">
-                      {testimonial.author}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.position}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.company}
-                      {testimonial.country && ` • ${testimonial.country}`}
+          {(testimonials || []).map((testimonial, index) => {
+            const displayQuote = testimonial.quote || testimonial.text || '';
+            const displayPosition = testimonial.position || testimonial.role || '';
+            
+            return (
+              <Card key={index} className="border-2">
+                <CardContent className="pt-6">
+                  <Quote className="h-8 w-8 text-primary/20 mb-4" />
+                  <p className="text-muted-foreground mb-6 italic">
+                    "{displayQuote}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <Avatar>
+                      <AvatarImage src={testimonial.avatarUrl} />
+                      <AvatarFallback>
+                        {testimonial.author.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <div className="font-semibold text-foreground">
+                        {testimonial.author}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {displayPosition}
+                      </div>
+                      {testimonial.company && (
+                        <div className="text-sm text-muted-foreground">
+                          {testimonial.company}
+                          {testimonial.country && ` • ${testimonial.country}`}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
