@@ -12,6 +12,7 @@ import { CTAFinalSection } from '@/components/landing-sections/CTAFinalSection';
 import { ContactFormSection } from '@/components/landing-sections/ContactFormSection';
 import { Meta } from '@/components/seo/Meta';
 import { FAQSchema } from '@/components/seo/FAQSchema';
+import { BASE_DOMAIN } from '@/lib/seoUtils';
 import { Building2, Users, Award, Shield, Globe, FileCheck, Calculator, Landmark, FileText } from 'lucide-react';
 
 export const SetupCompanySpain = () => {
@@ -247,7 +248,7 @@ export const SetupCompanySpain = () => {
         title="Set Up a Company in Spain | Expert Legal & Tax Advisors | Navarro"
         description="Set up your company in Spain with expert legal and tax advisors. Company incorporation, tax structuring, compliance support for entrepreneurs and foreign investors."
         keywords="set up company spain, incorporate spain, spain company formation, form company spain, start operations spain, spanish company setup, business registration spain"
-        canonicalUrl="https://navarrotaxlegal.com/en/set-up-company-spain"
+        canonicalUrl={`${BASE_DOMAIN}/en/set-up-company-spain`}
         slugs={{
           es: '/crear-empresa-espana',
           ca: '/ca/crear-empresa-espanya',
