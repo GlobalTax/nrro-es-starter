@@ -109,11 +109,8 @@ const LandingDetailPage = () => {
   };
 
   const handleOpenLanding = () => {
-    if (landing?.url) {
-      window.open(landing.url, '_blank');
-    } else {
-      toast.error('No hay URL configurada');
-    }
+    // Always use local route instead of external URL
+    window.open(`/${landing.slug}`, '_blank');
   };
 
   if (isLoading) {
@@ -198,37 +195,46 @@ const LandingDetailPage = () => {
                 <CardTitle>Enlaces</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {landing.url && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium">URL Principal</label>
+                {/* URL Preview (Local Route) - Primary */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium">URL Preview</label>
+                    <div className="flex gap-2">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => copyToClipboard(landing.url!, 'URL')}
+                        onClick={() => copyToClipboard(`/${landing.slug}`, 'URL Preview')}
                       >
                         <Copy className="h-3 w-3 mr-1" />
                         Copiar
                       </Button>
+                      <Button variant="ghost" size="sm" asChild>
+                        <a href={`/${landing.slug}`} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </Button>
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-md">
-                      <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <a
-                        href={landing.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-primary hover:underline truncate"
-                      >
-                        {landing.url}
-                      </a>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-primary/10 rounded-md border border-primary/20">
+                    <code className="text-sm text-primary font-medium">/{landing.slug}</code>
+                  </div>
+                </div>
+
+                {/* URL de Producción (si existe) */}
+                {landing.url && (
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-muted-foreground">URL Producción (configurada)</label>
+                    <div className="p-2 bg-muted/30 rounded-md">
+                      <code className="text-xs text-muted-foreground break-all">{landing.url}</code>
                     </div>
                   </div>
                 )}
 
+                {/* URL con UTM (si existe) */}
                 {landing.utm_url && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium">URL con UTM</label>
+                      <label className="text-sm font-medium text-muted-foreground">URL con UTM</label>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -238,9 +244,8 @@ const LandingDetailPage = () => {
                         Copiar
                       </Button>
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-md">
-                      <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <code className="text-xs text-muted-foreground truncate">
+                    <div className="p-2 bg-muted/30 rounded-md">
+                      <code className="text-xs text-muted-foreground break-all">
                         {landing.utm_url}
                       </code>
                     </div>

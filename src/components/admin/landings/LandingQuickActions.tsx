@@ -9,7 +9,8 @@ import {
   Stethoscope,
   History,
   CheckCircle,
-  ArchiveX
+  ArchiveX,
+  ExternalLink
 } from 'lucide-react';
 import { LandingPage } from '@/hooks/useLandingPages';
 import { toast } from 'sonner';
@@ -66,6 +67,10 @@ export const LandingQuickActions = ({
     }
   };
 
+  const handleOpenPreview = () => {
+    window.open(`/${landing.slug}`, '_blank');
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -75,11 +80,24 @@ export const LandingQuickActions = ({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
+        {/* Preview Action */}
+        <Button
+          onClick={handleOpenPreview}
+          variant="default"
+          className="w-full justify-start"
+        >
+          <ExternalLink className="mr-2 h-4 w-4" />
+          Ver Preview
+        </Button>
+
+        {/* Divider */}
+        <div className="border-t my-2" />
+
         {/* Status Actions */}
         {landing.status !== 'published' && (
           <Button
             onClick={handleMarkReadyForAds}
-            variant="default"
+            variant="outline"
             className="w-full justify-start"
           >
             <Megaphone className="mr-2 h-4 w-4" />
