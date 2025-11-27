@@ -1038,6 +1038,19 @@
       "description": "Asesoramiento estratégico, fiscal y legal especializado en empresas familiares y grupos empresariales en Barcelona y Madrid."
     }
   },
+  "about": {
+    "meta": {
+      "title": "Nosotros - Navarro Tax Legal",
+      "description": "25 años de experiencia asesorando a empresas familiares en Barcelona. Conoce nuestra historia, valores y equipo de profesionales.",
+      "keywords": "nosotros, navarro tax legal, historia, valores, equipo, empresa familiar, Barcelona"
+    },
+    "cta": {
+      "title": "¿Listo para trabajar juntos?",
+      "subtitle": "Descubre cómo podemos ayudarte a alcanzar tus objetivos empresariales",
+      "contactButton": "Contactar",
+      "servicesButton": "Ver servicios"
+    }
+  },
   "home": {
     "hero": {
       "badge": "Planifica el futuro",

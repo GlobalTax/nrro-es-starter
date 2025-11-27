@@ -1066,6 +1066,19 @@
       "description": "Strategic, tax and legal consulting specialized in family businesses and corporate groups in Barcelona and Madrid."
     }
   },
+  "about": {
+    "meta": {
+      "title": "About Us - Navarro Tax Legal",
+      "description": "25 years of experience advising family businesses in Barcelona. Learn about our history, values, and team of professionals.",
+      "keywords": "about us, navarro tax legal, history, values, team, family business, Barcelona"
+    },
+    "cta": {
+      "title": "Ready to work together?",
+      "subtitle": "Discover how we can help you achieve your business goals",
+      "contactButton": "Contact Us",
+      "servicesButton": "View Services"
+    }
+  },
   "home": {
     "hero": {
       "badge": "Plan the future",
