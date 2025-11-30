@@ -2569,6 +2569,51 @@ export type Database = {
         }
         Relationships: []
       }
+      sitemap_sync_log: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          errors: Json | null
+          id: string
+          pages_added: number | null
+          pages_archived: number | null
+          pages_total: number | null
+          pages_updated: number | null
+          started_at: string
+          status: string
+          triggered_by: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          errors?: Json | null
+          id?: string
+          pages_added?: number | null
+          pages_archived?: number | null
+          pages_total?: number | null
+          pages_updated?: number | null
+          started_at?: string
+          status?: string
+          triggered_by?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          errors?: Json | null
+          id?: string
+          pages_added?: number | null
+          pages_archived?: number | null
+          pages_total?: number | null
+          pages_updated?: number | null
+          started_at?: string
+          status?: string
+          triggered_by?: string | null
+        }
+        Relationships: []
+      }
       team_members: {
         Row: {
           avatar_url: string | null

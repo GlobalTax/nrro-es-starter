@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { 
   ExternalLink, 
   Edit, 
@@ -22,9 +23,11 @@ import {
   Users,
   Phone,
   FileStack,
-  Scale
+  Scale,
+  Check
 } from "lucide-react";
 import { SitePage } from "@/hooks/useSitePages";
+import { SeoBadge } from "./SeoBadge";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -33,6 +36,9 @@ interface SitePageTableProps {
   onEdit: (page: SitePage) => void;
   onDuplicate: (page: SitePage) => void;
   onArchive: (page: SitePage) => void;
+  selectedPages?: string[];
+  onSelectPage?: (pageId: string, selected: boolean) => void;
+  onSelectAll?: (selected: boolean) => void;
 }
 
 const pageTypeIcons = {
@@ -76,63 +82,84 @@ const languageLabels = {
   en: "EN",
 };
 
-export const SitePageTable = ({ pages, onEdit, onDuplicate, onArchive }: SitePageTableProps) => {
+export const SitePageTable = ({ 
+  pages, 
+  onEdit, 
+  onDuplicate, 
+  onArchive,
+  selectedPages = [],
+  onSelectPage,
+  onSelectAll 
+}: SitePageTableProps) => {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
   const handleCopyUrl = (url: string) => {
-    navigator.clipboard.writeText(url);
+    const fullUrl = `https://nrro.es${url}`;
+    navigator.clipboard.writeText(fullUrl);
     setCopiedUrl(url);
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
+  const allSelected = pages.length > 0 && selectedPages.length === pages.length;
+  const someSelected = selectedPages.length > 0 && !allSelected;
+
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
+            {onSelectAll && (
+              <TableHead className="w-12">
+                <Checkbox
+                  checked={allSelected}
+                  onCheckedChange={(checked) => onSelectAll(!!checked)}
+                  aria-label="Seleccionar todas"
+                  className={someSelected ? "data-[state=checked]:bg-primary/50" : ""}
+                />
+              </TableHead>
+            )}
             <TableHead>Título</TableHead>
             <TableHead>URL</TableHead>
             <TableHead>Tipo</TableHead>
+            <TableHead>SEO</TableHead>
             <TableHead>Área</TableHead>
             <TableHead>Idioma</TableHead>
             <TableHead>Estado</TableHead>
-            <TableHead>Última actualización</TableHead>
+            <TableHead>Última Actualización</TableHead>
             <TableHead className="text-right">Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {pages.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+              <TableCell 
+                colSpan={onSelectAll ? 10 : 9} 
+                className="text-center py-8 text-muted-foreground"
+              >
                 No se encontraron páginas
               </TableCell>
             </TableRow>
           ) : (
             pages.map((page) => {
-              const Icon = pageTypeIcons[page.page_type];
+              const TypeIcon = pageTypeIcons[page.page_type as keyof typeof pageTypeIcons] || FileText;
+              const isSelected = selectedPages.includes(page.id);
+
               return (
-                <TableRow key={page.id}>
+                <TableRow key={page.id} className={isSelected ? "bg-muted/50" : ""}>
+                  {onSelectPage && (
+                    <TableCell>
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={(checked) => onSelectPage(page.id, !!checked)}
+                        aria-label={`Seleccionar ${page.title}`}
+                      />
+                    </TableCell>
+                  )}
+                  <TableCell className="font-medium">{page.title}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-muted-foreground" />
-                      <button
-                        onClick={() => onEdit(page)}
-                        className="text-left hover:underline font-medium"
-                      >
-                        {page.title}
-                      </button>
-                      {page.is_landing && (
-                        <Badge variant="secondary" className="text-xs">
-                          <Megaphone className="h-3 w-3 mr-1" />
-                          Landing
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2 max-w-md">
-                      <code className="text-xs bg-muted px-2 py-1 rounded truncate block">
-                        {page.url.replace('https://nrro.es', '')}
+                      <code className="text-xs bg-muted px-2 py-1 rounded">
+                        {page.url}
                       </code>
                       <Button
                         variant="ghost"
@@ -141,7 +168,7 @@ export const SitePageTable = ({ pages, onEdit, onDuplicate, onArchive }: SitePag
                         className="h-6 w-6 p-0"
                       >
                         {copiedUrl === page.url ? (
-                          <span className="text-xs">✓</span>
+                          <Check className="h-3 w-3 text-green-600" />
                         ) : (
                           <Copy className="h-3 w-3" />
                         )}
@@ -152,47 +179,51 @@ export const SitePageTable = ({ pages, onEdit, onDuplicate, onArchive }: SitePag
                         asChild
                         className="h-6 w-6 p-0"
                       >
-                        <a href={page.url} target="_blank" rel="noopener noreferrer">
+                        <a href={`https://nrro.es${page.url}`} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </Button>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm">{pageTypeLabels[page.page_type]}</span>
+                    <Badge variant="outline" className="gap-1">
+                      <TypeIcon className="h-3 w-3" />
+                      {pageTypeLabels[page.page_type as keyof typeof pageTypeLabels]}
+                    </Badge>
                   </TableCell>
                   <TableCell>
-                    {page.business_area ? (
-                      <Badge variant="outline" className="text-xs">
-                        {page.business_area}
-                      </Badge>
-                    ) : (
-                      <span className="text-muted-foreground text-sm">—</span>
+                    <SeoBadge
+                      hasTitle={!!page.meta_title}
+                      hasDescription={!!page.meta_description}
+                      isNoindex={page.is_noindex}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {page.business_area && (
+                      <Badge variant="secondary">{page.business_area}</Badge>
                     )}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-xs font-mono">
-                      {languageLabels[page.language]}
+                    <Badge variant="outline">
+                      {languageLabels[page.language as keyof typeof languageLabels]}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge className={statusColors[page.status]}>
-                      {page.status === 'published' && 'Publicada'}
-                      {page.status === 'draft' && 'Borrador'}
-                      {page.status === 'archived' && 'Archivada'}
-                      {page.status === 'redirect' && 'Redirección'}
+                    <Badge variant={statusColors[page.status as keyof typeof statusColors] as any}>
+                      {page.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(page.last_updated), "dd MMM yyyy", { locale: es })}
+                    {page.last_updated
+                      ? new Date(page.last_updated).toLocaleDateString('es-ES')
+                      : '-'}
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center justify-end gap-1">
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-1">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => onEdit(page)}
-                        className="h-8 w-8 p-0"
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -200,7 +231,6 @@ export const SitePageTable = ({ pages, onEdit, onDuplicate, onArchive }: SitePag
                         variant="ghost"
                         size="sm"
                         onClick={() => onDuplicate(page)}
-                        className="h-8 w-8 p-0"
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -209,7 +239,6 @@ export const SitePageTable = ({ pages, onEdit, onDuplicate, onArchive }: SitePag
                           variant="ghost"
                           size="sm"
                           onClick={() => onArchive(page)}
-                          className="h-8 w-8 p-0"
                         >
                           <Archive className="h-4 w-4" />
                         </Button>
