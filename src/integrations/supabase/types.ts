@@ -2416,6 +2416,78 @@ export type Database = {
         }
         Relationships: []
       }
+      site_pages: {
+        Row: {
+          business_area: string | null
+          campaign_name: string | null
+          conversion_goal: string | null
+          created_at: string | null
+          id: string
+          is_landing: boolean | null
+          is_noindex: boolean | null
+          language: string
+          last_updated: string | null
+          meta_description: string | null
+          meta_title: string | null
+          notes: string | null
+          owner: string | null
+          page_type: Database["public"]["Enums"]["page_type"]
+          source_id: string | null
+          source_table: string | null
+          status: Database["public"]["Enums"]["page_status"]
+          title: string
+          traffic_source: Database["public"]["Enums"]["traffic_source"] | null
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          business_area?: string | null
+          campaign_name?: string | null
+          conversion_goal?: string | null
+          created_at?: string | null
+          id?: string
+          is_landing?: boolean | null
+          is_noindex?: boolean | null
+          language?: string
+          last_updated?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          notes?: string | null
+          owner?: string | null
+          page_type?: Database["public"]["Enums"]["page_type"]
+          source_id?: string | null
+          source_table?: string | null
+          status?: Database["public"]["Enums"]["page_status"]
+          title: string
+          traffic_source?: Database["public"]["Enums"]["traffic_source"] | null
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          business_area?: string | null
+          campaign_name?: string | null
+          conversion_goal?: string | null
+          created_at?: string | null
+          id?: string
+          is_landing?: boolean | null
+          is_noindex?: boolean | null
+          language?: string
+          last_updated?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          notes?: string | null
+          owner?: string | null
+          page_type?: Database["public"]["Enums"]["page_type"]
+          source_id?: string | null
+          source_table?: string | null
+          status?: Database["public"]["Enums"]["page_status"]
+          title?: string
+          traffic_source?: Database["public"]["Enums"]["traffic_source"] | null
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           category: string
@@ -2906,6 +2978,19 @@ export type Database = {
         | "en_proceso"
         | "completado"
         | "descartado"
+      page_status: "published" | "draft" | "archived" | "redirect"
+      page_type:
+        | "home"
+        | "service"
+        | "landing"
+        | "blog"
+        | "case_study"
+        | "legal"
+        | "contact"
+        | "about"
+        | "careers"
+        | "job_position"
+        | "other"
       security_event_type:
         | "LOGIN_SUCCESS"
         | "LOGIN_FAILED"
@@ -2922,6 +3007,14 @@ export type Database = {
         | "tax_advisory"
         | "legal_advisory"
         | "financial_planning"
+        | "other"
+      traffic_source:
+        | "seo"
+        | "sem"
+        | "social"
+        | "email"
+        | "referral"
+        | "direct"
         | "other"
     }
     CompositeTypes: {
@@ -3070,6 +3163,20 @@ export const Constants = {
         "completado",
         "descartado",
       ],
+      page_status: ["published", "draft", "archived", "redirect"],
+      page_type: [
+        "home",
+        "service",
+        "landing",
+        "blog",
+        "case_study",
+        "legal",
+        "contact",
+        "about",
+        "careers",
+        "job_position",
+        "other",
+      ],
       security_event_type: [
         "LOGIN_SUCCESS",
         "LOGIN_FAILED",
@@ -3087,6 +3194,15 @@ export const Constants = {
         "tax_advisory",
         "legal_advisory",
         "financial_planning",
+        "other",
+      ],
+      traffic_source: [
+        "seo",
+        "sem",
+        "social",
+        "email",
+        "referral",
+        "direct",
         "other",
       ],
     },

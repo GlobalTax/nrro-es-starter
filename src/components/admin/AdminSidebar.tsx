@@ -40,7 +40,7 @@ import { Separator } from '@/components/ui/separator';
   { path: '/admin/ley-beckham-leads', icon: Users, label: 'Ley Beckham' },
     { path: '/admin/demo-requests', icon: Users, label: 'Demo Requests' },
     { path: '/admin/technology', icon: Monitor, label: 'Tecnología' },
-    { path: '/admin/sitemap', icon: Map, label: 'Sitemap SEO' },
+    { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
     { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR', external: true },
   ];
 
