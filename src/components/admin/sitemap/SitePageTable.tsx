@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Share2 } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -36,9 +37,13 @@ interface SitePageTableProps {
   onEdit: (page: SitePage) => void;
   onDuplicate: (page: SitePage) => void;
   onArchive: (page: SitePage) => void;
+  onRedirect?: (page: SitePage) => void;
   selectedPages?: string[];
   onSelectPage?: (pageId: string, selected: boolean) => void;
   onSelectAll?: (selected: boolean) => void;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  onSort?: (column: string) => void;
 }
 
 const pageTypeIcons = {
@@ -87,9 +92,13 @@ export const SitePageTable = ({
   onEdit, 
   onDuplicate, 
   onArchive,
+  onRedirect,
   selectedPages = [],
   onSelectPage,
-  onSelectAll 
+  onSelectAll,
+  sortBy,
+  sortOrder,
+  onSort
 }: SitePageTableProps) => {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
@@ -102,6 +111,23 @@ export const SitePageTable = ({
 
   const allSelected = pages.length > 0 && selectedPages.length === pages.length;
   const someSelected = selectedPages.length > 0 && !allSelected;
+
+  const SortButton = ({ column, label }: { column: string; label: string }) => {
+    const isSorted = sortBy === column;
+    const Icon = isSorted ? (sortOrder === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown;
+    
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        className="h-8 -ml-3 hover:bg-transparent"
+        onClick={() => onSort?.(column)}
+      >
+        {label}
+        <Icon className="ml-2 h-3 w-3" />
+      </Button>
+    );
+  };
 
   return (
     <div className="rounded-md border">
@@ -118,14 +144,24 @@ export const SitePageTable = ({
                 />
               </TableHead>
             )}
-            <TableHead>Título</TableHead>
+            <TableHead>
+              {onSort ? <SortButton column="title" label="Título" /> : "Título"}
+            </TableHead>
             <TableHead>URL</TableHead>
-            <TableHead>Tipo</TableHead>
+            <TableHead>
+              {onSort ? <SortButton column="page_type" label="Tipo" /> : "Tipo"}
+            </TableHead>
             <TableHead>SEO</TableHead>
             <TableHead>Área</TableHead>
-            <TableHead>Idioma</TableHead>
-            <TableHead>Estado</TableHead>
-            <TableHead>Última Actualización</TableHead>
+            <TableHead>
+              {onSort ? <SortButton column="language" label="Idioma" /> : "Idioma"}
+            </TableHead>
+            <TableHead>
+              {onSort ? <SortButton column="status" label="Estado" /> : "Estado"}
+            </TableHead>
+            <TableHead>
+              {onSort ? <SortButton column="last_updated" label="Última Actualización" /> : "Última Actualización"}
+            </TableHead>
             <TableHead className="text-right">Acciones</TableHead>
           </TableRow>
         </TableHeader>
@@ -234,6 +270,16 @@ export const SitePageTable = ({
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
+                      {onRedirect && (page.status === 'archived' || page.redirect_url) && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => onRedirect(page)}
+                          title={page.redirect_url ? `Redirige a: ${page.redirect_url}` : 'Configurar redirección'}
+                        >
+                          <Share2 className="h-4 w-4" />
+                        </Button>
+                      )}
                       {page.status !== 'archived' && (
                         <Button
                           variant="ghost"

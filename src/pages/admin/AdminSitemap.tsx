@@ -1,11 +1,17 @@
 import { useState } from "react";
+import { LayoutGrid, List, Search } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, RefreshCw, Globe, TrendingUp, Archive, Download } from "lucide-react";
+import { Loader2, RefreshCw, Globe, TrendingUp, Archive, Download, Wand2 } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useSitePages, useSitePageStats, SitePageFilters } from "@/hooks/useSitePages";
 import { useSyncSitePages } from "@/hooks/useSyncSitePages";
+import { useFetchPageMeta } from "@/hooks/useFetchPageMeta";
 import { SitePageTable } from "@/components/admin/sitemap/SitePageTable";
+import { SitePageTreeView } from "@/components/admin/sitemap/SitePageTreeView";
+import { SeoAlertsPanel } from "@/components/admin/sitemap/SeoAlertsPanel";
+import { RedirectDialog } from "@/components/admin/sitemap/RedirectDialog";
 import { SitePageFilters as FiltersComponent } from "@/components/admin/sitemap/SitePageFilters";
 import { SitePageEditDialog } from "@/components/admin/sitemap/SitePageEditDialog";
 import { SyncProgressModal } from "@/components/admin/sitemap/SyncProgressModal";
@@ -26,12 +32,16 @@ const AdminSitemap = () => {
   const [selectedPages, setSelectedPages] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isSyncModalOpen, setIsSyncModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'table' | 'tree'>('table');
+  const [redirectPage, setRedirectPage] = useState<SitePage | null>(null);
+  const [isRedirectDialogOpen, setIsRedirectDialogOpen] = useState(false);
   
   const { data: pages = [], isLoading } = useSitePages(filters);
   const { data: stats } = useSitePageStats();
   const updateMutation = useUpdateSitePage();
   const createMutation = useCreateSitePage();
   const syncMutation = useSyncSitePages();
+  const fetchMetaMutation = useFetchPageMeta();
 
   // Paginación
   const totalPages = Math.ceil(pages.length / PAGES_PER_PAGE);
@@ -99,6 +109,22 @@ const AdminSitemap = () => {
     });
   };
 
+  const handleRedirect = (page: SitePage) => {
+    setRedirectPage(page);
+    setIsRedirectDialogOpen(true);
+  };
+
+  const handleSort = (column: string) => {
+    const newSortOrder = 
+      filters.sort_by === column && filters.sort_order === 'asc' ? 'desc' : 'asc';
+    
+    setFilters({
+      ...filters,
+      sort_by: column as any,
+      sort_order: newSortOrder
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -119,6 +145,15 @@ const AdminSitemap = () => {
 
         {/* Tab 1: Páginas */}
         <TabsContent value="pages" className="space-y-6">
+          {/* Panel de Alertas SEO */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Alertas SEO</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <SeoAlertsPanel />
+            </CardContent>
+          </Card>
           {/* Stats Cards */}
           {stats && (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -185,7 +220,7 @@ const AdminSitemap = () => {
             </CardContent>
           </Card>
 
-          {/* Table */}
+          {/* Table/Tree View */}
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -196,6 +231,14 @@ const AdminSitemap = () => {
                   </CardDescription>
                 </div>
                 <div className="flex gap-2">
+                  <ToggleGroup type="single" value={viewMode} onValueChange={(v) => v && setViewMode(v as any)}>
+                    <ToggleGroupItem value="table" aria-label="Vista tabla">
+                      <List className="h-4 w-4" />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="tree" aria-label="Vista árbol">
+                      <LayoutGrid className="h-4 w-4" />
+                    </ToggleGroupItem>
+                  </ToggleGroup>
                   {selectedPages.length > 0 && (
                     <Button
                       variant="outline"
@@ -215,16 +258,20 @@ const AdminSitemap = () => {
                 <div className="flex items-center justify-center py-12">
                   <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                 </div>
-              ) : (
+              ) : viewMode === 'table' ? (
                 <>
                   <SitePageTable
                     pages={paginatedPages}
                     onEdit={handleEdit}
                     onDuplicate={handleDuplicate}
                     onArchive={handleArchive}
+                    onRedirect={handleRedirect}
                     selectedPages={selectedPages}
                     onSelectPage={handleSelectPage}
                     onSelectAll={handleSelectAll}
+                    sortBy={filters.sort_by}
+                    sortOrder={filters.sort_order}
+                    onSort={handleSort}
                   />
                   {totalPages > 1 && (
                     <CustomPagination
@@ -234,6 +281,8 @@ const AdminSitemap = () => {
                     />
                   )}
                 </>
+              ) : (
+                <SitePageTreeView pages={pages} onEdit={handleEdit} />
               )}
             </CardContent>
           </Card>
@@ -256,13 +305,23 @@ const AdminSitemap = () => {
                     Sincroniza la base de datos con el sitemap.xml publicado
                   </CardDescription>
                 </div>
-                <Button 
-                  onClick={handleSync}
-                  disabled={syncMutation.isPending}
-                >
-                  <RefreshCw className={`h-4 w-4 mr-2 ${syncMutation.isPending ? 'animate-spin' : ''}`} />
-                  Sincronizar Ahora
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => fetchMetaMutation.mutate()}
+                    disabled={fetchMetaMutation.isPending}
+                    variant="outline"
+                  >
+                    <Wand2 className={`h-4 w-4 mr-2 ${fetchMetaMutation.isPending ? 'animate-spin' : ''}`} />
+                    Detectar Meta Tags
+                  </Button>
+                  <Button 
+                    onClick={handleSync}
+                    disabled={syncMutation.isPending}
+                  >
+                    <RefreshCw className={`h-4 w-4 mr-2 ${syncMutation.isPending ? 'animate-spin' : ''}`} />
+                    Sincronizar Ahora
+                  </Button>
+                </div>
               </div>
             </CardHeader>
             <CardContent>
@@ -296,6 +355,16 @@ const AdminSitemap = () => {
         isLoading={syncMutation.isPending}
         summary={syncMutation.data?.summary || null}
         error={syncMutation.error?.message || null}
+      />
+
+      {/* Redirect Dialog */}
+      <RedirectDialog
+        page={redirectPage}
+        isOpen={isRedirectDialogOpen}
+        onClose={() => {
+          setIsRedirectDialogOpen(false);
+          setRedirectPage(null);
+        }}
       />
     </div>
   );

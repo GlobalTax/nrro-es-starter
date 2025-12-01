@@ -2432,6 +2432,7 @@ export type Database = {
           notes: string | null
           owner: string | null
           page_type: Database["public"]["Enums"]["page_type"]
+          redirect_url: string | null
           source_id: string | null
           source_table: string | null
           status: Database["public"]["Enums"]["page_status"]
@@ -2455,6 +2456,7 @@ export type Database = {
           notes?: string | null
           owner?: string | null
           page_type?: Database["public"]["Enums"]["page_type"]
+          redirect_url?: string | null
           source_id?: string | null
           source_table?: string | null
           status?: Database["public"]["Enums"]["page_status"]
@@ -2478,6 +2480,7 @@ export type Database = {
           notes?: string | null
           owner?: string | null
           page_type?: Database["public"]["Enums"]["page_type"]
+          redirect_url?: string | null
           source_id?: string | null
           source_table?: string | null
           status?: Database["public"]["Enums"]["page_status"]

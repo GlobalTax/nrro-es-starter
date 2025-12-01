@@ -22,6 +22,7 @@ export interface SitePage {
   conversion_goal: string | null;
   last_updated: string;
   notes: string | null;
+  redirect_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -33,6 +34,8 @@ export interface SitePageFilters {
   business_area?: string;
   status?: string;
   is_landing?: boolean;
+  sort_by?: 'title' | 'last_updated' | 'page_type' | 'status' | 'language';
+  sort_order?: 'asc' | 'desc';
 }
 
 export const useSitePages = (filters?: SitePageFilters) => {
@@ -41,8 +44,7 @@ export const useSitePages = (filters?: SitePageFilters) => {
     queryFn: async () => {
       let query = supabase
         .from("site_pages")
-        .select("*")
-        .order("last_updated", { ascending: false });
+        .select("*");
 
       if (filters?.search) {
         query = query.or(`title.ilike.%${filters.search}%,url.ilike.%${filters.search}%`);
@@ -67,6 +69,11 @@ export const useSitePages = (filters?: SitePageFilters) => {
       if (filters?.is_landing !== undefined) {
         query = query.eq("is_landing", filters.is_landing);
       }
+
+      // Ordenación
+      const sortBy = filters?.sort_by || 'last_updated';
+      const sortOrder = filters?.sort_order || 'desc';
+      query = query.order(sortBy, { ascending: sortOrder === 'asc' });
 
       const { data, error } = await query;
 
