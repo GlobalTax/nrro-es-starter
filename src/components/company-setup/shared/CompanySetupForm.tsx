@@ -23,7 +23,7 @@ const formSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().optional(),
   company_name: z.string().optional(),
-  country_origin: z.string().min(1, 'Please select your country'),
+  country_origin: z.string().optional(),
   industry: z.string().optional(),
   estimated_revenue: z.string().optional(),
   timeline: z.string().optional(),
@@ -278,9 +278,10 @@ export const CompanySetupForm = ({
         </p>
         <div className="flex items-center justify-center gap-2 mb-3">
           <img 
-            src="/assets/logos/navarro-tax-legal.svg" 
+            src="/src/assets/logos/navarro-tax-legal.svg" 
             alt="Navarro Tax Legal" 
             className="h-8"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
         </div>
         <p className="text-xs text-muted-foreground">

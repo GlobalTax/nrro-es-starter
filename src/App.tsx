@@ -163,6 +163,7 @@ const App = () => {
             <Route path="/en/orquest-kairoshr" element={<LandingLayout><OrquestKairosHR /></LandingLayout>} />
             
             {/* Company Setup Landings */}
+            <Route path="/set-up-company-spain" element={<SetupCompanySpain />} />
             <Route path="/en/company-setup-calculator" element={<CompanySetupCalculator />} />
             <Route path="/en/nie-spain-foreigners" element={<NIEServiceSpain />} />
             <Route path="/en/startup-company-setup-spain" element={<TechStartupSetup />} />
