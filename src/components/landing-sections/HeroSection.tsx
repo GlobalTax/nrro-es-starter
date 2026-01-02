@@ -54,7 +54,7 @@ export const HeroSection = ({
             </BadgeHero>
           )}
           
-          <h1 className="hero-title mb-6">
+          <h1 className="hero-title mb-6 text-white">
             {title}
           </h1>
           
