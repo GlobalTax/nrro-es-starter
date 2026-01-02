@@ -37,34 +37,39 @@ export const HeroSection = ({
   const BadgeIcon = badgeIcon && ICON_MAP[badgeIcon];
   const PrimaryCTAIcon = primaryCta?.icon && ICON_MAP[primaryCta.icon];
   
+  const isDark = background === 'dark';
+  
   const bgClass = background === 'gradient' 
     ? 'bg-gradient-to-br from-primary/5 to-background'
     : background === 'dark'
-    ? 'bg-black text-white'
+    ? 'bg-black'
     : 'bg-background';
+
+  const textClass = isDark ? 'text-white' : 'text-foreground';
+  const subtitleClass = isDark ? 'text-white/70' : 'text-muted-foreground';
 
   return (
     <section className={`pt-40 pb-32 md:pt-48 md:pb-40 ${bgClass}`}>
       <div className="container">
         <div className="max-w-4xl text-left">
           {badge && (
-            <BadgeHero variant="dark" className="mb-6">
+            <BadgeHero variant={isDark ? "dark" : "light"} className="mb-6">
               {BadgeIcon && <BadgeIcon className="h-4 w-4 mr-2" />}
               {badge}
             </BadgeHero>
           )}
           
-          <h1 className="hero-title mb-6 text-white">
+          <h1 className={`hero-title mb-6 ${textClass}`}>
             {title}
           </h1>
           
-          <p className="text-lg md:text-xl text-white/70 mb-8 max-w-2xl">
+          <p className={`text-lg md:text-xl mb-8 max-w-2xl ${subtitleClass}`}>
             {subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
             {primaryCta && (
-              <Button size="lg" variant="secondary" asChild>
+              <Button size="lg" variant={isDark ? "secondary" : "default"} asChild>
                 <a href={primaryCta.url}>
                   {PrimaryCTAIcon && <PrimaryCTAIcon className="mr-2 h-5 w-5" />}
                   {primaryCta.text}
@@ -72,7 +77,12 @@ export const HeroSection = ({
               </Button>
             )}
             {secondaryCta && (
-              <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/10 text-white" asChild>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className={isDark ? "border-white/20 hover:bg-white/10 text-white" : ""} 
+                asChild
+              >
                 <a href={secondaryCta.url}>
                   {secondaryCta.text}
                 </a>
