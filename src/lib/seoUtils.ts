@@ -1,5 +1,5 @@
 // Base domain for all SEO purposes
-export const BASE_DOMAIN = "https://nrro.es";
+export const BASE_DOMAIN = "https://int.nrro.es";
 
 export const getBaseUrl = () => BASE_DOMAIN;
 

@@ -55,12 +55,12 @@ Deno.serve(async (req) => {
     console.log(`✅ Sitemap descargado (${sitemapXml.length} bytes)`);
 
     // 2. Parsear URLs del sitemap
-    const urlMatches = sitemapXml.matchAll(/<loc>(https:\/\/nrro\.es\/[^<]+)<\/loc>/g);
+    const urlMatches = sitemapXml.matchAll(/<loc>(https:\/\/int\.nrro\.es\/[^<]+)<\/loc>/g);
     const sitemapUrls: SitemapUrl[] = [];
 
     for (const match of urlMatches) {
       const fullUrl = match[1];
-      const urlPath = fullUrl.replace('https://nrro.es', '');
+      const urlPath = fullUrl.replace('https://int.nrro.es', '');
       
       // Detectar idioma
       let language = 'es';

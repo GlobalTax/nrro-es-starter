@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nrro.es/</loc>
+    <loc>https://int.nrro.es/</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nrro.es/servicios</loc>
+    <loc>https://int.nrro.es/servicios</loc>
     <lastmod>2025-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nrro.es/equipo</loc>
+    <loc>https://int.nrro.es/equipo</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nrro.es/casos-exito</loc>
+    <loc>https://int.nrro.es/casos-exito</loc>
     <lastmod>2025-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nrro.es/blog</loc>
+    <loc>https://int.nrro.es/blog</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nrro.es/contacto</loc>
+    <loc>https://int.nrro.es/contacto</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nrro.es/talento</loc>
+    <loc>https://int.nrro.es/talento</loc>
     <lastmod>2025-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nrro.es/ley-beckham</loc>
+    <loc>https://int.nrro.es/ley-beckham</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nrro.es/orquest-kairoshr</loc>
+    <loc>https://int.nrro.es/orquest-kairoshr</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nrro.es/privacidad</loc>
+    <loc>https://int.nrro.es/privacidad</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://nrro.es/aviso-legal</loc>
+    <loc>https://int.nrro.es/aviso-legal</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://nrro.es/cookies</loc>
+    <loc>https://int.nrro.es/cookies</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://nrro.es/condiciones-contratacion</loc>
+    <loc>https://int.nrro.es/condiciones-contratacion</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
