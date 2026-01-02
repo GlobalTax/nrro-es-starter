@@ -104,6 +104,7 @@ export type Database = {
           seo_title_es: string | null
           slug_en: string | null
           slug_es: string
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: string
           tags: string[] | null
           title_en: string | null
@@ -132,6 +133,7 @@ export type Database = {
           seo_title_es?: string | null
           slug_en?: string | null
           slug_es: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string
           tags?: string[] | null
           title_en?: string | null
@@ -160,6 +162,7 @@ export type Database = {
           seo_title_es?: string | null
           slug_en?: string | null
           slug_es?: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string
           tags?: string[] | null
           title_en?: string | null
@@ -194,6 +197,7 @@ export type Database = {
           puesto_solicitado: string
           salario_esperado: number | null
           skills: string[] | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           telefono: string | null
           updated_at: string | null
         }
@@ -221,6 +225,7 @@ export type Database = {
           puesto_solicitado: string
           salario_esperado?: number | null
           skills?: string[] | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           telefono?: string | null
           updated_at?: string | null
         }
@@ -248,6 +253,7 @@ export type Database = {
           puesto_solicitado?: string
           salario_esperado?: number | null
           skills?: string[] | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           telefono?: string | null
           updated_at?: string | null
         }
@@ -329,6 +335,7 @@ export type Database = {
           solution_ca: string | null
           solution_en: string | null
           solution_es: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: Database["public"]["Enums"]["case_study_status"]
           tags: string[] | null
           testimonial_author: string | null
@@ -400,6 +407,7 @@ export type Database = {
           solution_ca?: string | null
           solution_en?: string | null
           solution_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["case_study_status"]
           tags?: string[] | null
           testimonial_author?: string | null
@@ -471,6 +479,7 @@ export type Database = {
           solution_ca?: string | null
           solution_en?: string | null
           solution_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["case_study_status"]
           tags?: string[] | null
           testimonial_author?: string | null
@@ -578,6 +587,7 @@ export type Database = {
           phone: string | null
           priority: string | null
           referrer: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: string | null
           timeline: string | null
           updated_at: string | null
@@ -612,6 +622,7 @@ export type Database = {
           phone?: string | null
           priority?: string | null
           referrer?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
           timeline?: string | null
           updated_at?: string | null
@@ -646,6 +657,7 @@ export type Database = {
           phone?: string | null
           priority?: string | null
           referrer?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
           timeline?: string | null
           updated_at?: string | null
@@ -753,6 +765,7 @@ export type Database = {
           responded_by: string | null
           response_notes: string | null
           service_type: Database["public"]["Enums"]["service_type"] | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           subject: string
           updated_at: string | null
           user_agent: string | null
@@ -771,6 +784,7 @@ export type Database = {
           responded_by?: string | null
           response_notes?: string | null
           service_type?: Database["public"]["Enums"]["service_type"] | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           subject: string
           updated_at?: string | null
           user_agent?: string | null
@@ -789,6 +803,7 @@ export type Database = {
           responded_by?: string | null
           response_notes?: string | null
           service_type?: Database["public"]["Enums"]["service_type"] | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           subject?: string
           updated_at?: string | null
           user_agent?: string | null
@@ -1022,6 +1037,7 @@ export type Database = {
           slug_ca: string | null
           slug_en: string | null
           slug_es: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: Database["public"]["Enums"]["job_status"]
           title: string
           title_ca: string | null
@@ -1058,6 +1074,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["job_status"]
           title: string
           title_ca?: string | null
@@ -1094,6 +1111,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["job_status"]
           title?: string
           title_ca?: string | null
@@ -1184,6 +1202,7 @@ export type Database = {
           slug_ca: string | null
           slug_en: string | null
           slug_es: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: string | null
           title: string
           title_ca: string | null
@@ -1234,6 +1253,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
           title: string
           title_ca?: string | null
@@ -1284,6 +1304,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
           title?: string
           title_ca?: string | null
@@ -1514,6 +1535,7 @@ export type Database = {
           name: string
           phone: string | null
           priority: Database["public"]["Enums"]["lead_priority"]
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: Database["public"]["Enums"]["ley_beckham_lead_status"]
           updated_at: string | null
           user_agent: string | null
@@ -1537,6 +1559,7 @@ export type Database = {
           name: string
           phone?: string | null
           priority?: Database["public"]["Enums"]["lead_priority"]
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["ley_beckham_lead_status"]
           updated_at?: string | null
           user_agent?: string | null
@@ -1560,6 +1583,7 @@ export type Database = {
           name?: string
           phone?: string | null
           priority?: Database["public"]["Enums"]["lead_priority"]
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["ley_beckham_lead_status"]
           updated_at?: string | null
           user_agent?: string | null
@@ -1790,6 +1814,7 @@ export type Database = {
           slug_ca: string | null
           slug_en: string | null
           slug_es: string
+          source_site: Database["public"]["Enums"]["site_source"] | null
           tags: string[] | null
           title_ca: string | null
           title_en: string | null
@@ -1816,6 +1841,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           tags?: string[] | null
           title_ca?: string | null
           title_en?: string | null
@@ -1842,6 +1868,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           tags?: string[] | null
           title_ca?: string | null
           title_en?: string | null
@@ -3056,6 +3083,7 @@ export type Database = {
         | "legal_advisory"
         | "financial_planning"
         | "other"
+      site_source: "es" | "int"
       traffic_source:
         | "seo"
         | "sem"
@@ -3244,6 +3272,7 @@ export const Constants = {
         "financial_planning",
         "other",
       ],
+      site_source: ["es", "int"],
       traffic_source: [
         "seo",
         "sem",
