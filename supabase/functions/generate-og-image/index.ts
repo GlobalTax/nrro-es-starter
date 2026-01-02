@@ -65,7 +65,7 @@ function generateOGImageSVG(type: string, title: string, description: string): s
   
   <!-- Footer -->
   <text x="60" y="580" font-family="Arial, sans-serif" font-size="20" fill="#666666">
-    nrro.es
+    int.nrro.es
   </text>
   
   <!-- Green accent line -->

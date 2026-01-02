@@ -131,7 +131,7 @@ const AdminSitemap = () => {
         <div>
           <h1 className="text-3xl font-bold">Mapa del Sitio</h1>
           <p className="text-muted-foreground mt-1">
-            Gestiona todas las páginas y landings de nrro.es
+            Gestiona todas las páginas y landings de int.nrro.es
           </p>
         </div>
       </div>
