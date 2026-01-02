@@ -17,17 +17,14 @@ export async function fixHerenciasLanding() {
 
   const sections = landing.sections as any[];
   
-  // 1. Eliminar trust-bar completamente
-  const sectionsWithoutTrustBar = sections.filter((s: any) => s.type !== 'trust-bar');
-  
-  // 2. Cambiar hero background a 'solid' (blanco puro)
-  const updatedSections = sectionsWithoutTrustBar.map((section: any) => {
+  // Cambiar hero background a 'dark' (fondo negro con texto blanco)
+  const updatedSections = sections.map((section: any) => {
     if (section.type === 'hero') {
       return {
         ...section,
         props: {
           ...section.props,
-          background: 'solid'
+          background: 'dark'
         }
       };
     }
@@ -46,8 +43,7 @@ export async function fixHerenciasLanding() {
   if (updateError) {
     console.error('❌ Error al actualizar:', updateError);
   } else {
-    console.log('✅ Trust bar eliminada');
-    console.log('✅ Hero con fondo blanco');
+    console.log('✅ Hero con fondo negro (dark)');
     console.log('✅ Recarga la página para ver los cambios');
   }
 }
