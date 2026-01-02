@@ -8,10 +8,14 @@ interface Stat {
 
 interface TrustBarSectionProps {
   overline?: string;
-  stats: Stat[];
+  stats?: Stat[];
 }
 
-export const TrustBarSection = ({ overline = "Our Impact", stats }: TrustBarSectionProps) => {
+export const TrustBarSection = ({ overline = "Nuestro impacto", stats = [] }: TrustBarSectionProps) => {
+  if (!stats || stats.length === 0) {
+    return null;
+  }
+
   return (
     <section className="bg-neutral-50 py-20 md:py-28">
       <div className="container">

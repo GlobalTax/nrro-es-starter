@@ -2,9 +2,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 interface CTAFinalSectionProps {
-  title: string;
-  description: string;
-  primaryCta: {
+  title?: string;
+  description?: string;
+  subtitle?: string;
+  primaryCta?: {
     text: string;
     url: string;
   };
@@ -15,11 +16,13 @@ interface CTAFinalSectionProps {
 }
 
 export const CTAFinalSection = ({
-  title,
+  title = "¿Listo para empezar?",
   description,
-  primaryCta,
+  subtitle,
+  primaryCta = { text: "Contactar", url: "#contacto" },
   secondaryCta,
 }: CTAFinalSectionProps) => {
+  const displayDescription = description || subtitle;
   return (
     <section className="py-16 bg-primary text-primary-foreground">
       <div className="container">
@@ -29,7 +32,7 @@ export const CTAFinalSection = ({
           </h2>
           
           <p className="text-xl mb-8 opacity-90">
-            {description}
+            {displayDescription}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
