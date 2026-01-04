@@ -1217,5 +1217,20 @@
     "privacy": "Privacitat",
     "cookies": "Cookies",
     "terms": "Termes"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Rep les últimes novetats fiscals i legals",
+    "emailPlaceholder": "El teu email",
+    "consent": "Accepto rebre comunicacions comercials sobre novetats fiscals i legals.",
+    "subscribe": "Subscriure'm",
+    "subscribing": "Enviant...",
+    "successTitle": "Subscrit!",
+    "successDescription": "Gràcies per subscriure't a la nostra newsletter.",
+    "errorTitle": "Error",
+    "errorDescription": "No s'ha pogut completar la subscripció. Torna-ho a intentar.",
+    "alreadySubscribed": "Aquest email ja està subscrit a la nostra newsletter.",
+    "invalidEmail": "Si us plau, introdueix un email vàlid.",
+    "consentRequired": "Has d'acceptar rebre comunicacions."
   }
 }

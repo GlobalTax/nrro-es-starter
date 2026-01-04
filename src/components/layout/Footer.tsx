@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useServicesSearch } from '@/hooks/useServicesSearch';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { useAnalytics } from '@/hooks/useAnalytics';
-
+import { NewsletterForm } from './NewsletterForm';
 export const Footer = () => {
   const { t, language } = useLanguage();
   const { trackContactClick } = useAnalytics();
@@ -216,6 +216,11 @@ export const Footer = () => {
                 {t("footer.contact")}
               </LanguageLink>
             </nav>
+
+            {/* Newsletter Form */}
+            <div className="mt-8 pt-6 border-t border-primary-foreground/10">
+              <NewsletterForm />
+            </div>
           </div>
         </div>
       </div>
