@@ -80,7 +80,13 @@
     "notFound": "Article no trobat",
     "previewNotAvailable": "Vista prèvia no disponible",
     "previewExpired": "Aquesta vista prèvia ha caducat o no és vàlida",
-    "tags": "Etiquetes"
+    "tags": "Etiquetes",
+    "writtenBy": "Escrit per",
+    "viewProfile": "Veure perfil",
+    "contactFormTitle": "Tens dubtes sobre aquest tema?",
+    "contactFormSubtitle": "Deixa'ns la teva consulta i et respondrem el més aviat possible",
+    "contactFormPlaceholder": "Escriu la teva consulta sobre aquest article...",
+    "sendQuery": "Enviar consulta"
   },
   "caseStudies": {
     "challenge": "El Desafiament",

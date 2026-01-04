@@ -1,6 +1,8 @@
 import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,9 +24,10 @@ import { PreviewBanner } from "@/components/ui/preview-banner";
 import { usePreviewContent } from "@/hooks/usePreviewContent";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import DOMPurify from "dompurify";
 import { RelatedBlogPosts } from "@/components/blog/RelatedBlogPosts";
 import { BlogCTASection } from "@/components/blog/BlogCTASection";
+import { AuthorCard } from "@/components/blog/AuthorCard";
+import { BlogContactForm } from "@/components/blog/BlogContactForm";
 import { mainBreadcrumbs, createDynamicBreadcrumb } from "@/lib/seoUtils";
 
 const BlogDetail = () => {
@@ -200,7 +203,55 @@ const BlogDetail = () => {
     );
   }
 
-  const sanitizedContent = DOMPurify.sanitize(post.content || "");
+  // Markdown components for styled rendering
+  const markdownComponents = {
+    h2: ({ children, ...props }: any) => (
+      <h2 className="text-2xl font-semibold mt-10 mb-4 text-foreground" {...props}>{children}</h2>
+    ),
+    h3: ({ children, ...props }: any) => (
+      <h3 className="text-xl font-semibold mt-8 mb-3 text-foreground" {...props}>{children}</h3>
+    ),
+    h4: ({ children, ...props }: any) => (
+      <h4 className="text-lg font-semibold mt-6 mb-2 text-foreground" {...props}>{children}</h4>
+    ),
+    p: ({ children, ...props }: any) => (
+      <p className="mb-4 leading-relaxed text-foreground/90" {...props}>{children}</p>
+    ),
+    ul: ({ children, ...props }: any) => (
+      <ul className="list-disc pl-6 mb-6 space-y-2" {...props}>{children}</ul>
+    ),
+    ol: ({ children, ...props }: any) => (
+      <ol className="list-decimal pl-6 mb-6 space-y-2" {...props}>{children}</ol>
+    ),
+    li: ({ children, ...props }: any) => (
+      <li className="leading-relaxed text-foreground/90" {...props}>{children}</li>
+    ),
+    strong: ({ children, ...props }: any) => (
+      <strong className="font-semibold text-foreground" {...props}>{children}</strong>
+    ),
+    blockquote: ({ children, ...props }: any) => (
+      <blockquote className="border-l-4 border-primary pl-4 italic my-6 text-muted-foreground" {...props}>
+        {children}
+      </blockquote>
+    ),
+    a: ({ children, href, ...props }: any) => (
+      <a 
+        href={href} 
+        className="text-primary hover:underline" 
+        target={href?.startsWith('http') ? '_blank' : undefined}
+        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+        {...props}
+      >
+        {children}
+      </a>
+    ),
+    code: ({ children, ...props }: any) => (
+      <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono" {...props}>{children}</code>
+    ),
+    pre: ({ children, ...props }: any) => (
+      <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-6" {...props}>{children}</pre>
+    ),
+  };
   
   // Generate dynamic OG image URL
   const ogImageUrl = post 
@@ -303,44 +354,20 @@ const BlogDetail = () => {
 
             <div className="prose-article">
               {post.excerpt && (
-                <p className="text-lead mb-8">{post.excerpt}</p>
+                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">{post.excerpt}</p>
               )}
               {post.content && (
-                <div
-                  className="text-body space-y-6"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(post.content, {
-                      ALLOWED_TAGS: [
-                        "p",
-                        "br",
-                        "strong",
-                        "em",
-                        "u",
-                        "h1",
-                        "h2",
-                        "h3",
-                        "h4",
-                        "h5",
-                        "h6",
-                        "ul",
-                        "ol",
-                        "li",
-                        "a",
-                        "img",
-                        "blockquote",
-                        "code",
-                        "pre",
-                      ],
-                      ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target", "rel"],
-                      ALLOW_DATA_ATTR: false,
-                    }),
-                  }}
-                />
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={markdownComponents}
+                >
+                  {post.content}
+                </ReactMarkdown>
               )}
             </div>
 
             {post.tags && post.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t">
+              <div className="mt-12 pt-8 border-t border-border">
                 <h3 className="text-sm font-semibold mb-4">{t('blog.tags')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag: string) => (
@@ -354,6 +381,18 @@ const BlogDetail = () => {
                 </div>
               </div>
             )}
+
+            {/* Author Card */}
+            <AuthorCard 
+              authorName={post.author_name} 
+              specialization={post.author_specialization} 
+            />
+
+            {/* Contact Form */}
+            <BlogContactForm 
+              articleTitle={post.title} 
+              articleSlug={post.slug} 
+            />
           </div>
         </article>
 

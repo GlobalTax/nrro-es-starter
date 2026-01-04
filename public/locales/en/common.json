@@ -80,7 +80,13 @@
     "notFound": "Article not found",
     "previewNotAvailable": "Preview not available",
     "previewExpired": "This preview has expired or is not valid",
-    "tags": "Tags"
+    "tags": "Tags",
+    "writtenBy": "Written by",
+    "viewProfile": "View profile",
+    "contactFormTitle": "Have questions about this topic?",
+    "contactFormSubtitle": "Leave us your query and we'll respond as soon as possible",
+    "contactFormPlaceholder": "Write your question about this article...",
+    "sendQuery": "Send query"
   },
   "caseStudies": {
     "challenge": "The Challenge",
