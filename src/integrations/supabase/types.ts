@@ -2053,6 +2053,72 @@ export type Database = {
         }
         Relationships: []
       }
+      playbook_leads: {
+        Row: {
+          company_name: string
+          country: string
+          created_at: string | null
+          downloaded_at: string | null
+          email: string
+          full_name: string
+          id: string
+          ip_address: string | null
+          job_title: string | null
+          playbook_name: string | null
+          source_site: string | null
+          timeline: string | null
+          updated_at: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          company_name: string
+          country: string
+          created_at?: string | null
+          downloaded_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string | null
+          playbook_name?: string | null
+          source_site?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          company_name?: string
+          country?: string
+          created_at?: string | null
+          downloaded_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string | null
+          playbook_name?: string | null
+          source_site?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       portfolio_companies: {
         Row: {
           country: string
