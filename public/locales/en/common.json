@@ -1217,5 +1217,20 @@
     "privacy": "Privacy",
     "cookies": "Cookies",
     "terms": "Terms"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Get the latest tax and legal updates",
+    "emailPlaceholder": "Your email",
+    "consent": "I agree to receive commercial communications about tax and legal news.",
+    "subscribe": "Subscribe",
+    "subscribing": "Sending...",
+    "successTitle": "Subscribed!",
+    "successDescription": "Thank you for subscribing to our newsletter.",
+    "errorTitle": "Error",
+    "errorDescription": "Could not complete subscription. Please try again.",
+    "alreadySubscribed": "This email is already subscribed to our newsletter.",
+    "invalidEmail": "Please enter a valid email.",
+    "consentRequired": "You must agree to receive communications."
   }
 }

@@ -1189,5 +1189,20 @@
     "privacy": "Privacidad",
     "cookies": "Cookies",
     "terms": "Términos"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Recibe las últimas novedades fiscales y legales",
+    "emailPlaceholder": "Tu email",
+    "consent": "Acepto recibir comunicaciones comerciales sobre novedades fiscales y legales.",
+    "subscribe": "Suscribirse",
+    "subscribing": "Enviando...",
+    "successTitle": "¡Suscrito!",
+    "successDescription": "Gracias por suscribirte a nuestra newsletter.",
+    "errorTitle": "Error",
+    "errorDescription": "No se pudo completar la suscripción. Inténtalo de nuevo.",
+    "alreadySubscribed": "Este email ya está suscrito a nuestra newsletter.",
+    "invalidEmail": "Por favor, introduce un email válido.",
+    "consentRequired": "Debes aceptar recibir comunicaciones."
   }
 }
