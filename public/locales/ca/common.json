@@ -1154,6 +1154,51 @@
       "cta": "Veure tots els articles"
     }
   },
+  "contact": {
+    "meta": {
+      "title": "Contacte - Navarro Tax Legal",
+      "description": "Contacta amb Navarro Tax Legal. Assessorament fiscal i legal per a empreses familiars a Barcelona. Telèfon 93 459 36 00.",
+      "keywords": "contacte, navarro tax legal, assessoria fiscal Barcelona, advocats empresa familiar"
+    },
+    "hero": {
+      "badge": "Contacte",
+      "title": "Parlem del teu projecte",
+      "subtitle": "Estem aquí per ajudar-te. Explica'ns com podem assessorar-te."
+    },
+    "form": {
+      "title": "Envia'ns un missatge",
+      "name": "Nom complet *",
+      "namePlaceholder": "El teu nom",
+      "email": "Email *",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Telèfon",
+      "phonePlaceholder": "+34 600 000 000",
+      "subject": "Assumpte *",
+      "subjectPlaceholder": "Sobre què vols consultar-nos?",
+      "message": "Missatge *",
+      "messagePlaceholder": "Explica'ns com podem ajudar-te...",
+      "messageError": "El missatge ha de tenir almenys 10 caràcters",
+      "submit": "Enviar missatge",
+      "submitting": "Enviant...",
+      "successTitle": "Missatge enviat!",
+      "successDescription": "Ens posarem en contacte amb tu el més aviat possible.",
+      "errorTitle": "Error en enviar",
+      "errorDescription": "S'ha produït un error. Si us plau, torna-ho a intentar."
+    },
+    "info": {
+      "title": "Informació de contacte",
+      "subtitle": "També pots contactar-nos directament per telèfon o visitar-nos a la nostra oficina.",
+      "phone": "Telèfon",
+      "email": "Email",
+      "address": "Adreça",
+      "addressValue": "Via Augusta, 125, 08006 Barcelona",
+      "hours": "Horari d'atenció",
+      "weekdays": "Dilluns a Dijous",
+      "weekdaysValue": "9:00 - 18:00",
+      "weekend": "Divendres",
+      "weekendValue": "9:00 - 15:00"
+    }
+  },
   "footer": {
     "contact": "Contacte",
     "tagline": "Assessorament estratègic i legal per empreses familiars i grups empresarials.",

@@ -1126,6 +1126,51 @@
       "cta": "Ver todos los artículos"
     }
   },
+  "contact": {
+    "meta": {
+      "title": "Contacto - Navarro Tax Legal",
+      "description": "Contacta con Navarro Tax Legal. Asesoramiento fiscal y legal para empresas familiares en Barcelona. Teléfono 93 459 36 00.",
+      "keywords": "contacto, navarro tax legal, asesoría fiscal Barcelona, abogados empresa familiar"
+    },
+    "hero": {
+      "badge": "Contacto",
+      "title": "Hablemos de tu proyecto",
+      "subtitle": "Estamos aquí para ayudarte. Cuéntanos cómo podemos asesorarte."
+    },
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": "Nombre completo *",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email *",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+34 600 000 000",
+      "subject": "Asunto *",
+      "subjectPlaceholder": "¿Sobre qué quieres consultarnos?",
+      "message": "Mensaje *",
+      "messagePlaceholder": "Cuéntanos cómo podemos ayudarte...",
+      "messageError": "El mensaje debe tener al menos 10 caracteres",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "successTitle": "¡Mensaje enviado!",
+      "successDescription": "Nos pondremos en contacto contigo lo antes posible.",
+      "errorTitle": "Error al enviar",
+      "errorDescription": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
+    },
+    "info": {
+      "title": "Información de contacto",
+      "subtitle": "También puedes contactarnos directamente por teléfono o visitarnos en nuestra oficina.",
+      "phone": "Teléfono",
+      "email": "Email",
+      "address": "Dirección",
+      "addressValue": "Via Augusta, 125, 08006 Barcelona",
+      "hours": "Horario de atención",
+      "weekdays": "Lunes a Jueves",
+      "weekdaysValue": "9:00 - 18:00",
+      "weekend": "Viernes",
+      "weekendValue": "9:00 - 15:00"
+    }
+  },
   "footer": {
     "contact": "Contacto",
     "tagline": "Asesoramiento estratégico y legal para empresas familiares y grupos empresariales.",

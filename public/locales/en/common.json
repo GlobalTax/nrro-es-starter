@@ -1154,6 +1154,51 @@
       "cta": "View all articles"
     }
   },
+  "contact": {
+    "meta": {
+      "title": "Contact - Navarro Tax Legal",
+      "description": "Contact Navarro Tax Legal. Tax and legal advisory for family businesses in Barcelona. Phone +34 93 459 36 00.",
+      "keywords": "contact, navarro tax legal, tax advisory Barcelona, family business lawyers"
+    },
+    "hero": {
+      "badge": "Contact",
+      "title": "Let's talk about your project",
+      "subtitle": "We're here to help. Tell us how we can advise you."
+    },
+    "form": {
+      "title": "Send us a message",
+      "name": "Full name *",
+      "namePlaceholder": "Your name",
+      "email": "Email *",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+34 600 000 000",
+      "subject": "Subject *",
+      "subjectPlaceholder": "What would you like to ask us?",
+      "message": "Message *",
+      "messagePlaceholder": "Tell us how we can help you...",
+      "messageError": "Message must be at least 10 characters",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "successTitle": "Message sent!",
+      "successDescription": "We will contact you as soon as possible.",
+      "errorTitle": "Error sending",
+      "errorDescription": "An error occurred. Please try again."
+    },
+    "info": {
+      "title": "Contact information",
+      "subtitle": "You can also contact us directly by phone or visit our office.",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "addressValue": "Via Augusta, 125, 08006 Barcelona",
+      "hours": "Office hours",
+      "weekdays": "Monday to Thursday",
+      "weekdaysValue": "9:00 AM - 6:00 PM",
+      "weekend": "Friday",
+      "weekendValue": "9:00 AM - 3:00 PM"
+    }
+  },
   "footer": {
     "contact": "Contact",
     "tagline": "Strategic and legal consulting for family businesses and corporate groups.",
