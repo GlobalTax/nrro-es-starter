@@ -6,8 +6,7 @@
 
 /* Roboto Mono already imported in index.html for monospace code/data display */
 
-/* Leaflet CSS for OpenStreetMap */
-@import 'leaflet/dist/leaflet.css';
+/* Mapa usa iframe de OpenStreetMap - no requiere CSS externo */
 
 /* Design System Utilities */
 @import './styles/utilities.css';
