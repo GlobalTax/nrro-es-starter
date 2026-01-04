@@ -25,6 +25,25 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const { i18n, t: i18nT, ready } = useTranslation();
   const language = i18n.language as Language;
 
+  // All hooks MUST be called before any conditional return
+  const setLanguage = useCallback((lang: Language) => {
+    i18n.changeLanguage(lang);
+  }, [i18n]);
+
+  const t = useCallback((key: string, options?: any): string => {
+    return i18nT(key, options) as string;
+  }, [i18nT]);
+
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage,
+    t
+  }), [language, setLanguage, t]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   // Show loading state while i18next initializes
   if (!ready) {
     return (
@@ -33,28 +52,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       </div>
     );
   }
-
-  // Memoize setLanguage to prevent unnecessary re-renders
-  const setLanguage = useCallback((lang: Language) => {
-    i18n.changeLanguage(lang);
-  }, [i18n]);
-
-  // Memoize translation function to prevent unnecessary re-renders
-  const t = useCallback((key: string, options?: any): string => {
-    return i18nT(key, options) as string;
-  }, [i18nT]);
-
-  // Memoize context value to prevent unnecessary re-renders
-  const contextValue = useMemo(() => ({
-    language,
-    setLanguage,
-    t
-  }), [language, setLanguage, t]);
-
-  // Set html lang attribute
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
 
   return (
     <LanguageContext.Provider value={contextValue}>
