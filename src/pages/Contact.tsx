@@ -298,13 +298,25 @@ export default function Contact() {
                 </CardContent>
               </Card>
 
+              {/* Other Offices */}
+              <Card className="border-border/50 shadow-soft">
+                <CardContent className="p-6">
+                  <h3 className="font-display font-normal text-foreground mb-3">
+                    {t("contact.info.otherOffices")}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {t("contact.info.otherOfficesValue")}
+                  </p>
+                </CardContent>
+              </Card>
+
               {/* Map */}
               <Card className="border-border/50 shadow-soft overflow-hidden">
                 <CardContent className="p-0">
                   <LocationMap
                     address={t("contact.info.addressValue")}
-                    lat={41.3931}
-                    lng={2.1737}
+                    lat={41.3915}
+                    lng={2.1745}
                   />
                 </CardContent>
               </Card>
