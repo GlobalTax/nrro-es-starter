@@ -41,14 +41,14 @@ const guarantees: Guarantee[] = [
 
 export const GuaranteesSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-primary text-primary-foreground">
+    <section className="py-16 lg:py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="badge-hero mb-4 inline-block">Our Commitment</span>
           <h2 className="text-3xl lg:text-4xl font-normal mb-4">
             Why Work With Us
           </h2>
-          <p className="text-lg text-primary-foreground/80">
+          <p className="text-lg text-white/80">
             We understand the challenges of setting up a company in a foreign country. That's why we offer these guarantees.
           </p>
         </div>
@@ -59,7 +59,7 @@ export const GuaranteesSection = () => {
             return (
               <div 
                 key={index}
-                className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-xl p-6 hover:bg-primary-foreground/10 transition-colors"
+                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
@@ -67,7 +67,7 @@ export const GuaranteesSection = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-2">{guarantee.title}</h3>
-                    <p className="text-sm text-primary-foreground/70">{guarantee.description}</p>
+                    <p className="text-sm text-white/70">{guarantee.description}</p>
                   </div>
                 </div>
               </div>
@@ -76,8 +76,8 @@ export const GuaranteesSection = () => {
         </div>
 
         {/* Trust bar */}
-        <div className="mt-12 pt-12 border-t border-primary-foreground/20">
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-primary-foreground/60">
+        <div className="mt-12 pt-12 border-t border-white/20">
+          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-white/60">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               <span>ISO 27001 Certified</span>
