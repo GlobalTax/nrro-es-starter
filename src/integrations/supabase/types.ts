@@ -819,6 +819,7 @@ export type Database = {
           name: string
           restaurant_name: string | null
           source: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           status: string | null
         }
         Insert: {
@@ -829,6 +830,7 @@ export type Database = {
           name: string
           restaurant_name?: string | null
           source?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
         }
         Update: {
@@ -839,6 +841,7 @@ export type Database = {
           name?: string
           restaurant_name?: string | null
           source?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
         }
         Relationships: []
@@ -1979,6 +1982,7 @@ export type Database = {
           language: string
           page_key: string
           section_key: string
+          source_site: Database["public"]["Enums"]["site_source"] | null
           updated_at: string | null
           updated_by: string | null
         }
@@ -1991,6 +1995,7 @@ export type Database = {
           language?: string
           page_key: string
           section_key: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           updated_at?: string | null
           updated_by?: string | null
         }
@@ -2003,6 +2008,7 @@ export type Database = {
           language?: string
           page_key?: string
           section_key?: string
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           updated_at?: string | null
           updated_by?: string | null
         }
@@ -2461,6 +2467,7 @@ export type Database = {
           page_type: Database["public"]["Enums"]["page_type"]
           redirect_url: string | null
           source_id: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
           source_table: string | null
           status: Database["public"]["Enums"]["page_status"]
           title: string
@@ -2485,6 +2492,7 @@ export type Database = {
           page_type?: Database["public"]["Enums"]["page_type"]
           redirect_url?: string | null
           source_id?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           source_table?: string | null
           status?: Database["public"]["Enums"]["page_status"]
           title: string
@@ -2509,6 +2517,7 @@ export type Database = {
           page_type?: Database["public"]["Enums"]["page_type"]
           redirect_url?: string | null
           source_id?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
           source_table?: string | null
           status?: Database["public"]["Enums"]["page_status"]
           title?: string

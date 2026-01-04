@@ -1,53 +1,25 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import { useUnreadContactLeads } from '@/hooks/useUnreadContactLeads';
 import {
   LayoutDashboard,
-  TrendingUp,
-  LogOut as ExitIcon,
-  Users,
-  Newspaper,
-  UserCog,
   Home,
   Settings,
-  ExternalLink,
-  FileText,
-  Briefcase,
-  Monitor,
   Map,
-  Building2,
-  Presentation,
-  BarChart3,
+  UserCog,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
-  const navItems = [
-    { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/admin/settings', icon: Settings, label: 'Site Settings' },
-    { path: '/admin/content', icon: FileText, label: 'Gestión de Contenido' },
-    { path: '/admin/landing-dashboard', icon: BarChart3, label: 'Landing Dashboard' },
-    { path: '/admin/landings', icon: Presentation, label: 'Landing Control Center' },
-    { path: '/admin/case-studies', icon: TrendingUp, label: 'Case Studies' },
-    { path: '/admin/services', icon: Settings, label: 'Services' },
-    { path: '/admin/blog', icon: Newspaper, label: 'Blog' },
-    { path: '/admin/team', icon: Users, label: 'Team Members' },
-    { path: '/admin/job-positions', icon: Briefcase, label: 'Vacantes' },
-    { path: '/admin/candidatos', icon: Briefcase, label: 'Candidatos' },
-  { path: '/admin/contact-leads', icon: Users, label: 'Leads de Contacto' },
-  { path: '/admin/company-setup-leads', icon: Building2, label: 'Company Setup Leads' },
-  { path: '/admin/ley-beckham-leads', icon: Users, label: 'Ley Beckham' },
-    { path: '/admin/demo-requests', icon: Users, label: 'Demo Requests' },
-    { path: '/admin/technology', icon: Monitor, label: 'Tecnología' },
-    { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
-    { path: '/orquest-kairoshr', icon: ExternalLink, label: 'Orquest + KairosHR', external: true },
-  ];
+const navItems = [
+  { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
+  { path: '/admin/settings', icon: Settings, label: 'Configuración' },
+];
 
 export const AdminSidebar = () => {
   const location = useLocation();
   const { adminUser, canManageUsers } = useAdminAuth();
-  const unreadLeads = useUnreadContactLeads();
 
   const isActive = (path: string) => {
     if (path === '/admin') {
@@ -57,71 +29,60 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-slate-900 text-white min-h-screen flex flex-col">
+    <aside className="w-64 bg-teal-900 text-white min-h-screen flex flex-col">
       <div className="p-6">
-        <h1 className="text-2xl font-bold">Admin Panel</h1>
+        <h1 className="text-2xl font-bold">int.nrro.es</h1>
+        <p className="text-xs text-teal-300 mt-1">Panel de Administración</p>
         {adminUser && (
-          <div className="mt-2">
-            <Badge variant="secondary" className="text-xs">
+          <div className="mt-3">
+            <Badge variant="secondary" className="text-xs bg-teal-700 text-teal-100 hover:bg-teal-600">
               {adminUser.role.replace('_', ' ').toUpperCase()}
             </Badge>
           </div>
         )}
       </div>
 
-      <Separator className="bg-slate-700" />
+      <Separator className="bg-teal-700" />
 
       <nav className="flex-1 p-4 space-y-2">
         <Link to="/">
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800"
+            className="w-full justify-start text-teal-200 hover:text-white hover:bg-teal-800"
           >
             <Home className="mr-3 h-4 w-4" />
-            Back to Site
+            Volver al sitio
           </Button>
         </Link>
 
-        <Separator className="bg-slate-700 my-4" />
+        <Separator className="bg-teal-700 my-4" />
 
         {navItems.map((item) => (
-          <Link 
-            key={item.path} 
-            to={item.path}
-            {...((item as any).external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          >
+          <Link key={item.path} to={item.path}>
             <Button
               variant="ghost"
               className={`w-full justify-start gap-2 ${
                 isActive(item.path)
-                  ? 'bg-slate-800 text-white'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                  ? 'bg-teal-800 text-white'
+                  : 'text-teal-200 hover:text-white hover:bg-teal-800'
               }`}
             >
               <item.icon className="h-4 w-4" />
               <span className="flex-1 text-left">{item.label}</span>
-              {item.path === '/admin/contact-leads' && unreadLeads > 0 && (
-                <Badge 
-                  variant="destructive" 
-                  className="h-5 min-w-[20px] rounded-full px-1.5 text-xs"
-                >
-                  {unreadLeads > 99 ? '99+' : unreadLeads}
-                </Badge>
-              )}
             </Button>
           </Link>
         ))}
 
         {canManageUsers() && (
           <>
-            <Separator className="bg-slate-700 my-4" />
+            <Separator className="bg-teal-700 my-4" />
             <Link to="/admin/users">
               <Button
                 variant="ghost"
                 className={`w-full justify-start ${
                   isActive('/admin/users')
-                    ? 'bg-slate-800 text-white'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                    ? 'bg-teal-800 text-white'
+                    : 'text-teal-200 hover:text-white hover:bg-teal-800'
                 }`}
               >
                 <UserCog className="mr-3 h-4 w-4" />
@@ -134,8 +95,8 @@ export const AdminSidebar = () => {
 
       <div className="p-4">
         {adminUser && (
-          <div className="text-sm text-slate-400 mb-2">
-            <p className="truncate">{adminUser.full_name}</p>
+          <div className="text-sm text-teal-300 mb-2">
+            <p className="truncate font-medium text-teal-100">{adminUser.full_name}</p>
             <p className="text-xs truncate">{adminUser.email}</p>
           </div>
         )}
