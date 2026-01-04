@@ -81,6 +81,18 @@ export const Footer = () => {
             <p className="text-lg text-primary-foreground/80 font-light leading-relaxed">
               {t("footer.tagline")}
             </p>
+
+            {/* Offices */}
+            <div className="space-y-2 text-sm">
+              <p className="text-primary-foreground/90">
+                <span className="font-medium">{t("contact.info.headquarters")}:</span>{" "}
+                <span className="text-primary-foreground/70">Barcelona</span>
+              </p>
+              <p className="text-primary-foreground/70 leading-relaxed">
+                <span className="font-medium text-primary-foreground/90">{t("contact.info.otherOffices")}:</span>{" "}
+                {t("contact.info.otherOfficesValue")}
+              </p>
+            </div>
             
             {/* Social Media Links */}
             <div className="flex flex-col gap-4">
