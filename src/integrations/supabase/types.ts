@@ -1880,6 +1880,45 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscriptions: {
+        Row: {
+          company: string | null
+          consent: boolean
+          created_at: string | null
+          email: string
+          first_name: string | null
+          id: string
+          is_active: boolean | null
+          source_page: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
+          subscribed_at: string | null
+        }
+        Insert: {
+          company?: string | null
+          consent?: boolean
+          created_at?: string | null
+          email: string
+          first_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          source_page?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          subscribed_at?: string | null
+        }
+        Update: {
+          company?: string | null
+          consent?: boolean
+          created_at?: string | null
+          email?: string
+          first_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          source_page?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          subscribed_at?: string | null
+        }
+        Relationships: []
+      }
       nominas: {
         Row: {
           anio: number | null
@@ -2209,6 +2248,63 @@ export type Database = {
           last_request?: string | null
           request_count?: number | null
           window_start?: string | null
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          category: Database["public"]["Enums"]["resource_category"]
+          countries: string[] | null
+          created_at: string | null
+          description: string | null
+          download_count: number | null
+          file_url: string | null
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          personas: string[] | null
+          published_at: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
+          thumbnail_url: string | null
+          title: string
+          type: Database["public"]["Enums"]["resource_type"]
+          updated_at: string | null
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["resource_category"]
+          countries?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          download_count?: number | null
+          file_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          personas?: string[] | null
+          published_at?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          thumbnail_url?: string | null
+          title: string
+          type: Database["public"]["Enums"]["resource_type"]
+          updated_at?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["resource_category"]
+          countries?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          download_count?: number | null
+          file_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          personas?: string[] | null
+          published_at?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          thumbnail_url?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["resource_type"]
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -3075,6 +3171,15 @@ export type Database = {
         | "careers"
         | "job_position"
         | "other"
+      resource_category:
+        | "accounting"
+        | "tax"
+        | "payroll"
+        | "corporate_legal"
+        | "treasury"
+        | "transfer_pricing"
+        | "governance"
+      resource_type: "white_paper" | "country_guide" | "template" | "webinar"
       security_event_type:
         | "LOGIN_SUCCESS"
         | "LOGIN_FAILED"
@@ -3262,6 +3367,16 @@ export const Constants = {
         "job_position",
         "other",
       ],
+      resource_category: [
+        "accounting",
+        "tax",
+        "payroll",
+        "corporate_legal",
+        "treasury",
+        "transfer_pricing",
+        "governance",
+      ],
+      resource_type: ["white_paper", "country_guide", "template", "webinar"],
       security_event_type: [
         "LOGIN_SUCCESS",
         "LOGIN_FAILED",
