@@ -1,15 +1,3 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-
-// Fix para el icono por defecto de Leaflet
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-});
-
 interface LocationMapProps {
   address: string;
   lat: number;
@@ -17,24 +5,21 @@ interface LocationMapProps {
 }
 
 export const LocationMap = ({ address, lat, lng }: LocationMapProps) => {
+  // Crear URL de OpenStreetMap embed con marker
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.005},${lat - 0.003},${lng + 0.005},${lat + 0.003}&layer=mapnik&marker=${lat},${lng}`;
+  
   return (
-    <MapContainer
-      center={[lat, lng]}
-      zoom={15}
-      style={{ height: '300px', width: '100%', borderRadius: '8px' }}
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    <div className="relative w-full h-[300px] rounded-lg overflow-hidden border border-border">
+      <iframe
+        title={`Mapa de ubicación: ${address}`}
+        src={mapUrl}
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="rounded-lg"
       />
-      <Marker position={[lat, lng]}>
-        <Popup>
-          <div className="text-sm font-medium">
-            {address}
-          </div>
-        </Popup>
-      </Marker>
-    </MapContainer>
+    </div>
   );
 };
