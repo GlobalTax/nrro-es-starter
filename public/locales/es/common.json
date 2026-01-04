@@ -7,7 +7,8 @@
     "careers": "Carreras",
     "contact": "Contacto",
     "areas": "Áreas",
-    "caseStudies": "Casos de Éxito"
+    "caseStudies": "Casos de Éxito",
+    "resources": "Recursos"
   },
   "breadcrumb": {
     "home": "Inicio"
@@ -1210,5 +1211,53 @@
     "alreadySubscribed": "Este email ya está suscrito a nuestra newsletter.",
     "invalidEmail": "Por favor, introduce un email válido.",
     "consentRequired": "Debes aceptar recibir comunicaciones."
+  },
+  "resources": {
+    "badge": "Centro de Recursos",
+    "heroTitle": "Recursos para tu empresa",
+    "heroSubtitle": "Guías prácticas, ebooks, webinars y herramientas para ayudarte en la gestión fiscal, legal y empresarial.",
+    "searchPlaceholder": "Buscar recursos...",
+    "filterByType": "Tipo de recurso",
+    "filterByCategory": "Área de práctica",
+    "loading": "Cargando recursos...",
+    "results": "{{count}} recursos encontrados",
+    "noResults": "No se encontraron recursos",
+    "noResultsHint": "Prueba con otros filtros o términos de búsqueda",
+    "featured": "Destacado",
+    "downloads": "descargas",
+    "download": "Descargar",
+    "downloadTitle": "Descargar recurso",
+    "downloadDescription": "Completa tus datos para acceder al recurso:",
+    "downloadSuccess": "¡Descarga iniciada!",
+    "downloadError": "Error al procesar la descarga",
+    "types": {
+      "all": "Todos",
+      "country_guide": "Guía país",
+      "template": "Plantilla",
+      "webinar": "Webinar",
+      "white_paper": "White Paper"
+    },
+    "categories": {
+      "all": "Todas",
+      "tax": "Fiscal",
+      "corporate_legal": "Mercantil",
+      "payroll": "Laboral",
+      "accounting": "Contabilidad",
+      "governance": "Gobierno Corporativo",
+      "transfer_pricing": "Precios de Transferencia",
+      "treasury": "Tesorería"
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "company": "Empresa",
+      "companyPlaceholder": "Tu empresa",
+      "acceptsMarketing": "Acepto recibir contenido y novedades por email",
+      "processing": "Procesando...",
+      "submit": "Descargar ahora",
+      "privacy": "Tus datos serán tratados conforme a nuestra política de privacidad"
+    }
   }
 }

@@ -7,7 +7,8 @@
     "careers": "Careers",
     "contact": "Contact",
     "areas": "Areas",
-    "caseStudies": "Case Studies"
+    "caseStudies": "Case Studies",
+    "resources": "Resources"
   },
   "breadcrumb": {
     "home": "Home"
@@ -1238,5 +1239,53 @@
     "alreadySubscribed": "This email is already subscribed to our newsletter.",
     "invalidEmail": "Please enter a valid email.",
     "consentRequired": "You must agree to receive communications."
+  },
+  "resources": {
+    "badge": "Resource Center",
+    "heroTitle": "Resources for your business",
+    "heroSubtitle": "Practical guides, ebooks, webinars and tools to help you with tax, legal and business management.",
+    "searchPlaceholder": "Search resources...",
+    "filterByType": "Resource type",
+    "filterByCategory": "Practice area",
+    "loading": "Loading resources...",
+    "results": "{{count}} resources found",
+    "noResults": "No resources found",
+    "noResultsHint": "Try different filters or search terms",
+    "featured": "Featured",
+    "downloads": "downloads",
+    "download": "Download",
+    "downloadTitle": "Download resource",
+    "downloadDescription": "Fill in your details to access the resource:",
+    "downloadSuccess": "Download started!",
+    "downloadError": "Error processing download",
+    "types": {
+      "all": "All",
+      "country_guide": "Country Guide",
+      "template": "Template",
+      "webinar": "Webinar",
+      "white_paper": "White Paper"
+    },
+    "categories": {
+      "all": "All",
+      "tax": "Tax",
+      "corporate_legal": "Corporate Law",
+      "payroll": "Payroll",
+      "accounting": "Accounting",
+      "governance": "Corporate Governance",
+      "transfer_pricing": "Transfer Pricing",
+      "treasury": "Treasury"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "company": "Company",
+      "companyPlaceholder": "Your company",
+      "acceptsMarketing": "I agree to receive content and news by email",
+      "processing": "Processing...",
+      "submit": "Download now",
+      "privacy": "Your data will be processed according to our privacy policy"
+    }
   }
 }

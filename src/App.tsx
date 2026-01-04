@@ -31,6 +31,7 @@ import Cookies from "./pages/Cookies";
 import Terms from "./pages/Terms";
 import Strategy from "./pages/Strategy";
 import Sectors from "./pages/Sectors";
+import Resources from "./pages/Resources";
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { AdminCaseStudies } from "./pages/admin/AdminCaseStudies";
@@ -113,7 +114,7 @@ const App = () => {
           <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
           <Route path="/condiciones-contratacion" element={<Layout><Terms /></Layout>} />
             <Route path="/carreras" element={<Layout><Careers /></Layout>} />
-            
+            <Route path="/recursos" element={<Layout><Resources /></Layout>} />
         {/* Catalan routes */}
         <Route path="/ca" element={<Layout><Home /></Layout>} />
         <Route path="/ca/serveis" element={<Layout><Services /></Layout>} />
@@ -133,7 +134,7 @@ const App = () => {
             <Route path="/ca/cookies" element={<Layout><Cookies /></Layout>} />
             <Route path="/ca/condicions-contractacio" element={<Layout><Terms /></Layout>} />
             <Route path="/ca/carreres" element={<Layout><Careers /></Layout>} />
-
+            <Route path="/ca/recursos" element={<Layout><Resources /></Layout>} />
         {/* English routes */}
         <Route path="/en" element={<Layout><Home /></Layout>} />
         <Route path="/en/services" element={<Layout><Services /></Layout>} />
@@ -153,7 +154,7 @@ const App = () => {
             <Route path="/en/cookies" element={<Layout><Cookies /></Layout>} />
             <Route path="/en/terms" element={<Layout><Terms /></Layout>} />
             <Route path="/en/careers" element={<Layout><Careers /></Layout>} />
-            
+            <Route path="/en/resources" element={<Layout><Resources /></Layout>} />
             {/* Special landings */}
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />

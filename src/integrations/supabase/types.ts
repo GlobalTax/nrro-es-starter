@@ -2317,6 +2317,68 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_downloads: {
+        Row: {
+          accepts_marketing: boolean | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          name: string
+          phone: string | null
+          referrer: string | null
+          resource_id: string
+          source_site: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          accepts_marketing?: boolean | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          name: string
+          phone?: string | null
+          referrer?: string | null
+          resource_id: string
+          source_site?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          accepts_marketing?: boolean | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          name?: string
+          phone?: string | null
+          referrer?: string | null
+          resource_id?: string
+          source_site?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_downloads_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       resources: {
         Row: {
           category: Database["public"]["Enums"]["resource_category"]

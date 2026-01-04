@@ -39,6 +39,7 @@ export const Navbar = () => {
     { name: t("nav.services"), href: "/servicios" },
     { name: t("nav.about"), href: "/nosotros" },
     { name: t("nav.blog"), href: "/blog" },
+    { name: t("nav.resources"), href: "/recursos" },
     { name: t("nav.team"), href: "/equipo" },
     { name: t("nav.careers"), href: "/carreras" },
   ];
