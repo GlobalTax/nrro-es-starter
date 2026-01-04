@@ -68,6 +68,11 @@ const pathTranslations: Record<string, Record<Language, string>> = {
     es: '/condiciones-contratacion',
     ca: '/condicions-contractacio',
     en: '/terms'
+  },
+  '/recursos': {
+    es: '/recursos',
+    ca: '/recursos',
+    en: '/resources'
   }
 };
 

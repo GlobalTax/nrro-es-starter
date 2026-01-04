@@ -7,7 +7,8 @@
     "careers": "Carreres",
     "contact": "Contacte",
     "areas": "Àrees",
-    "caseStudies": "Casos d'Èxit"
+    "caseStudies": "Casos d'Èxit",
+    "resources": "Recursos"
   },
   "breadcrumb": {
     "home": "Inici"
@@ -1238,5 +1239,53 @@
     "alreadySubscribed": "Aquest email ja està subscrit a la nostra newsletter.",
     "invalidEmail": "Si us plau, introdueix un email vàlid.",
     "consentRequired": "Has d'acceptar rebre comunicacions."
+  },
+  "resources": {
+    "badge": "Centre de Recursos",
+    "heroTitle": "Recursos per a la teva empresa",
+    "heroSubtitle": "Guies pràctiques, ebooks, webinars i eines per ajudar-te en la gestió fiscal, legal i empresarial.",
+    "searchPlaceholder": "Cercar recursos...",
+    "filterByType": "Tipus de recurs",
+    "filterByCategory": "Àrea de pràctica",
+    "loading": "Carregant recursos...",
+    "results": "{{count}} recursos trobats",
+    "noResults": "No s'han trobat recursos",
+    "noResultsHint": "Prova amb altres filtres o termes de cerca",
+    "featured": "Destacat",
+    "downloads": "descàrregues",
+    "download": "Descarregar",
+    "downloadTitle": "Descarregar recurs",
+    "downloadDescription": "Completa les teves dades per accedir al recurs:",
+    "downloadSuccess": "Descàrrega iniciada!",
+    "downloadError": "Error en processar la descàrrega",
+    "types": {
+      "all": "Tots",
+      "country_guide": "Guia país",
+      "template": "Plantilla",
+      "webinar": "Webinar",
+      "white_paper": "White Paper"
+    },
+    "categories": {
+      "all": "Totes",
+      "tax": "Fiscal",
+      "corporate_legal": "Mercantil",
+      "payroll": "Laboral",
+      "accounting": "Comptabilitat",
+      "governance": "Govern Corporatiu",
+      "transfer_pricing": "Preus de Transferència",
+      "treasury": "Tresoreria"
+    },
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "El teu nom",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "company": "Empresa",
+      "companyPlaceholder": "La teva empresa",
+      "acceptsMarketing": "Accepto rebre contingut i novetats per email",
+      "processing": "Processant...",
+      "submit": "Descarregar ara",
+      "privacy": "Les teves dades seran tractades conforme a la nostra política de privacitat"
+    }
   }
 }
