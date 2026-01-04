@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -42,18 +43,22 @@ export const NewsletterForm = () => {
 
   const consentValue = watch("consent");
 
-  const onSubmit = async (data: NewsletterFormData) => {
+  const onSubmit = async (formData: NewsletterFormData) => {
     setIsSubmitting(true);
 
     try {
-      // Check if email already exists
-      const { data: existing } = await supabase
-        .from("newsletter_subscriptions")
-        .select("id")
-        .eq("email", data.email)
-        .maybeSingle();
+      const { data, error } = await supabase.functions.invoke('subscribe-newsletter', {
+        body: {
+          email: formData.email,
+          consent: formData.consent,
+          source_page: window.location.pathname,
+          language: i18n.language,
+        }
+      });
 
-      if (existing) {
+      if (error) throw error;
+
+      if (data?.error === 'already_subscribed') {
         toast({
           title: t("newsletter.errorTitle"),
           description: t("newsletter.alreadySubscribed"),
@@ -62,17 +67,6 @@ export const NewsletterForm = () => {
         setIsSubmitting(false);
         return;
       }
-
-      // Insert new subscription
-      const { error } = await supabase.from("newsletter_subscriptions").insert({
-        email: data.email,
-        consent: data.consent,
-        source_page: window.location.pathname,
-        source_site: "es",
-        is_active: true,
-      });
-
-      if (error) throw error;
 
       setIsSuccess(true);
       toast({
