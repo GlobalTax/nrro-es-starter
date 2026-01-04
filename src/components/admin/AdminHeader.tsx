@@ -47,10 +47,12 @@ export const AdminHeader = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+    <header className="bg-white border-b border-teal-100 px-6 py-4">
       <div className="flex items-center justify-between">
-        <div className="flex-1">
-          {/* Breadcrumbs can be added here later */}
+        <div className="flex items-center gap-3">
+          <span className="px-2.5 py-1 bg-teal-100 text-teal-800 text-xs font-semibold rounded-md">
+            int.nrro.es
+          </span>
         </div>
 
         <div className="flex items-center gap-4">
