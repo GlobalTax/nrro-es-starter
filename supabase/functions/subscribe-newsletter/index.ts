@@ -247,7 +247,7 @@ serve(async (req: Request): Promise<Response> => {
           email: email.toLowerCase().trim(),
           consent: true,
           source_page: source_page || null,
-          source_site: "navarro",
+          source_site: "es",
           is_active: true,
           subscribed_at: new Date().toISOString(),
         });
