@@ -80,7 +80,13 @@
     "notFound": "Artículo no encontrado",
     "previewNotAvailable": "Vista previa no disponible",
     "previewExpired": "Esta vista previa ha expirado o no es válida",
-    "tags": "Tags"
+    "tags": "Tags",
+    "writtenBy": "Escrito por",
+    "viewProfile": "Ver perfil",
+    "contactFormTitle": "¿Tienes dudas sobre este tema?",
+    "contactFormSubtitle": "Déjanos tu consulta y te responderemos a la mayor brevedad",
+    "contactFormPlaceholder": "Escribe tu consulta sobre este artículo...",
+    "sendQuery": "Enviar consulta"
   },
   "caseStudies": {
     "challenge": "El Desafío",
