@@ -14,175 +14,290 @@ interface SubscribeRequest {
 }
 
 const getEmailContent = (language: string = 'es') => {
-  const content: Record<string, { subject: string; html: string }> = {
+  const content = {
     es: {
-      subject: "¡Bienvenido a la newsletter de Navarro!",
+      subject: "¡Bienvenido/a a la newsletter de navarro!",
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="es">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Bienvenido a navarro</title>
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 8px 8px 0 0; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Navarro Tax Legal</h1>
-          </div>
-          
-          <div style="background: #ffffff; padding: 30px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px;">
-            <h2 style="color: #1a365d; margin-top: 0;">¡Gracias por suscribirte!</h2>
-            
-            <p>Te damos la bienvenida a nuestra newsletter. A partir de ahora recibirás:</p>
-            
-            <ul style="padding-left: 20px;">
-              <li><strong>Novedades fiscales y legales</strong> que pueden afectar a tu empresa</li>
-              <li><strong>Actualizaciones regulatorias</strong> importantes</li>
-              <li><strong>Artículos y análisis</strong> de nuestro equipo de expertos</li>
-              <li><strong>Consejos prácticos</strong> para la gestión empresarial</li>
-            </ul>
-            
-            <p>Nos comprometemos a enviarte contenido de valor y relevante para tu actividad profesional.</p>
-            
-            <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; font-size: 14px; color: #4a5568;">
-                <strong>¿Tienes alguna consulta?</strong><br>
-                Puedes contactarnos en <a href="mailto:info@navarro.legal" style="color: #2c5282;">info@navarro.legal</a> o llamarnos al <a href="tel:+34932722580" style="color: #2c5282;">+34 932 722 580</a>
-              </p>
-            </div>
-            
-            <p style="color: #718096; font-size: 14px; margin-bottom: 0;">
-              Un saludo cordial,<br>
-              <strong>El equipo de Navarro Tax Legal</strong>
-            </p>
-          </div>
-          
-          <div style="text-align: center; padding: 20px; color: #718096; font-size: 12px;">
-            <p style="margin: 0;">
-              Navarro Tax Legal<br>
-              Passeig de Gràcia, 103, 08008 Barcelona<br>
-              <a href="https://navarro.legal" style="color: #2c5282;">navarro.legal</a>
-            </p>
-            <p style="margin: 10px 0 0 0;">
-              Puedes darte de baja en cualquier momento respondiendo a este email.
-            </p>
-          </div>
-        </body>
-        </html>
-      `,
-    },
-    en: {
-      subject: "Welcome to Navarro's newsletter!",
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 8px 8px 0 0; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Navarro Tax Legal</h1>
-          </div>
-          
-          <div style="background: #ffffff; padding: 30px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px;">
-            <h2 style="color: #1a365d; margin-top: 0;">Thank you for subscribing!</h2>
-            
-            <p>Welcome to our newsletter. From now on you will receive:</p>
-            
-            <ul style="padding-left: 20px;">
-              <li><strong>Tax and legal news</strong> that may affect your business</li>
-              <li><strong>Important regulatory updates</strong></li>
-              <li><strong>Articles and analysis</strong> from our team of experts</li>
-              <li><strong>Practical advice</strong> for business management</li>
-            </ul>
-            
-            <p>We are committed to sending you valuable and relevant content for your professional activity.</p>
-            
-            <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; font-size: 14px; color: #4a5568;">
-                <strong>Have any questions?</strong><br>
-                Contact us at <a href="mailto:info@navarro.legal" style="color: #2c5282;">info@navarro.legal</a> or call us at <a href="tel:+34932722580" style="color: #2c5282;">+34 932 722 580</a>
-              </p>
-            </div>
-            
-            <p style="color: #718096; font-size: 14px; margin-bottom: 0;">
-              Best regards,<br>
-              <strong>The Navarro Tax Legal Team</strong>
-            </p>
-          </div>
-          
-          <div style="text-align: center; padding: 20px; color: #718096; font-size: 12px;">
-            <p style="margin: 0;">
-              Navarro Tax Legal<br>
-              Passeig de Gràcia, 103, 08008 Barcelona, Spain<br>
-              <a href="https://navarro.legal" style="color: #2c5282;">navarro.legal</a>
-            </p>
-            <p style="margin: 10px 0 0 0;">
-              You can unsubscribe at any time by replying to this email.
-            </p>
-          </div>
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc;">
+          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 40px 40px 30px;">
+                      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+                        navarro
+                      </h1>
+                      <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.85); font-size: 14px;">
+                        Asesoría legal y fiscal
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px;">
+                      <h2 style="margin: 0 0 20px; color: #1a365d; font-size: 24px; font-weight: 600;">
+                        ¡Gracias por suscribirte!
+                      </h2>
+                      <p style="margin: 0 0 20px; color: #4a5568; font-size: 16px; line-height: 1.6;">
+                        Nos alegra que hayas decidido unirte a nuestra comunidad. A partir de ahora, recibirás en tu correo:
+                      </p>
+                      <ul style="margin: 0 0 24px; padding-left: 20px; color: #4a5568; font-size: 15px; line-height: 1.8;">
+                        <li>Análisis de novedades fiscales y legales</li>
+                        <li>Consejos prácticos para empresas y empresas familiares</li>
+                        <li>Actualizaciones sobre cambios normativos relevantes</li>
+                        <li>Invitaciones a eventos y webinars exclusivos</li>
+                      </ul>
+                      
+                      <!-- CTA Button -->
+                      <table role="presentation" style="margin: 32px 0;">
+                        <tr>
+                          <td style="background-color: #1a365d; border-radius: 8px;">
+                            <a href="https://navarro.legal/blog" style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600;">
+                              Explorar nuestro blog →
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <p style="margin: 0; color: #718096; font-size: 14px; line-height: 1.6;">
+                        Si tienes alguna pregunta o necesitas asesoramiento, no dudes en 
+                        <a href="https://navarro.legal/contacto" style="color: #2c5282; text-decoration: underline;">contactarnos</a>.
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f7fafc; padding: 30px 40px; border-top: 1px solid #e2e8f0;">
+                      <p style="margin: 0 0 8px; color: #718096; font-size: 13px;">
+                        navarro · Asesoría legal y fiscal
+                      </p>
+                      <p style="margin: 0 0 16px; color: #a0aec0; font-size: 12px;">
+                        Barcelona, España
+                      </p>
+                      <p style="margin: 0; color: #a0aec0; font-size: 11px;">
+                        Puedes darte de baja en cualquier momento haciendo clic 
+                        <a href="https://navarro.legal/unsubscribe" style="color: #718096;">aquí</a>.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
         </html>
       `,
     },
     ca: {
-      subject: "Benvingut a la newsletter de Navarro!",
+      subject: "Benvingut/da a la newsletter de navarro!",
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="ca">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Benvingut a navarro</title>
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 8px 8px 0 0; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Navarro Tax Legal</h1>
-          </div>
-          
-          <div style="background: #ffffff; padding: 30px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px;">
-            <h2 style="color: #1a365d; margin-top: 0;">Gràcies per subscriure't!</h2>
-            
-            <p>Et donem la benvinguda a la nostra newsletter. A partir d'ara rebràs:</p>
-            
-            <ul style="padding-left: 20px;">
-              <li><strong>Novetats fiscals i legals</strong> que poden afectar la teva empresa</li>
-              <li><strong>Actualitzacions regulatòries</strong> importants</li>
-              <li><strong>Articles i anàlisis</strong> del nostre equip d'experts</li>
-              <li><strong>Consells pràctics</strong> per a la gestió empresarial</li>
-            </ul>
-            
-            <p>Ens comprometem a enviar-te contingut de valor i rellevant per a la teva activitat professional.</p>
-            
-            <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; font-size: 14px; color: #4a5568;">
-                <strong>Tens alguna consulta?</strong><br>
-                Pots contactar-nos a <a href="mailto:info@navarro.legal" style="color: #2c5282;">info@navarro.legal</a> o trucar-nos al <a href="tel:+34932722580" style="color: #2c5282;">+34 932 722 580</a>
-              </p>
-            </div>
-            
-            <p style="color: #718096; font-size: 14px; margin-bottom: 0;">
-              Una salutació cordial,<br>
-              <strong>L'equip de Navarro Tax Legal</strong>
-            </p>
-          </div>
-          
-          <div style="text-align: center; padding: 20px; color: #718096; font-size: 12px;">
-            <p style="margin: 0;">
-              Navarro Tax Legal<br>
-              Passeig de Gràcia, 103, 08008 Barcelona<br>
-              <a href="https://navarro.legal" style="color: #2c5282;">navarro.legal</a>
-            </p>
-            <p style="margin: 10px 0 0 0;">
-              Pots donar-te de baixa en qualsevol moment responent a aquest email.
-            </p>
-          </div>
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc;">
+          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 40px 40px 30px;">
+                      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+                        navarro
+                      </h1>
+                      <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.85); font-size: 14px;">
+                        Assessoria legal i fiscal
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px;">
+                      <h2 style="margin: 0 0 20px; color: #1a365d; font-size: 24px; font-weight: 600;">
+                        Gràcies per subscriure't!
+                      </h2>
+                      <p style="margin: 0 0 20px; color: #4a5568; font-size: 16px; line-height: 1.6;">
+                        Ens alegra que hagis decidit unir-te a la nostra comunitat. A partir d'ara, rebràs al teu correu:
+                      </p>
+                      <ul style="margin: 0 0 24px; padding-left: 20px; color: #4a5568; font-size: 15px; line-height: 1.8;">
+                        <li>Anàlisi de novetats fiscals i legals</li>
+                        <li>Consells pràctics per a empreses i empreses familiars</li>
+                        <li>Actualitzacions sobre canvis normatius rellevants</li>
+                        <li>Invitacions a esdeveniments i webinars exclusius</li>
+                      </ul>
+                      
+                      <!-- CTA Button -->
+                      <table role="presentation" style="margin: 32px 0;">
+                        <tr>
+                          <td style="background-color: #1a365d; border-radius: 8px;">
+                            <a href="https://navarro.legal/ca/blog" style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600;">
+                              Explorar el nostre blog →
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <p style="margin: 0; color: #718096; font-size: 14px; line-height: 1.6;">
+                        Si tens alguna pregunta o necessites assessorament, no dubtis a 
+                        <a href="https://navarro.legal/ca/contacte" style="color: #2c5282; text-decoration: underline;">contactar-nos</a>.
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f7fafc; padding: 30px 40px; border-top: 1px solid #e2e8f0;">
+                      <p style="margin: 0 0 8px; color: #718096; font-size: 13px;">
+                        navarro · Assessoria legal i fiscal
+                      </p>
+                      <p style="margin: 0 0 16px; color: #a0aec0; font-size: 12px;">
+                        Barcelona, Espanya
+                      </p>
+                      <p style="margin: 0; color: #a0aec0; font-size: 11px;">
+                        Pots donar-te de baixa en qualsevol moment fent clic 
+                        <a href="https://navarro.legal/unsubscribe" style="color: #718096;">aquí</a>.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+      `,
+    },
+    en: {
+      subject: "Welcome to navarro's newsletter!",
+      html: `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Welcome to navarro</title>
+        </head>
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc;">
+          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 40px 40px 30px;">
+                      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+                        navarro
+                      </h1>
+                      <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.85); font-size: 14px;">
+                        Legal and tax advisory
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px;">
+                      <h2 style="margin: 0 0 20px; color: #1a365d; font-size: 24px; font-weight: 600;">
+                        Thank you for subscribing!
+                      </h2>
+                      <p style="margin: 0 0 20px; color: #4a5568; font-size: 16px; line-height: 1.6;">
+                        We're glad you've decided to join our community. From now on, you'll receive:
+                      </p>
+                      <ul style="margin: 0 0 24px; padding-left: 20px; color: #4a5568; font-size: 15px; line-height: 1.8;">
+                        <li>Analysis of tax and legal developments</li>
+                        <li>Practical advice for businesses and family enterprises</li>
+                        <li>Updates on relevant regulatory changes</li>
+                        <li>Invitations to exclusive events and webinars</li>
+                      </ul>
+                      
+                      <!-- CTA Button -->
+                      <table role="presentation" style="margin: 32px 0;">
+                        <tr>
+                          <td style="background-color: #1a365d; border-radius: 8px;">
+                            <a href="https://navarro.legal/en/blog" style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600;">
+                              Explore our blog →
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <p style="margin: 0; color: #718096; font-size: 14px; line-height: 1.6;">
+                        If you have any questions or need advice, don't hesitate to 
+                        <a href="https://navarro.legal/en/contact" style="color: #2c5282; text-decoration: underline;">contact us</a>.
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f7fafc; padding: 30px 40px; border-top: 1px solid #e2e8f0;">
+                      <p style="margin: 0 0 8px; color: #718096; font-size: 13px;">
+                        navarro · Legal and tax advisory
+                      </p>
+                      <p style="margin: 0 0 16px; color: #a0aec0; font-size: 12px;">
+                        Barcelona, Spain
+                      </p>
+                      <p style="margin: 0; color: #a0aec0; font-size: 11px;">
+                        You can unsubscribe at any time by clicking 
+                        <a href="https://navarro.legal/unsubscribe" style="color: #718096;">here</a>.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
         </html>
       `,
     },
   };
 
-  return content[language] || content.es;
+  return content[language as keyof typeof content] || content.es;
+};
+
+// Notification email content for admin
+const getNotificationEmailContent = (subscriberEmail: string, sourcePage?: string) => {
+  return {
+    subject: "Nueva suscripción a la newsletter",
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px;">
+        <h2 style="color: #1a365d;">Nueva suscripción a la newsletter</h2>
+        <p>Se ha registrado una nueva suscripción:</p>
+        <ul>
+          <li><strong>Email:</strong> ${subscriberEmail}</li>
+          <li><strong>Página de origen:</strong> ${sourcePage || 'No especificada'}</li>
+          <li><strong>Fecha:</strong> ${new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })}</li>
+        </ul>
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+        <p style="color: #718096; font-size: 12px;">
+          Este es un email automático del sistema de newsletter de navarro.legal
+        </p>
+      </body>
+      </html>
+    `,
+  };
 };
 
 serve(async (req: Request): Promise<Response> => {
@@ -282,6 +397,29 @@ serve(async (req: Request): Promise<Response> => {
 
         const emailResult = await emailResponse.json();
         console.log("Welcome email sent successfully:", emailResult);
+
+        // Send notification email to admin
+        try {
+          const notificationContent = getNotificationEmailContent(email, source_page);
+          
+          await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${resendApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              from: "Navarro Newsletter <onboarding@resend.dev>",
+              to: ["s.navarro@nrro.es"],
+              subject: notificationContent.subject,
+              html: notificationContent.html,
+            }),
+          });
+          
+          console.log("Notification email sent to admin");
+        } catch (notifyError) {
+          console.error("Error sending notification email:", notifyError);
+        }
       } catch (emailError) {
         // Log but don't fail the subscription if email fails
         console.error("Error sending welcome email:", emailError);
