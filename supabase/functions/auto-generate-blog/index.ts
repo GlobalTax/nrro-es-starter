@@ -282,11 +282,66 @@ serve(async (req) => {
       })
       .eq("id", settings?.id);
 
+    // Send email notification if articles were generated
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    
+    if (resendApiKey && generatedArticles.length > 0) {
+      try {
+        const articlesList = generatedArticles
+          .map((a) => `<li style="margin-bottom: 8px;"><strong>${a.title}</strong> <span style="color: #666;">(${a.category})</span></li>`)
+          .join("");
+
+        const emailResponse = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Navarro Blog <onboarding@resend.dev>",
+            to: ["s.navarro@nrro.es"],
+            subject: `📝 ${generatedArticles.length} nuevos artículos pendientes de revisión`,
+            html: `
+              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #0f172a; margin-bottom: 16px;">Nuevos artículos generados</h2>
+                <p style="color: #374151; margin-bottom: 16px;">Se han generado <strong>${generatedArticles.length} artículos</strong> en borrador:</p>
+                <ul style="list-style: none; padding: 0; margin: 0 0 24px 0; background: #f9fafb; padding: 16px; border-radius: 8px;">
+                  ${articlesList}
+                </ul>
+                <a href="https://navarro.lovable.app/admin/blog" 
+                   style="display: inline-block; background: #0f172a; color: white; padding: 12px 24px; 
+                          text-decoration: none; border-radius: 6px; font-weight: 500;">
+                  Revisar artículos
+                </a>
+                <p style="color: #6b7280; margin-top: 24px; font-size: 14px;">
+                  Los artículos están en estado <strong>borrador</strong>. Revísalos y publícalos cuando estén listos.
+                </p>
+                <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;">
+                <p style="color: #9ca3af; font-size: 12px;">
+                  Este email fue enviado automáticamente por el sistema de generación de blog de Navarro Asesores.
+                </p>
+              </div>
+            `,
+          }),
+        });
+
+        if (emailResponse.ok) {
+          console.log("[auto-generate-blog] Notification email sent to s.navarro@nrro.es");
+        } else {
+          const errorData = await emailResponse.text();
+          console.error("[auto-generate-blog] Failed to send email:", errorData);
+        }
+      } catch (emailError) {
+        console.error("[auto-generate-blog] Email error:", emailError);
+      }
+    }
+
     const result = {
       success: true,
       generated: generatedArticles.length,
       articles: generatedArticles,
       errors: errors.length > 0 ? errors : undefined,
+      emailSent: resendApiKey && generatedArticles.length > 0,
       next_run: new Date(
         Date.now() + (settings?.run_interval_days || 2) * 24 * 60 * 60 * 1000
       ).toISOString(),
