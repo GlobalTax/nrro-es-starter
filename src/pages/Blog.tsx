@@ -52,6 +52,7 @@ const Blog = () => {
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
+    sourceSite: "int", // Filter for int.nrro.es - shows posts with source_site='int' OR 'int' in shared_sites
   }, language);
 
   // Process posts with fallback based on language

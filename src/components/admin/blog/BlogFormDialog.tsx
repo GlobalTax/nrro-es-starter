@@ -62,6 +62,7 @@ const blogFormSchema = z.object({
   seo_title_en: z.string().optional(),
   seo_description_en: z.string().optional(),
   author_id: z.string().optional(),
+  shared_sites: z.array(z.string()).optional(),
 });
 
 type BlogFormValues = z.infer<typeof blogFormSchema>;
@@ -105,6 +106,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
       seo_title_en: "",
       seo_description_en: "",
       author_id: "",
+      shared_sites: [],
     },
   });
 
@@ -130,6 +132,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_title_en: post.seo_title_en || "",
         seo_description_en: post.seo_description_en || "",
         author_id: post.author_id || "",
+        shared_sites: post.shared_sites || [],
       });
       setIsAIGenerated(false);
       setShowAIGenerator(false);
@@ -196,6 +199,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         author_id: values.author_id || null,
         author_name: selectedMember?.name || null,
         author_specialization: selectedMember?.specialization || null,
+        shared_sites: values.shared_sites || [],
       };
 
       if (post) {
@@ -699,6 +703,45 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                       )}
                     />
                   )}
+
+                  <div className="space-y-4 pt-4 border-t">
+                    <h3 className="font-semibold">Compartir en otros sitios</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Este post pertenece a int.nrro.es. Selecciona en qué otros sitios debe aparecer también.
+                    </p>
+                    <FormField
+                      control={form.control}
+                      name="shared_sites"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex flex-wrap gap-4">
+                            {[
+                              { value: 'es', label: 'es.nrro.es (España)' },
+                              { value: 'global', label: 'global.nrro.es (Global)' },
+                            ].map((site) => (
+                              <label key={site.value} className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={field.value?.includes(site.value) || false}
+                                  onChange={(e) => {
+                                    const currentValue = field.value || [];
+                                    if (e.target.checked) {
+                                      field.onChange([...currentValue, site.value]);
+                                    } else {
+                                      field.onChange(currentValue.filter((v) => v !== site.value));
+                                    }
+                                  }}
+                                  className="h-4 w-4 rounded border-input"
+                                />
+                                <span className="text-sm">{site.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
                   <div className="space-y-4 pt-4 border-t">
                     <h3 className="font-semibold">SEO</h3>

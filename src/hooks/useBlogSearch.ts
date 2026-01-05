@@ -8,6 +8,7 @@ interface BlogSearchParams {
   status?: string;
   limit?: number;
   offset?: number;
+  sourceSite?: string; // 'es' | 'int' | 'global' | null (null = all sites)
 }
 
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {
@@ -23,6 +24,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         limit_count: params.limit || 10,
         offset_count: params.offset || 0,
         lang: language,
+        filter_site: params.sourceSite || null,
       });
 
       if (postsError) throw postsError;
@@ -34,6 +36,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         filter_tags: params.tags || null,
         filter_status: params.status || 'published',
         lang: language,
+        filter_site: params.sourceSite || null,
       });
 
       if (countError) throw countError;
