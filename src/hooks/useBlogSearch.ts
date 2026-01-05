@@ -35,7 +35,7 @@ export interface BlogPostResult {
 
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {
   return useQuery({
-    queryKey: ["blog-search", params, language],
+    queryKey: ["blog-search", params, language, "v2"],
     queryFn: async () => {
       // Fetch paginated posts
       const { data: posts, error: postsError } = await supabase.rpc("search_blog_posts", {
