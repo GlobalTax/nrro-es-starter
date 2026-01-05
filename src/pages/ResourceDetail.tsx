@@ -11,7 +11,8 @@ import { ResourceCTA } from "@/components/resources/ResourceCTA";
 import { RelatedResources } from "@/components/resources/RelatedResources";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Home } from "lucide-react";
+import { Home, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const ResourceDetail = () => {
@@ -94,6 +95,19 @@ const ResourceDetail = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
+          
+          {/* Back button */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            asChild 
+            className="mt-4 -ml-2 text-muted-foreground hover:text-foreground"
+          >
+            <Link to={getLocalizedPath("/recursos")}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {language === "en" ? "Back to Resources" : language === "ca" ? "Tornar a Recursos" : "Volver a Recursos"}
+            </Link>
+          </Button>
         </div>
 
         {/* Hero Section */}
