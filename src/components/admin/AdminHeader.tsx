@@ -49,15 +49,6 @@ export const AdminHeader = () => {
   return (
     <header className="bg-white border-b border-teal-100 px-6 py-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-muted-foreground">
-            Intranet
-          </span>
-          <span className="text-muted-foreground/50">•</span>
-          <span className="font-mono text-xs text-foreground">
-            nrro.es
-          </span>
-        </div>
 
         <div className="flex items-center gap-4">
           <Button 
