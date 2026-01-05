@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 import { Button } from "@/components/ui/button";
 import { Overline } from "@/components/ui/typography";
@@ -35,7 +36,8 @@ const BlogDetail = () => {
   const navigate = useNavigate();
   const { trackPageView } = useAnalytics();
   useScrollDepth();
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
+  const { sourceSite, language } = useSiteConfig();
   const { getBlogPath, getLocalizedPath } = useLocalizedPath();
   const [searchParams] = useSearchParams();
   const previewToken = searchParams.get("preview");
@@ -89,16 +91,16 @@ const BlogDetail = () => {
 
       if (response.error) throw response.error;
       
-      // Force English content for international site, fallback to Spanish
+      // Dynamic content based on site configuration
       const post: any = response.data;
       return {
         ...post,
-        title: post.title_en || post.title_es,
-        slug: post.slug_en || post.slug_es,
-        excerpt: post.excerpt_en || post.excerpt_es,
-        content: post.content_en || post.content_es,
-        seo_title: post.seo_title_en || post.seo_title_es,
-        seo_description: post.seo_description_en || post.seo_description_es,
+        title: post[`title_${language}`] || post.title_es,
+        slug: post[`slug_${language}`] || post.slug_es,
+        excerpt: post[`excerpt_${language}`] || post.excerpt_es,
+        content: post[`content_${language}`] || post.content_es,
+        seo_title: post[`seo_title_${language}`] || post.seo_title_es,
+        seo_description: post[`seo_description_${language}`] || post.seo_description_es,
         // Keep original slugs for URL normalization
         slug_es: post.slug_es,
         slug_ca: post.slug_ca,
@@ -401,7 +403,7 @@ const BlogDetail = () => {
           currentPostId={post.id}
           category={post.category || ''}
           tags={post.tags || []}
-          language="en"
+          language={language}
         />
 
         {/* CTA de contacto */}
