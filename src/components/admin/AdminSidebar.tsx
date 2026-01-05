@@ -6,6 +6,7 @@ import {
   Settings,
   Map,
   UserCog,
+  FileText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +14,7 @@ import { Separator } from '@/components/ui/separator';
 
 const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/admin/resources', icon: FileText, label: 'Recursos' },
   { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
   { path: '/admin/settings', icon: Settings, label: 'Configuración' },
 ];
