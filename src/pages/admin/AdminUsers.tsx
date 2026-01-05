@@ -261,7 +261,7 @@ export const AdminUsers = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Usuarios Admin</h1>
+          <h1 className="text-3xl font-normal">Usuarios Admin</h1>
           <p className="text-muted-foreground mt-1">Gestiona los usuarios administradores del sistema</p>
         </div>
         

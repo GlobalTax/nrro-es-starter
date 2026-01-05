@@ -4,11 +4,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, AlertTriangle, Clock } from 'lucide-react';
+import { AlertTriangle, Clock, Loader2 } from 'lucide-react';
 import { z } from 'zod';
+
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
@@ -113,78 +113,103 @@ export const AdminLogin = () => {
     : 0;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted/50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-primary/10 rounded-full">
-              <Shield className="h-8 w-8 text-primary" />
-            </div>
-          </div>
-          <CardTitle className="text-2xl">Admin Panel</CardTitle>
-          <CardDescription>Accede con tus credenciales</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {isLockedOut && (
-            <Alert variant="destructive" className="mb-4">
-              <Clock className="h-4 w-4" />
-              <AlertDescription>
-                Demasiados intentos fallidos. Por favor espera {lockoutMinutes} minutos antes de intentar de nuevo.
-              </AlertDescription>
-            </Alert>
-          )}
-          
-          {remainingAttempts !== null && remainingAttempts < 3 && remainingAttempts > 0 && !isLockedOut && (
-            <Alert variant="default" className="mb-4">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>
-                Te quedan {remainingAttempts} intentos antes de que tu cuenta sea bloqueada temporalmente.
-              </AlertDescription>
-            </Alert>
-          )}
+    <div className="bg-black min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
+        {/* Logo texto */}
+        <div className="text-center mb-10">
+          <h1 className="font-display text-4xl font-normal lowercase text-white tracking-tight">
+            nrro
+          </h1>
+          <p className="text-white/50 text-sm mt-2">
+            Portal de Administración
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@example.com"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrors((prev) => ({ ...prev, email: undefined }));
-                }}
-                required
-                disabled={isLoading || isLockedOut}
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrors((prev) => ({ ...prev, password: undefined }));
-                }}
-                required
-                disabled={isLoading || isLockedOut}
-              />
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password}</p>
-              )}
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading || isLockedOut}>
-              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+        {/* Alertas */}
+        {isLockedOut && (
+          <Alert variant="destructive" className="mb-6 bg-destructive/10 border-destructive/30">
+            <Clock className="h-4 w-4" />
+            <AlertDescription className="text-sm">
+              Demasiados intentos fallidos. Por favor espera {lockoutMinutes} minutos.
+            </AlertDescription>
+          </Alert>
+        )}
+        
+        {remainingAttempts !== null && remainingAttempts < 3 && remainingAttempts > 0 && !isLockedOut && (
+          <Alert className="mb-6 bg-amber-500/10 border-amber-500/30">
+            <AlertTriangle className="h-4 w-4 text-amber-500" />
+            <AlertDescription className="text-sm text-amber-200">
+              Te quedan {remainingAttempts} intentos antes del bloqueo temporal.
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-white/70 text-sm font-medium">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="admin@nrro.es"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors((prev) => ({ ...prev, email: undefined }));
+              }}
+              required
+              disabled={isLoading || isLockedOut}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-white/20"
+            />
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-white/70 text-sm font-medium">
+              Contraseña
+            </Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors((prev) => ({ ...prev, password: undefined }));
+              }}
+              required
+              disabled={isLoading || isLockedOut}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-white/20"
+            />
+            {errors.password && (
+              <p className="text-sm text-destructive">{errors.password}</p>
+            )}
+          </div>
+          
+          <Button 
+            type="submit" 
+            className="w-full bg-white text-black hover:bg-white/90 font-normal h-11 mt-2" 
+            disabled={isLoading || isLockedOut}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Iniciando sesión...
+              </>
+            ) : (
+              'Iniciar Sesión'
+            )}
+          </Button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-center text-white/30 text-xs mt-10">
+          int.nrro.es
+        </p>
+      </div>
     </div>
   );
 };

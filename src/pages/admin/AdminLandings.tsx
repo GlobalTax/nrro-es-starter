@@ -45,7 +45,7 @@ export default function AdminLandings() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Landing Pages</h1>
+          <h1 className="text-3xl font-normal">Landing Pages</h1>
           <p className="text-muted-foreground mt-2">
             Gestiona las páginas de aterrizaje y sus contenidos
           </p>

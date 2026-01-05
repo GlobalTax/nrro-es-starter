@@ -129,7 +129,7 @@ const AdminServices = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Services</h1>
+          <h1 className="text-3xl font-normal">Services</h1>
           <p className="text-muted-foreground mt-1">
             Manage your services and their content
           </p>

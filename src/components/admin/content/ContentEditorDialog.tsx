@@ -423,7 +423,7 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
                     
                     {[0, 1, 2, 3, 4, 5].map(index => (
                       <div key={index} className="space-y-3 p-4 border rounded-lg bg-card">
-                        <div className="font-semibold text-sm">Tarjeta {index + 1}</div>
+                        <div className="font-medium text-sm">Tarjeta {index + 1}</div>
                         
                         <div>
                           <Label>Categoría</Label>
@@ -472,7 +472,7 @@ export function ContentEditorDialog({ open, onOpenChange, content, onSave }: Con
                     
                     {[0, 1, 2, 3].map(index => (
                       <div key={index} className="space-y-2 p-4 border rounded-lg bg-card">
-                        <div className="font-semibold text-sm">KPI {index + 1}</div>
+                        <div className="font-medium text-sm">KPI {index + 1}</div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <Label>Valor</Label>

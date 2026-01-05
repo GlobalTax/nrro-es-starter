@@ -99,7 +99,7 @@ export default function AdminDemoRequests() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Demo Requests - Orquest + KairosHR</h1>
+          <h1 className="text-3xl font-normal">Demo Requests - Orquest + KairosHR</h1>
           <p className="text-muted-foreground mt-1">
             Gestiona las solicitudes de demo recibidas
           </p>

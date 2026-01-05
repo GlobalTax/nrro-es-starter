@@ -47,7 +47,7 @@ export function TranslateNewsToCatalan() {
     <Card className="p-6">
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+          <h3 className="text-lg font-medium mb-2 flex items-center gap-2">
             <Languages className="h-5 w-5" />
             Traducir Noticias al Catalán
           </h3>
@@ -78,7 +78,7 @@ export function TranslateNewsToCatalan() {
           <Alert>
             <AlertDescription>
               <div className="space-y-2">
-                <p className="font-semibold">Resultados:</p>
+                <p className="font-medium">Resultados:</p>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   <li>✅ Traducidas: {results.success}</li>
                   <li>⏭️ Omitidas: {results.skipped}</li>
@@ -86,7 +86,7 @@ export function TranslateNewsToCatalan() {
                 </ul>
                 {results.errors.length > 0 && (
                   <div className="mt-3">
-                    <p className="font-semibold text-sm text-destructive">Errores:</p>
+                    <p className="font-medium text-sm text-destructive">Errores:</p>
                     <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
                       {results.errors.map((error, i) => (
                         <li key={i}>{error}</li>

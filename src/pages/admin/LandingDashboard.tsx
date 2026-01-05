@@ -97,7 +97,7 @@ export const LandingDashboard = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Landing Dashboard</h1>
+          <h1 className="text-3xl font-normal text-foreground">Landing Dashboard</h1>
           <p className="text-muted-foreground mt-1">Resumen y métricas de todas las landing pages</p>
         </div>
         <Button asChild>

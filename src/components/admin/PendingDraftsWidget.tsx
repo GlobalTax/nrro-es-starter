@@ -34,7 +34,7 @@ export function PendingDraftsWidget() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
+        <CardTitle className="flex items-center gap-2 text-lg font-medium">
           <FileEdit className="h-5 w-5 text-amber-500" />
           Borradores Pendientes
           {hasDrafts && (

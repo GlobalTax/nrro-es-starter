@@ -47,7 +47,7 @@ export const TranslateServicesToEnglish = () => {
     <Card className="w-full">
       <CardHeader>
         <div className="flex items-start justify-between">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
+          <h3 className="text-lg font-medium flex items-center gap-2">
             <Languages className="h-5 w-5" />
             Traducir al Inglés
           </h3>
@@ -84,21 +84,21 @@ export const TranslateServicesToEnglish = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-green-600">
                   <CheckCircle2 className="h-4 w-4" />
-                  <span className="font-semibold">Exitosos: {results.success}</span>
+                  <span className="font-medium">Exitosos: {results.success}</span>
                 </div>
                 <div className="flex items-center gap-2 text-yellow-600">
                   <AlertCircle className="h-4 w-4" />
-                  <span className="font-semibold">Omitidos: {results.skipped}</span>
+                  <span className="font-medium">Omitidos: {results.skipped}</span>
                 </div>
                 {results.failed > 0 && (
                   <>
                     <div className="flex items-center gap-2 text-red-600">
                       <XCircle className="h-4 w-4" />
-                      <span className="font-semibold">Errores: {results.failed}</span>
+                      <span className="font-medium">Errores: {results.failed}</span>
                     </div>
                     {results.errors.length > 0 && (
                       <div className="mt-2 text-sm text-muted-foreground">
-                        <p className="font-semibold mb-1">Detalles de errores:</p>
+                        <p className="font-medium mb-1">Detalles de errores:</p>
                         <ul className="list-disc list-inside space-y-1">
                           {results.errors.map((error, idx) => (
                             <li key={idx} className="text-xs">{error}</li>

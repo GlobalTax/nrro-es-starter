@@ -147,7 +147,7 @@ export const AdminBlog = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Blog</h1>
+        <h1 className="text-3xl font-normal">Blog</h1>
         <Button onClick={handleNew}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Artículo

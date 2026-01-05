@@ -68,7 +68,7 @@ ${lead.message ? `Mensaje: ${lead.message}` : ''}
         <div className="flex items-start justify-between">
           <div className="space-y-1 flex-1">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-lg">{lead.name}</h3>
+              <h3 className="font-medium text-lg">{lead.name}</h3>
               {lead.eligibility_score && (
                 <Badge variant="outline" className="ml-2">
                   Score: {lead.eligibility_score}/100
