@@ -85,8 +85,11 @@ export const Footer = () => {
             {/* Offices */}
             <div className="space-y-2 text-sm">
               <p className="text-white/90">
-                <span className="font-medium">{t("contact.info.headquarters")}:</span>{" "}
-                <span className="text-white/70">Barcelona</span>
+                <span className="font-medium">{t("contact.info.headquarters")}:</span>
+              </p>
+              <p className="text-white/70">
+                Calle Ausias March 36 Pr<br />
+                08010 Barcelona
               </p>
               <p className="text-white/70 leading-relaxed">
                 <span className="font-medium text-white/90">{t("contact.info.otherOffices")}:</span>{" "}
@@ -95,50 +98,42 @@ export const Footer = () => {
             </div>
             
             {/* Social Media Links */}
-            <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
               <a
                 href={socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group"
+                className="text-white/60 hover:text-accent transition-colors"
+                aria-label="Instagram"
               >
-                <div className="rounded-full border-2 border-white/20 p-2 group-hover:border-accent transition-colors">
-                  <Instagram className="h-4 w-4" />
-                </div>
-                <span className="text-sm font-mono uppercase tracking-wider">Instagram</span>
+                <Instagram className="h-5 w-5" />
               </a>
               <a
                 href={socialLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group"
+                className="text-white/60 hover:text-accent transition-colors"
+                aria-label="Twitter"
               >
-                <div className="rounded-full border-2 border-white/20 p-2 group-hover:border-accent transition-colors">
-                  <Twitter className="h-4 w-4" />
-                </div>
-                <span className="text-sm font-mono uppercase tracking-wider">Twitter</span>
+                <Twitter className="h-5 w-5" />
               </a>
               <a
                 href={socialLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group"
+                className="text-white/60 hover:text-accent transition-colors"
+                aria-label="Facebook"
               >
-                <div className="rounded-full border-2 border-white/20 p-2 group-hover:border-accent transition-colors">
-                  <Facebook className="h-4 w-4" />
-                </div>
-                <span className="text-sm font-mono uppercase tracking-wider">Facebook</span>
+                <Facebook className="h-5 w-5" />
               </a>
               <a
                 href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/80 hover:text-accent transition-colors group"
+                className="text-white/60 hover:text-accent transition-colors"
+                aria-label="LinkedIn"
               >
-                <div className="rounded-full border-2 border-white/20 p-2 group-hover:border-accent transition-colors">
-                  <Linkedin className="h-4 w-4" />
-                </div>
-                <span className="text-sm font-mono uppercase tracking-wider">LinkedIn</span>
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </div>
