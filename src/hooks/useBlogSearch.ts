@@ -29,8 +29,6 @@ export interface BlogPostResult {
   read_time: number;
   status: string;
   view_count: number;
-  source_site: string | null;
-  shared_sites: string[] | null;
 }
 
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {

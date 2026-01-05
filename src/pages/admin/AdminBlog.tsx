@@ -61,6 +61,7 @@ export const AdminBlog = () => {
     status: statusFilter === "all" ? undefined : statusFilter,
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
+    sourceSite: "int",
   });
 
   const posts = data?.posts || [];
