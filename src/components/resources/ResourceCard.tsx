@@ -79,7 +79,7 @@ export const ResourceCard = ({ resource, onDownload }: ResourceCardProps) => {
           </p>
 
           {/* Title */}
-          <h3 className="font-semibold text-lg text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="font-display font-normal text-lg text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
             {resource.title}
           </h3>
 
