@@ -222,7 +222,7 @@ export const AdminBlog = () => {
               <TableBody>
                 {posts.map((post: any) => (
                   <TableRow key={post.id}>
-                    <TableCell className="font-medium">{post.title_es}</TableCell>
+                    <TableCell className="font-medium">{post.title}</TableCell>
                     <TableCell>
                       {post.category && <Badge variant="outline">{post.category}</Badge>}
                     </TableCell>
