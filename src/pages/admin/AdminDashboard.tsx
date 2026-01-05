@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, Users, Newspaper, Briefcase } from 'lucide-react';
+import { PendingDraftsWidget } from '@/components/admin/PendingDraftsWidget';
 
 export const AdminDashboard = () => {
   const { data: stats, isLoading } = useQuery({
@@ -69,7 +70,7 @@ export const AdminDashboard = () => {
         <p className="text-muted-foreground mt-1">Welcome to the admin panel</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat) => (
           <Card key={stat.title}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -97,14 +98,7 @@ export const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Drafts Pending Review</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground text-sm">No drafts pending</p>
-          </CardContent>
-        </Card>
+        <PendingDraftsWidget />
       </div>
     </div>
   );

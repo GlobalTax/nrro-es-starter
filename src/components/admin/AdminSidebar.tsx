@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { usePendingDraftsCount } from '@/hooks/usePendingDrafts';
 import {
   LayoutDashboard,
   Home,
@@ -7,6 +8,7 @@ import {
   Map,
   UserCog,
   FileText,
+  Newspaper,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +16,7 @@ import { Separator } from '@/components/ui/separator';
 
 const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/admin/blog', icon: Newspaper, label: 'Blog', showDraftsBadge: true },
   { path: '/admin/resources', icon: FileText, label: 'Recursos' },
   { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
   { path: '/admin/settings', icon: Settings, label: 'Configuración' },
@@ -22,6 +25,7 @@ const navItems = [
 export const AdminSidebar = () => {
   const location = useLocation();
   const { adminUser, canManageUsers } = useAdminAuth();
+  const { data: pendingDraftsCount } = usePendingDraftsCount();
 
   const isActive = (path: string) => {
     if (path === '/admin') {
@@ -71,6 +75,14 @@ export const AdminSidebar = () => {
             >
               <item.icon className="h-4 w-4" />
               <span className="flex-1 text-left">{item.label}</span>
+              {item.showDraftsBadge && pendingDraftsCount && pendingDraftsCount > 0 ? (
+                <Badge 
+                  variant="destructive" 
+                  className="ml-auto h-5 min-w-5 px-1.5 text-xs"
+                >
+                  {pendingDraftsCount}
+                </Badge>
+              ) : null}
             </Button>
           </Link>
         ))}
