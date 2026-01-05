@@ -205,10 +205,6 @@ export const AdminLogin = () => {
           </Button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center text-white/30 text-xs mt-10">
-          int.nrro.es
-        </p>
       </div>
     </div>
   );
