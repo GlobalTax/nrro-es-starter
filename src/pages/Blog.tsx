@@ -62,7 +62,7 @@ const Blog = () => {
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
     sourceSite: "int",
-  }, language);
+  }, 'en'); // Force English for international blog content
 
   const posts = data?.posts || [];
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);
