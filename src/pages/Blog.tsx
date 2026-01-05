@@ -61,7 +61,7 @@ const Blog = () => {
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-    sourceSite: "es",
+    sourceSite: "int",
   }, language);
 
   const posts = data?.posts || [];
