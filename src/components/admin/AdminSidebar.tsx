@@ -35,33 +35,33 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-teal-900 text-white min-h-screen flex flex-col">
+    <aside className="w-64 bg-black text-white min-h-screen flex flex-col">
       <div className="p-6">
-        <h1 className="text-2xl font-bold">int.nrro.es</h1>
-        <p className="text-xs text-teal-300 mt-1">Panel de Administración</p>
+        <h1 className="font-display text-2xl font-normal lowercase tracking-tight">nrro</h1>
+        <p className="text-xs text-white/40 mt-1">Panel de Administración</p>
         {adminUser && (
           <div className="mt-3">
-            <Badge variant="secondary" className="text-xs bg-teal-700 text-teal-100 hover:bg-teal-600">
+            <Badge variant="outline" className="text-xs bg-white/10 text-white/80 border-white/20 hover:bg-white/20">
               {adminUser.role.replace('_', ' ').toUpperCase()}
             </Badge>
           </div>
         )}
       </div>
 
-      <Separator className="bg-teal-700" />
+      <Separator className="bg-white/10" />
 
       <nav className="flex-1 p-4 space-y-2">
         <Link to="/">
           <Button
             variant="ghost"
-            className="w-full justify-start text-teal-200 hover:text-white hover:bg-teal-800"
+            className="w-full justify-start text-white/60 hover:text-white hover:bg-white/10"
           >
             <Home className="mr-3 h-4 w-4" />
             Volver al sitio
           </Button>
         </Link>
 
-        <Separator className="bg-teal-700 my-4" />
+        <Separator className="bg-white/10 my-4" />
 
         {navItems.map((item) => (
           <Link key={item.path} to={item.path}>
@@ -69,8 +69,8 @@ export const AdminSidebar = () => {
               variant="ghost"
               className={`w-full justify-start gap-2 ${
                 isActive(item.path)
-                  ? 'bg-teal-800 text-white'
-                  : 'text-teal-200 hover:text-white hover:bg-teal-800'
+                  ? 'bg-white/10 text-white border-l-2 border-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
               <item.icon className="h-4 w-4" />
@@ -89,14 +89,14 @@ export const AdminSidebar = () => {
 
         {canManageUsers() && (
           <>
-            <Separator className="bg-teal-700 my-4" />
+            <Separator className="bg-white/10 my-4" />
             <Link to="/admin/users">
               <Button
                 variant="ghost"
                 className={`w-full justify-start ${
                   isActive('/admin/users')
-                    ? 'bg-teal-800 text-white'
-                    : 'text-teal-200 hover:text-white hover:bg-teal-800'
+                    ? 'bg-white/10 text-white border-l-2 border-white'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
                 }`}
               >
                 <UserCog className="mr-3 h-4 w-4" />
@@ -109,8 +109,8 @@ export const AdminSidebar = () => {
 
       <div className="p-4">
         {adminUser && (
-          <div className="text-sm text-teal-300 mb-2">
-            <p className="truncate font-medium text-teal-100">{adminUser.full_name}</p>
+          <div className="text-sm text-white/60 mb-2">
+            <p className="truncate font-medium text-white/90">{adminUser.full_name}</p>
             <p className="text-xs truncate">{adminUser.email}</p>
           </div>
         )}

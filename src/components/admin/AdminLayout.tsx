@@ -46,7 +46,7 @@ export const AdminLayout = () => {
       <AdminSidebar />
       <div className="flex-1 flex flex-col">
         <AdminHeader />
-        <main className="flex-1 bg-teal-50/30 p-6">
+        <main className="flex-1 bg-neutral-50 p-6">
           {showBanner && (
             <Alert className="mb-4">
               <Bell className="h-4 w-4" />
