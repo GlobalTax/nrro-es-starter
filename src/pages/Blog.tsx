@@ -14,6 +14,7 @@ import {
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { Search, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,7 +29,8 @@ import { Button } from "@/components/ui/button";
 const ITEMS_PER_PAGE = 9;
 
 const Blog = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
+  const { sourceSite, language } = useSiteConfig();
   const { trackPageView, trackEvent } = useAnalytics();
   useScrollDepth();
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,8 +63,8 @@ const Blog = () => {
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-    sourceSite: "int",
-  }, 'en'); // Force English for international blog content
+    sourceSite: sourceSite,
+  }, language);
 
   const posts = data?.posts || [];
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);

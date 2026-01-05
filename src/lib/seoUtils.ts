@@ -1,7 +1,14 @@
-// Base domain for all SEO purposes
-export const BASE_DOMAIN = "https://int.nrro.es";
+// Dynamic base domain based on hostname
+export const getBaseDomain = () => {
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : 'nrro.es';
+  const isInternational = hostname.includes('int.') || hostname.includes('global.');
+  return isInternational ? 'https://int.nrro.es' : 'https://nrro.es';
+};
 
-export const getBaseUrl = () => BASE_DOMAIN;
+// For backwards compatibility
+export const BASE_DOMAIN = getBaseDomain();
+
+export const getBaseUrl = () => getBaseDomain();
 
 export const getBreadcrumbUrl = (path: string) => {
   const base = getBaseUrl();
