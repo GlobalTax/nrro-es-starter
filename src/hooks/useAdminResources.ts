@@ -10,6 +10,7 @@ export interface AdminResource {
   id: string;
   title: string;
   description: string | null;
+  content: string | null;
   type: ResourceType;
   category: ResourceCategory;
   countries: string[] | null;
