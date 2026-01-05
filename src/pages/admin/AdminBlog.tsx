@@ -31,13 +31,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BlogStatsCard } from "@/components/admin/blog/BlogStatsCard";
 import { BlogFormDialog } from "@/components/admin/blog/BlogFormDialog";
 import { BlogPreviewModal } from "@/components/admin/blog/BlogPreviewModal";
+import { BlogAutomationPanel } from "@/components/admin/blog/BlogAutomationPanel";
 import { TranslateBlogToCatalan } from "@/components/admin/blog/TranslateBlogToCatalan";
 import { TranslateBlogToEnglish } from "@/components/admin/blog/TranslateBlogToEnglish";
 import { useBlogSearch } from "@/hooks/useBlogSearch";
-import { Plus, Eye, Edit, Trash2, CheckCircle, Search } from "lucide-react";
+import { Plus, Eye, Edit, Trash2, CheckCircle, Search, Bot, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 
@@ -154,10 +156,27 @@ export const AdminBlog = () => {
 
       <BlogStatsCard />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <TranslateBlogToCatalan />
-          <TranslateBlogToEnglish />
-        </div>
+      <Tabs defaultValue="posts" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="posts" className="gap-2">
+            <FileText className="h-4 w-4" />
+            Artículos
+          </TabsTrigger>
+          <TabsTrigger value="automation" className="gap-2">
+            <Bot className="h-4 w-4" />
+            Automatización
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="automation" className="space-y-4">
+          <BlogAutomationPanel />
+        </TabsContent>
+
+        <TabsContent value="posts" className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <TranslateBlogToCatalan />
+            <TranslateBlogToEnglish />
+          </div>
 
       <Card className="p-6 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
@@ -262,6 +281,8 @@ export const AdminBlog = () => {
           </>
         )}
       </Card>
+        </TabsContent>
+      </Tabs>
 
       <BlogFormDialog
         open={isFormOpen}

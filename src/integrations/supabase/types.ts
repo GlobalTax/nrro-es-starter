@@ -44,6 +44,101 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_automation_settings: {
+        Row: {
+          articles_per_run: number
+          auto_publish: boolean
+          created_at: string
+          default_language: string
+          default_tone: string
+          id: string
+          is_enabled: boolean
+          last_run_at: string | null
+          next_run_at: string | null
+          notify_on_generation: boolean
+          run_interval_days: number
+          updated_at: string
+        }
+        Insert: {
+          articles_per_run?: number
+          auto_publish?: boolean
+          created_at?: string
+          default_language?: string
+          default_tone?: string
+          id?: string
+          is_enabled?: boolean
+          last_run_at?: string | null
+          next_run_at?: string | null
+          notify_on_generation?: boolean
+          run_interval_days?: number
+          updated_at?: string
+        }
+        Update: {
+          articles_per_run?: number
+          auto_publish?: boolean
+          created_at?: string
+          default_language?: string
+          default_tone?: string
+          id?: string
+          is_enabled?: boolean
+          last_run_at?: string | null
+          next_run_at?: string | null
+          notify_on_generation?: boolean
+          run_interval_days?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_generation_queue: {
+        Row: {
+          category: string
+          created_at: string
+          error_message: string | null
+          generated_post_id: string | null
+          id: string
+          language: string
+          scheduled_for: string
+          status: string
+          tone: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          language?: string
+          scheduled_for?: string
+          status?: string
+          tone?: string
+          topic: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          language?: string
+          scheduled_for?: string
+          status?: string
+          tone?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_generation_queue_generated_post_id_fkey"
+            columns: ["generated_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_post_state_changes: {
         Row: {
           changed_at: string | null
@@ -2948,6 +3043,59 @@ export type Database = {
           triggered_by?: string | null
         }
         Relationships: []
+      }
+      social_shares: {
+        Row: {
+          blog_post_id: string
+          created_at: string
+          engagement: Json | null
+          error_message: string | null
+          id: string
+          platform: string
+          post_id: string | null
+          post_url: string | null
+          share_text: string | null
+          shared_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          blog_post_id: string
+          created_at?: string
+          engagement?: Json | null
+          error_message?: string | null
+          id?: string
+          platform?: string
+          post_id?: string | null
+          post_url?: string | null
+          share_text?: string | null
+          shared_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          blog_post_id?: string
+          created_at?: string
+          engagement?: Json | null
+          error_message?: string | null
+          id?: string
+          platform?: string
+          post_id?: string | null
+          post_url?: string | null
+          share_text?: string | null
+          shared_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_shares_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       team_members: {
         Row: {

@@ -77,3 +77,6 @@ verify_jwt = false
 
 [functions.subscribe-newsletter]
 verify_jwt = false
+
+[functions.auto-generate-blog]
+verify_jwt = false
