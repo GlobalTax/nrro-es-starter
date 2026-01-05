@@ -52,7 +52,7 @@ const Blog = () => {
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-    sourceSite: "int", // Filter for int.nrro.es - shows posts with source_site='int' OR 'int' in shared_sites
+    sourceSite: "es", // Filter for es.nrro.es - shows posts with source_site='es' OR 'es' in shared_sites
   }, language);
 
   // RPC already returns language-processed fields (title, slug, excerpt)
