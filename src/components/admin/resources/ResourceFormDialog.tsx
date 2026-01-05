@@ -14,6 +14,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,13 +27,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCreateResource, useUpdateResource, AdminResource } from "@/hooks/useAdminResources";
 import { resourceTypes, resourceCategories } from "@/hooks/useResources";
 import { useEffect } from "react";
+import { MarkdownEditor } from "@/components/admin/services/MarkdownEditor";
 
 const resourceFormSchema = z.object({
   title: z.string().min(1, "El título es requerido"),
   description: z.string().optional(),
+  content: z.string().optional(),
   type: z.enum(["country_guide", "template", "webinar", "white_paper"]),
   category: z.enum(["accounting", "corporate_legal", "governance", "payroll", "tax", "transfer_pricing", "treasury"]),
   file_url: z.string().url("URL inválida").optional().or(z.literal("")),
@@ -80,6 +84,7 @@ export const ResourceFormDialog = ({
     defaultValues: {
       title: "",
       description: "",
+      content: "",
       type: "template",
       category: "tax",
       file_url: "",
@@ -95,6 +100,7 @@ export const ResourceFormDialog = ({
       form.reset({
         title: resource.title,
         description: resource.description || "",
+        content: resource.content || "",
         type: resource.type,
         category: resource.category,
         file_url: resource.file_url || "",
@@ -107,6 +113,7 @@ export const ResourceFormDialog = ({
       form.reset({
         title: "",
         description: "",
+        content: "",
         type: "template",
         category: "tax",
         file_url: "",
@@ -124,6 +131,7 @@ export const ResourceFormDialog = ({
       type: values.type,
       category: values.category,
       description: values.description || null,
+      content: values.content || null,
       file_url: values.file_url || null,
       thumbnail_url: values.thumbnail_url || null,
       published_at: values.published_at || null,
@@ -143,7 +151,7 @@ export const ResourceFormDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {resource ? "Editar Recurso" : "Nuevo Recurso"}
@@ -152,37 +160,44 @@ export const ResourceFormDialog = ({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Título *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Ej: Guía: Cómo Constituir una Empresa..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Tabs defaultValue="general" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="general">General</TabsTrigger>
+                <TabsTrigger value="content">Contenido</TabsTrigger>
+              </TabsList>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Descripción</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Breve descripción del recurso (1-2 líneas)"
-                      rows={3}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <TabsContent value="general" className="space-y-6 pt-4">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Título *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Ej: Guía: Cómo Constituir una Empresa..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Descripción</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Breve descripción del recurso (1-2 líneas)"
+                          rows={3}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
             <div className="grid grid-cols-2 gap-4">
               <FormField
@@ -253,58 +268,90 @@ export const ResourceFormDialog = ({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="thumbnail_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>URL de Imagen de Portada</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://ejemplo.com/imagen.jpg"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="thumbnail_url"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>URL de Imagen de Portada</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="https://ejemplo.com/imagen.jpg"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <div className="flex gap-8">
-              <FormField
-                control={form.control}
-                name="is_featured"
-                render={({ field }) => (
-                  <FormItem className="flex items-center gap-3">
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel className="!mt-0">Destacado</FormLabel>
-                  </FormItem>
-                )}
-              />
+                <div className="flex gap-8">
+                  <FormField
+                    control={form.control}
+                    name="is_featured"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel className="!mt-0">Destacado</FormLabel>
+                      </FormItem>
+                    )}
+                  />
 
-              <FormField
-                control={form.control}
-                name="is_active"
-                render={({ field }) => (
-                  <FormItem className="flex items-center gap-3">
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel className="!mt-0">Activo (visible)</FormLabel>
-                  </FormItem>
-                )}
-              />
-            </div>
+                  <FormField
+                    control={form.control}
+                    name="is_active"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel className="!mt-0">Activo (visible)</FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </TabsContent>
 
-            <div className="flex justify-end gap-3 pt-4">
+              <TabsContent value="content" className="space-y-6 pt-4">
+                <FormField
+                  control={form.control}
+                  name="content"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contenido (Markdown)</FormLabel>
+                      <FormDescription>
+                        Usa Markdown para formato. Para imágenes: ![alt](url)
+                      </FormDescription>
+                      <FormControl>
+                        <MarkdownEditor
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          placeholder="Escribe el contenido del recurso aquí...
+
+## Ejemplo de imagen:
+![Diagrama del proceso](https://tu-url.com/imagen.png)
+
+## Beneficios
+- Punto 1
+- Punto 2"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </TabsContent>
+            </Tabs>
+
+            <div className="flex justify-end gap-3 pt-4 border-t">
               <Button
                 type="button"
                 variant="outline"
