@@ -175,6 +175,54 @@ export type Database = {
         }
         Relationships: []
       }
+      calculator_settings: {
+        Row: {
+          category: string
+          conditions: Json | null
+          created_at: string | null
+          display_order: number | null
+          entity_type: string | null
+          id: string
+          is_active: boolean | null
+          item_key: string
+          item_label: string
+          item_notes: string | null
+          max_value: number
+          min_value: number
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          conditions?: Json | null
+          created_at?: string | null
+          display_order?: number | null
+          entity_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          item_key: string
+          item_label: string
+          item_notes?: string | null
+          max_value?: number
+          min_value?: number
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          conditions?: Json | null
+          created_at?: string | null
+          display_order?: number | null
+          entity_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          item_key?: string
+          item_label?: string
+          item_notes?: string | null
+          max_value?: number
+          min_value?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       candidatos: {
         Row: {
           anos_experiencia: number | null
@@ -3154,6 +3202,39 @@ export type Database = {
       publish_scheduled_posts: { Args: never; Returns: number }
       run_maintenance_tasks: { Args: never; Returns: undefined }
       search_blog_posts:
+        | {
+            Args: {
+              filter_category?: string
+              filter_site?: string
+              filter_status?: string
+              filter_tags?: string[]
+              lang?: string
+              limit_count?: number
+              offset_count?: number
+              search_query?: string
+            }
+            Returns: {
+              author_name: string
+              author_specialization: string
+              category: string
+              content: string
+              created_at: string
+              excerpt: string
+              featured_image: string
+              id: string
+              published_at: string
+              read_time: number
+              shared_sites: string[]
+              slug: string
+              slug_en: string
+              slug_es: string
+              source_site: string
+              status: string
+              tags: string[]
+              title: string
+              view_count: number
+            }[]
+          }
         | {
             Args: {
               filter_category?: string
