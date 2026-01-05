@@ -10,7 +10,7 @@ interface RelatedBlogPostsProps {
   language?: string;
 }
 
-export const RelatedBlogPosts = ({ currentPostId, category, tags, language = 'es' }: RelatedBlogPostsProps) => {
+export const RelatedBlogPosts = ({ currentPostId, category, tags, language = 'en' }: RelatedBlogPostsProps) => {
   const { t } = useLanguage();
   
   const { data: relatedPosts, isLoading } = useRelatedBlogPosts({

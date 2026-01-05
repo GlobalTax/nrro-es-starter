@@ -89,16 +89,16 @@ const BlogDetail = () => {
 
       if (response.error) throw response.error;
       
-      // Map with fallback to Spanish
+      // Force English content for international site, fallback to Spanish
       const post: any = response.data;
       return {
         ...post,
-        title: post[`title_${language}`] || post.title_es,
-        slug: post[`slug_${language}`] || post.slug_es,
-        excerpt: post[`excerpt_${language}`] || post.excerpt_es,
-        content: post[`content_${language}`] || post.content_es,
-        seo_title: post[`seo_title_${language}`] || post.seo_title_es,
-        seo_description: post[`seo_description_${language}`] || post.seo_description_es,
+        title: post.title_en || post.title_es,
+        slug: post.slug_en || post.slug_es,
+        excerpt: post.excerpt_en || post.excerpt_es,
+        content: post.content_en || post.content_es,
+        seo_title: post.seo_title_en || post.seo_title_es,
+        seo_description: post.seo_description_en || post.seo_description_es,
         // Keep original slugs for URL normalization
         slug_es: post.slug_es,
         slug_ca: post.slug_ca,
@@ -401,7 +401,7 @@ const BlogDetail = () => {
           currentPostId={post.id}
           category={post.category || ''}
           tags={post.tags || []}
-          language={language}
+          language="en"
         />
 
         {/* CTA de contacto */}
