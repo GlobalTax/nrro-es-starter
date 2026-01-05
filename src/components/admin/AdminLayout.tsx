@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { AdminSidebar } from './AdminSidebar';
 import { AdminHeader } from './AdminHeader';
 import { useContactLeadsRealtime } from '@/hooks/useContactLeadsRealtime';
+import { useBlogDraftsRealtime } from '@/hooks/useBlogDraftsRealtime';
 import { useBrowserNotifications } from '@/hooks/useBrowserNotifications';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ import { Bell, X } from 'lucide-react';
 export const AdminLayout = () => {
   // Activar suscripción a notificaciones en tiempo real
   useContactLeadsRealtime();
+  useBlogDraftsRealtime();
   
   const { permission, isSupported, requestPermission } = useBrowserNotifications();
   const [showBanner, setShowBanner] = useState(false);
