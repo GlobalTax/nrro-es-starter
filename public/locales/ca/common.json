@@ -74,6 +74,12 @@
     },
     "search": "Buscar articles...",
     "empty": "No s'han trobat articles",
+    "filters": {
+      "category": "Categoria",
+      "tags": "Etiquetes",
+      "active": "Filtres actius",
+      "clearAll": "Netejar filtres"
+    },
     "relatedPosts": {
       "title": "Articles relacionats"
     },

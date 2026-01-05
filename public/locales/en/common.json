@@ -74,6 +74,12 @@
     },
     "search": "Search articles...",
     "empty": "No articles found",
+    "filters": {
+      "category": "Category",
+      "tags": "Tags",
+      "active": "Active filters",
+      "clearAll": "Clear filters"
+    },
     "relatedPosts": {
       "title": "Related articles"
     },
