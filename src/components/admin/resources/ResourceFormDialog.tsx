@@ -30,8 +30,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCreateResource, useUpdateResource, AdminResource } from "@/hooks/useAdminResources";
 import { resourceTypes, resourceCategories } from "@/hooks/useResources";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MarkdownEditor } from "@/components/admin/services/MarkdownEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const resourceFormSchema = z.object({
   title: z.string().min(1, "El título es requerido"),
@@ -78,6 +81,8 @@ export const ResourceFormDialog = ({
 }: ResourceFormDialogProps) => {
   const createMutation = useCreateResource();
   const updateMutation = useUpdateResource();
+  const [pendingImageFile, setPendingImageFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(resourceFormSchema),
@@ -125,28 +130,67 @@ export const ResourceFormDialog = ({
     }
   }, [resource, form]);
 
-  const onSubmit = async (values: ResourceFormValues) => {
-    const resourceData = {
-      title: values.title,
-      type: values.type,
-      category: values.category,
-      description: values.description || null,
-      content: values.content || null,
-      file_url: values.file_url || null,
-      thumbnail_url: values.thumbnail_url || null,
-      published_at: values.published_at || null,
-      is_featured: values.is_featured,
-      is_active: values.is_active,
-      countries: null,
-      personas: null,
-    };
+  const uploadImage = async (file: File): Promise<string | null> => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+    const filePath = `thumbnails/${fileName}`;
 
-    if (resource) {
-      await updateMutation.mutateAsync({ id: resource.id, ...resourceData });
-    } else {
-      await createMutation.mutateAsync(resourceData);
+    const { error: uploadError } = await supabase.storage
+      .from('resource-thumbnails')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      console.error('Error uploading image:', uploadError);
+      toast.error('Error al subir la imagen');
+      return null;
     }
-    onOpenChange(false);
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('resource-thumbnails')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
+  const onSubmit = async (values: ResourceFormValues) => {
+    setIsUploading(true);
+    
+    try {
+      let thumbnailUrl = values.thumbnail_url || null;
+      
+      // Upload pending image if exists
+      if (pendingImageFile) {
+        const uploadedUrl = await uploadImage(pendingImageFile);
+        if (uploadedUrl) {
+          thumbnailUrl = uploadedUrl;
+        }
+      }
+
+      const resourceData = {
+        title: values.title,
+        type: values.type,
+        category: values.category,
+        description: values.description || null,
+        content: values.content || null,
+        file_url: values.file_url || null,
+        thumbnail_url: thumbnailUrl,
+        published_at: values.published_at || null,
+        is_featured: values.is_featured,
+        is_active: values.is_active,
+        countries: null,
+        personas: null,
+      };
+
+      if (resource) {
+        await updateMutation.mutateAsync({ id: resource.id, ...resourceData });
+      } else {
+        await createMutation.mutateAsync(resourceData);
+      }
+      setPendingImageFile(null);
+      onOpenChange(false);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -273,12 +317,33 @@ export const ResourceFormDialog = ({
                   name="thumbnail_url"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>URL de Imagen de Portada</FormLabel>
+                      <FormLabel>Imagen de Portada</FormLabel>
+                      <FormDescription>
+                        Sube una imagen o pega una URL externa
+                      </FormDescription>
                       <FormControl>
-                        <Input
-                          placeholder="https://ejemplo.com/imagen.jpg"
-                          {...field}
-                        />
+                        <div className="space-y-3">
+                          <ImageUpload
+                            value={field.value || null}
+                            onChange={(url, file) => {
+                              if (file) {
+                                setPendingImageFile(file);
+                              } else {
+                                setPendingImageFile(null);
+                                field.onChange(url || "");
+                              }
+                            }}
+                          />
+                          <div className="text-center text-sm text-muted-foreground">o pega una URL:</div>
+                          <Input
+                            placeholder="https://ejemplo.com/imagen.jpg"
+                            value={field.value || ""}
+                            onChange={(e) => {
+                              field.onChange(e.target.value);
+                              setPendingImageFile(null);
+                            }}
+                          />
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -361,9 +426,11 @@ export const ResourceFormDialog = ({
               </Button>
               <Button
                 type="submit"
-                disabled={createMutation.isPending || updateMutation.isPending}
+                disabled={createMutation.isPending || updateMutation.isPending || isUploading}
               >
-                {createMutation.isPending || updateMutation.isPending
+                {isUploading
+                  ? "Subiendo imagen..."
+                  : createMutation.isPending || updateMutation.isPending
                   ? "Guardando..."
                   : resource
                   ? "Actualizar"
