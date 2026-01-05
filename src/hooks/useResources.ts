@@ -19,6 +19,13 @@ export interface Resource {
   download_count: number | null;
   published_at: string | null;
   is_active: boolean | null;
+  slug: string | null;
+  content: string | null;
+  toc: string[] | null;
+  benefits: string[] | null;
+  target_audience: string[] | null;
+  preview_pages: number | null;
+  read_time: number | null;
 }
 
 export const resourceTypes: ResourceType[] = [
@@ -88,5 +95,23 @@ export const useResource = (id: string) => {
       return data as Resource;
     },
     enabled: !!id,
+  });
+};
+
+export const useResourceBySlug = (slug: string) => {
+  return useQuery({
+    queryKey: ["resource", "slug", slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("resources")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data as Resource | null;
+    },
+    enabled: !!slug,
   });
 };

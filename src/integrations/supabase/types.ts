@@ -2381,7 +2381,9 @@ export type Database = {
       }
       resources: {
         Row: {
+          benefits: string[] | null
           category: Database["public"]["Enums"]["resource_category"]
+          content: string | null
           countries: string[] | null
           created_at: string | null
           description: string | null
@@ -2391,15 +2393,22 @@ export type Database = {
           is_active: boolean | null
           is_featured: boolean | null
           personas: string[] | null
+          preview_pages: number | null
           published_at: string | null
+          read_time: number | null
+          slug: string | null
           source_site: Database["public"]["Enums"]["site_source"] | null
+          target_audience: string[] | null
           thumbnail_url: string | null
           title: string
+          toc: string[] | null
           type: Database["public"]["Enums"]["resource_type"]
           updated_at: string | null
         }
         Insert: {
+          benefits?: string[] | null
           category: Database["public"]["Enums"]["resource_category"]
+          content?: string | null
           countries?: string[] | null
           created_at?: string | null
           description?: string | null
@@ -2409,15 +2418,22 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           personas?: string[] | null
+          preview_pages?: number | null
           published_at?: string | null
+          read_time?: number | null
+          slug?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
+          target_audience?: string[] | null
           thumbnail_url?: string | null
           title: string
+          toc?: string[] | null
           type: Database["public"]["Enums"]["resource_type"]
           updated_at?: string | null
         }
         Update: {
+          benefits?: string[] | null
           category?: Database["public"]["Enums"]["resource_category"]
+          content?: string | null
           countries?: string[] | null
           created_at?: string | null
           description?: string | null
@@ -2427,10 +2443,15 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           personas?: string[] | null
+          preview_pages?: number | null
           published_at?: string | null
+          read_time?: number | null
+          slug?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
+          target_audience?: string[] | null
           thumbnail_url?: string | null
           title?: string
+          toc?: string[] | null
           type?: Database["public"]["Enums"]["resource_type"]
           updated_at?: string | null
         }
