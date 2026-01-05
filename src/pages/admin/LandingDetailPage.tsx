@@ -146,7 +146,7 @@ const LandingDetailPage = () => {
               </Link>
             </Button>
             <div>
-              <h1 className="text-3xl font-bold text-foreground">{landing.title}</h1>
+              <h1 className="text-3xl font-normal text-foreground">{landing.title}</h1>
               <div className="flex items-center gap-2 mt-2">
                 <LandingCategoryBadge category={landing.category || 'Other'} />
                 <LandingStatusBadge status={landing.status || 'draft'} />

@@ -49,9 +49,13 @@ export const AdminHeader = () => {
   return (
     <header className="bg-white border-b border-teal-100 px-6 py-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="px-2.5 py-1 bg-teal-100 text-teal-800 text-xs font-semibold rounded-md">
-            int.nrro.es
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs text-muted-foreground">
+            Intranet
+          </span>
+          <span className="text-muted-foreground/50">•</span>
+          <span className="font-mono text-xs text-foreground">
+            nrro.es
           </span>
         </div>
 

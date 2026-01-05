@@ -705,7 +705,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                   )}
 
                   <div className="space-y-4 pt-4 border-t">
-                    <h3 className="font-semibold">Compartir en otros sitios</h3>
+                    <h3 className="font-medium">Compartir en otros sitios</h3>
                     <p className="text-sm text-muted-foreground">
                       Este post pertenece a int.nrro.es. Selecciona en qué otros sitios debe aparecer también.
                     </p>
@@ -744,7 +744,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                   </div>
 
                   <div className="space-y-4 pt-4 border-t">
-                    <h3 className="font-semibold">SEO</h3>
+                    <h3 className="font-medium">SEO</h3>
                     <FormField
                       control={form.control}
                       name="seo_title_es"

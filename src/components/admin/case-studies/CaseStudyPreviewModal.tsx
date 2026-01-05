@@ -55,7 +55,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
                 />
               )}
               <div className="flex-1">
-                <h2 className="text-2xl font-semibold">{caseStudy.hero_title}</h2>
+                <h2 className="text-2xl font-medium">{caseStudy.hero_title}</h2>
                 {caseStudy.hero_subtitle && (
                   <p className="text-muted-foreground mt-1">{caseStudy.hero_subtitle}</p>
                 )}
@@ -114,17 +114,17 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Content Sections */}
             <div className="space-y-6 border-t pt-6">
               <div>
-                <h3 className="text-lg font-semibold mb-2">Desafío</h3>
+                <h3 className="text-lg font-medium mb-2">Desafío</h3>
                 <p className="text-muted-foreground">{caseStudy.challenge}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2">Solución</h3>
+                <h3 className="text-lg font-medium mb-2">Solución</h3>
                 <p className="text-muted-foreground">{caseStudy.solution}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2">Resultados</h3>
+                <h3 className="text-lg font-medium mb-2">Resultados</h3>
                 <p className="text-muted-foreground">{caseStudy.results_summary}</p>
               </div>
             </div>
@@ -132,7 +132,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Metrics */}
             {caseStudy.metrics.length > 0 && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Métricas Clave</h3>
+                <h3 className="text-lg font-medium mb-4">Métricas Clave</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {caseStudy.metrics.map((metric, index) => (
                     <div key={index} className="text-center p-4 border rounded-lg">
@@ -150,7 +150,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Timeline */}
             {caseStudy.timeline.length > 0 && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Timeline</h3>
+                <h3 className="text-lg font-medium mb-4">Timeline</h3>
                 <div className="space-y-4">
                   {caseStudy.timeline.map((event, index) => (
                     <div key={index} className="flex gap-4">
@@ -170,7 +170,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Testimonial */}
             {caseStudy.testimonial_text && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Testimonio</h3>
+                <h3 className="text-lg font-medium mb-4">Testimonio</h3>
                 <div className="bg-muted p-6 rounded-lg">
                   <p className="text-lg italic mb-4">"{caseStudy.testimonial_text}"</p>
                   <div className="flex items-center gap-3">

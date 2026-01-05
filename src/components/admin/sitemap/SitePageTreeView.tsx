@@ -172,7 +172,7 @@ export const SitePageTreeView = ({ pages, onEdit }: SitePageTreeViewProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="w-5 h-5 text-primary" />
-            <h3 className="font-semibold">Vista de Árbol</h3>
+            <h3 className="font-medium">Vista de Árbol</h3>
           </div>
           <Badge variant="secondary">{pages.length} páginas</Badge>
         </div>

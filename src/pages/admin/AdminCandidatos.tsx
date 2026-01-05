@@ -105,7 +105,7 @@ export default function AdminCandidatos() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Candidatos</h1>
+        <h1 className="text-3xl font-normal">Candidatos</h1>
         <p className="text-muted-foreground">
           Gestiona las candidaturas recibidas a través del portal de talento.
         </p>

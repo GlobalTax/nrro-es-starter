@@ -116,7 +116,7 @@ export default function AdminResources() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Centro de Recursos</h1>
+          <h1 className="text-3xl font-normal tracking-tight">Centro de Recursos</h1>
           <p className="text-muted-foreground">
             Gestiona los lead magnets y recursos descargables
           </p>

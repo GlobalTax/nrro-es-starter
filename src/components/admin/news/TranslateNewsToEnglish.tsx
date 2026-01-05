@@ -116,7 +116,7 @@ export const TranslateNewsToEnglish = () => {
               <Alert variant="destructive">
                 <XCircle className="h-4 w-4" />
                 <AlertDescription>
-                  <p className="font-semibold mb-2">Errores durante la traducción:</p>
+                  <p className="font-medium mb-2">Errores durante la traducción:</p>
                   <ul className="list-disc list-inside space-y-1 text-sm">
                     {results.errors.map((error, idx) => (
                       <li key={idx}>{error}</li>
