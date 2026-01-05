@@ -50,7 +50,7 @@ export const ResourceCard = ({ resource, onDownload }: ResourceCardProps) => {
             <img
               src={resource.thumbnail_url}
               alt={resource.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover transition-all duration-500 grayscale group-hover:scale-105 group-hover:grayscale-0"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
