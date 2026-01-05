@@ -3201,103 +3201,39 @@ export type Database = {
       }
       publish_scheduled_posts: { Args: never; Returns: number }
       run_maintenance_tasks: { Args: never; Returns: undefined }
-      search_blog_posts:
-        | {
-            Args: {
-              filter_category?: string
-              filter_site?: string
-              filter_status?: string
-              filter_tags?: string[]
-              lang?: string
-              limit_count?: number
-              offset_count?: number
-              search_query?: string
-            }
-            Returns: {
-              author_name: string
-              author_specialization: string
-              category: string
-              content: string
-              created_at: string
-              excerpt: string
-              featured_image: string
-              id: string
-              published_at: string
-              read_time: number
-              shared_sites: string[]
-              slug: string
-              slug_en: string
-              slug_es: string
-              source_site: string
-              status: string
-              tags: string[]
-              title: string
-              view_count: number
-            }[]
-          }
-        | {
-            Args: {
-              filter_category?: string
-              filter_status?: string
-              filter_tags?: string[]
-              lang?: string
-              limit_count?: number
-              offset_count?: number
-              search_query?: string
-            }
-            Returns: {
-              author_name: string
-              author_specialization: string
-              category: string
-              content_en: string
-              content_es: string
-              excerpt_en: string
-              excerpt_es: string
-              featured_image: string
-              id: string
-              published_at: string
-              read_time: number
-              relevance: number
-              slug_en: string
-              slug_es: string
-              status: string
-              tags: string[]
-              title_en: string
-              title_es: string
-              view_count: number
-            }[]
-          }
-        | {
-            Args: {
-              filter_category?: string
-              filter_site?: string
-              filter_status?: string
-              filter_tags?: string[]
-              lang?: string
-              limit_count?: number
-              offset_count?: number
-              search_query?: string
-            }
-            Returns: {
-              author_name: string
-              author_specialization: string
-              category: string
-              content: string
-              created_at: string
-              excerpt: string
-              featured_image: string
-              id: string
-              published_at: string
-              read_time: number
-              shared_sites: string[]
-              slug: string
-              source_site: string
-              status: string
-              tags: string[]
-              title: string
-              view_count: number
-            }[]
-          }
+      search_blog_posts: {
+        Args: {
+          filter_category?: string
+          filter_site?: string
+          filter_status?: string
+          filter_tags?: string[]
+          lang?: string
+          limit_count?: number
+          offset_count?: number
+          search_query?: string
+        }
+        Returns: {
+          author_name: string
+          author_specialization: string
+          category: string
+          content: string
+          created_at: string
+          excerpt: string
+          featured_image: string
+          id: string
+          published_at: string
+          read_time: number
+          shared_sites: string[]
+          slug: string
+          slug_en: string
+          slug_es: string
+          source_site: string
+          status: string
+          tags: string[]
+          title: string
+          view_count: number
+        }[]
+      }
       search_case_studies: {
         Args: {
           filter_industry?: string
