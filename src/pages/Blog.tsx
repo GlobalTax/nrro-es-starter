@@ -55,16 +55,8 @@ const Blog = () => {
     sourceSite: "int", // Filter for int.nrro.es - shows posts with source_site='int' OR 'int' in shared_sites
   }, language);
 
-  // Process posts with fallback based on language
-  const posts = (data?.posts || []).map((post: any) => ({
-    ...post,
-    title: post[`title_${language}`] || post.title_es,
-    slug: post[`slug_${language}`] || post.slug_es,
-    excerpt: post[`excerpt_${language}`] || post.excerpt_es,
-    // Preserve slugs for BlogPostCard
-    slug_es: post.slug_es,
-    slug_en: post.slug_en,
-  }));
+  // RPC already returns language-processed fields (title, slug, excerpt)
+  const posts = data?.posts || [];
   
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);
 
@@ -147,29 +139,27 @@ const Blog = () => {
             </div>
           ) : posts && posts.length > 0 ? (
             <>
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.map((post) => (
-                   <div 
-                     key={post.id}
-                     onClick={() => trackEvent("blog_card_click", { 
-                       blog_title: post.title,
-                       blog_category: post.category 
-                     })}
-                   >
-                     <BlogPostCard
-                       slug={post.slug}
-                       slug_es={post.slug_es}
-                       slug_en={post.slug_en}
-                       category={post.category}
-                       title={post.title}
-                       excerpt={post.excerpt}
-                       authorName={post.author_name}
-                       authorSpecialization={post.author_specialization}
-                       publishedAt={post.published_at}
-                       readTime={post.read_time}
-                     />
-                   </div>
-                 ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts.map((post) => (
+                  <div 
+                    key={post.id}
+                    onClick={() => trackEvent("blog_card_click", { 
+                      blog_title: post.title,
+                      blog_category: post.category 
+                    })}
+                  >
+                    <BlogPostCard
+                      slug={post.slug}
+                      category={post.category}
+                      title={post.title}
+                      excerpt={post.excerpt}
+                      authorName={post.author_name}
+                      authorSpecialization={post.author_specialization}
+                      publishedAt={post.published_at}
+                      readTime={post.read_time}
+                    />
+                  </div>
+                ))}
               </div>
 
               {totalPages > 1 && (
