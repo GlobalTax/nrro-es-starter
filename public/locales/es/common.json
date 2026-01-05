@@ -74,6 +74,12 @@
     },
     "search": "Buscar artículos...",
     "empty": "No se encontraron artículos",
+    "filters": {
+      "category": "Categoría",
+      "tags": "Etiquetas",
+      "active": "Filtros activos",
+      "clearAll": "Limpiar filtros"
+    },
     "relatedPosts": {
       "title": "Artículos relacionados"
     },

@@ -14,14 +14,16 @@ import {
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CustomPagination } from "@/components/ui/custom-pagination";
-import { useBlogSearch } from "@/hooks/useBlogSearch";
+import { useBlogSearch, useBlogFilterOptions } from "@/hooks/useBlogSearch";
 import { BadgeHero } from "@/components/ui/badge-hero";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
+import { BadgeFilter } from "@/components/ui/badge-filter";
+import { Button } from "@/components/ui/button";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -31,6 +33,11 @@ const Blog = () => {
   useScrollDepth();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  
+  // Get filter options
+  const { data: filterOptions } = useBlogFilterOptions();
   
   // Track page view
   useEffect(() => {
@@ -49,16 +56,24 @@ const Blog = () => {
 
   const { data, isLoading } = useBlogSearch({
     searchQuery: searchQuery || undefined,
+    category: selectedCategory || undefined,
+    tags: selectedTags.length > 0 ? selectedTags : undefined,
     status: "published",
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-    sourceSite: "es", // Filter for es.nrro.es - shows posts with source_site='es' OR 'es' in shared_sites
+    sourceSite: "es",
   }, language);
 
-  // RPC already returns language-processed fields (title, slug, excerpt)
   const posts = data?.posts || [];
-  
   const totalPages = Math.ceil((data?.totalCount || 0) / ITEMS_PER_PAGE);
+  
+  const hasActiveFilters = selectedCategory || selectedTags.length > 0;
+  
+  const clearAllFilters = () => {
+    setSelectedCategory(null);
+    setSelectedTags([]);
+    setCurrentPage(1);
+  };
 
   return (
     <>
@@ -108,20 +123,114 @@ const Blog = () => {
       <div className="min-h-screen py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div className="mb-12 max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder={t('blog.search')}
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="pl-10"
-              />
+          {/* Search and Filters */}
+          <div className="mb-8 space-y-6">
+            {/* Search bar */}
+            <div className="max-w-xl">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder={t('blog.search')}
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="pl-10"
+                />
+              </div>
             </div>
+
+            {/* Category filters */}
+            {filterOptions?.categories && filterOptions.categories.length > 0 && (
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-sm font-medium text-muted-foreground mr-2">
+                  {t('blog.filters.category')}:
+                </span>
+                {filterOptions.categories.map((category) => (
+                  <BadgeFilter
+                    key={category}
+                    label={category}
+                    active={selectedCategory === category}
+                    onClick={() => {
+                      setSelectedCategory(selectedCategory === category ? null : category);
+                      setCurrentPage(1);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Tag filters */}
+            {filterOptions?.all_tags && filterOptions.all_tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-sm font-medium text-muted-foreground mr-2">
+                  {t('blog.filters.tags')}:
+                </span>
+                {filterOptions.all_tags.slice(0, 10).map((tag) => (
+                  <BadgeFilter
+                    key={tag}
+                    label={tag}
+                    active={selectedTags.includes(tag)}
+                    onClick={() => {
+                      setSelectedTags(prev => 
+                        prev.includes(tag) 
+                          ? prev.filter(t => t !== tag)
+                          : [...prev, tag]
+                      );
+                      setCurrentPage(1);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Active filters indicator */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap gap-2 items-center pt-4 border-t border-border/50">
+                <span className="text-sm text-muted-foreground">
+                  {t('blog.filters.active')}:
+                </span>
+                {selectedCategory && (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedCategory(null);
+                      setCurrentPage(1);
+                    }}
+                    className="h-7 gap-1"
+                  >
+                    {selectedCategory}
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+                {selectedTags.map(tag => (
+                  <Button
+                    key={tag}
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedTags(prev => prev.filter(t => t !== tag));
+                      setCurrentPage(1);
+                    }}
+                    className="h-7 gap-1"
+                  >
+                    {tag}
+                    <X className="h-3 w-3" />
+                  </Button>
+                ))}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearAllFilters}
+                  className="h-7 text-primary hover:text-primary/80"
+                >
+                  {t('blog.filters.clearAll')}
+                </Button>
+              </div>
+            )}
           </div>
 
           {isLoading ? (
