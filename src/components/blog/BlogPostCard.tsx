@@ -4,8 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { es, ca, enUS } from "date-fns/locale";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface BlogPostCardProps {
   slug: string;
@@ -35,7 +36,9 @@ export const BlogPostCard = memo(({
   className = "",
 }: BlogPostCardProps) => {
   const { getBlogPath } = useLocalizedPath();
+  const { language } = useLanguage();
   const blogPath = getBlogPath(slug_es, slug_en);
+  const dateLocale = language === 'ca' ? ca : language === 'en' ? enUS : es;
   
   return (
     <Link to={blogPath}>
@@ -60,7 +63,7 @@ export const BlogPostCard = memo(({
             </p>
           )}
 
-          {/* Footer: Author & Read Time */}
+          {/* Footer: Author, Date & Read Time */}
           <div className="flex items-end justify-between mt-auto pt-4 border-t border-border">
             <div className="flex flex-col gap-0.5">
               {authorName && (
@@ -75,12 +78,19 @@ export const BlogPostCard = memo(({
               )}
             </div>
 
-            {readTime && (
-              <div className="flex items-center gap-1.5 text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span className="text-sm">{readTime} min</span>
-              </div>
-            )}
+            {/* Date & Read Time */}
+            <div className="flex items-center gap-2 text-muted-foreground text-sm">
+              {publishedAt && (
+                <span>{format(new Date(publishedAt), "d MMM yyyy", { locale: dateLocale })}</span>
+              )}
+              {publishedAt && readTime && <span>·</span>}
+              {readTime && (
+                <div className="flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" />
+                  <span>{readTime} min</span>
+                </div>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
