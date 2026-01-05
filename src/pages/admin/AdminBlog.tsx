@@ -127,9 +127,30 @@ export const AdminBlog = () => {
     }
   };
 
-  const handleEdit = (post: any) => {
-    setSelectedPost(post);
-    setIsFormOpen(true);
+  const [loadingEdit, setLoadingEdit] = useState(false);
+
+  const handleEdit = async (post: any) => {
+    setLoadingEdit(true);
+    try {
+      const { data: fullPost, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("id", post.id)
+        .single();
+      
+      if (error) throw error;
+      
+      setSelectedPost(fullPost);
+      setIsFormOpen(true);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "No se pudo cargar el artículo",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingEdit(false);
+    }
   };
 
   const handleNew = () => {
