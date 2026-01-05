@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { Clock, Download, FileText, Video, BookOpen, FileSpreadsheet } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Clock, Download, FileText, Video, BookOpen, FileSpreadsheet, ArrowLeft } from "lucide-react";
 import { Resource } from "@/hooks/useResources";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 interface ResourceHeroProps {
   resource: Resource;
@@ -33,6 +36,7 @@ const categoryLabels: Record<string, Record<string, string>> = {
 
 export const ResourceHero = ({ resource }: ResourceHeroProps) => {
   const { language } = useLanguage();
+  const { getLocalizedPath } = useLocalizedPath();
   const Icon = typeIcons[resource.type] || FileText;
   const typeLabel = typeLabels[resource.type]?.[language] || resource.type;
   const categoryLabel = resource.category 
@@ -43,6 +47,19 @@ export const ResourceHero = ({ resource }: ResourceHeroProps) => {
     <section className="bg-gradient-to-br from-muted/50 to-background border-b border-border">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-4xl">
+          {/* Back button */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            asChild 
+            className="-ml-3 mb-6 text-muted-foreground hover:text-foreground"
+          >
+            <Link to={getLocalizedPath("/recursos")}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {language === "en" ? "Back to Resources" : language === "ca" ? "Tornar a Recursos" : "Volver a Recursos"}
+            </Link>
+          </Button>
+
           {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-6">
             <Badge variant="secondary" className="flex items-center gap-1.5">
