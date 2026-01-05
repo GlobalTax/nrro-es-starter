@@ -11,6 +11,28 @@ interface BlogSearchParams {
   sourceSite?: string; // 'es' | 'int' | 'global' | null (null = all sites)
 }
 
+export interface BlogPostResult {
+  id: string;
+  slug: string;
+  slug_es: string;
+  slug_en: string | null;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  featured_image: string;
+  author_name: string;
+  author_specialization: string;
+  published_at: string;
+  created_at: string;
+  read_time: number;
+  status: string;
+  view_count: number;
+  source_site: string | null;
+  shared_sites: string[] | null;
+}
+
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {
   return useQuery({
     queryKey: ["blog-search", params, language],
@@ -42,7 +64,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
       if (countError) throw countError;
 
       return {
-        posts: posts || [],
+        posts: (posts || []) as BlogPostResult[],
         totalCount: Number(totalCount) || 0,
       };
     },

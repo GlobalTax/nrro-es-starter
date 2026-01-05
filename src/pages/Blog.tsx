@@ -150,6 +150,8 @@ const Blog = () => {
                   >
                     <BlogPostCard
                       slug={post.slug}
+                      slug_es={post.slug_es}
+                      slug_en={post.slug_en}
                       category={post.category}
                       title={post.title}
                       excerpt={post.excerpt}
