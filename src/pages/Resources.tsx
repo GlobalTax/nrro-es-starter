@@ -74,7 +74,7 @@ const Resources = () => {
               <BookOpen className="h-4 w-4" />
               {t("resources.badge", "Centro de Recursos")}
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-normal text-foreground mb-6">
               {t("resources.heroTitle", "Recursos para tu empresa")}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
