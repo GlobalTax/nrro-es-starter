@@ -1,10 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Download, FileText, Video, BookOpen, FileSpreadsheet, ArrowLeft } from "lucide-react";
+import { Clock, Download, FileText, Video, BookOpen, FileSpreadsheet, ArrowLeft, Calendar } from "lucide-react";
 import { Resource } from "@/hooks/useResources";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
+import { format } from "date-fns";
+import { es, ca, enUS } from "date-fns/locale";
 
 interface ResourceHeroProps {
   resource: Resource;
@@ -42,6 +44,7 @@ export const ResourceHero = ({ resource }: ResourceHeroProps) => {
   const categoryLabel = resource.category 
     ? categoryLabels[resource.category]?.[language] || resource.category 
     : null;
+  const dateLocale = language === 'ca' ? ca : language === 'en' ? enUS : es;
 
   return (
     <section className="bg-gradient-to-br from-muted/50 to-background border-b border-border">
@@ -90,6 +93,12 @@ export const ResourceHero = ({ resource }: ResourceHeroProps) => {
 
           {/* Meta Info */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            {resource.published_at && (
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-4 w-4" />
+                <span>{format(new Date(resource.published_at), "d 'de' MMMM yyyy", { locale: dateLocale })}</span>
+              </div>
+            )}
             <div className="flex items-center gap-1.5">
               <Icon className="h-4 w-4" />
               <span>{typeLabel}</span>

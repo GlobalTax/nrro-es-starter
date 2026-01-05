@@ -1,4 +1,4 @@
-import { FileText, Video, FileCheck, Download, Globe, ArrowRight } from "lucide-react";
+import { FileText, Video, FileCheck, Download, Globe, ArrowRight, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Resource } from "@/hooks/useResources";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { format } from "date-fns";
+import { es, ca, enUS } from "date-fns/locale";
 
 interface ResourceCardProps {
   resource: Resource;
@@ -31,6 +33,7 @@ export const ResourceCard = ({ resource, onDownload }: ResourceCardProps) => {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const Icon = typeIcons[resource.type] || FileText;
+  const dateLocale = language === 'ca' ? ca : language === 'en' ? enUS : es;
 
   const getLocalizedPath = (path: string) => {
     if (language === "es") return path;
@@ -92,13 +95,17 @@ export const ResourceCard = ({ resource, onDownload }: ResourceCardProps) => {
 
           {/* Stats & CTA */}
           <div className="flex items-center justify-between pt-3 border-t border-border/50">
-            {resource.download_count && resource.download_count > 0 ? (
-              <span className="text-xs text-muted-foreground">
-                {resource.download_count} {t("resources.downloads", "descargas")}
-              </span>
-            ) : (
-              <span />
-            )}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              {resource.published_at && (
+                <span className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  {format(new Date(resource.published_at), "d MMM yyyy", { locale: dateLocale })}
+                </span>
+              )}
+              {resource.download_count && resource.download_count > 0 && (
+                <span>• {resource.download_count} {t("resources.downloads", "descargas")}</span>
+              )}
+            </div>
             
             <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
               {t("resources.viewMore", "Ver más")}
