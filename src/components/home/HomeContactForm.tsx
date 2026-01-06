@@ -96,7 +96,7 @@ export const HomeContactForm = () => {
             <p className="text-sm font-medium tracking-widest uppercase text-primary">
               {t("homeContact.overline")}
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl tracking-tight text-foreground font-display" style={{ fontWeight: 600 }}>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl tracking-tight text-foreground font-display font-normal">
               {t("homeContact.title")}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-md">

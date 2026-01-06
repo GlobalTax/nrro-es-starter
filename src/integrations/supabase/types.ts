@@ -44,6 +44,48 @@ export type Database = {
         }
         Relationships: []
       }
+      awards: {
+        Row: {
+          category: string
+          created_at: string | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          name: string
+          organization: string
+          short_name: string
+          source_site: string | null
+          updated_at: string | null
+          year: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          organization: string
+          short_name: string
+          source_site?: string | null
+          updated_at?: string | null
+          year: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          organization?: string
+          short_name?: string
+          source_site?: string | null
+          updated_at?: string | null
+          year?: string
+        }
+        Relationships: []
+      }
       blog_automation_settings: {
         Row: {
           articles_per_run: number
