@@ -87,10 +87,15 @@ export const Footer = () => {
               <p className="text-white/90">
                 <span className="font-medium">{t("contact.info.headquarters")}:</span>
               </p>
-              <p className="text-white/70">
+              <a 
+                href="https://www.google.com/maps?q=41.3915,2.1745"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-accent transition-colors block"
+              >
                 Calle Ausias March 36 Pr<br />
                 08010 Barcelona
-              </p>
+              </a>
               <p className="text-white/70 leading-relaxed">
                 <span className="font-medium text-white/90">{t("contact.info.otherOffices")}:</span>{" "}
                 {t("contact.info.otherOfficesValue")}
