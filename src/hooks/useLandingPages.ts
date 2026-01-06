@@ -53,6 +53,7 @@ export interface LandingPage {
   notes?: string | null;
   version?: number | null;
   health_score?: number | null;
+  source_site?: 'es' | 'int' | null;
 }
 
 interface LandingFilters {
