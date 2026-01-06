@@ -1293,5 +1293,26 @@
       "submit": "Download now",
       "privacy": "Your data will be processed according to our privacy policy"
     }
+  },
+  "homeContact": {
+    "overline": "Contact",
+    "title": "Have a project in mind?",
+    "subtitle": "Tell us what you need and we'll get back to you within 24 business hours.",
+    "name": "Name",
+    "email": "Email",
+    "company": "Company (optional)",
+    "message": "How can we help you?",
+    "privacy": "I accept the",
+    "privacyLink": "privacy policy",
+    "submit": "Send inquiry",
+    "sending": "Sending...",
+    "sendAnother": "Send another inquiry",
+    "benefit1": "Response within 24 hours",
+    "benefit2": "First consultation with no commitment",
+    "benefit3": "Team specialized in your sector",
+    "success": {
+      "title": "Message sent",
+      "description": "We'll get back to you as soon as possible."
+    }
   }
 }

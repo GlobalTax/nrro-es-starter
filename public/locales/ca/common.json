@@ -1293,5 +1293,26 @@
       "submit": "Descarregar ara",
       "privacy": "Les teves dades seran tractades conforme a la nostra política de privacitat"
     }
+  },
+  "homeContact": {
+    "overline": "Contacte",
+    "title": "Tens un projecte en ment?",
+    "subtitle": "Explica'ns què necessites i et contactarem en menys de 24 hores laborables.",
+    "name": "Nom",
+    "email": "Email",
+    "company": "Empresa (opcional)",
+    "message": "En què podem ajudar-te?",
+    "privacy": "Accepto la",
+    "privacyLink": "política de privacitat",
+    "submit": "Enviar consulta",
+    "sending": "Enviant...",
+    "sendAnother": "Enviar una altra consulta",
+    "benefit1": "Resposta en menys de 24h",
+    "benefit2": "Primera consulta sense compromís",
+    "benefit3": "Equip especialitzat en el teu sector",
+    "success": {
+      "title": "Missatge enviat",
+      "description": "Et respondrem el més aviat possible."
+    }
   }
 }

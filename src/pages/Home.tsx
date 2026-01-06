@@ -27,6 +27,7 @@ import { useHomeDatos } from "@/hooks/useHomeDatos";
 import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
+import { HomeContactForm } from "@/components/home/HomeContactForm";
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
@@ -348,6 +349,9 @@ const Home = () => {
             </Carousel>
           </div>
         </section>
+
+        {/* Contact Form */}
+        <HomeContactForm />
 
         {/* Blog Preview */}
         <section className="bg-background py-24">

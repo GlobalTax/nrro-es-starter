@@ -2603,6 +2603,60 @@ export type Database = {
         }
         Relationships: []
       }
+      review_submissions: {
+        Row: {
+          company_name: string
+          country: string
+          created_at: string | null
+          full_name: string
+          id: string
+          ip_address: string | null
+          job_title: string | null
+          permission_to_publish: boolean | null
+          rating: number
+          review_text: string
+          service_used: string
+          source_site: string | null
+          status: string | null
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          company_name: string
+          country: string
+          created_at?: string | null
+          full_name: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string | null
+          permission_to_publish?: boolean | null
+          rating: number
+          review_text: string
+          service_used: string
+          source_site?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          company_name?: string
+          country?: string
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string | null
+          permission_to_publish?: boolean | null
+          rating?: number
+          review_text?: string
+          service_used?: string
+          source_site?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       security_events: {
         Row: {
           created_at: string | null
