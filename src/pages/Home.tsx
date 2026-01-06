@@ -8,6 +8,7 @@ import { Meta } from "@/components/seo/Meta";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
@@ -30,6 +31,7 @@ import DOMPurify from "dompurify";
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
   const { t, language } = useLanguage();
+  const { sourceSite } = useSiteConfig();
   useScrollDepth();
   
   // Track page view
@@ -93,14 +95,15 @@ const Home = () => {
 
   const serviceLogos = (services || []).map((s) => ({ name: s.name }));
   
-  // Fetch featured blog posts from Supabase
+  // Fetch featured blog posts from Supabase (filtered by source_site)
   const { data: featuredPosts = [], isLoading: postsLoading } = useQuery({
-    queryKey: ['featured-blog-posts', language],
+    queryKey: ['featured-blog-posts', language, sourceSite],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('blog_posts')
         .select('*')
         .eq('status', 'published')
+        .eq('source_site', sourceSite)
         .order('published_at', { ascending: false })
         .limit(3);
       
