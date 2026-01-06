@@ -1265,5 +1265,26 @@
       "submit": "Descargar ahora",
       "privacy": "Tus datos serán tratados conforme a nuestra política de privacidad"
     }
+  },
+  "homeContact": {
+    "overline": "Contacto",
+    "title": "¿Tienes un proyecto en mente?",
+    "subtitle": "Cuéntanos qué necesitas y te contactaremos en menos de 24 horas laborables.",
+    "name": "Nombre",
+    "email": "Email",
+    "company": "Empresa (opcional)",
+    "message": "¿En qué podemos ayudarte?",
+    "privacy": "Acepto la",
+    "privacyLink": "política de privacidad",
+    "submit": "Enviar consulta",
+    "sending": "Enviando...",
+    "sendAnother": "Enviar otra consulta",
+    "benefit1": "Respuesta en menos de 24h",
+    "benefit2": "Primera consulta sin compromiso",
+    "benefit3": "Equipo especializado en tu sector",
+    "success": {
+      "title": "Mensaje enviado",
+      "description": "Te responderemos a la mayor brevedad posible."
+    }
   }
 }
