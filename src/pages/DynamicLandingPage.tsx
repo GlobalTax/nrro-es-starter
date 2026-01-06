@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { useLandingPageBySlug } from '@/hooks/useLandingPages';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 import { Meta } from '@/components/seo/Meta';
 import { LandingLayout } from '@/components/layout/LandingLayout';
 import { Loader2 } from 'lucide-react';
@@ -37,6 +38,7 @@ const SECTION_COMPONENTS: Record<string, React.ComponentType<any>> = {
 export const DynamicLandingPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language } = useLanguage();
+  const { sourceSite } = useSiteConfig();
   const { data: landing, isLoading, error } = useLandingPageBySlug(slug || '');
 
   if (isLoading) {
@@ -48,6 +50,11 @@ export const DynamicLandingPage = () => {
   }
 
   if (error || !landing || landing.status !== 'published' || !landing.is_active) {
+    return <Navigate to="/404" replace />;
+  }
+
+  // Validate that landing is shown only on its designated domain
+  if (landing.source_site && landing.source_site !== sourceSite) {
     return <Navigate to="/404" replace />;
   }
 
