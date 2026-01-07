@@ -2782,6 +2782,7 @@ export type Database = {
           slug_ca: string | null
           slug_en: string | null
           slug_es: string
+          source_site: string | null
           stats: Json | null
           stats_ca: Json | null
           stats_en: Json | null
@@ -2836,6 +2837,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es: string
+          source_site?: string | null
           stats?: Json | null
           stats_ca?: Json | null
           stats_en?: Json | null
@@ -2890,6 +2892,7 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string
+          source_site?: string | null
           stats?: Json | null
           stats_ca?: Json | null
           stats_en?: Json | null

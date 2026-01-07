@@ -74,12 +74,13 @@ const Home = () => {
   const clientLogos = clientesContent?.logos || defaultClientLogos;
 
   const { data: services } = useQuery({
-    queryKey: ['featured-services', language],
+    queryKey: ['featured-services', language, sourceSite],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('services')
         .select(`id, name_${language}, slug_${language}, name_es, slug_es`)
         .eq('is_active', true)
+        .eq('source_site', sourceSite)
         .order('display_order', { ascending: true })
         .limit(4);
       
