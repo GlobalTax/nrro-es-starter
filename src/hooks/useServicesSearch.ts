@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 interface ServicesSearchParams {
   searchQuery?: string;
@@ -9,14 +10,17 @@ interface ServicesSearchParams {
 }
 
 export const useServicesSearch = (params: ServicesSearchParams, language: string = 'es') => {
+  const { sourceSite } = useSiteConfig();
+  
   return useQuery({
-    queryKey: ["services-search", params, language],
+    queryKey: ["services-search", params, language, sourceSite],
     retry: 1,
     queryFn: async () => {
       let query = supabase
         .from('services')
         .select('*', { count: 'exact' })
-        .eq('is_active', true) as any;
+        .eq('is_active', true)
+        .eq('source_site', sourceSite) as any;
 
       // Apply search filter with language-specific columns and fallback
       if (params.searchQuery) {
@@ -77,14 +81,17 @@ export const useServicesSearch = (params: ServicesSearchParams, language: string
 };
 
 export const useServicesFilterOptions = (language: string = 'es') => {
+  const { sourceSite } = useSiteConfig();
+  
   return useQuery({
-    queryKey: ["services-filter-options", language],
+    queryKey: ["services-filter-options", language, sourceSite],
     queryFn: async () => {
       const areaCol = `area_${language}`;
       const { data, error } = await supabase
         .from('services')
         .select(`${areaCol}, area_es`)
-        .eq('is_active', true);
+        .eq('is_active', true)
+        .eq('source_site', sourceSite);
       
       if (error) {
         console.error('Error fetching service filter options:', error);

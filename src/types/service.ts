@@ -47,6 +47,7 @@ export interface Service {
   updated_by?: string;
   meta_title?: string;
   meta_description?: string;
+  source_site?: 'es' | 'int';
   
   // Raw DB fields (for admin)
   name_es?: string;
