@@ -24,7 +24,7 @@ import { Search, Loader2 } from "lucide-react";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { ViewToggle } from "@/components/ui/view-toggle";
 import { cn } from "@/lib/utils";
-import { AreasDestacadasSection } from "@/components/services/AreasDestacadasSection";
+
 
 const ITEMS_PER_PAGE = 12;
 
@@ -129,8 +129,6 @@ const Services = () => {
           </div>
         </div>
 
-        {/* Áreas Destacadas */}
-        <AreasDestacadasSection />
 
         {/* Filters and Results Section */}
         <section className="bg-background pb-20 md:pb-32">
