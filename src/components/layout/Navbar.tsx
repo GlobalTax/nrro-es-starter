@@ -164,7 +164,7 @@ export const Navbar = () => {
                         "flex items-center gap-1 font-display text-base transition-colors",
                         scrolled || isLightMode
                           ? "text-foreground hover:text-accent"
-                          : "text-white hover:text-accent",
+                          : "text-white hover:text-white/70",
                         isActive(item.href) && (scrolled || isLightMode 
                           ? "text-accent font-semibold" 
                           : "text-white font-semibold underline decoration-2 underline-offset-4")
@@ -226,7 +226,7 @@ export const Navbar = () => {
                     "font-display text-base transition-colors",
                     scrolled || isLightMode
                       ? "text-foreground hover:text-accent"
-                      : "text-white hover:text-accent",
+                      : "text-white hover:text-white/70",
                     isActive(item.href) && (scrolled || isLightMode 
                       ? "text-accent font-semibold" 
                       : "text-white font-semibold underline decoration-2 underline-offset-4")
@@ -258,7 +258,7 @@ export const Navbar = () => {
                 "p-2 rounded-md transition-colors",
                 scrolled || isLightMode
                   ? "text-foreground hover:text-accent"
-                  : "text-white hover:text-accent"
+                  : "text-white hover:text-white/70"
               )}
             >
               {mobileMenuOpen ? (
