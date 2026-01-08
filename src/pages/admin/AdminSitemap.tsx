@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LayoutGrid, List, Search } from "lucide-react";
+import { LayoutGrid, List, Search, Scan } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,6 +19,7 @@ import { SyncHistoryTable } from "@/components/admin/sitemap/SyncHistoryTable";
 import { SitemapMetricsCard } from "@/components/admin/sitemap/SitemapMetricsCard";
 import { SitemapHistoryChart } from "@/components/admin/sitemap/SitemapHistoryChart";
 import { ExportButton } from "@/components/admin/sitemap/ExportButton";
+import { AuditTab } from "@/components/admin/sitemap/AuditTab";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 import { SitePage, useUpdateSitePage, useCreateSitePage } from "@/hooks/useSitePages";
 import { toast } from "sonner";
@@ -139,6 +140,10 @@ const AdminSitemap = () => {
       <Tabs defaultValue="pages" className="space-y-6">
         <TabsList>
           <TabsTrigger value="pages">Páginas</TabsTrigger>
+          <TabsTrigger value="audit" className="flex items-center gap-1.5">
+            <Scan className="h-4 w-4" />
+            Auditor SEO
+          </TabsTrigger>
           <TabsTrigger value="metrics">Métricas</TabsTrigger>
           <TabsTrigger value="sync">Sincronización</TabsTrigger>
         </TabsList>
@@ -288,7 +293,12 @@ const AdminSitemap = () => {
           </Card>
         </TabsContent>
 
-        {/* Tab 2: Métricas */}
+        {/* Tab 2: Auditor SEO */}
+        <TabsContent value="audit" className="space-y-6">
+          <AuditTab />
+        </TabsContent>
+
+        {/* Tab 3: Métricas */}
         <TabsContent value="metrics" className="space-y-6">
           <SitemapMetricsCard />
           <SitemapHistoryChart />

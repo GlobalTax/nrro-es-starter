@@ -2199,6 +2199,59 @@ export type Database = {
         }
         Relationships: []
       }
+      page_audits: {
+        Row: {
+          audit_date: string
+          content_score: number | null
+          created_at: string
+          id: string
+          issues: Json | null
+          overall_score: number | null
+          page_url: string
+          raw_data: Json | null
+          recommendations: Json | null
+          seo_score: number | null
+          site_page_id: string | null
+          structure_score: number | null
+        }
+        Insert: {
+          audit_date?: string
+          content_score?: number | null
+          created_at?: string
+          id?: string
+          issues?: Json | null
+          overall_score?: number | null
+          page_url: string
+          raw_data?: Json | null
+          recommendations?: Json | null
+          seo_score?: number | null
+          site_page_id?: string | null
+          structure_score?: number | null
+        }
+        Update: {
+          audit_date?: string
+          content_score?: number | null
+          created_at?: string
+          id?: string
+          issues?: Json | null
+          overall_score?: number | null
+          page_url?: string
+          raw_data?: Json | null
+          recommendations?: Json | null
+          seo_score?: number | null
+          site_page_id?: string | null
+          structure_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_audits_site_page_id_fkey"
+            columns: ["site_page_id"]
+            isOneToOne: false
+            referencedRelation: "site_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       page_content: {
         Row: {
           content: Json
