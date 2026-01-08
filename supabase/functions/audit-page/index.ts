@@ -79,15 +79,30 @@ serve(async (req) => {
       body: JSON.stringify({
         url: formattedUrl,
         formats: ['markdown', 'html', 'links'],
-        onlyMainContent: false,
+        onlyMainContent: true,
+        waitFor: 3000,
+        timeout: 45000,
       }),
     });
 
     if (!firecrawlResponse.ok) {
-      const errorText = await firecrawlResponse.text();
-      console.error('Firecrawl error:', firecrawlResponse.status, errorText);
+      const errorData = await firecrawlResponse.json().catch(() => ({ error: 'Unknown error' }));
+      console.error('Firecrawl error:', firecrawlResponse.status, errorData);
+      
+      // Handle specific timeout error
+      if (errorData.code === 'SCRAPE_TIMEOUT' || firecrawlResponse.status === 408) {
+        return new Response(
+          JSON.stringify({ 
+            success: false, 
+            error: 'La página tardó demasiado en cargar. Intenta de nuevo o con una página más ligera.',
+            code: 'TIMEOUT'
+          }),
+          { status: 408, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
       return new Response(
-        JSON.stringify({ success: false, error: `Failed to scrape page: ${errorText}` }),
+        JSON.stringify({ success: false, error: `Failed to scrape page: ${errorData.error || errorData.message || 'Unknown error'}` }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
