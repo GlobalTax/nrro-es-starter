@@ -80,3 +80,6 @@ verify_jwt = false
 
 [functions.auto-generate-blog]
 verify_jwt = false
+
+[functions.audit-page]
+verify_jwt = false
