@@ -1,5 +1,8 @@
 project_id = "fwhqtzkkvnjkazhaficj"
 
+[functions.batch-audit-pages]
+verify_jwt = false
+
 [functions.regenerate-sitemap]
 verify_jwt = false
 

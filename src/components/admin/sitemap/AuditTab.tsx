@@ -4,23 +4,77 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Search, ExternalLink, Eye, Trash2, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2, Search, ExternalLink, Eye, Trash2, TrendingUp, TrendingDown, Minus, PlayCircle } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useAuditPage, usePageAudits, useAuditStats, useDeleteAudit, type PageAudit } from "@/hooks/usePageAudit";
+import { useSitePages } from "@/hooks/useSitePages";
+import { useBatchAudit } from "@/hooks/useBatchAudit";
 import { AuditScoreCard } from "./AuditScoreCard";
 import { PageAuditModal } from "./PageAuditModal";
+import { BatchAuditModal } from "./BatchAuditModal";
 import { cn } from "@/lib/utils";
 
 export function AuditTab() {
   const [urlToAudit, setUrlToAudit] = useState("");
   const [selectedAudit, setSelectedAudit] = useState<PageAudit | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
+  const [batchFilter, setBatchFilter] = useState<string>("all");
 
   const { mutate: auditPage, isPending: isAuditing } = useAuditPage();
   const { data: audits = [], isLoading: isLoadingAudits } = usePageAudits(50);
   const { data: stats } = useAuditStats();
   const { mutate: deleteAudit } = useDeleteAudit();
+  
+  // Get published site pages for batch audit
+  const { data: sitePages = [] } = useSitePages({ status: 'published' });
+  
+  // Batch audit hook
+  const batchAudit = useBatchAudit({
+    onComplete: () => {
+      // Refresh audits after batch completes
+    },
+  });
+  
+  // Get pages that haven't been audited (no matching audit in last 7 days)
+  const auditedUrls = new Set(audits.map(a => {
+    try {
+      return new URL(a.page_url).pathname;
+    } catch {
+      return a.page_url;
+    }
+  }));
+  
+  const pagesWithoutAudit = sitePages.filter(page => !auditedUrls.has(page.url));
+  
+  // Filter pages based on selection
+  const getFilteredPages = () => {
+    switch (batchFilter) {
+      case "unaudited":
+        return pagesWithoutAudit;
+      case "services":
+        return sitePages.filter(p => p.page_type === 'service');
+      case "blog":
+        return sitePages.filter(p => p.page_type === 'blog');
+      case "landing":
+        return sitePages.filter(p => p.is_landing);
+      default:
+        return sitePages;
+    }
+  };
+  
+  const filteredPages = getFilteredPages();
+  
+  const handleStartBatchAudit = () => {
+    setIsBatchModalOpen(true);
+    batchAudit.auditPages(filteredPages.map(p => ({ 
+      id: p.id, 
+      url: p.url, 
+      title: p.title 
+    })));
+  };
 
   const handleAudit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,7 +176,7 @@ export function AuditTab() {
             Introduce una URL para analizar su SEO, contenido y estructura
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <form onSubmit={handleAudit} className="flex gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -146,6 +200,39 @@ export function AuditTab() {
               )}
             </Button>
           </form>
+          
+          {/* Batch Audit Section */}
+          <div className="border-t pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+              <div className="flex-1">
+                <h4 className="font-medium text-sm">Auditoría masiva</h4>
+                <p className="text-xs text-muted-foreground">
+                  Audita múltiples páginas del sitemap automáticamente
+                </p>
+              </div>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <Select value={batchFilter} onValueChange={setBatchFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filtrar páginas" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas ({sitePages.length})</SelectItem>
+                    <SelectItem value="unaudited">Sin auditar ({pagesWithoutAudit.length})</SelectItem>
+                    <SelectItem value="services">Servicios</SelectItem>
+                    <SelectItem value="blog">Blog</SelectItem>
+                    <SelectItem value="landing">Landings</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button 
+                  onClick={handleStartBatchAudit}
+                  disabled={filteredPages.length === 0 || batchAudit.isRunning}
+                >
+                  <PlayCircle className="h-4 w-4 mr-2" />
+                  Auditar {filteredPages.length} páginas
+                </Button>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
@@ -259,6 +346,18 @@ export function AuditTab() {
         onOpenChange={setIsModalOpen}
         onReaudit={handleReaudit}
         isReauditing={isAuditing}
+      />
+      
+      {/* Batch Audit Modal */}
+      <BatchAuditModal
+        open={isBatchModalOpen}
+        onOpenChange={setIsBatchModalOpen}
+        isRunning={batchAudit.isRunning}
+        progress={batchAudit.progress}
+        total={batchAudit.total}
+        results={batchAudit.results}
+        onCancel={batchAudit.cancel}
+        onComplete={batchAudit.reset}
       />
     </div>
   );
