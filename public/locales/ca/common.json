@@ -1166,6 +1166,9 @@
     "blog": {
       "overline": "Les nostres publicacions",
       "cta": "Veure tots els articles"
+    },
+    "news": {
+      "overline": "Als mitjans"
     }
   },
   "contact": {
