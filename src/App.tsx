@@ -58,6 +58,7 @@ import AdminResources from "./pages/admin/AdminResources";
 import AdminProposals from "./pages/admin/AdminProposals";
 import AdminProposalTemplates from "./pages/admin/AdminProposalTemplates";
 import AdminCorporatePresentations from "./pages/admin/AdminCorporatePresentations";
+import AdminToolsHub from "./pages/admin/AdminToolsHub";
 import { CompanySetupCalculator } from "./pages/CompanySetupCalculator";
 import { NIEServiceSpain } from "./pages/NIEServiceSpain";
 import { TechStartupSetup } from "./pages/TechStartupSetup";
@@ -214,6 +215,7 @@ const App = () => {
               <Route path="proposals" element={<AdminProposals />} />
               <Route path="proposal-templates" element={<AdminProposalTemplates />} />
               <Route path="presentations" element={<AdminCorporatePresentations />} />
+              <Route path="hub" element={<AdminToolsHub />} />
               <Route
                 path="users"
                 element={
