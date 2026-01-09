@@ -55,6 +55,8 @@ import { AdminCompanySetupLeads } from "./pages/admin/AdminCompanySetupLeads";
 import AdminTechnology from "./pages/admin/AdminTechnology";
 import AdminSitemap from "./pages/admin/AdminSitemap";
 import AdminResources from "./pages/admin/AdminResources";
+import AdminProposals from "./pages/admin/AdminProposals";
+import AdminProposalTemplates from "./pages/admin/AdminProposalTemplates";
 import { CompanySetupCalculator } from "./pages/CompanySetupCalculator";
 import { NIEServiceSpain } from "./pages/NIEServiceSpain";
 import { TechStartupSetup } from "./pages/TechStartupSetup";
@@ -208,6 +210,8 @@ const App = () => {
               <Route path="technology" element={<AdminTechnology />} />
               <Route path="sitemap" element={<AdminSitemap />} />
               <Route path="resources" element={<AdminResources />} />
+              <Route path="proposals" element={<AdminProposals />} />
+              <Route path="proposal-templates" element={<AdminProposalTemplates />} />
               <Route
                 path="users"
                 element={

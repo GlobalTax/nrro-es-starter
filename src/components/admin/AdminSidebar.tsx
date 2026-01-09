@@ -9,6 +9,8 @@ import {
   UserCog,
   FileText,
   Newspaper,
+  Briefcase,
+  FileCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,6 +22,11 @@ const navItems = [
   { path: '/admin/resources', icon: FileText, label: 'Recursos' },
   { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
   { path: '/admin/settings', icon: Settings, label: 'Configuración' },
+];
+
+const comercialItems = [
+  { path: '/admin/proposals', icon: Briefcase, label: 'Propuestas' },
+  { path: '/admin/proposal-templates', icon: FileCheck, label: 'Plantillas' },
 ];
 
 export const AdminSidebar = () => {
@@ -83,6 +90,24 @@ export const AdminSidebar = () => {
                   {pendingDraftsCount}
                 </Badge>
               ) : null}
+            </Button>
+          </Link>
+        ))}
+
+        <Separator className="bg-white/10 my-4" />
+        <p className="text-xs text-white/40 px-3 mb-2">Comercial</p>
+        {comercialItems.map((item) => (
+          <Link key={item.path} to={item.path}>
+            <Button
+              variant="ghost"
+              className={`w-full justify-start ${
+                isActive(item.path)
+                  ? 'bg-white/10 text-white border-l-2 border-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <item.icon className="mr-3 h-4 w-4" />
+              {item.label}
             </Button>
           </Link>
         ))}
