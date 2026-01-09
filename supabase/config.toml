@@ -86,3 +86,6 @@ verify_jwt = false
 
 [functions.audit-page]
 verify_jwt = false
+
+[functions.generate-proposal-pdf]
+verify_jwt = false
