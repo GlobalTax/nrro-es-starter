@@ -1166,6 +1166,9 @@
     "blog": {
       "overline": "Our publications",
       "cta": "View all articles"
+    },
+    "news": {
+      "overline": "In the media"
     }
   },
   "contact": {

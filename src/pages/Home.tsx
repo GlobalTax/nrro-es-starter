@@ -28,6 +28,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
 import { HomeContactForm } from "@/components/home/HomeContactForm";
+import { NewsSection } from "@/components/home/NewsSection";
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
@@ -350,6 +351,9 @@ const Home = () => {
             </Carousel>
           </div>
         </section>
+
+        {/* News Section - Tweet style */}
+        <NewsSection />
 
         {/* Contact Form */}
         <HomeContactForm />
