@@ -11,6 +11,7 @@ import {
   Newspaper,
   Briefcase,
   FileCheck,
+  Presentation,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +28,7 @@ const navItems = [
 const comercialItems = [
   { path: '/admin/proposals', icon: Briefcase, label: 'Propuestas' },
   { path: '/admin/proposal-templates', icon: FileCheck, label: 'Plantillas' },
+  { path: '/admin/presentations', icon: Presentation, label: 'Presentaciones' },
 ];
 
 export const AdminSidebar = () => {
