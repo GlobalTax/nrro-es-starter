@@ -44,12 +44,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = language;
   }, [language]);
 
-  // Show loading state while i18next initializes
+  // Show loading state while i18next initializes, but still provide context
   if (!ready) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
+      <LanguageContext.Provider value={contextValue}>
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </LanguageContext.Provider>
     );
   }
 
