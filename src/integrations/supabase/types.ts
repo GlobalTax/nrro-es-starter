@@ -2528,6 +2528,146 @@ export type Database = {
         }
         Relationships: []
       }
+      proposal_services: {
+        Row: {
+          category: string
+          created_at: string | null
+          default_price: number | null
+          description: string | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          name: string
+          price_type: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          default_price?: number | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          price_type?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          default_price?: number | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          price_type?: string | null
+        }
+        Relationships: []
+      }
+      proposal_templates: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          file_url: string
+          id: string
+          is_active: boolean | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          version: number | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description?: string | null
+          file_url: string
+          id?: string
+          is_active?: boolean | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          version?: number | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          file_url?: string
+          id?: string
+          is_active?: boolean | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          version?: number | null
+        }
+        Relationships: []
+      }
+      proposals: {
+        Row: {
+          client_company: string | null
+          client_email: string | null
+          client_name: string
+          contact_lead_id: string | null
+          created_at: string | null
+          created_by: string | null
+          fees: Json
+          id: string
+          notes: string | null
+          pdf_url: string | null
+          proposal_number: string
+          services: Json
+          status: string | null
+          total_amount: number | null
+          updated_at: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          client_company?: string | null
+          client_email?: string | null
+          client_name: string
+          contact_lead_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          fees?: Json
+          id?: string
+          notes?: string | null
+          pdf_url?: string | null
+          proposal_number: string
+          services?: Json
+          status?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          client_company?: string | null
+          client_email?: string | null
+          client_name?: string
+          contact_lead_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          fees?: Json
+          id?: string
+          notes?: string | null
+          pdf_url?: string | null
+          proposal_number?: string
+          services?: Json
+          status?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposals_contact_lead_id_fkey"
+            columns: ["contact_lead_id"]
+            isOneToOne: false
+            referencedRelation: "contact_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rate_limit_tracking: {
         Row: {
           category: string
