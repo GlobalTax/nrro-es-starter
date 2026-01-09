@@ -12,6 +12,7 @@ import {
   Briefcase,
   FileCheck,
   Presentation,
+  Grid3X3,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +20,7 @@ import { Separator } from '@/components/ui/separator';
 
 const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/admin/hub', icon: Grid3X3, label: 'Hub' },
   { path: '/admin/blog', icon: Newspaper, label: 'Blog', showDraftsBadge: true },
   { path: '/admin/resources', icon: FileText, label: 'Recursos' },
   { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
