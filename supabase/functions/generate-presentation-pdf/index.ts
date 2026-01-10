@@ -580,12 +580,16 @@ Deno.serve(async (req) => {
     const timestamp = Date.now();
     const filename = `presentation_${presentation_id}_${timestamp}.html`;
 
-    // Upload HTML to storage
+    // Upload HTML to storage with proper UTF-8 encoding
+    const encoder = new TextEncoder();
+    const htmlBytes = encoder.encode(html);
+    
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('corporate-presentations')
-      .upload(filename, new Blob([html], { type: 'text/html' }), {
-        contentType: 'text/html',
+      .upload(filename, htmlBytes, {
+        contentType: 'text/html; charset=utf-8',
         upsert: true,
+        cacheControl: '3600',
       });
 
     if (uploadError) {
