@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://*.supabase.co https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' data: blob: https://*.supabase.co wss://*.supabase.co https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com; frame-src 'self' https://*.lovableproject.com https://consentcdn.cookiebot.com; frame-ancestors 'self' https://lovable.dev https://*.lovable.dev; worker-src 'self' blob:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://*.supabase.co https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com https://assets.apollo.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' data: blob: https://*.supabase.co wss://*.supabase.co https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com https://*.apollo.io; frame-src 'self' https://*.lovableproject.com https://consentcdn.cookiebot.com; frame-ancestors 'self' https://lovable.dev https://*.lovable.dev; worker-src 'self' blob:;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -20,6 +20,22 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-R0CN4HCFC5');
+    </script>
+    
+    <!-- Apollo.io Website Tracker (requires marketing consent) -->
+    <script data-cookieconsent="marketing" type="text/plain">
+      function initApollo(){
+        var n=Math.random().toString(36).substring(7),
+            o=document.createElement("script");
+        o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n;
+        o.async=!0;
+        o.defer=!0;
+        o.onload=function(){
+          window.trackingFunctions.onLoad({appId:"663335e26da5c703001459c7"})
+        };
+        document.head.appendChild(o)
+      }
+      initApollo();
     </script>
     
     <!-- Google Fonts: Inter (sans) -->
