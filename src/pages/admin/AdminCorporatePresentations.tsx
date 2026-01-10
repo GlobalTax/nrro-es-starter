@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
@@ -56,11 +55,6 @@ export default function AdminCorporatePresentations() {
   const deleteMutation = useDeleteCorporatePresentation();
   const deleteGeneratedMutation = useDeleteGeneratedPresentation();
   const incrementDownload = useIncrementDownloadCount();
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-
-  const { data: presentations, isLoading } = useCorporatePresentations();
-  const deleteMutation = useDeleteCorporatePresentation();
-  const incrementDownload = useIncrementDownloadCount();
 
   const filteredPresentations = presentations?.filter((p) => {
     const matchesSearch =
@@ -112,18 +106,6 @@ export default function AdminCorporatePresentations() {
 
   const totalPresentations = (presentations?.length || 0) + (generatedPresentations?.length || 0);
   const totalDownloads = presentations?.reduce((sum, p) => sum + p.download_count, 0) || 0;
-    window.open(presentation.file_url, '_blank');
-  };
-
-  const handleDialogClose = (open: boolean) => {
-    setDialogOpen(open);
-    if (!open) {
-      setEditingPresentation(null);
-    }
-  };
-
-  const totalPresentations = presentations?.length || 0;
-  const totalDownloads = presentations?.reduce((sum, p) => sum + p.download_count, 0) || 0;
 
   return (
     <div className="space-y-6">
@@ -147,8 +129,6 @@ export default function AdminCorporatePresentations() {
             Generar presentación
           </Button>
         </div>
-      </div>
-        </Button>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
