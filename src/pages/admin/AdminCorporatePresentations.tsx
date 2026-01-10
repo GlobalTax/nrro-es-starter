@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
   SelectContent,
@@ -19,9 +20,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Plus, Search, Presentation, Download, FileText, Filter } from 'lucide-react';
+import { Plus, Search, Presentation, Download, FileText, Filter, Wand2 } from 'lucide-react';
 import { PresentationCard } from '@/components/admin/presentations/PresentationCard';
 import { PresentationFormDialog } from '@/components/admin/presentations/PresentationFormDialog';
+import { PresentationBuilderDialog } from '@/components/admin/presentations/PresentationBuilderDialog';
+import { GeneratedPresentationCard } from '@/components/admin/presentations/GeneratedPresentationCard';
 import {
   CorporatePresentation,
   useCorporatePresentations,
@@ -31,6 +34,10 @@ import {
   PRESENTATION_LANGUAGES,
   PRESENTATION_FORMATS,
 } from '@/hooks/useCorporatePresentations';
+import {
+  useGeneratedPresentations,
+  useDeleteGeneratedPresentation,
+} from '@/hooks/useGeneratedPresentations';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function AdminCorporatePresentations() {
@@ -39,7 +46,16 @@ export default function AdminCorporatePresentations() {
   const [languageFilter, setLanguageFilter] = useState<string>('all');
   const [formatFilter, setFormatFilter] = useState<string>('all');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [builderOpen, setBuilderOpen] = useState(false);
   const [editingPresentation, setEditingPresentation] = useState<CorporatePresentation | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteGeneratedId, setDeleteGeneratedId] = useState<string | null>(null);
+
+  const { data: presentations, isLoading } = useCorporatePresentations();
+  const { data: generatedPresentations, isLoading: isLoadingGenerated } = useGeneratedPresentations();
+  const deleteMutation = useDeleteCorporatePresentation();
+  const deleteGeneratedMutation = useDeleteGeneratedPresentation();
+  const incrementDownload = useIncrementDownloadCount();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data: presentations, isLoading } = useCorporatePresentations();
@@ -75,8 +91,27 @@ export default function AdminCorporatePresentations() {
     }
   };
 
+  const confirmDeleteGenerated = async () => {
+    if (deleteGeneratedId) {
+      await deleteGeneratedMutation.mutateAsync(deleteGeneratedId);
+      setDeleteGeneratedId(null);
+    }
+  };
+
   const handleDownload = (presentation: CorporatePresentation) => {
     incrementDownload.mutate(presentation.id);
+    window.open(presentation.file_url, '_blank');
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setDialogOpen(open);
+    if (!open) {
+      setEditingPresentation(null);
+    }
+  };
+
+  const totalPresentations = (presentations?.length || 0) + (generatedPresentations?.length || 0);
+  const totalDownloads = presentations?.reduce((sum, p) => sum + p.download_count, 0) || 0;
     window.open(presentation.file_url, '_blank');
   };
 
@@ -99,12 +134,20 @@ export default function AdminCorporatePresentations() {
             Presentaciones Corporativas
           </h1>
           <p className="text-muted-foreground">
-            Gestiona las presentaciones de capabilities para clientes
+            Genera y gestiona presentaciones de capabilities para clientes
           </p>
         </div>
-        <Button onClick={() => setDialogOpen(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Nueva presentación
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setDialogOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Subir PDF
+          </Button>
+          <Button onClick={() => setBuilderOpen(true)}>
+            <Wand2 className="h-4 w-4 mr-2" />
+            Generar presentación
+          </Button>
+        </div>
+      </div>
         </Button>
       </div>
 
@@ -179,46 +222,92 @@ export default function AdminCorporatePresentations() {
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="aspect-video w-full" />
-              <Skeleton className="h-4 w-3/4" />
-              <Skeleton className="h-3 w-1/2" />
+      <Tabs defaultValue="generated" className="w-full">
+        <TabsList>
+          <TabsTrigger value="generated">Generadas ({generatedPresentations?.length || 0})</TabsTrigger>
+          <TabsTrigger value="uploaded">Subidas ({presentations?.length || 0})</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="generated" className="mt-4">
+          {isLoadingGenerated ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <Skeleton key={i} className="h-48 w-full" />
+              ))}
             </div>
-          ))}
-        </div>
-      ) : filteredPresentations?.length === 0 ? (
-        <div className="text-center py-12 bg-muted/30 rounded-lg">
-          <Presentation className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
-          <h3 className="font-medium text-foreground mb-1">No hay presentaciones</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Sube tu primera presentación corporativa
-          </p>
-          <Button onClick={() => setDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Subir presentación
-          </Button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredPresentations?.map((presentation) => (
-            <PresentationCard
-              key={presentation.id}
-              presentation={presentation}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onDownload={handleDownload}
-            />
-          ))}
-        </div>
-      )}
+          ) : generatedPresentations?.length === 0 ? (
+            <div className="text-center py-12 bg-muted/30 rounded-lg">
+              <Wand2 className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+              <h3 className="font-medium text-foreground mb-1">No hay presentaciones generadas</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Genera tu primera presentación personalizada
+              </p>
+              <Button onClick={() => setBuilderOpen(true)}>
+                <Wand2 className="h-4 w-4 mr-2" />
+                Generar presentación
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {generatedPresentations?.map((presentation) => (
+                <GeneratedPresentationCard
+                  key={presentation.id}
+                  presentation={presentation}
+                  onDelete={setDeleteGeneratedId}
+                />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="uploaded" className="mt-4">
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="space-y-3">
+                  <Skeleton className="aspect-video w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : filteredPresentations?.length === 0 ? (
+            <div className="text-center py-12 bg-muted/30 rounded-lg">
+              <Presentation className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+              <h3 className="font-medium text-foreground mb-1">No hay presentaciones subidas</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Sube tu primera presentación corporativa
+              </p>
+              <Button onClick={() => setDialogOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Subir presentación
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {filteredPresentations?.map((presentation) => (
+                <PresentationCard
+                  key={presentation.id}
+                  presentation={presentation}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onDownload={handleDownload}
+                />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
 
       <PresentationFormDialog
         open={dialogOpen}
         onOpenChange={handleDialogClose}
         presentation={editingPresentation}
+      />
+
+      <PresentationBuilderDialog
+        open={builderOpen}
+        onOpenChange={setBuilderOpen}
       />
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
@@ -233,6 +322,26 @@ export default function AdminCorporatePresentations() {
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!deleteGeneratedId} onOpenChange={() => setDeleteGeneratedId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar presentación generada?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDeleteGenerated}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               Eliminar

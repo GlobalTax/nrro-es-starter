@@ -1257,6 +1257,63 @@ export type Database = {
           },
         ]
       }
+      generated_presentations: {
+        Row: {
+          case_studies_included: Json | null
+          client_company: string | null
+          client_name: string
+          created_at: string
+          custom_intro: string | null
+          format: string
+          generated_by: string | null
+          id: string
+          include_stats: boolean | null
+          language: string
+          pdf_url: string | null
+          sector: string | null
+          services_included: Json | null
+          status: string
+          team_members_included: Json | null
+          updated_at: string
+        }
+        Insert: {
+          case_studies_included?: Json | null
+          client_company?: string | null
+          client_name: string
+          created_at?: string
+          custom_intro?: string | null
+          format?: string
+          generated_by?: string | null
+          id?: string
+          include_stats?: boolean | null
+          language?: string
+          pdf_url?: string | null
+          sector?: string | null
+          services_included?: Json | null
+          status?: string
+          team_members_included?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          case_studies_included?: Json | null
+          client_company?: string | null
+          client_name?: string
+          created_at?: string
+          custom_intro?: string | null
+          format?: string
+          generated_by?: string | null
+          id?: string
+          include_stats?: boolean | null
+          language?: string
+          pdf_url?: string | null
+          sector?: string | null
+          services_included?: Json | null
+          status?: string
+          team_members_included?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       internal_tools: {
         Row: {
           category: string | null
