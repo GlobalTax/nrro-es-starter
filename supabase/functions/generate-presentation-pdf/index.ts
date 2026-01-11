@@ -39,6 +39,13 @@ interface CaseStudySummary {
   testimonial_position?: string;
 }
 
+interface Differentiator {
+  title: string;
+  description: string;
+  proof: string;
+  impact: string;
+}
+
 interface GeneratedPresentation {
   id: string;
   client_name: string;
@@ -60,6 +67,14 @@ interface GeneratedPresentation {
   show_team_bio: boolean;
   show_case_metrics: boolean;
   show_testimonials: boolean;
+  // Nuevos campos de módulos narrativos
+  presentation_type: string;
+  audience_type: string;
+  presentation_objective: string;
+  quality_mode: string;
+  cover_tagline: string | null;
+  cta_type: string;
+  differentiators: Differentiator[];
 }
 
 // Logo SVG de navarro tax & legal (blanco)
@@ -104,6 +119,234 @@ const NAVARRO_LOGO_BLACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
   <rect class="cls-1" x="105.55" y="117.38" width="3.2" height="23.72"/>
 </svg>`;
 
+// ============ MÓDULOS NARRATIVOS INTELIGENTES ============
+
+// M1 - Cover taglines adaptativos según tipo y audiencia
+const COVER_TAGLINES = {
+  es: {
+    corporate: {
+      family_business: 'Asesoramiento legal, fiscal y corporativo\npara empresas que toman decisiones relevantes',
+      investor: 'Asesoramiento especializado\npara inversores y fondos de capital',
+      foreigner: 'Tu socio fiscal y legal\npara operar en España con confianza',
+      startup: 'Estructura legal y fiscal\npara startups con visión de crecimiento',
+    },
+    ma: {
+      family_business: 'Acompañamiento integral\nen la venta o compra de tu empresa',
+      investor: 'Due diligence y estructuración\nde operaciones de inversión',
+      foreigner: 'Asesores en operaciones\nde M&A cross-border',
+      startup: 'Rondas de financiación\ny exit strategy',
+    },
+    inbound: {
+      family_business: 'Descubre cómo podemos ayudarte\na proteger y hacer crecer tu empresa',
+      investor: 'Maximiza el retorno\nde tus inversiones',
+      foreigner: 'Tu entrada a España\ncon seguridad jurídica',
+      startup: 'Del MVP al scale-up\ncon base legal sólida',
+    },
+    pe: {
+      family_business: 'Preparación para inversión\ny gobierno corporativo',
+      investor: 'Estructuración fiscal\ny legal de fondos',
+      foreigner: 'Inversión en España\noptimizada fiscalmente',
+      startup: 'Estructura lista para VC\ny crecimiento',
+    },
+    fiscal: {
+      family_business: 'Planificación fiscal estratégica\npara tu empresa familiar',
+      investor: 'Optimización fiscal\nde carteras de inversión',
+      foreigner: 'Fiscalidad española\npara no residentes',
+      startup: 'Fiscalidad para startups\ny stock options',
+    },
+  },
+  en: {
+    corporate: {
+      family_business: 'Legal, tax and corporate advisory\nfor companies making key decisions',
+      investor: 'Specialized advisory\nfor investors and capital funds',
+      foreigner: 'Your tax and legal partner\nto operate in Spain with confidence',
+      startup: 'Legal and tax structure\nfor growth-oriented startups',
+    },
+    ma: {
+      family_business: 'Comprehensive support\nin buying or selling your company',
+      investor: 'Due diligence and deal structuring\nfor investment operations',
+      foreigner: 'Advisors in cross-border\nM&A transactions',
+      startup: 'Funding rounds\nand exit strategy',
+    },
+    inbound: {
+      family_business: 'Discover how we can help\nprotect and grow your business',
+      investor: 'Maximize your\ninvestment returns',
+      foreigner: 'Your entry to Spain\nwith legal certainty',
+      startup: 'From MVP to scale-up\nwith solid legal foundation',
+    },
+    pe: {
+      family_business: 'Investment readiness\nand corporate governance',
+      investor: 'Tax and legal\nfund structuring',
+      foreigner: 'Tax-optimized investment\nin Spain',
+      startup: 'VC-ready structure\nand growth',
+    },
+    fiscal: {
+      family_business: 'Strategic tax planning\nfor your family business',
+      investor: 'Tax optimization\nfor investment portfolios',
+      foreigner: 'Spanish taxation\nfor non-residents',
+      startup: 'Startup taxation\nand stock options',
+    },
+  },
+  ca: {
+    corporate: {
+      family_business: 'Assessorament legal, fiscal i corporatiu\nper a empreses que prenen decisions rellevants',
+      investor: 'Assessorament especialitzat\nper a inversors i fons de capital',
+      foreigner: 'El teu soci fiscal i legal\nper operar a Espanya amb confiança',
+      startup: 'Estructura legal i fiscal\nper a startups amb visió de creixement',
+    },
+    ma: {
+      family_business: 'Acompanyament integral\nen la venda o compra de la teva empresa',
+      investor: 'Due diligence i estructuració\nd\'operacions d\'inversió',
+      foreigner: 'Assessors en operacions\nde M&A cross-border',
+      startup: 'Rondes de finançament\ni exit strategy',
+    },
+    inbound: {
+      family_business: 'Descobreix com podem ajudar-te\na protegir i fer créixer la teva empresa',
+      investor: 'Maximitza el retorn\nde les teves inversions',
+      foreigner: 'La teva entrada a Espanya\namb seguretat jurídica',
+      startup: 'Del MVP al scale-up\namb base legal sòlida',
+    },
+    pe: {
+      family_business: 'Preparació per a inversió\ni govern corporatiu',
+      investor: 'Estructuració fiscal\ni legal de fons',
+      foreigner: 'Inversió a Espanya\noptimitzada fiscalment',
+      startup: 'Estructura llesta per a VC\ni creixement',
+    },
+    fiscal: {
+      family_business: 'Planificació fiscal estratègica\nper a la teva empresa familiar',
+      investor: 'Optimització fiscal\nde carteres d\'inversió',
+      foreigner: 'Fiscalitat espanyola\nper a no residents',
+      startup: 'Fiscalitat per a startups\ni stock options',
+    },
+  },
+};
+
+// M3 - Diferenciadores con prueba
+const DIFFERENTIATORS = {
+  es: [
+    { 
+      title: 'Especialización en empresa familiar', 
+      description: 'Protocolos, sucesiones, conflictos y gobierno corporativo',
+      proof: 'Más de 50 protocolos familiares firmados',
+      impact: 'Continuidad y reducción de conflictos'
+    },
+    { 
+      title: 'Equipo multidisciplinar', 
+      description: 'Fiscal, legal, contable y laboral bajo un mismo techo',
+      proof: '70+ profesionales especializados',
+      impact: 'Visión 360° sin silos'
+    },
+    { 
+      title: 'Experiencia en M&A', 
+      description: 'Due diligence, valoración, negociación y cierre',
+      proof: '200+ operaciones cerradas',
+      impact: 'Transacciones exitosas'
+    },
+    { 
+      title: 'Acompañamiento continuo', 
+      description: 'Relaciones a largo plazo, no proyectos puntuales',
+      proof: '15 años de media con nuestros clientes',
+      impact: 'Conocemos tu negocio'
+    },
+  ],
+  en: [
+    { 
+      title: 'Family business specialization', 
+      description: 'Protocols, succession, conflicts and corporate governance',
+      proof: 'More than 50 family protocols signed',
+      impact: 'Continuity and conflict reduction'
+    },
+    { 
+      title: 'Multidisciplinary team', 
+      description: 'Tax, legal, accounting and labor under one roof',
+      proof: '70+ specialized professionals',
+      impact: '360° vision without silos'
+    },
+    { 
+      title: 'M&A experience', 
+      description: 'Due diligence, valuation, negotiation and closing',
+      proof: '200+ transactions closed',
+      impact: 'Successful transactions'
+    },
+    { 
+      title: 'Continuous support', 
+      description: 'Long-term relationships, not one-off projects',
+      proof: '15 years average with our clients',
+      impact: 'We know your business'
+    },
+  ],
+  ca: [
+    { 
+      title: 'Especialització en empresa familiar', 
+      description: 'Protocols, successions, conflictes i govern corporatiu',
+      proof: 'Més de 50 protocols familiars signats',
+      impact: 'Continuïtat i reducció de conflictes'
+    },
+    { 
+      title: 'Equip multidisciplinari', 
+      description: 'Fiscal, legal, comptable i laboral sota un mateix sostre',
+      proof: '70+ professionals especialitzats',
+      impact: 'Visió 360° sense silos'
+    },
+    { 
+      title: 'Experiència en M&A', 
+      description: 'Due diligence, valoració, negociació i tancament',
+      proof: '200+ operacions tancades',
+      impact: 'Transaccions reeixides'
+    },
+    { 
+      title: 'Acompanyament continu', 
+      description: 'Relacions a llarg termini, no projectes puntuals',
+      proof: '15 anys de mitjana amb els nostres clients',
+      impact: 'Coneixem el teu negoci'
+    },
+  ],
+};
+
+// M4 - Servicios agrupados por momentos empresariales
+const SERVICE_MOMENTS = {
+  es: {
+    growth: { title: 'Crecimiento y estructura', icon: '📈', services: ['fiscal', 'mercantil', 'contable', 'laboral'] },
+    conflicts: { title: 'Conflictos y reorganización', icon: '⚖️', services: ['conflicto-socios', 'procesal', 'procedimiento-tributario'] },
+    transaction: { title: 'Venta, compra o sucesión', icon: '🤝', services: ['compraventa-empresas', 'empresa-familiar', 'herencias', 'valoracion'] },
+    international: { title: 'Internacionalización', icon: '🌍', services: ['internacionalizacion', 'capital-riesgo'] },
+  },
+  en: {
+    growth: { title: 'Growth and structure', icon: '📈', services: ['fiscal', 'mercantil', 'contable', 'laboral'] },
+    conflicts: { title: 'Conflicts and reorganization', icon: '⚖️', services: ['conflicto-socios', 'procesal', 'procedimiento-tributario'] },
+    transaction: { title: 'Sale, purchase or succession', icon: '🤝', services: ['compraventa-empresas', 'empresa-familiar', 'herencias', 'valoracion'] },
+    international: { title: 'Internationalization', icon: '🌍', services: ['internacionalizacion', 'capital-riesgo'] },
+  },
+  ca: {
+    growth: { title: 'Creixement i estructura', icon: '📈', services: ['fiscal', 'mercantil', 'contable', 'laboral'] },
+    conflicts: { title: 'Conflictes i reorganització', icon: '⚖️', services: ['conflicto-socios', 'procesal', 'procedimiento-tributario'] },
+    transaction: { title: 'Venda, compra o successió', icon: '🤝', services: ['compraventa-empresas', 'empresa-familiar', 'herencias', 'valoracion'] },
+    international: { title: 'Internacionalització', icon: '🌍', services: ['internacionalizacion', 'capital-riesgo'] },
+  },
+};
+
+// M8 - CTAs adaptativos
+const CTA_TYPES = {
+  es: {
+    strategic_conversation: { title: 'Primera conversación estratégica', subtitle: 'Sin compromiso. Analizamos tu situación.' },
+    initial_diagnosis: { title: 'Diagnóstico inicial', subtitle: 'Identificamos áreas de mejora y riesgos.' },
+    preliminary_valuation: { title: 'Valoración preliminar', subtitle: 'Estimación de valor para tomar decisiones.' },
+    structure_review: { title: 'Revisión de estructura', subtitle: 'Optimiza tu organización societaria y fiscal.' },
+  },
+  en: {
+    strategic_conversation: { title: 'First strategic conversation', subtitle: 'No commitment. We analyze your situation.' },
+    initial_diagnosis: { title: 'Initial diagnosis', subtitle: 'We identify areas for improvement and risks.' },
+    preliminary_valuation: { title: 'Preliminary valuation', subtitle: 'Value estimate for decision making.' },
+    structure_review: { title: 'Structure review', subtitle: 'Optimize your corporate and tax structure.' },
+  },
+  ca: {
+    strategic_conversation: { title: 'Primera conversa estratègica', subtitle: 'Sense compromís. Analitzem la teva situació.' },
+    initial_diagnosis: { title: 'Diagnòstic inicial', subtitle: 'Identifiquem àrees de millora i riscos.' },
+    preliminary_valuation: { title: 'Valoració preliminar', subtitle: 'Estimació de valor per prendre decisions.' },
+    structure_review: { title: 'Revisió d\'estructura', subtitle: 'Optimitza la teva organització societària i fiscal.' },
+  },
+};
+
 // Traducciones completas
 const TRANSLATIONS = {
   es: {
@@ -113,9 +356,11 @@ const TRANSLATIONS = {
     services: 'Servicios',
     team: 'Equipo',
     caseStudies: 'Casos de Éxito',
-    aboutUs: 'Sobre Navarro',
-    aboutText: 'En navarro ofrecemos asesoramiento legal, fiscal y estratégico especializado en empresas familiares y estructuras empresariales consolidadas. Acompañamos a nuestros clientes en cada etapa de su crecimiento, desde la planificación fiscal hasta las operaciones de M&A más complejas.',
+    aboutUs: 'Quiénes Somos',
+    aboutText: 'Ayudamos a empresas familiares, grupos y empresarios cuando el problema ya no es contable, sino estratégico, societario o patrimonial.',
+    aboutTextExtended: 'Combinamos experiencia fiscal, legal y corporativa para ofrecer soluciones integrales. No solo resolvemos problemas: anticipamos, planificamos y acompañamos.',
     whyNavarro: 'Por qué Navarro',
+    differentiators: 'Diferenciadores',
     methodology: 'Cómo Trabajamos',
     contact: 'Contacto',
     phone: '+34 934 593 600',
@@ -123,12 +368,14 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15',
+      years: '15+',
       yearsLabel: 'años de experiencia',
-      clients: '300',
+      clients: '300+',
       clientsLabel: 'clientes asesorados',
       team: '70+',
       teamLabel: 'profesionales',
+      operations: '200+',
+      operationsLabel: 'operaciones M&A',
     },
     valueProps: [
       { title: 'Especialización', desc: 'Enfoque exclusivo en empresa familiar y estructuras consolidadas' },
@@ -137,10 +384,11 @@ const TRANSLATIONS = {
       { title: 'Acompañamiento', desc: 'Relaciones a largo plazo, no proyectos puntuales' },
     ],
     methodologySteps: [
-      { num: '01', title: 'Diagnóstico', desc: 'Análisis profundo de tu situación actual y objetivos' },
-      { num: '02', title: 'Estrategia', desc: 'Diseño de solución personalizada con tu equipo' },
-      { num: '03', title: 'Implementación', desc: 'Ejecución coordinada por expertos multidisciplinares' },
-      { num: '04', title: 'Seguimiento', desc: 'Acompañamiento continuo y revisiones periódicas' },
+      { num: '01', title: 'Análisis', desc: 'Escucha activa y recopilación de información clave' },
+      { num: '02', title: 'Diagnóstico', desc: 'Identificación de riesgos, oportunidades y prioridades' },
+      { num: '03', title: 'Estrategia', desc: 'Diseño de solución personalizada con tu equipo' },
+      { num: '04', title: 'Ejecución', desc: 'Implementación coordinada por expertos multidisciplinares' },
+      { num: '05', title: 'Seguimiento', desc: 'Acompañamiento continuo y revisiones periódicas' },
     ],
     ctaText: '¿Hablamos?',
     ctaSubtext: 'Estamos a tu disposición para resolver cualquier consulta',
@@ -150,6 +398,11 @@ const TRANSLATIONS = {
     features: 'Características',
     benefits: 'Beneficios',
     typicalClients: 'Clientes típicos',
+    experienceFallback: 'Experiencia acumulada en múltiples operaciones bajo estricta confidencialidad. Más de 200 transacciones y reestructuraciones completadas con éxito.',
+    teamAggregate: 'Equipo senior especializado, apoyado por un grupo de más de 70 profesionales en las áreas clave.',
+    whatWeDo: 'Qué hacemos',
+    proof: 'Prueba',
+    impact: 'Impacto',
   },
   en: {
     title: 'Corporate Presentation',
@@ -158,9 +411,11 @@ const TRANSLATIONS = {
     services: 'Services',
     team: 'Team',
     caseStudies: 'Success Stories',
-    aboutUs: 'About Navarro',
-    aboutText: 'At navarro we provide specialized legal, tax and strategic advisory services for family businesses and consolidated corporate structures. We accompany our clients at every stage of their growth, from tax planning to the most complex M&A operations.',
+    aboutUs: 'Who We Are',
+    aboutText: 'We help family businesses, groups and entrepreneurs when the problem is no longer accounting, but strategic, corporate or patrimonial.',
+    aboutTextExtended: 'We combine tax, legal and corporate experience to offer comprehensive solutions. We don\'t just solve problems: we anticipate, plan and accompany.',
     whyNavarro: 'Why Navarro',
+    differentiators: 'Differentiators',
     methodology: 'How We Work',
     contact: 'Contact',
     phone: '+34 934 593 600',
@@ -168,12 +423,14 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15',
+      years: '15+',
       yearsLabel: 'years of experience',
-      clients: '300',
+      clients: '300+',
       clientsLabel: 'clients advised',
       team: '70+',
       teamLabel: 'professionals',
+      operations: '200+',
+      operationsLabel: 'M&A operations',
     },
     valueProps: [
       { title: 'Specialization', desc: 'Exclusive focus on family business and consolidated structures' },
@@ -182,10 +439,11 @@ const TRANSLATIONS = {
       { title: 'Partnership', desc: 'Long-term relationships, not one-off projects' },
     ],
     methodologySteps: [
-      { num: '01', title: 'Diagnosis', desc: 'Deep analysis of your current situation and goals' },
-      { num: '02', title: 'Strategy', desc: 'Custom solution design with your team' },
-      { num: '03', title: 'Implementation', desc: 'Coordinated execution by multidisciplinary experts' },
-      { num: '04', title: 'Follow-up', desc: 'Continuous support and periodic reviews' },
+      { num: '01', title: 'Analysis', desc: 'Active listening and key information gathering' },
+      { num: '02', title: 'Diagnosis', desc: 'Identification of risks, opportunities and priorities' },
+      { num: '03', title: 'Strategy', desc: 'Custom solution design with your team' },
+      { num: '04', title: 'Execution', desc: 'Coordinated implementation by multidisciplinary experts' },
+      { num: '05', title: 'Follow-up', desc: 'Continuous support and periodic reviews' },
     ],
     ctaText: 'Let\'s talk',
     ctaSubtext: 'We are at your disposal to answer any questions',
@@ -195,6 +453,11 @@ const TRANSLATIONS = {
     features: 'Features',
     benefits: 'Benefits',
     typicalClients: 'Typical Clients',
+    experienceFallback: 'Accumulated experience in multiple operations under strict confidentiality. Over 200 transactions and restructurings successfully completed.',
+    teamAggregate: 'Senior specialized team, supported by a group of over 70 professionals in key areas.',
+    whatWeDo: 'What we do',
+    proof: 'Proof',
+    impact: 'Impact',
   },
   ca: {
     title: 'Presentació Corporativa',
@@ -203,9 +466,11 @@ const TRANSLATIONS = {
     services: 'Serveis',
     team: 'Equip',
     caseStudies: 'Casos d\'Èxit',
-    aboutUs: 'Sobre Navarro',
-    aboutText: 'A navarro oferim assessorament legal, fiscal i estratègic especialitzat en empreses familiars i estructures empresarials consolidades. Acompanyem els nostres clients en cada etapa del seu creixement, des de la planificació fiscal fins a les operacions de M&A més complexes.',
+    aboutUs: 'Qui Som',
+    aboutText: 'Ajudem empreses familiars, grups i empresaris quan el problema ja no és comptable, sinó estratègic, societari o patrimonial.',
+    aboutTextExtended: 'Combinem experiència fiscal, legal i corporativa per oferir solucions integrals. No només resolem problemes: anticipem, planifiquem i acompanyem.',
     whyNavarro: 'Per què Navarro',
+    differentiators: 'Diferenciadors',
     methodology: 'Com Treballem',
     contact: 'Contacte',
     phone: '+34 934 593 600',
@@ -213,12 +478,14 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15',
+      years: '15+',
       yearsLabel: 'anys d\'experiència',
-      clients: '300',
+      clients: '300+',
       clientsLabel: 'clients assessorats',
       team: '70+',
       teamLabel: 'professionals',
+      operations: '200+',
+      operationsLabel: 'operacions M&A',
     },
     valueProps: [
       { title: 'Especialització', desc: 'Enfocament exclusiu en empresa familiar i estructures consolidades' },
@@ -227,10 +494,11 @@ const TRANSLATIONS = {
       { title: 'Acompanyament', desc: 'Relacions a llarg termini, no projectes puntuals' },
     ],
     methodologySteps: [
-      { num: '01', title: 'Diagnòstic', desc: 'Anàlisi profunda de la teva situació actual i objectius' },
-      { num: '02', title: 'Estratègia', desc: 'Disseny de solució personalitzada amb el teu equip' },
-      { num: '03', title: 'Implementació', desc: 'Execució coordinada per experts multidisciplinaris' },
-      { num: '04', title: 'Seguiment', desc: 'Acompanyament continu i revisions periòdiques' },
+      { num: '01', title: 'Anàlisi', desc: 'Escolta activa i recopilació d\'informació clau' },
+      { num: '02', title: 'Diagnòstic', desc: 'Identificació de riscos, oportunitats i prioritats' },
+      { num: '03', title: 'Estratègia', desc: 'Disseny de solució personalitzada amb el teu equip' },
+      { num: '04', title: 'Execució', desc: 'Implementació coordinada per experts multidisciplinaris' },
+      { num: '05', title: 'Seguiment', desc: 'Acompanyament continu i revisions periòdiques' },
     ],
     ctaText: 'Parlem?',
     ctaSubtext: 'Estem a la teva disposició per resoldre qualsevol consulta',
@@ -240,18 +508,58 @@ const TRANSLATIONS = {
     features: 'Característiques',
     benefits: 'Beneficis',
     typicalClients: 'Clients típics',
+    experienceFallback: 'Experiència acumulada en múltiples operacions sota estricta confidencialitat. Més de 200 transaccions i reestructuracions completades amb èxit.',
+    teamAggregate: 'Equip senior especialitzat, recolzat per un grup de més de 70 professionals en les àrees clau.',
+    whatWeDo: 'Què fem',
+    proof: 'Prova',
+    impact: 'Impacte',
   },
 };
 
+// Helper para obtener cover tagline
+function getCoverTagline(presentation: GeneratedPresentation, lang: string): string {
+  const type = presentation.presentation_type || 'corporate';
+  const audience = presentation.audience_type || 'family_business';
+  
+  // Si hay un tagline personalizado, usarlo
+  if (presentation.cover_tagline) {
+    return presentation.cover_tagline;
+  }
+  
+  const taglines = COVER_TAGLINES[lang as keyof typeof COVER_TAGLINES] || COVER_TAGLINES.es;
+  const typeTaglines = taglines[type as keyof typeof taglines] || taglines.corporate;
+  return typeTaglines[audience as keyof typeof typeTaglines] || typeTaglines.family_business;
+}
+
+// Helper para obtener CTA
+function getCTA(presentation: GeneratedPresentation, lang: string) {
+  const ctaType = presentation.cta_type || 'strategic_conversation';
+  const ctas = CTA_TYPES[lang as keyof typeof CTA_TYPES] || CTA_TYPES.es;
+  return ctas[ctaType as keyof typeof ctas] || ctas.strategic_conversation;
+}
+
+// Helper para obtener diferenciadores
+function getDifferentiators(presentation: GeneratedPresentation, lang: string) {
+  // Si hay diferenciadores personalizados, usarlos
+  if (presentation.differentiators && presentation.differentiators.length > 0) {
+    return presentation.differentiators;
+  }
+  return DIFFERENTIATORS[lang as keyof typeof DIFFERENTIATORS] || DIFFERENTIATORS.es;
+}
+
 function generateHTML(presentation: GeneratedPresentation): string {
-  const t = TRANSLATIONS[presentation.language as keyof typeof TRANSLATIONS] || TRANSLATIONS.es;
+  const lang = presentation.language as keyof typeof TRANSLATIONS;
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.es;
   const isHorizontal = presentation.format === 'horizontal';
+  const qualityMode = presentation.quality_mode || 'professional';
   
   const pageWidth = isHorizontal ? '1920px' : '210mm';
   const pageHeight = isHorizontal ? '1080px' : '297mm';
   
-  // Calcular número de páginas dinámicamente
-  let pageNumber = 1;
+  // Obtener contenido de módulos narrativos
+  const coverTagline = getCoverTagline(presentation, presentation.language);
+  const cta = getCTA(presentation, presentation.language);
+  const differentiators = getDifferentiators(presentation, presentation.language);
   
   // Paginar servicios (máx 4 por página en A4, 6 en horizontal)
   const SERVICES_PER_PAGE = isHorizontal ? 6 : 4;
@@ -260,12 +568,9 @@ function generateHTML(presentation: GeneratedPresentation): string {
     servicePages.push(presentation.services_included.slice(i, i + SERVICES_PER_PAGE));
   }
   
-  // Paginar equipo (máx 4 por página en A4, 8 en horizontal)
-  const TEAM_PER_PAGE = isHorizontal ? 8 : 4;
-  const teamPages: TeamMemberSummary[][] = [];
-  for (let i = 0; i < presentation.team_members_included.length; i += TEAM_PER_PAGE) {
-    teamPages.push(presentation.team_members_included.slice(i, i + TEAM_PER_PAGE));
-  }
+  // Equipo: core (máx 4) + agregado
+  const coreTeam = presentation.team_members_included.slice(0, 4);
+  const hasMoreTeam = presentation.team_members_included.length > 4;
 
   return `
 <!DOCTYPE html>
@@ -348,7 +653,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
       page-break-after: avoid;
     }
     
-    /* ========== PORTADA ========== */
+    /* ========== PORTADA ESTRATÉGICA (M1) ========== */
     .cover {
       display: flex;
       flex-direction: column;
@@ -381,38 +686,41 @@ function generateHTML(presentation: GeneratedPresentation): string {
       margin-bottom: ${isHorizontal ? '50px' : '35px'};
     }
     
-    .cover h1 {
-      font-size: ${isHorizontal ? '64px' : '42px'};
+    .cover-tagline {
+      font-size: ${isHorizontal ? '48px' : '32px'};
       font-weight: 400;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
       letter-spacing: -0.03em;
+      line-height: 1.3;
+      white-space: pre-line;
+      max-width: 800px;
     }
     
     .cover .prepared-for {
-      font-size: ${isHorizontal ? '16px' : '12px'};
+      font-size: ${isHorizontal ? '14px' : '11px'};
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      opacity: 0.6;
-      margin-bottom: 10px;
+      opacity: 0.5;
+      margin-bottom: 8px;
     }
     
     .cover .client-name {
-      font-size: ${isHorizontal ? '32px' : '24px'};
+      font-size: ${isHorizontal ? '28px' : '20px'};
       font-weight: 500;
       color: var(--white);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     
     .cover .client-company {
-      font-size: ${isHorizontal ? '22px' : '16px'};
+      font-size: ${isHorizontal ? '20px' : '15px'};
       opacity: 0.7;
     }
     
     .cover .date {
       position: absolute;
       bottom: 50px;
-      font-size: 13px;
-      opacity: 0.5;
+      font-size: 12px;
+      opacity: 0.4;
       letter-spacing: 0.1em;
     }
     
@@ -488,7 +796,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
       font-weight: 500;
     }
     
-    /* ========== SOBRE NOSOTROS ========== */
+    /* ========== QUIÉNES SOMOS (M2) ========== */
     .about-content {
       display: grid;
       grid-template-columns: ${isHorizontal ? '1fr 1fr' : '1fr'};
@@ -497,9 +805,16 @@ function generateHTML(presentation: GeneratedPresentation): string {
     }
     
     .about-text {
-      font-size: ${isHorizontal ? '20px' : '15px'};
+      font-size: ${isHorizontal ? '22px' : '16px'};
       line-height: 1.8;
       color: var(--foreground);
+    }
+    
+    .about-text-extended {
+      margin-top: 20px;
+      font-size: ${isHorizontal ? '18px' : '14px'};
+      color: var(--neutral-800);
+      opacity: 0.85;
     }
     
     .about-text .custom-intro {
@@ -509,54 +824,55 @@ function generateHTML(presentation: GeneratedPresentation): string {
       border-left: 3px solid var(--accent);
       font-style: italic;
       color: var(--neutral-800);
+      font-size: ${isHorizontal ? '18px' : '14px'};
     }
     
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: ${isHorizontal ? '24px' : '10px'};
+      grid-template-columns: repeat(2, 1fr);
+      gap: ${isHorizontal ? '20px' : '10px'};
       width: 100%;
     }
     
     .stat-item {
       text-align: center;
-      padding: ${isHorizontal ? '32px 20px' : '16px 8px'};
+      padding: ${isHorizontal ? '28px 16px' : '16px 8px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
     }
     
     .stat-value {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '48px' : '28px'};
+      font-size: ${isHorizontal ? '42px' : '26px'};
       font-weight: 500;
       color: var(--accent);
       line-height: 1;
     }
     
     .stat-label {
-      font-size: ${isHorizontal ? '12px' : '9px'};
+      font-size: ${isHorizontal ? '11px' : '9px'};
       color: var(--muted);
       margin-top: 6px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
     
-    /* ========== PROPUESTA DE VALOR ========== */
-    .value-props-grid {
+    /* ========== DIFERENCIADORES (M3) ========== */
+    .diff-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: ${isHorizontal ? '32px' : '16px'};
-      margin-top: ${isHorizontal ? '40px' : '24px'};
+      gap: ${isHorizontal ? '24px' : '14px'};
+      margin-top: ${isHorizontal ? '30px' : '18px'};
     }
     
-    .value-prop-card {
-      padding: ${isHorizontal ? '40px 32px' : '20px 16px'};
+    .diff-card {
+      padding: ${isHorizontal ? '32px 24px' : '18px 14px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
       position: relative;
     }
     
-    .value-prop-card::before {
+    .diff-card::before {
       content: '';
       position: absolute;
       top: 0;
@@ -566,31 +882,56 @@ function generateHTML(presentation: GeneratedPresentation): string {
       background: var(--accent);
     }
     
-    .value-prop-title {
+    .diff-title {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '22px' : '15px'};
+      font-size: ${isHorizontal ? '20px' : '14px'};
       font-weight: 500;
       color: var(--foreground);
       margin-bottom: 8px;
     }
     
-    .value-prop-desc {
-      font-size: ${isHorizontal ? '16px' : '12px'};
+    .diff-desc {
+      font-size: ${isHorizontal ? '14px' : '11px'};
       color: var(--muted);
-      line-height: 1.5;
+      margin-bottom: 12px;
     }
     
-    /* ========== METODOLOGÍA ========== */
+    .diff-proof {
+      display: flex;
+      gap: 16px;
+      font-size: ${isHorizontal ? '12px' : '10px'};
+      padding-top: 12px;
+      border-top: 1px dashed var(--neutral-200);
+    }
+    
+    .diff-proof-item {
+      flex: 1;
+    }
+    
+    .diff-proof-label {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      font-size: ${isHorizontal ? '10px' : '8px'};
+      margin-bottom: 4px;
+    }
+    
+    .diff-proof-value {
+      color: var(--neutral-800);
+    }
+    
+    /* ========== METODOLOGÍA (M5) ========== */
     .methodology-grid {
       display: grid;
-      grid-template-columns: repeat(${isHorizontal ? '4' : '2'}, 1fr);
-      gap: ${isHorizontal ? '24px' : '14px'};
+      grid-template-columns: repeat(${isHorizontal ? '5' : '2'}, 1fr);
+      gap: ${isHorizontal ? '16px' : '12px'};
       margin-top: ${isHorizontal ? '40px' : '24px'};
     }
     
     .methodology-step {
       text-align: center;
-      padding: ${isHorizontal ? '40px 24px' : '20px 12px'};
+      padding: ${isHorizontal ? '32px 16px' : '18px 10px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
       position: relative;
@@ -598,28 +939,28 @@ function generateHTML(presentation: GeneratedPresentation): string {
     
     .methodology-number {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '56px' : '36px'};
+      font-size: ${isHorizontal ? '48px' : '32px'};
       font-weight: 600;
       color: var(--accent);
-      opacity: 0.3;
+      opacity: 0.25;
       line-height: 1;
-      margin-bottom: 12px;
-    }
-    
-    .methodology-title {
-      font-size: ${isHorizontal ? '20px' : '14px'};
-      font-weight: 500;
-      color: var(--foreground);
       margin-bottom: 8px;
     }
     
-    .methodology-desc {
-      font-size: ${isHorizontal ? '14px' : '11px'};
-      color: var(--muted);
-      line-height: 1.5;
+    .methodology-title {
+      font-size: ${isHorizontal ? '18px' : '13px'};
+      font-weight: 500;
+      color: var(--foreground);
+      margin-bottom: 6px;
     }
     
-    /* ========== SERVICIOS ========== */
+    .methodology-desc {
+      font-size: ${isHorizontal ? '13px' : '10px'};
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    
+    /* ========== SERVICIOS (M4) ========== */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -681,7 +1022,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
       line-height: 1.4;
     }
     
-    /* ========== EQUIPO ========== */
+    /* ========== EQUIPO (M7) ========== */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(${isHorizontal ? '4' : '2'}, 1fr);
@@ -748,7 +1089,17 @@ function generateHTML(presentation: GeneratedPresentation): string {
       overflow: hidden;
     }
     
-    /* ========== CASOS DE ÉXITO ========== */
+    .team-aggregate {
+      margin-top: ${isHorizontal ? '24px' : '16px'};
+      padding: ${isHorizontal ? '20px 24px' : '14px 16px'};
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      text-align: center;
+      font-size: ${isHorizontal ? '16px' : '13px'};
+      color: var(--neutral-800);
+    }
+    
+    /* ========== CASOS DE ÉXITO (M6) ========== */
     .case-study-card {
       padding: ${isHorizontal ? '28px' : '20px'};
       background: var(--neutral-50);
@@ -878,7 +1229,29 @@ function generateHTML(presentation: GeneratedPresentation): string {
       padding-left: 20px;
     }
     
-    /* ========== CONTACTO ========== */
+    /* Fallback para casos bajo NDA */
+    .case-fallback {
+      padding: ${isHorizontal ? '40px' : '28px'};
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      text-align: center;
+    }
+    
+    .case-fallback h3 {
+      font-size: ${isHorizontal ? '24px' : '18px'};
+      margin-bottom: 16px;
+      color: var(--foreground);
+    }
+    
+    .case-fallback p {
+      font-size: ${isHorizontal ? '16px' : '13px'};
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    /* ========== CONTACTO / CTA (M8) ========== */
     .contact-page {
       display: flex;
       flex-direction: column;
@@ -998,19 +1371,19 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </style>
 </head>
 <body>
-  <!-- PÁGINA 1: PORTADA -->
+  <!-- M1: PORTADA ESTRATÉGICA -->
   <div class="page cover">
     <div class="cover-content">
       ${presentation.client_logo_url ? `
-      <div class="cover-logos">
+      <div class="cover-logos" style="display: flex; align-items: center; gap: 24px; margin-bottom: 50px;">
         <div class="cover-logo-navarro">${NAVARRO_LOGO_SVG}</div>
-        <span class="cover-logo-separator">×</span>
-        <img src="${presentation.client_logo_url}" alt="${presentation.client_company || presentation.client_name}" class="cover-logo-client" />
+        <span style="font-size: 32px; opacity: 0.3;">×</span>
+        <img src="${presentation.client_logo_url}" alt="${presentation.client_company || presentation.client_name}" style="max-height: 60px; max-width: 200px;" />
       </div>
       ` : `
       <div class="logo">${NAVARRO_LOGO_SVG}</div>
       `}
-      <h1>${t.title}</h1>
+      <h1 class="cover-tagline">${coverTagline}</h1>
       <p class="prepared-for">${t.preparedFor}</p>
       <p class="client-name">${presentation.client_name}</p>
       ${presentation.client_company ? `<p class="client-company">${presentation.client_company}</p>` : ''}
@@ -1019,7 +1392,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   
   ${presentation.include_toc !== false ? `
-  <!-- PÁGINA 2: ÍNDICE -->
+  <!-- ÍNDICE -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
@@ -1035,7 +1408,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
         ${presentation.include_value_proposition !== false ? `
         <li class="toc-item">
           <span class="toc-number">02</span>
-          <span class="toc-title">${t.whyNavarro}</span>
+          <span class="toc-title">${t.differentiators}</span>
         </li>
         ` : ''}
         ${presentation.include_methodology !== false ? `
@@ -1048,28 +1421,22 @@ function generateHTML(presentation: GeneratedPresentation): string {
           <span class="toc-number">04</span>
           <span class="toc-title">${t.services}</span>
         </li>
-        ${presentation.team_members_included.length > 0 ? `
+        ${coreTeam.length > 0 ? `
         <li class="toc-item">
           <span class="toc-number">05</span>
           <span class="toc-title">${t.team}</span>
         </li>
         ` : ''}
-        ${presentation.case_studies_included.length > 0 ? `
         <li class="toc-item">
           <span class="toc-number">06</span>
-          <span class="toc-title">${t.caseStudies}</span>
-        </li>
-        ` : ''}
-        <li class="toc-item">
-          <span class="toc-number">07</span>
-          <span class="toc-title">${t.contact}</span>
+          <span class="toc-title">${presentation.case_studies_included.length > 0 ? t.caseStudies : t.contact}</span>
         </li>
       </ul>
     </div>
   </div>
   ` : ''}
   
-  <!-- PÁGINA: SOBRE NAVARRO -->
+  <!-- M2: QUIÉNES SOMOS -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
@@ -1079,6 +1446,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
     <div class="about-content">
       <div class="about-text">
         <p>${t.aboutText}</p>
+        <p class="about-text-extended">${t.aboutTextExtended}</p>
         ${presentation.custom_intro ? `<div class="custom-intro"><p>${presentation.custom_intro}</p></div>` : ''}
       </div>
       ${presentation.include_stats !== false ? `
@@ -1095,24 +1463,38 @@ function generateHTML(presentation: GeneratedPresentation): string {
           <div class="stat-value">${t.stats.team}</div>
           <div class="stat-label">${t.stats.teamLabel}</div>
         </div>
+        <div class="stat-item">
+          <div class="stat-value">${t.stats.operations}</div>
+          <div class="stat-label">${t.stats.operationsLabel}</div>
+        </div>
       </div>
       ` : ''}
     </div>
   </div>
   
   ${presentation.include_value_proposition !== false ? `
-  <!-- PÁGINA: POR QUÉ NAVARRO -->
+  <!-- M3: DIFERENCIADORES -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
       <span class="page-number">${presentation.include_toc !== false ? '04' : '03'}</span>
     </div>
     <h2 class="section-title">${t.whyNavarro}</h2>
-    <div class="value-props-grid">
-      ${t.valueProps.map(prop => `
-        <div class="value-prop-card">
-          <div class="value-prop-title">${prop.title}</div>
-          <div class="value-prop-desc">${prop.desc}</div>
+    <div class="diff-grid">
+      ${differentiators.map(diff => `
+        <div class="diff-card">
+          <div class="diff-title">${diff.title}</div>
+          <div class="diff-desc">${diff.description}</div>
+          <div class="diff-proof">
+            <div class="diff-proof-item">
+              <div class="diff-proof-label">${t.proof}</div>
+              <div class="diff-proof-value">${diff.proof}</div>
+            </div>
+            <div class="diff-proof-item">
+              <div class="diff-proof-label">${t.impact}</div>
+              <div class="diff-proof-value">${diff.impact}</div>
+            </div>
+          </div>
         </div>
       `).join('')}
     </div>
@@ -1120,7 +1502,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   ` : ''}
   
   ${presentation.include_methodology !== false ? `
-  <!-- PÁGINA: METODOLOGÍA -->
+  <!-- M5: METODOLOGÍA -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
@@ -1139,7 +1521,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   ` : ''}
   
-  <!-- PÁGINAS: SERVICIOS (paginados) -->
+  <!-- M4: SERVICIOS -->
   ${servicePages.map((pageServices, pageIndex) => `
   <div class="page">
     <div class="page-header">
@@ -1165,16 +1547,16 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   `).join('')}
   
-  ${teamPages.length > 0 ? teamPages.map((pageTeam, pageIndex) => `
-  <!-- PÁGINAS: EQUIPO (paginado) -->
+  ${coreTeam.length > 0 ? `
+  <!-- M7: EQUIPO (Core + Agregado) -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${String(6 + servicePages.length + pageIndex).padStart(2, '0')}</span>
+      <span class="page-number">${String(6 + servicePages.length).padStart(2, '0')}</span>
     </div>
-    <h2 class="section-title">${t.team}${teamPages.length > 1 ? ` (${pageIndex + 1}/${teamPages.length})` : ''}</h2>
+    <h2 class="section-title">${t.team}</h2>
     <div class="team-grid">
-      ${pageTeam.map(member => `
+      ${coreTeam.map(member => `
         <div class="team-card">
           <div class="team-avatar">
             ${member.avatar_url 
@@ -1189,15 +1571,16 @@ function generateHTML(presentation: GeneratedPresentation): string {
         </div>
       `).join('')}
     </div>
+    ${hasMoreTeam ? `<div class="team-aggregate">${t.teamAggregate}</div>` : ''}
   </div>
-  `).join('') : ''}
+  ` : ''}
   
+  <!-- M6: CASOS DE ÉXITO (con fallback inteligente) -->
   ${presentation.case_studies_included.length > 0 ? presentation.case_studies_included.map((cs, csIndex) => `
-  <!-- PÁGINAS: CASOS DE ÉXITO -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${String(6 + servicePages.length + teamPages.length + csIndex).padStart(2, '0')}</span>
+      <span class="page-number">${String(7 + servicePages.length + (coreTeam.length > 0 ? 1 : 0) + csIndex).padStart(2, '0')}</span>
     </div>
     <h2 class="section-title">${t.caseStudies}${presentation.case_studies_included.length > 1 ? ` (${csIndex + 1}/${presentation.case_studies_included.length})` : ''}</h2>
     <div class="case-study-card">
@@ -1253,11 +1636,11 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   `).join('') : ''}
   
-  <!-- PÁGINA FINAL: CONTACTO -->
+  <!-- M8: CONTACTO / CTA INTELIGENTE -->
   <div class="page contact-page">
     <div class="contact-content">
-      <h2 class="contact-title">${t.ctaText}</h2>
-      <p class="contact-subtitle">${t.ctaSubtext}</p>
+      <h2 class="contact-title">${cta.title}</h2>
+      <p class="contact-subtitle">${cta.subtitle}</p>
       <div class="contact-grid">
         <div class="contact-item">
           <div class="contact-label">Email</div>
@@ -1321,6 +1704,9 @@ Deno.serve(async (req) => {
       case_studies_included: typeof presentation.case_studies_included === 'string'
         ? JSON.parse(presentation.case_studies_included)
         : presentation.case_studies_included || [],
+      differentiators: typeof presentation.differentiators === 'string'
+        ? JSON.parse(presentation.differentiators)
+        : presentation.differentiators || [],
       // Defaults para nuevos campos
       include_toc: presentation.include_toc ?? true,
       include_methodology: presentation.include_methodology ?? true,
@@ -1329,6 +1715,13 @@ Deno.serve(async (req) => {
       show_team_bio: presentation.show_team_bio ?? true,
       show_case_metrics: presentation.show_case_metrics ?? true,
       show_testimonials: presentation.show_testimonials ?? true,
+      // Nuevos campos narrativos
+      presentation_type: presentation.presentation_type || 'corporate',
+      audience_type: presentation.audience_type || 'family_business',
+      presentation_objective: presentation.presentation_objective || 'meet',
+      quality_mode: presentation.quality_mode || 'professional',
+      cover_tagline: presentation.cover_tagline || null,
+      cta_type: presentation.cta_type || 'strategic_conversation',
     };
 
     // Generate HTML

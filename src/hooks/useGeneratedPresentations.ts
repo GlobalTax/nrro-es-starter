@@ -20,6 +20,16 @@ export interface GeneratedPresentation {
   generated_by: string | null;
   created_at: string;
   updated_at: string;
+  // Nuevos campos de módulos narrativos
+  presentation_type: string;
+  audience_type: string;
+  presentation_objective: string;
+  quality_mode: string;
+  narrative_score: number;
+  validation_passed: boolean;
+  cover_tagline: string | null;
+  cta_type: string;
+  differentiators: Differentiator[];
 }
 
 export interface ServiceSummary {
@@ -27,6 +37,8 @@ export interface ServiceSummary {
   name: string;
   area: string;
   description: string;
+  features?: string[];
+  benefits?: string[];
 }
 
 export interface TeamMemberSummary {
@@ -34,6 +46,8 @@ export interface TeamMemberSummary {
   name: string;
   position: string;
   avatar_url?: string;
+  specialization?: string;
+  bio?: string;
 }
 
 export interface CaseStudySummary {
@@ -42,6 +56,18 @@ export interface CaseStudySummary {
   client_name: string;
   client_industry: string;
   results_summary: string;
+  challenge?: string;
+  solution?: string;
+  metrics?: { label: string; value: string }[];
+  testimonial_text?: string;
+  testimonial_author?: string;
+}
+
+export interface Differentiator {
+  title: string;
+  description: string;
+  proof: string;
+  impact: string;
 }
 
 export interface GeneratedPresentationInsert {
@@ -57,6 +83,14 @@ export interface GeneratedPresentationInsert {
   include_stats?: boolean;
   custom_intro?: string;
   generated_by?: string;
+  // Nuevos campos de módulos narrativos
+  presentation_type?: string;
+  audience_type?: string;
+  presentation_objective?: string;
+  quality_mode?: string;
+  cover_tagline?: string;
+  cta_type?: string;
+  differentiators?: Differentiator[];
 }
 
 export const PRESENTATION_SECTORS = [
@@ -70,6 +104,40 @@ export const PRESENTATION_SECTORS = [
   { value: 'construccion', label: 'Construcción' },
   { value: 'educacion', label: 'Educación' },
   { value: 'otro', label: 'Otro' },
+];
+
+export const PRESENTATION_TYPES = [
+  { value: 'corporate', label: 'Corporativa general' },
+  { value: 'ma', label: 'Para operación de M&A' },
+  { value: 'inbound', label: 'Para captar cliente inbound' },
+  { value: 'pe', label: 'Para inversor / Private Equity' },
+  { value: 'fiscal', label: 'Solo fiscal' },
+];
+
+export const AUDIENCE_TYPES = [
+  { value: 'family_business', label: 'Empresa familiar' },
+  { value: 'investor', label: 'Inversor / fondo' },
+  { value: 'foreigner', label: 'Empresa extranjera' },
+  { value: 'startup', label: 'Startup / scale-up' },
+];
+
+export const PRESENTATION_OBJECTIVES = [
+  { value: 'meet', label: 'Que nos conozcan' },
+  { value: 'decide', label: 'Que tomen una decisión' },
+  { value: 'contact', label: 'Que contacten' },
+];
+
+export const QUALITY_MODES = [
+  { value: 'basic', label: 'Básico', description: '6-8 páginas, esencial' },
+  { value: 'professional', label: 'Profesional', description: '10-12 páginas, completo' },
+  { value: 'premium', label: 'Premium', description: '15+ páginas, detallado' },
+];
+
+export const CTA_TYPES = [
+  { value: 'strategic_conversation', label: 'Primera conversación estratégica' },
+  { value: 'initial_diagnosis', label: 'Diagnóstico inicial' },
+  { value: 'preliminary_valuation', label: 'Valoración preliminar' },
+  { value: 'structure_review', label: 'Revisión de estructura' },
 ];
 
 export const useGeneratedPresentations = () => {
@@ -88,6 +156,9 @@ export const useGeneratedPresentations = () => {
         services_included: Array.isArray(item.services_included) ? item.services_included : [],
         team_members_included: Array.isArray(item.team_members_included) ? item.team_members_included : [],
         case_studies_included: Array.isArray(item.case_studies_included) ? item.case_studies_included : [],
+        differentiators: Array.isArray(item.differentiators) ? item.differentiators : [],
+        narrative_score: item.narrative_score || 0,
+        validation_passed: item.validation_passed || false,
       })) as GeneratedPresentation[];
     },
   });
@@ -114,6 +185,14 @@ export const useCreateGeneratedPresentation = () => {
           custom_intro: data.custom_intro,
           generated_by: data.generated_by,
           status: 'draft',
+          // Nuevos campos narrativos
+          presentation_type: data.presentation_type || 'corporate',
+          audience_type: data.audience_type || 'family_business',
+          presentation_objective: data.presentation_objective || 'meet',
+          quality_mode: data.quality_mode || 'professional',
+          cover_tagline: data.cover_tagline,
+          cta_type: data.cta_type || 'strategic_conversation',
+          differentiators: data.differentiators as any || [],
         })
         .select()
         .single();
@@ -145,6 +224,9 @@ export const useUpdateGeneratedPresentation = () => {
       }
       if (data.case_studies_included) {
         updateData.case_studies_included = data.case_studies_included;
+      }
+      if (data.differentiators) {
+        updateData.differentiators = data.differentiators;
       }
 
       const { data: result, error } = await supabase
@@ -204,11 +286,56 @@ export const useGeneratePresentationPdf = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['generated-presentations'] });
-      toast.success('PDF generado correctamente');
+      toast.success('Presentación generada correctamente');
     },
     onError: (error) => {
       console.error('Error generating PDF:', error);
-      toast.error('Error al generar el PDF');
+      toast.error('Error al generar la presentación');
     },
   });
 };
+
+// Función para calcular score de calidad en frontend (preview)
+export function calculateNarrativeScore(data: Partial<GeneratedPresentationInsert>): { score: number; issues: string[] } {
+  let score = 100;
+  const issues: string[] = [];
+
+  // Cliente
+  if (!data.client_name?.trim()) {
+    score -= 20;
+    issues.push('Falta nombre del cliente');
+  }
+
+  // Servicios
+  const servicesCount = data.services_included?.length || 0;
+  if (servicesCount === 0) {
+    score -= 30;
+    issues.push('Sin servicios seleccionados');
+  } else if (servicesCount < 3) {
+    score -= 10;
+    issues.push('Pocos servicios (menos de 3)');
+  }
+
+  // Equipo
+  const teamCount = data.team_members_included?.length || 0;
+  const casesCount = data.case_studies_included?.length || 0;
+  if (casesCount > 0 && teamCount < 2) {
+    score -= 15;
+    issues.push('Añade más equipo si incluyes casos');
+  }
+
+  // Intro personalizada (bonus)
+  if (data.custom_intro && data.custom_intro.length >= 50) {
+    score += 5;
+  }
+
+  // Cover tagline (bonus)
+  if (data.cover_tagline && data.cover_tagline.length >= 20) {
+    score += 5;
+  }
+
+  return {
+    score: Math.max(0, Math.min(100, score)),
+    issues,
+  };
+}

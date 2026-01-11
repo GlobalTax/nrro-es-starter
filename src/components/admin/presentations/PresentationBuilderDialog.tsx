@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Progress } from '@/components/ui/progress';
 import {
   ChevronLeft,
   ChevronRight,
@@ -34,6 +35,10 @@ import {
   Globe,
   LayoutTemplate,
   ImageIcon,
+  Target,
+  Sparkles,
+  AlertCircle,
+  CheckCircle2,
 } from 'lucide-react';
 import { ImageUpload } from '../ImageUpload';
 import { uploadCompanyLogo } from '@/lib/uploadCompanyLogo';
@@ -47,6 +52,12 @@ import {
   TeamMemberSummary,
   CaseStudySummary,
   PRESENTATION_SECTORS,
+  PRESENTATION_TYPES,
+  AUDIENCE_TYPES,
+  PRESENTATION_OBJECTIVES,
+  QUALITY_MODES,
+  CTA_TYPES,
+  calculateNarrativeScore,
 } from '@/hooks/useGeneratedPresentations';
 import { toast } from 'sonner';
 
@@ -56,6 +67,7 @@ interface PresentationBuilderDialogProps {
 }
 
 const STEPS = [
+  { id: 0, title: 'Contexto', icon: Target },
   { id: 1, title: 'Configuración', icon: Building2 },
   { id: 2, title: 'Servicios', icon: Briefcase },
   { id: 3, title: 'Contenido', icon: Users },
@@ -77,7 +89,13 @@ export function PresentationBuilderDialog({
   open,
   onOpenChange,
 }: PresentationBuilderDialogProps) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
+
+  // Step 0: Strategic Context (NEW)
+  const [presentationType, setPresentationType] = useState('corporate');
+  const [audienceType, setAudienceType] = useState('family_business');
+  const [presentationObjective, setPresentationObjective] = useState('meet');
+  const [qualityMode, setQualityMode] = useState('professional');
 
   // Step 1: Configuration
   const [clientName, setClientName] = useState('');
@@ -87,6 +105,7 @@ export function PresentationBuilderDialog({
   const [format, setFormat] = useState('horizontal');
   const [clientLogoPreview, setClientLogoPreview] = useState<string | null>(null);
   const [clientLogoFile, setClientLogoFile] = useState<File | null>(null);
+  const [ctaType, setCtaType] = useState('strategic_conversation');
 
   // Step 2: Services
   const [selectedServices, setSelectedServices] = useState<ServiceSummary[]>([]);
@@ -116,6 +135,17 @@ export function PresentationBuilderDialog({
     return acc;
   }, {});
 
+  // Calculate narrative score for preview
+  const narrativeScore = useMemo(() => {
+    return calculateNarrativeScore({
+      client_name: clientName,
+      services_included: selectedServices,
+      team_members_included: selectedTeamMembers,
+      case_studies_included: selectedCaseStudies,
+      custom_intro: customIntro,
+    });
+  }, [clientName, selectedServices, selectedTeamMembers, selectedCaseStudies, customIntro]);
+
   const handleServiceToggle = (service: any) => {
     const exists = selectedServices.find((s) => s.id === service.id);
     if (exists) {
@@ -128,6 +158,8 @@ export function PresentationBuilderDialog({
           name: service.name,
           area: service.area,
           description: service.description,
+          features: service.features || [],
+          benefits: service.benefits || [],
         },
       ]);
     }
@@ -145,6 +177,8 @@ export function PresentationBuilderDialog({
           name: member.name,
           position: member.position,
           avatar_url: member.avatar_url,
+          specialization: member.specialization,
+          bio: member.bio,
         },
       ]);
     }
@@ -163,6 +197,11 @@ export function PresentationBuilderDialog({
           client_name: cs.client_name,
           client_industry: cs.client_industry,
           results_summary: cs.results_summary,
+          challenge: cs.challenge,
+          solution: cs.solution,
+          metrics: cs.metrics,
+          testimonial_text: cs.testimonial_text,
+          testimonial_author: cs.testimonial_author,
         },
       ]);
     }
@@ -170,6 +209,8 @@ export function PresentationBuilderDialog({
 
   const canProceed = () => {
     switch (step) {
+      case 0:
+        return presentationType && audienceType && presentationObjective;
       case 1:
         return clientName.trim().length > 0 && language && format;
       case 2:
@@ -177,13 +218,18 @@ export function PresentationBuilderDialog({
       case 3:
         return true;
       case 4:
-        return true;
+        return narrativeScore.score >= 70;
       default:
         return false;
     }
   };
 
   const handleGenerate = async () => {
+    if (narrativeScore.score < 70) {
+      toast.error('La presentación no pasa la validación de calidad');
+      return;
+    }
+
     try {
       // Upload client logo if provided
       let clientLogoUrl: string | undefined;
@@ -208,6 +254,12 @@ export function PresentationBuilderDialog({
         case_studies_included: selectedCaseStudies,
         include_stats: includeStats,
         custom_intro: customIntro || undefined,
+        // Nuevos campos narrativos
+        presentation_type: presentationType,
+        audience_type: audienceType,
+        presentation_objective: presentationObjective,
+        quality_mode: qualityMode,
+        cta_type: ctaType,
       });
 
       // Generate PDF
@@ -225,7 +277,11 @@ export function PresentationBuilderDialog({
   };
 
   const handleClose = () => {
-    setStep(1);
+    setStep(0);
+    setPresentationType('corporate');
+    setAudienceType('family_business');
+    setPresentationObjective('meet');
+    setQualityMode('professional');
     setClientName('');
     setClientCompany('');
     setSector('');
@@ -233,6 +289,7 @@ export function PresentationBuilderDialog({
     setFormat('horizontal');
     setClientLogoPreview(null);
     setClientLogoFile(null);
+    setCtaType('strategic_conversation');
     setSelectedServices([]);
     setSelectedTeamMembers([]);
     setSelectedCaseStudies([]);
@@ -248,35 +305,148 @@ export function PresentationBuilderDialog({
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Generar Presentación Corporativa
+            <Sparkles className="h-5 w-5 text-primary" />
+            Generar Presentación Inteligente
           </DialogTitle>
         </DialogHeader>
 
         {/* Steps indicator */}
-        <div className="flex items-center justify-between px-4 py-2 border-b">
+        <div className="flex items-center justify-between px-2 py-2 border-b overflow-x-auto">
           {STEPS.map((s, idx) => (
             <div key={s.id} className="flex items-center">
               <div
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors cursor-pointer ${
                   step === s.id
                     ? 'bg-primary text-primary-foreground'
                     : step > s.id
                     ? 'bg-primary/20 text-primary'
                     : 'bg-muted text-muted-foreground'
                 }`}
+                onClick={() => step > s.id && setStep(s.id)}
               >
                 <s.icon className="h-4 w-4" />
                 <span className="text-sm font-medium hidden sm:inline">{s.title}</span>
               </div>
               {idx < STEPS.length - 1 && (
-                <div className={`w-8 h-0.5 mx-2 ${step > s.id ? 'bg-primary' : 'bg-muted'}`} />
+                <div className={`w-6 h-0.5 mx-1 ${step > s.id ? 'bg-primary' : 'bg-muted'}`} />
               )}
             </div>
           ))}
         </div>
 
         <ScrollArea className="flex-1 px-4 py-4">
+          {/* Step 0: Strategic Context (NEW) */}
+          {step === 0 && (
+            <div className="space-y-6">
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-semibold mb-2">Contexto estratégico</h3>
+                <p className="text-sm text-muted-foreground">
+                  Define el objetivo para adaptar automáticamente el contenido
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <Target className="h-4 w-4" />
+                    ¿Qué tipo de presentación es?
+                  </Label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {PRESENTATION_TYPES.map((type) => (
+                      <div
+                        key={type.value}
+                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                          presentationType === type.value
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => setPresentationType(type.value)}
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className={`w-4 h-4 rounded-full border-2 ${
+                            presentationType === type.value ? 'border-primary bg-primary' : 'border-muted'
+                          }`}>
+                            {presentationType === type.value && (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-white rounded-full" />
+                              </div>
+                            )}
+                          </div>
+                          <span className="font-medium">{type.label}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <Label>¿Quién es el destinatario?</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {AUDIENCE_TYPES.map((type) => (
+                      <div
+                        key={type.value}
+                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                          audienceType === type.value
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => setAudienceType(type.value)}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Checkbox checked={audienceType === type.value} />
+                          <span className="text-sm">{type.label}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>¿Cuál es el objetivo?</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {PRESENTATION_OBJECTIVES.map((obj) => (
+                      <div
+                        key={obj.value}
+                        className={`p-3 border rounded-lg cursor-pointer transition-colors text-center ${
+                          presentationObjective === obj.value
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => setPresentationObjective(obj.value)}
+                      >
+                        <span className="text-sm">{obj.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <Label>Modo de calidad</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {QUALITY_MODES.map((mode) => (
+                      <div
+                        key={mode.value}
+                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                          qualityMode === mode.value
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => setQualityMode(mode.value)}
+                      >
+                        <div className="text-sm font-medium">{mode.label}</div>
+                        <div className="text-xs text-muted-foreground">{mode.description}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Step 1: Configuration */}
           {step === 1 && (
             <div className="space-y-6">
@@ -375,6 +545,22 @@ export function PresentationBuilderDialog({
                   </Select>
                 </div>
               </div>
+
+              <div className="space-y-2">
+                <Label>Tipo de CTA (llamada a la acción)</Label>
+                <Select value={ctaType} onValueChange={setCtaType}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CTA_TYPES.map((c) => (
+                      <SelectItem key={c.value} value={c.value}>
+                        {c.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           )}
 
@@ -425,7 +611,7 @@ export function PresentationBuilderDialog({
                 <div className="flex items-center justify-between">
                   <Label className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    Equipo clave
+                    Equipo clave (máx. 4 en presentación)
                   </Label>
                   <Badge variant="secondary">{selectedTeamMembers.length} seleccionados</Badge>
                 </div>
@@ -516,14 +702,58 @@ export function PresentationBuilderDialog({
                     onChange={(e) => setCustomIntro(e.target.value)}
                     rows={3}
                   />
+                  <p className="text-xs text-muted-foreground">
+                    +5 puntos de calidad si supera 50 caracteres
+                  </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Step 4: Preview */}
+          {/* Step 4: Preview with Quality Score */}
           {step === 4 && (
             <div className="space-y-6">
+              {/* Quality Score Card */}
+              <div className={`rounded-lg p-4 border ${
+                narrativeScore.score >= 70 
+                  ? 'bg-green-50 border-green-200 dark:bg-green-950/20 dark:border-green-900' 
+                  : 'bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-900'
+              }`}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {narrativeScore.score >= 70 ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    ) : (
+                      <AlertCircle className="h-5 w-5 text-amber-600" />
+                    )}
+                    <span className="font-semibold">Puntuación de calidad</span>
+                  </div>
+                  <span className={`text-2xl font-bold ${
+                    narrativeScore.score >= 70 ? 'text-green-600' : 'text-amber-600'
+                  }`}>
+                    {narrativeScore.score}/100
+                  </span>
+                </div>
+                <Progress value={narrativeScore.score} className="h-2 mb-3" />
+                
+                {narrativeScore.issues.length > 0 && (
+                  <div className="space-y-1">
+                    {narrativeScore.issues.map((issue, i) => (
+                      <div key={i} className="text-sm flex items-center gap-2">
+                        <AlertCircle className="h-3 w-3 text-amber-600" />
+                        <span>{issue}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {narrativeScore.score >= 70 && (
+                  <p className="text-sm text-green-700 dark:text-green-400">
+                    ✓ La presentación pasa la validación de calidad
+                  </p>
+                )}
+              </div>
+
               <div className="bg-muted/50 rounded-lg p-4 space-y-4">
                 <h3 className="font-semibold">Resumen de la presentación</h3>
 
@@ -538,6 +768,21 @@ export function PresentationBuilderDialog({
                     <p className="font-medium">
                       {LANGUAGES.find((l) => l.value === language)?.label} ·{' '}
                       {FORMATS.find((f) => f.value === format)?.label}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-muted-foreground">Tipo</p>
+                    <p className="font-medium">
+                      {PRESENTATION_TYPES.find((t) => t.value === presentationType)?.label}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Audiencia</p>
+                    <p className="font-medium">
+                      {AUDIENCE_TYPES.find((t) => t.value === audienceType)?.label}
                     </p>
                   </div>
                 </div>
@@ -602,7 +847,7 @@ export function PresentationBuilderDialog({
               <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
                 <FileText className="h-12 w-12 mx-auto text-primary mb-2" />
                 <p className="text-sm text-muted-foreground">
-                  La presentación se generará en formato PDF y se guardará en el historial
+                  La presentación se generará con narrativa adaptativa según el contexto seleccionado
                 </p>
               </div>
             </div>
@@ -614,7 +859,7 @@ export function PresentationBuilderDialog({
           <Button
             variant="outline"
             onClick={() => setStep(step - 1)}
-            disabled={step === 1 || isLoading}
+            disabled={step === 0 || isLoading}
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Anterior
@@ -626,7 +871,10 @@ export function PresentationBuilderDialog({
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           ) : (
-            <Button onClick={handleGenerate} disabled={isLoading}>
+            <Button 
+              onClick={handleGenerate} 
+              disabled={isLoading || narrativeScore.score < 70}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -634,7 +882,7 @@ export function PresentationBuilderDialog({
                 </>
               ) : (
                 <>
-                  <FileText className="h-4 w-4 mr-2" />
+                  <Sparkles className="h-4 w-4 mr-2" />
                   Generar PDF
                 </>
               )}
