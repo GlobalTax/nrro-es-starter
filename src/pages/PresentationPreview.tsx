@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Printer, Download, Loader2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import html2pdf from 'html2pdf.js';
+import { useRef, useState } from 'react';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function PresentationPreview() {
   const { id } = useParams<{ id: string }>();
@@ -41,19 +42,52 @@ export default function PresentationPreview() {
     setIsGeneratingPDF(true);
     
     try {
-      const element = iframeRef.current.contentDocument.body;
+      const doc = iframeRef.current.contentDocument;
+      const pages = doc.querySelectorAll('.page');
       
-      const opt = {
-        margin: 0,
-        filename: `Presentacion-${presentation.client_name || 'Navarro'}.pdf`,
-        image: { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm' as const, format: 'a4', orientation: 'portrait' as const }
-      };
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
       
-      await html2pdf().set(opt).from(element).save();
-    } catch (error) {
-      console.error('Error generating PDF:', error);
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      
+      if (pages.length === 0) {
+        const canvas = await html2canvas(doc.body, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff'
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      } else {
+        for (let i = 0; i < pages.length; i++) {
+          const page = pages[i] as HTMLElement;
+          
+          const canvas = await html2canvas(page, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+          });
+          
+          const imgData = canvas.toDataURL('image/jpeg', 0.98);
+          
+          if (i > 0) {
+            pdf.addPage();
+          }
+          
+          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        }
+      }
+      
+      pdf.save(`Presentacion-${presentation.client_name || 'Navarro'}.pdf`);
+      
+    } catch (err) {
+      console.error('Error generating PDF:', err);
     } finally {
       setIsGeneratingPDF(false);
     }
@@ -109,7 +143,6 @@ export default function PresentationPreview() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      {/* Floating toolbar */}
       <div className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center">
         <Button variant="secondary" size="sm" onClick={handleBack} className="shadow-lg">
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -138,7 +171,6 @@ export default function PresentationPreview() {
         </div>
       </div>
 
-      {/* Presentation iframe */}
       <iframe
         ref={iframeRef}
         srcDoc={htmlContent}
