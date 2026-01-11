@@ -3,12 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Printer, Download, Loader2 } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import html2pdf from 'html2pdf.js';
 
 export default function PresentationPreview() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const { data: presentation, isLoading, error } = useQuery({
     queryKey: ['presentation-preview', id],
@@ -33,18 +35,28 @@ export default function PresentationPreview() {
     }
   };
 
-  const handleDownload = () => {
-    if (!htmlContent || !presentation) return;
+  const handleDownloadPDF = async () => {
+    if (!iframeRef.current?.contentDocument?.body || !presentation) return;
     
-    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Presentacion-${presentation.client_name || 'Navarro'}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setIsGeneratingPDF(true);
+    
+    try {
+      const element = iframeRef.current.contentDocument.body;
+      
+      const opt = {
+        margin: 0,
+        filename: `Presentacion-${presentation.client_name || 'Navarro'}.pdf`,
+        image: { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm' as const, format: 'a4', orientation: 'portrait' as const }
+      };
+      
+      await html2pdf().set(opt).from(element).save();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
   };
 
   const handleBack = () => {
@@ -105,9 +117,18 @@ export default function PresentationPreview() {
         </Button>
         
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={handleDownload} className="shadow-lg bg-background">
-            <Download className="h-4 w-4 mr-2" />
-            Descargar
+          <Button 
+            variant="outline" 
+            onClick={handleDownloadPDF} 
+            disabled={isGeneratingPDF}
+            className="shadow-lg bg-background"
+          >
+            {isGeneratingPDF ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4 mr-2" />
+            )}
+            {isGeneratingPDF ? 'Generando...' : 'Descargar PDF'}
           </Button>
           
           <Button onClick={handlePrint} className="shadow-lg">

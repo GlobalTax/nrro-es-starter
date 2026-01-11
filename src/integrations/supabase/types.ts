@@ -312,6 +312,42 @@ export type Database = {
         }
         Relationships: []
       }
+      brand_kits: {
+        Row: {
+          cover_bg_url: string | null
+          created_at: string | null
+          font_urls: Json | null
+          id: string
+          is_default: boolean | null
+          logo_url: string | null
+          name: string
+          tokens_json: Json
+          updated_at: string | null
+        }
+        Insert: {
+          cover_bg_url?: string | null
+          created_at?: string | null
+          font_urls?: Json | null
+          id?: string
+          is_default?: boolean | null
+          logo_url?: string | null
+          name?: string
+          tokens_json?: Json
+          updated_at?: string | null
+        }
+        Update: {
+          cover_bg_url?: string | null
+          created_at?: string | null
+          font_urls?: Json | null
+          id?: string
+          is_default?: boolean | null
+          logo_url?: string | null
+          name?: string
+          tokens_json?: Json
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       calculator_settings: {
         Row: {
           category: string
@@ -998,6 +1034,45 @@ export type Database = {
         }
         Relationships: []
       }
+      content_blocks: {
+        Row: {
+          created_at: string | null
+          id: string
+          language: string | null
+          markdown: string
+          metadata: Json | null
+          section: string
+          source_url: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          markdown: string
+          metadata?: Json | null
+          section: string
+          source_url?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          markdown?: string
+          metadata?: Json | null
+          section?: string
+          source_url?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       corporate_presentations: {
         Row: {
           category: string
@@ -1054,6 +1129,100 @@ export type Database = {
           version?: number | null
         }
         Relationships: []
+      }
+      deck_slides: {
+        Row: {
+          content_json: Json
+          created_at: string | null
+          deck_id: string
+          id: string
+          slide_order: number
+          slide_type: string
+          speaker_notes: string | null
+          title: string | null
+        }
+        Insert: {
+          content_json?: Json
+          created_at?: string | null
+          deck_id: string
+          id?: string
+          slide_order: number
+          slide_type: string
+          speaker_notes?: string | null
+          title?: string | null
+        }
+        Update: {
+          content_json?: Json
+          created_at?: string | null
+          deck_id?: string
+          id?: string
+          slide_order?: number
+          slide_type?: string
+          speaker_notes?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deck_slides_deck_id_fkey"
+            columns: ["deck_id"]
+            isOneToOne: false
+            referencedRelation: "decks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      decks: {
+        Row: {
+          audience: string | null
+          brand_kit_id: string | null
+          created_at: string | null
+          created_by: string | null
+          goal: string | null
+          id: string
+          language: string | null
+          name: string
+          outline_json: Json | null
+          pdf_url: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          audience?: string | null
+          brand_kit_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          goal?: string | null
+          id?: string
+          language?: string | null
+          name: string
+          outline_json?: Json | null
+          pdf_url?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          audience?: string | null
+          brand_kit_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          goal?: string | null
+          id?: string
+          language?: string | null
+          name?: string
+          outline_json?: Json | null
+          pdf_url?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "decks_brand_kit_id_fkey"
+            columns: ["brand_kit_id"]
+            isOneToOne: false
+            referencedRelation: "brand_kits"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       demo_requests: {
         Row: {
