@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Printer, Loader2 } from 'lucide-react';
+import { ArrowLeft, Printer, Download, Loader2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 export default function PresentationPreview() {
@@ -31,6 +31,20 @@ export default function PresentationPreview() {
     if (iframeRef.current?.contentWindow) {
       iframeRef.current.contentWindow.print();
     }
+  };
+
+  const handleDownload = () => {
+    if (!htmlContent || !presentation) return;
+    
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Presentacion-${presentation.client_name || 'Navarro'}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleBack = () => {
@@ -90,10 +104,17 @@ export default function PresentationPreview() {
           Volver
         </Button>
         
-        <Button onClick={handlePrint} className="shadow-lg">
-          <Printer className="h-4 w-4 mr-2" />
-          Imprimir / Guardar PDF
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleDownload} className="shadow-lg bg-background">
+            <Download className="h-4 w-4 mr-2" />
+            Descargar
+          </Button>
+          
+          <Button onClick={handlePrint} className="shadow-lg">
+            <Printer className="h-4 w-4 mr-2" />
+            Imprimir PDF
+          </Button>
+        </div>
       </div>
 
       {/* Presentation iframe */}
