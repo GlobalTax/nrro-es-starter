@@ -191,13 +191,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   const pageWidth = isHorizontal ? '1920px' : '210mm';
   const pageHeight = isHorizontal ? '1080px' : '297mm';
   
-  // Group services by area
-  const servicesByArea: Record<string, ServiceSummary[]> = {};
-  presentation.services_included.forEach((service) => {
-    const area = service.area || 'Otros';
-    if (!servicesByArea[area]) servicesByArea[area] = [];
-    servicesByArea[area].push(service);
-  });
+  // Services will be paginated automatically in the HTML generation
 
   return `
 <!DOCTYPE html>
@@ -442,46 +436,44 @@ function generateHTML(presentation: GeneratedPresentation): string {
     }
     
     /* ========== SERVICIOS ========== */
-    .services-container {
+    .services-grid {
       display: grid;
-      grid-template-columns: repeat(${isHorizontal ? '2' : '1'}, 1fr);
-      gap: ${isHorizontal ? '48px' : '32px'};
-    }
-    
-    .service-area {
-      margin-bottom: ${isHorizontal ? '24px' : '16px'};
-    }
-    
-    .service-area-title {
-      font-size: ${isHorizontal ? '20px' : '16px'};
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--neutral-200);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      grid-template-columns: repeat(2, 1fr);
+      gap: ${isHorizontal ? '24px' : '12px'};
+      width: 100%;
     }
     
     .service-card {
-      padding: ${isHorizontal ? '24px' : '20px'};
+      padding: ${isHorizontal ? '24px 20px' : '14px 12px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
-      margin-bottom: 16px;
-      transition: all 0.2s ease;
     }
     
     .service-card h4 {
-      font-size: ${isHorizontal ? '18px' : '16px'};
+      font-size: ${isHorizontal ? '16px' : '13px'};
       font-weight: 500;
       color: var(--foreground);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    
+    .service-card .service-area-tag {
+      font-size: ${isHorizontal ? '10px' : '9px'};
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
     
     .service-card p {
-      font-size: ${isHorizontal ? '14px' : '13px'};
+      font-size: ${isHorizontal ? '13px' : '11px'};
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     
     /* ========== EQUIPO ========== */
@@ -757,34 +749,42 @@ function generateHTML(presentation: GeneratedPresentation): string {
     </div>
   </div>
   
-  <!-- SERVICIOS -->
+  <!-- SERVICIOS (paginados automáticamente, máx 4 por página) -->
+  ${(() => {
+    const allServices = presentation.services_included;
+    const SERVICES_PER_PAGE = 4;
+    const servicePages: ServiceSummary[][] = [];
+    
+    for (let i = 0; i < allServices.length; i += SERVICES_PER_PAGE) {
+      servicePages.push(allServices.slice(i, i + SERVICES_PER_PAGE));
+    }
+    
+    return servicePages.map((pageServices, pageIndex) => `
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">02</span>
+      <span class="page-number">${String(pageIndex + 2).padStart(2, '0')}</span>
     </div>
-    <h2 class="section-title">${t.services}</h2>
-    <div class="services-container">
-      ${Object.entries(servicesByArea).map(([area, services]) => `
-        <div class="service-area">
-          <h3 class="service-area-title">${area}</h3>
-          ${services.map(service => `
-            <div class="service-card">
-              <h4>${service.name}</h4>
-              <p>${service.description}</p>
-            </div>
-          `).join('')}
+    <h2 class="section-title">${t.services}${servicePages.length > 1 ? ` (${pageIndex + 1}/${servicePages.length})` : ''}</h2>
+    <div class="services-grid">
+      ${pageServices.map(service => `
+        <div class="service-card">
+          <div class="service-area-tag">${service.area || 'Servicios'}</div>
+          <h4>${service.name}</h4>
+          <p>${service.description}</p>
         </div>
       `).join('')}
     </div>
   </div>
+    `).join('');
+  })()}
   
   ${presentation.team_members_included.length > 0 ? `
   <!-- EQUIPO -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">03</span>
+      <span class="page-number">${String(Math.ceil(presentation.services_included.length / 4) + 2).padStart(2, '0')}</span>
     </div>
     <h2 class="section-title">${t.team}</h2>
     <div class="team-grid">
@@ -810,7 +810,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${presentation.team_members_included.length > 0 ? '04' : '03'}</span>
+      <span class="page-number">${String(Math.ceil(presentation.services_included.length / 4) + (presentation.team_members_included.length > 0 ? 3 : 2)).padStart(2, '0')}</span>
     </div>
     <h2 class="section-title">${t.caseStudies}</h2>
     ${presentation.case_studies_included.map(cs => `
