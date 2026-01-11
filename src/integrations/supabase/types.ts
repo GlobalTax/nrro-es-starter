@@ -1437,11 +1437,18 @@ export type Database = {
           generated_by: string | null
           html_content: string | null
           id: string
+          include_methodology: boolean | null
           include_stats: boolean | null
+          include_toc: boolean | null
+          include_value_proposition: boolean | null
           language: string
           pdf_url: string | null
           sector: string | null
           services_included: Json | null
+          show_case_metrics: boolean | null
+          show_service_features: boolean | null
+          show_team_bio: boolean | null
+          show_testimonials: boolean | null
           status: string
           team_members_included: Json | null
           updated_at: string
@@ -1456,11 +1463,18 @@ export type Database = {
           generated_by?: string | null
           html_content?: string | null
           id?: string
+          include_methodology?: boolean | null
           include_stats?: boolean | null
+          include_toc?: boolean | null
+          include_value_proposition?: boolean | null
           language?: string
           pdf_url?: string | null
           sector?: string | null
           services_included?: Json | null
+          show_case_metrics?: boolean | null
+          show_service_features?: boolean | null
+          show_team_bio?: boolean | null
+          show_testimonials?: boolean | null
           status?: string
           team_members_included?: Json | null
           updated_at?: string
@@ -1475,11 +1489,18 @@ export type Database = {
           generated_by?: string | null
           html_content?: string | null
           id?: string
+          include_methodology?: boolean | null
           include_stats?: boolean | null
+          include_toc?: boolean | null
+          include_value_proposition?: boolean | null
           language?: string
           pdf_url?: string | null
           sector?: string | null
           services_included?: Json | null
+          show_case_metrics?: boolean | null
+          show_service_features?: boolean | null
+          show_team_bio?: boolean | null
+          show_testimonials?: boolean | null
           status?: string
           team_members_included?: Json | null
           updated_at?: string
