@@ -33,18 +33,26 @@ export default function PresentationPreview() {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownloadPDF = () => {
     if (!presentation?.html_content) return;
     
-    const blob = new Blob([presentation.html_content], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Presentacion-${presentation.client_name || 'Navarro'}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Abrir una nueva ventana con el contenido HTML
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Por favor, permite las ventanas emergentes para descargar el PDF');
+      return;
+    }
+    
+    // Escribir el contenido HTML en la nueva ventana
+    printWindow.document.write(presentation.html_content);
+    printWindow.document.close();
+    
+    // Esperar a que cargue y abrir diálogo de impresión automáticamente
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    };
   };
 
   const handleBack = () => {
@@ -104,9 +112,9 @@ export default function PresentationPreview() {
         </Button>
         
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={handleDownload} className="shadow-lg bg-background">
+          <Button variant="outline" onClick={handleDownloadPDF} className="shadow-lg bg-background">
             <Download className="h-4 w-4 mr-2" />
-            Descargar HTML
+            Descargar PDF
           </Button>
           
           <Button onClick={handlePrint} className="shadow-lg">
@@ -121,7 +129,7 @@ export default function PresentationPreview() {
         srcDoc={htmlContent}
         className="w-full min-h-screen border-0"
         title="Presentación corporativa"
-        sandbox="allow-same-origin allow-scripts"
+        sandbox="allow-same-origin allow-scripts allow-modals"
       />
     </div>
   );
