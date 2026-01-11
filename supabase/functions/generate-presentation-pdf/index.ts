@@ -576,39 +576,11 @@ Deno.serve(async (req) => {
     // Generate HTML
     const html = generateHTML(presentationData);
 
-    // Create a unique filename
-    const timestamp = Date.now();
-    const filename = `presentation_${presentation_id}_${timestamp}.html`;
-
-    // Upload HTML to storage with proper UTF-8 encoding
-    const encoder = new TextEncoder();
-    const htmlBytes = encoder.encode(html);
-    
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('corporate-presentations')
-      .upload(filename, htmlBytes, {
-        contentType: 'text/html; charset=utf-8',
-        upsert: true,
-        cacheControl: '3600',
-      });
-
-    if (uploadError) {
-      console.error('Error uploading HTML:', uploadError);
-      throw uploadError;
-    }
-
-    // Get public URL
-    const { data: urlData } = supabase.storage
-      .from('corporate-presentations')
-      .getPublicUrl(filename);
-
-    const pdfUrl = urlData.publicUrl;
-
-    // Update presentation with PDF URL
+    // Save HTML content directly to database instead of storage
     const { error: updateError } = await supabase
       .from('generated_presentations')
       .update({ 
-        pdf_url: pdfUrl, 
+        html_content: html,
         status: 'generated',
         updated_at: new Date().toISOString(),
       })
@@ -616,14 +588,15 @@ Deno.serve(async (req) => {
 
     if (updateError) {
       console.error('Error updating presentation:', updateError);
+      throw updateError;
     }
 
-    console.log('Presentation generated successfully:', pdfUrl);
+    console.log('Presentation generated successfully, ID:', presentation_id);
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        pdf_url: pdfUrl,
+        presentation_id: presentation_id,
         message: 'Presentation generated successfully' 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
