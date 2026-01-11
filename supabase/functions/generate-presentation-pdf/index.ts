@@ -43,6 +43,7 @@ interface GeneratedPresentation {
   id: string;
   client_name: string;
   client_company: string | null;
+  client_logo_url: string | null;
   sector: string | null;
   language: string;
   format: string;
@@ -1000,7 +1001,15 @@ function generateHTML(presentation: GeneratedPresentation): string {
   <!-- PÁGINA 1: PORTADA -->
   <div class="page cover">
     <div class="cover-content">
+      ${presentation.client_logo_url ? `
+      <div class="cover-logos">
+        <div class="cover-logo-navarro">${NAVARRO_LOGO_SVG}</div>
+        <span class="cover-logo-separator">×</span>
+        <img src="${presentation.client_logo_url}" alt="${presentation.client_company || presentation.client_name}" class="cover-logo-client" />
+      </div>
+      ` : `
       <div class="logo">${NAVARRO_LOGO_SVG}</div>
+      `}
       <h1>${t.title}</h1>
       <p class="prepared-for">${t.preparedFor}</p>
       <p class="client-name">${presentation.client_name}</p>
@@ -1302,6 +1311,7 @@ Deno.serve(async (req) => {
     // Parse JSON fields if they're strings
     const parsedPresentation: GeneratedPresentation = {
       ...presentation,
+      client_logo_url: presentation.client_logo_url || null,
       services_included: typeof presentation.services_included === 'string' 
         ? JSON.parse(presentation.services_included) 
         : presentation.services_included || [],
