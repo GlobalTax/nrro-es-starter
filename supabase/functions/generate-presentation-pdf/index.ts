@@ -347,6 +347,92 @@ const CTA_TYPES = {
   },
 };
 
+// ============ CONTENIDO REAL DE LA WEB nrro.es ============
+
+// Datos Clave de la web (KPIs reales)
+const WEB_DATOS_CLAVE = {
+  es: [
+    { categoria: "Clientes", valor: "300+", descripcion: "Más de 300 empresas familiares y grupos confían en navarro." },
+    { categoria: "Proyectos", valor: "500+", descripcion: "Operaciones de reestructuración, sucesión y M&A completadas con éxito." },
+    { categoria: "Años de experiencia", valor: "25+", descripcion: "Trayectoria sólida acompañando a empresas familiares en su crecimiento." },
+    { categoria: "Equipo", valor: "70+", descripcion: "Abogados y profesionales especializados en fiscal, mercantil, laboral y M&A." },
+    { categoria: "Compromiso", valor: "100%", descripcion: "Dedicación total a cada mandato, con rigor técnico y confidencialidad." },
+    { categoria: "Operaciones M&A", valor: "100+", descripcion: "Mandatos de compra y venta asesorados con un enfoque integral." },
+  ],
+  en: [
+    { categoria: "Clients", valor: "300+", descripcion: "Over 300 family businesses and groups trust navarro." },
+    { categoria: "Projects", valor: "500+", descripcion: "Restructuring, succession, and M&A operations successfully completed." },
+    { categoria: "Years of experience", valor: "25+", descripcion: "Solid track record supporting family businesses in their growth." },
+    { categoria: "Team", valor: "70+", descripcion: "Lawyers and professionals specialized in tax, corporate, labor and M&A." },
+    { categoria: "Commitment", valor: "100%", descripcion: "Total dedication to every mandate, with technical rigor and confidentiality." },
+    { categoria: "M&A Operations", valor: "100+", descripcion: "Buy and sell mandates advised with a comprehensive approach." },
+  ],
+  ca: [
+    { categoria: "Clients", valor: "300+", descripcion: "Més de 300 empreses familiars i grups confien en navarro." },
+    { categoria: "Projectes", valor: "500+", descripcion: "Operacions de reestructuració, successió i M&A completades amb èxit." },
+    { categoria: "Anys d'experiència", valor: "25+", descripcion: "Trajectòria sòlida acompanyant empreses familiars en el seu creixement." },
+    { categoria: "Equip", valor: "70+", descripcion: "Advocats i professionals especialitzats en fiscal, mercantil, laboral i M&A." },
+    { categoria: "Compromís", valor: "100%", descripcion: "Dedicació total a cada mandat, amb rigor tècnic i confidencialitat." },
+    { categoria: "Operacions M&A", valor: "100+", descripcion: "Mandats de compra i venda assessorats amb un enfocament integral." },
+  ],
+};
+
+// Sección "Quiénes somos" - Contenido real de la web
+const WEB_NOSOTROS = {
+  es: {
+    overline: "Nosotros navarro",
+    title: "Asesoramiento estratégico y legal para empresas y grupos.",
+    paragraphs: [
+      "En navarro ofrecemos asesoramiento legal, fiscal y estratégico especializado en empresas familiares y estructuras empresariales consolidadas.",
+      "Nuestra visión parte de la comprensión profunda de los retos de continuidad, gobernanza y crecimiento que enfrentan las compañías familiares. Aportamos soluciones concretas para planificar el relevo generacional, proteger el patrimonio y estructurar la actividad con seguridad jurídica.",
+      "Nuestro equipo trabaja con rigor técnico, experiencia transversal y compromiso absoluto con cada cliente.",
+      "Ya sea en la gestión diaria, la toma de decisiones clave o en procesos de compraventa, acompañamos a nuestros clientes con total confidencialidad y enfoque a largo plazo."
+    ]
+  },
+  en: {
+    overline: "About navarro",
+    title: "Strategic and legal advisory for companies and groups.",
+    paragraphs: [
+      "At navarro we offer specialized legal, tax and strategic advisory for family businesses and established corporate structures.",
+      "Our vision is based on a deep understanding of the continuity, governance and growth challenges that family businesses face. We provide concrete solutions to plan generational succession, protect assets and structure operations with legal certainty.",
+      "Our team works with technical rigor, cross-functional experience and absolute commitment to each client.",
+      "Whether in daily management, key decision-making or buy/sell processes, we accompany our clients with total confidentiality and a long-term approach."
+    ]
+  },
+  ca: {
+    overline: "Nosaltres navarro",
+    title: "Assessorament estratègic i legal per a empreses i grups.",
+    paragraphs: [
+      "A navarro oferim assessorament legal, fiscal i estratègic especialitzat en empreses familiars i estructures empresarials consolidades.",
+      "La nostra visió parteix de la comprensió profunda dels reptes de continuïtat, governança i creixement que enfronten les companyies familiars. Aportem solucions concretes per planificar el relleu generacional, protegir el patrimoni i estructurar l'activitat amb seguretat jurídica.",
+      "El nostre equip treballa amb rigor tècnic, experiència transversal i compromís absolut amb cada client.",
+      "Ja sigui en la gestió diària, la presa de decisions clau o en processos de compravenda, acompanyem els nostres clients amb total confidencialitat i enfocament a llarg termini."
+    ]
+  },
+};
+
+// Valores reales de la web con iconos
+const WEB_VALORES = {
+  es: [
+    { icon: "★", titulo: "Experiencia consolidada", descripcion: "25 años en el sector garantizan conocimiento profundo, visión estratégica y capacidad de anticipación ante cualquier escenario fiscal o legal." },
+    { icon: "◎", titulo: "Rigor técnico absoluto", descripcion: "Formados en los principales despachos nacionales, aplicamos los más altos estándares de calidad. Cada asesoramiento está respaldado por un análisis exhaustivo y actualización normativa constante." },
+    { icon: "◈", titulo: "Servicio 100% personalizado", descripcion: "Atención directa del socio, sin intermediarios. Conocemos tu negocio, tus objetivos y tus preocupaciones. Relación de confianza a largo plazo." },
+    { icon: "↗", titulo: "Orientación a resultados", descripcion: "No solo cumplimiento: asesoramiento estratégico orientado a optimizar tu fiscalidad, proteger tu patrimonio e impulsar el crecimiento de tu empresa." }
+  ],
+  en: [
+    { icon: "★", titulo: "Consolidated experience", descripcion: "25 years in the sector guarantee deep knowledge, strategic vision and the ability to anticipate any tax or legal scenario." },
+    { icon: "◎", titulo: "Absolute technical rigor", descripcion: "Trained at leading national firms, we apply the highest quality standards. Every advisory is backed by thorough analysis and constant regulatory updates." },
+    { icon: "◈", titulo: "100% personalized service", descripcion: "Direct attention from the partner, no intermediaries. We know your business, your goals and your concerns. Long-term trust relationship." },
+    { icon: "↗", titulo: "Results-oriented", descripcion: "Not just compliance: strategic advisory aimed at optimizing your taxation, protecting your assets and driving your company's growth." }
+  ],
+  ca: [
+    { icon: "★", titulo: "Experiència consolidada", descripcion: "25 anys al sector garanteixen coneixement profund, visió estratègica i capacitat d'anticipació davant qualsevol escenari fiscal o legal." },
+    { icon: "◎", titulo: "Rigor tècnic absolut", descripcion: "Formats als principals despatxos nacionals, apliquem els més alts estàndards de qualitat. Cada assessorament està recolzat per una anàlisi exhaustiva i actualització normativa constant." },
+    { icon: "◈", titulo: "Servei 100% personalitzat", descripcion: "Atenció directa del soci, sense intermediaris. Coneixem el teu negoci, els teus objectius i les teves preocupacions. Relació de confiança a llarg termini." },
+    { icon: "↗", titulo: "Orientació a resultats", descripcion: "No només compliment: assessorament estratègic orientat a optimitzar la teva fiscalitat, protegir el teu patrimoni i impulsar el creixement de la teva empresa." }
+  ],
+};
+
 // Traducciones completas
 const TRANSLATIONS = {
   es: {
@@ -357,6 +443,8 @@ const TRANSLATIONS = {
     team: 'Equipo',
     caseStudies: 'Casos de Éxito',
     aboutUs: 'Quiénes Somos',
+    keyData: 'Datos Clave',
+    ourValues: 'Nuestros Valores',
     aboutText: 'Ayudamos a empresas familiares, grupos y empresarios cuando el problema ya no es contable, sino estratégico, societario o patrimonial.',
     aboutTextExtended: 'Combinamos experiencia fiscal, legal y corporativa para ofrecer soluciones integrales. No solo resolvemos problemas: anticipamos, planificamos y acompañamos.',
     whyNavarro: 'Por qué Navarro',
@@ -368,13 +456,13 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15+',
+      years: '25+',
       yearsLabel: 'años de experiencia',
       clients: '300+',
       clientsLabel: 'clientes asesorados',
       team: '70+',
       teamLabel: 'profesionales',
-      operations: '200+',
+      operations: '100+',
       operationsLabel: 'operaciones M&A',
     },
     valueProps: [
@@ -412,6 +500,8 @@ const TRANSLATIONS = {
     team: 'Team',
     caseStudies: 'Success Stories',
     aboutUs: 'Who We Are',
+    keyData: 'Key Data',
+    ourValues: 'Our Values',
     aboutText: 'We help family businesses, groups and entrepreneurs when the problem is no longer accounting, but strategic, corporate or patrimonial.',
     aboutTextExtended: 'We combine tax, legal and corporate experience to offer comprehensive solutions. We don\'t just solve problems: we anticipate, plan and accompany.',
     whyNavarro: 'Why Navarro',
@@ -423,13 +513,13 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15+',
+      years: '25+',
       yearsLabel: 'years of experience',
       clients: '300+',
       clientsLabel: 'clients advised',
       team: '70+',
       teamLabel: 'professionals',
-      operations: '200+',
+      operations: '100+',
       operationsLabel: 'M&A operations',
     },
     valueProps: [
@@ -467,6 +557,8 @@ const TRANSLATIONS = {
     team: 'Equip',
     caseStudies: 'Casos d\'Èxit',
     aboutUs: 'Qui Som',
+    keyData: 'Dades Clau',
+    ourValues: 'Els Nostres Valors',
     aboutText: 'Ajudem empreses familiars, grups i empresaris quan el problema ja no és comptable, sinó estratègic, societari o patrimonial.',
     aboutTextExtended: 'Combinem experiència fiscal, legal i corporativa per oferir solucions integrals. No només resolem problemes: anticipem, planifiquem i acompanyem.',
     whyNavarro: 'Per què Navarro',
@@ -478,13 +570,13 @@ const TRANSLATIONS = {
     address: 'Barcelona',
     website: 'nrro.es',
     stats: {
-      years: '15+',
+      years: '25+',
       yearsLabel: 'anys d\'experiència',
       clients: '300+',
       clientsLabel: 'clients assessorats',
       team: '70+',
       teamLabel: 'professionals',
-      operations: '200+',
+      operations: '100+',
       operationsLabel: 'operacions M&A',
     },
     valueProps: [
@@ -547,6 +639,21 @@ function getDifferentiators(presentation: GeneratedPresentation, lang: string) {
   return DIFFERENTIATORS[lang as keyof typeof DIFFERENTIATORS] || DIFFERENTIATORS.es;
 }
 
+// Helper para obtener datos clave de la web
+function getWebDatosClave(lang: string) {
+  return WEB_DATOS_CLAVE[lang as keyof typeof WEB_DATOS_CLAVE] || WEB_DATOS_CLAVE.es;
+}
+
+// Helper para obtener contenido "Nosotros" de la web
+function getWebNosotros(lang: string) {
+  return WEB_NOSOTROS[lang as keyof typeof WEB_NOSOTROS] || WEB_NOSOTROS.es;
+}
+
+// Helper para obtener valores de la web
+function getWebValores(lang: string) {
+  return WEB_VALORES[lang as keyof typeof WEB_VALORES] || WEB_VALORES.es;
+}
+
 function generateHTML(presentation: GeneratedPresentation): string {
   const lang = presentation.language as keyof typeof TRANSLATIONS;
   const t = TRANSLATIONS[lang] || TRANSLATIONS.es;
@@ -560,6 +667,11 @@ function generateHTML(presentation: GeneratedPresentation): string {
   const coverTagline = getCoverTagline(presentation, presentation.language);
   const cta = getCTA(presentation, presentation.language);
   const differentiators = getDifferentiators(presentation, presentation.language);
+  
+  // Obtener contenido real de la web
+  const webDatos = getWebDatosClave(presentation.language);
+  const webNosotros = getWebNosotros(presentation.language);
+  const webValores = getWebValores(presentation.language);
   
   // Paginar servicios (máx 4 por página en A4, 6 en horizontal)
   const SERVICES_PER_PAGE = isHorizontal ? 6 : 4;
@@ -817,6 +929,17 @@ function generateHTML(presentation: GeneratedPresentation): string {
       opacity: 0.85;
     }
     
+    .about-paragraphs p {
+      margin-bottom: 16px;
+      font-size: ${isHorizontal ? '17px' : '13px'};
+      line-height: 1.7;
+      color: var(--foreground);
+    }
+    
+    .about-paragraphs p:last-child {
+      margin-bottom: 0;
+    }
+    
     .about-text .custom-intro {
       margin-top: 24px;
       padding: 20px 24px;
@@ -825,6 +948,91 @@ function generateHTML(presentation: GeneratedPresentation): string {
       font-style: italic;
       color: var(--neutral-800);
       font-size: ${isHorizontal ? '18px' : '14px'};
+    }
+    
+    /* ========== DATOS CLAVE (KPIs) ========== */
+    .key-data-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: ${isHorizontal ? '20px' : '12px'};
+      width: 100%;
+    }
+    
+    .key-data-card {
+      padding: ${isHorizontal ? '24px 20px' : '16px 14px'};
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      text-align: center;
+    }
+    
+    .key-data-category {
+      font-size: ${isHorizontal ? '10px' : '8px'};
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    
+    .key-data-value {
+      font-family: 'General Sans', sans-serif;
+      font-size: ${isHorizontal ? '38px' : '26px'};
+      font-weight: 500;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    
+    .key-data-desc {
+      font-size: ${isHorizontal ? '11px' : '9px'};
+      color: var(--neutral-800);
+      line-height: 1.4;
+    }
+    
+    /* ========== VALORES (de la web) ========== */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: ${isHorizontal ? '24px' : '14px'};
+      margin-top: ${isHorizontal ? '24px' : '16px'};
+    }
+    
+    .value-card {
+      padding: ${isHorizontal ? '28px 24px' : '18px 14px'};
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      display: flex;
+      gap: ${isHorizontal ? '20px' : '14px'};
+      align-items: flex-start;
+    }
+    
+    .value-icon {
+      width: ${isHorizontal ? '48px' : '36px'};
+      height: ${isHorizontal ? '48px' : '36px'};
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: ${isHorizontal ? '24px' : '18px'};
+      flex-shrink: 0;
+    }
+    
+    .value-content {
+      flex: 1;
+    }
+    
+    .value-title {
+      font-family: 'General Sans', sans-serif;
+      font-size: ${isHorizontal ? '18px' : '14px'};
+      font-weight: 500;
+      color: var(--foreground);
+      margin-bottom: 6px;
+    }
+    
+    .value-desc {
+      font-size: ${isHorizontal ? '13px' : '10px'};
+      color: var(--muted);
+      line-height: 1.5;
     }
     
     .stats-grid {
@@ -1020,6 +1228,23 @@ function generateHTML(presentation: GeneratedPresentation): string {
       font-size: ${isHorizontal ? '11px' : '9px'};
       color: var(--muted);
       line-height: 1.4;
+    }
+    
+    .service-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    
+    .service-feature-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .feature-check {
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
     }
     
     /* ========== EQUIPO (M7) ========== */
@@ -1405,30 +1630,38 @@ function generateHTML(presentation: GeneratedPresentation): string {
           <span class="toc-number">01</span>
           <span class="toc-title">${t.aboutUs}</span>
         </li>
-        ${presentation.include_value_proposition !== false ? `
         <li class="toc-item">
           <span class="toc-number">02</span>
+          <span class="toc-title">${t.keyData}</span>
+        </li>
+        <li class="toc-item">
+          <span class="toc-number">03</span>
+          <span class="toc-title">${t.ourValues}</span>
+        </li>
+        ${presentation.include_value_proposition !== false ? `
+        <li class="toc-item">
+          <span class="toc-number">04</span>
           <span class="toc-title">${t.differentiators}</span>
         </li>
         ` : ''}
         ${presentation.include_methodology !== false ? `
         <li class="toc-item">
-          <span class="toc-number">03</span>
+          <span class="toc-number">05</span>
           <span class="toc-title">${t.methodology}</span>
         </li>
         ` : ''}
         <li class="toc-item">
-          <span class="toc-number">04</span>
+          <span class="toc-number">06</span>
           <span class="toc-title">${t.services}</span>
         </li>
         ${coreTeam.length > 0 ? `
         <li class="toc-item">
-          <span class="toc-number">05</span>
+          <span class="toc-number">07</span>
           <span class="toc-title">${t.team}</span>
         </li>
         ` : ''}
         <li class="toc-item">
-          <span class="toc-number">06</span>
+          <span class="toc-number">08</span>
           <span class="toc-title">${presentation.case_studies_included.length > 0 ? t.caseStudies : t.contact}</span>
         </li>
       </ul>
@@ -1436,7 +1669,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   ` : ''}
   
-  <!-- M2: QUIÉNES SOMOS -->
+  <!-- M2: QUIÉNES SOMOS (contenido real de la web) -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
@@ -1445,8 +1678,9 @@ function generateHTML(presentation: GeneratedPresentation): string {
     <h2 class="section-title">${t.aboutUs}</h2>
     <div class="about-content">
       <div class="about-text">
-        <p>${t.aboutText}</p>
-        <p class="about-text-extended">${t.aboutTextExtended}</p>
+        <div class="about-paragraphs">
+          ${webNosotros.paragraphs.map(p => `<p>${p}</p>`).join('')}
+        </div>
         ${presentation.custom_intro ? `<div class="custom-intro"><p>${presentation.custom_intro}</p></div>` : ''}
       </div>
       ${presentation.include_stats !== false ? `
@@ -1472,12 +1706,50 @@ function generateHTML(presentation: GeneratedPresentation): string {
     </div>
   </div>
   
+  <!-- DATOS CLAVE (KPIs reales de la web) -->
+  <div class="page">
+    <div class="page-header">
+      <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
+      <span class="page-number">${presentation.include_toc !== false ? '04' : '03'}</span>
+    </div>
+    <h2 class="section-title">${t.keyData}</h2>
+    <div class="key-data-grid">
+      ${webDatos.map(dato => `
+        <div class="key-data-card">
+          <div class="key-data-category">${dato.categoria}</div>
+          <div class="key-data-value">${dato.valor}</div>
+          <div class="key-data-desc">${dato.descripcion}</div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+  
+  <!-- NUESTROS VALORES (contenido real de la web) -->
+  <div class="page">
+    <div class="page-header">
+      <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
+      <span class="page-number">${presentation.include_toc !== false ? '05' : '04'}</span>
+    </div>
+    <h2 class="section-title">${t.ourValues}</h2>
+    <div class="values-grid">
+      ${webValores.map(valor => `
+        <div class="value-card">
+          <div class="value-icon">${valor.icon}</div>
+          <div class="value-content">
+            <div class="value-title">${valor.titulo}</div>
+            <div class="value-desc">${valor.descripcion}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+  
   ${presentation.include_value_proposition !== false ? `
   <!-- M3: DIFERENCIADORES -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${presentation.include_toc !== false ? '04' : '03'}</span>
+      <span class="page-number">${presentation.include_toc !== false ? '06' : '05'}</span>
     </div>
     <h2 class="section-title">${t.whyNavarro}</h2>
     <div class="diff-grid">
@@ -1506,7 +1778,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${presentation.include_toc !== false ? '05' : '04'}</span>
+      <span class="page-number">${presentation.include_toc !== false ? '07' : '06'}</span>
     </div>
     <h2 class="section-title">${t.methodology}</h2>
     <div class="methodology-grid">
@@ -1521,12 +1793,12 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   ` : ''}
   
-  <!-- M4: SERVICIOS -->
+  <!-- M4: SERVICIOS (con checkmarks) -->
   ${servicePages.map((pageServices, pageIndex) => `
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
-      <span class="page-number">${String(6 + pageIndex).padStart(2, '0')}</span>
+      <span class="page-number">${String(8 + pageIndex).padStart(2, '0')}</span>
     </div>
     <h2 class="section-title">${t.services}${servicePages.length > 1 ? ` (${pageIndex + 1}/${servicePages.length})` : ''}</h2>
     <div class="services-grid">
@@ -1538,7 +1810,14 @@ function generateHTML(presentation: GeneratedPresentation): string {
           ${presentation.show_service_features !== false && service.features && service.features.length > 0 ? `
             <div class="service-features">
               <div class="service-features-title">${t.features}</div>
-              <div class="service-features-list">${service.features.slice(0, 3).join(' · ')}</div>
+              <div class="service-features-list">
+                ${service.features.slice(0, 3).map(f => `
+                  <div class="service-feature-item">
+                    <span class="feature-check">✓</span>
+                    <span>${f}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
           ` : ''}
         </div>
