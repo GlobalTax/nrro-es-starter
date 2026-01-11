@@ -959,88 +959,130 @@ function generateHTML(presentation: GeneratedPresentation): string {
     }
     
     /* ========== DATOS CLAVE (KPIs) ========== */
+    .key-data-section {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    .key-data-subtitle {
+      font-size: ${isHorizontal ? '16px' : '12px'};
+      color: var(--muted);
+      margin-bottom: ${isHorizontal ? '32px' : '20px'};
+      margin-top: -${isHorizontal ? '20px' : '10px'};
+    }
+    
     .key-data-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: ${isHorizontal ? '20px' : '12px'};
+      gap: ${isHorizontal ? '16px' : '10px'};
       width: 100%;
+      flex: 1;
+      align-content: center;
     }
     
     .key-data-card {
-      padding: ${isHorizontal ? '24px 20px' : '16px 14px'};
+      padding: ${isHorizontal ? '32px 24px' : '20px 16px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
-      text-align: center;
+      border-left: 4px solid var(--accent);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: ${isHorizontal ? '160px' : '100px'};
     }
     
     .key-data-category {
-      font-size: ${isHorizontal ? '10px' : '8px'};
+      font-size: ${isHorizontal ? '11px' : '9px'};
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
     
     .key-data-value {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '38px' : '26px'};
+      font-size: ${isHorizontal ? '52px' : '32px'};
       font-weight: 500;
       color: var(--accent);
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
     
     .key-data-desc {
-      font-size: ${isHorizontal ? '11px' : '9px'};
+      font-size: ${isHorizontal ? '14px' : '10px'};
       color: var(--neutral-800);
-      line-height: 1.4;
+      line-height: 1.5;
     }
     
     /* ========== VALORES (de la web) ========== */
+    .values-section {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    .values-subtitle {
+      font-size: ${isHorizontal ? '16px' : '12px'};
+      color: var(--muted);
+      margin-bottom: ${isHorizontal ? '32px' : '20px'};
+      margin-top: -${isHorizontal ? '20px' : '10px'};
+    }
+    
     .values-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: ${isHorizontal ? '24px' : '14px'};
-      margin-top: ${isHorizontal ? '24px' : '16px'};
+      gap: ${isHorizontal ? '20px' : '12px'};
+      flex: 1;
+      align-content: center;
     }
     
     .value-card {
-      padding: ${isHorizontal ? '28px 24px' : '18px 14px'};
+      padding: ${isHorizontal ? '32px 28px' : '20px 16px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
       display: flex;
-      gap: ${isHorizontal ? '20px' : '14px'};
+      gap: ${isHorizontal ? '24px' : '16px'};
       align-items: flex-start;
+      min-height: ${isHorizontal ? '140px' : '90px'};
     }
     
     .value-icon {
-      width: ${isHorizontal ? '48px' : '36px'};
-      height: ${isHorizontal ? '48px' : '36px'};
+      width: ${isHorizontal ? '56px' : '40px'};
+      height: ${isHorizontal ? '56px' : '40px'};
       background: var(--black);
       color: var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: ${isHorizontal ? '24px' : '18px'};
       flex-shrink: 0;
+    }
+    
+    .value-icon svg {
+      width: ${isHorizontal ? '28px' : '20px'};
+      height: ${isHorizontal ? '28px' : '20px'};
     }
     
     .value-content {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     
     .value-title {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '18px' : '14px'};
+      font-size: ${isHorizontal ? '20px' : '15px'};
       font-weight: 500;
       color: var(--foreground);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     
     .value-desc {
-      font-size: ${isHorizontal ? '13px' : '10px'};
-      color: var(--muted);
-      line-height: 1.5;
+      font-size: ${isHorizontal ? '15px' : '11px'};
+      color: var(--neutral-700);
+      line-height: 1.6;
     }
     
     .stats-grid {
@@ -1700,15 +1742,18 @@ function generateHTML(presentation: GeneratedPresentation): string {
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
       <span class="page-number">${presentation.include_toc !== false ? '04' : '03'}</span>
     </div>
-    <h2 class="section-title">${t.keyData}</h2>
-    <div class="key-data-grid">
-      ${webDatos.map(dato => `
-        <div class="key-data-card">
-          <div class="key-data-category">${dato.categoria}</div>
-          <div class="key-data-value">${dato.valor}</div>
-          <div class="key-data-desc">${dato.descripcion}</div>
-        </div>
-      `).join('')}
+    <div class="key-data-section">
+      <h2 class="section-title">${t.keyData}</h2>
+      <p class="key-data-subtitle">${lang === 'es' ? 'Cifras que respaldan nuestra trayectoria' : lang === 'ca' ? 'Xifres que avalen la nostra trajectòria' : 'Numbers that back our track record'}</p>
+      <div class="key-data-grid">
+        ${webDatos.map(dato => `
+          <div class="key-data-card">
+            <div class="key-data-category">${dato.categoria}</div>
+            <div class="key-data-value">${dato.valor}</div>
+            <div class="key-data-desc">${dato.descripcion}</div>
+          </div>
+        `).join('')}
+      </div>
     </div>
   </div>
   
@@ -1718,17 +1763,20 @@ function generateHTML(presentation: GeneratedPresentation): string {
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
       <span class="page-number">${presentation.include_toc !== false ? '05' : '04'}</span>
     </div>
-    <h2 class="section-title">${t.ourValues}</h2>
-    <div class="values-grid">
-      ${webValores.map(valor => `
-        <div class="value-card">
-          <div class="value-icon">${valor.icon}</div>
-          <div class="value-content">
-            <div class="value-title">${valor.titulo}</div>
-            <div class="value-desc">${valor.descripcion}</div>
+    <div class="values-section">
+      <h2 class="section-title">${t.ourValues}</h2>
+      <p class="values-subtitle">${lang === 'es' ? 'Principios que guían nuestra práctica profesional' : lang === 'ca' ? 'Principis que guien la nostra pràctica professional' : 'Principles that guide our professional practice'}</p>
+      <div class="values-grid">
+        ${webValores.map(valor => `
+          <div class="value-card">
+            <div class="value-icon">${valor.icon}</div>
+            <div class="value-content">
+              <div class="value-title">${valor.titulo}</div>
+              <div class="value-desc">${valor.descripcion}</div>
+            </div>
           </div>
-        </div>
-      `).join('')}
+        `).join('')}
+      </div>
     </div>
   </div>
   
