@@ -15,6 +15,7 @@ export interface GeneratedPresentation {
   include_stats: boolean;
   custom_intro: string | null;
   pdf_url: string | null;
+  html_content: string | null;
   status: string;
   generated_by: string | null;
   created_at: string;

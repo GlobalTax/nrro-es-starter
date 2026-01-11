@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,12 +11,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  Download,
+  Eye,
   MoreVertical,
   Trash2,
   FileText,
   Building2,
-  Globe,
   LayoutTemplate,
   RefreshCw,
   Loader2,
@@ -42,19 +42,17 @@ export function GeneratedPresentationCard({
   presentation,
   onDelete,
 }: GeneratedPresentationCardProps) {
+  const navigate = useNavigate();
   const regenerateMutation = useGeneratePresentationPdf();
 
-  const handleDownload = () => {
-    if (presentation.pdf_url) {
-      window.open(presentation.pdf_url, '_blank');
-    }
+  const handleView = () => {
+    navigate(`/presentation-preview/${presentation.id}`);
   };
 
   const handleRegenerate = async () => {
-    const result = await regenerateMutation.mutateAsync(presentation.id);
-    if (result?.pdf_url) {
-      window.open(result.pdf_url, '_blank');
-    }
+    await regenerateMutation.mutateAsync(presentation.id);
+    // Navigate to preview after regeneration
+    navigate(`/presentation-preview/${presentation.id}`);
   };
 
   return (
@@ -86,10 +84,10 @@ export function GeneratedPresentationCard({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {presentation.pdf_url && (
-                <DropdownMenuItem onClick={handleDownload}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Descargar PDF
+              {presentation.html_content && (
+                <DropdownMenuItem onClick={handleView}>
+                  <Eye className="h-4 w-4 mr-2" />
+                  Ver presentación
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem
@@ -101,7 +99,7 @@ export function GeneratedPresentationCard({
                 ) : (
                   <RefreshCw className="h-4 w-4 mr-2" />
                 )}
-                Regenerar PDF
+                Regenerar
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => onDelete(presentation.id)}
@@ -144,16 +142,16 @@ export function GeneratedPresentationCard({
           </span>
         </div>
 
-        {/* Download button */}
-        {presentation.pdf_url ? (
+        {/* View/Generate button */}
+        {presentation.html_content ? (
           <Button
             variant="outline"
             size="sm"
             className="w-full mt-3"
-            onClick={handleDownload}
+            onClick={handleView}
           >
-            <Download className="h-4 w-4 mr-2" />
-            Descargar
+            <Eye className="h-4 w-4 mr-2" />
+            Ver presentación
           </Button>
         ) : (
           <Button
@@ -168,7 +166,7 @@ export function GeneratedPresentationCard({
             ) : (
               <FileText className="h-4 w-4 mr-2" />
             )}
-            Generar PDF
+            Generar
           </Button>
         )}
       </CardContent>

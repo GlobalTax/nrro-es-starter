@@ -1266,6 +1266,7 @@ export type Database = {
           custom_intro: string | null
           format: string
           generated_by: string | null
+          html_content: string | null
           id: string
           include_stats: boolean | null
           language: string
@@ -1284,6 +1285,7 @@ export type Database = {
           custom_intro?: string | null
           format?: string
           generated_by?: string | null
+          html_content?: string | null
           id?: string
           include_stats?: boolean | null
           language?: string
@@ -1302,6 +1304,7 @@ export type Database = {
           custom_intro?: string | null
           format?: string
           generated_by?: string | null
+          html_content?: string | null
           id?: string
           include_stats?: boolean | null
           language?: string

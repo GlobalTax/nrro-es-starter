@@ -66,6 +66,7 @@ import { ExpressCompanySetup } from "./pages/ExpressCompanySetup";
 import { SetupCompanySpain } from "./pages/SetupCompanySpain";
 import { DynamicLandingPage } from "./pages/DynamicLandingPage";
 import SitemapXML from "./pages/SitemapXML";
+import PresentationPreview from "./pages/PresentationPreview";
 
 const queryClient = new QueryClient();
 
@@ -225,6 +226,9 @@ const App = () => {
                 } 
               />
             </Route>
+
+            {/* Presentation Preview - standalone route without admin layout */}
+            <Route path="/presentation-preview/:id" element={<PresentationPreview />} />
 
             {/* Sitemap XML */}
             <Route path="/sitemap.xml" element={<SitemapXML />} />
