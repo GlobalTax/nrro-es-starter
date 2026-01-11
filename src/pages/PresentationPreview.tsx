@@ -3,15 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Printer, Download, Loader2 } from 'lucide-react';
-import { useRef, useState } from 'react';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
+import { useRef } from 'react';
 
 export default function PresentationPreview() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const { data: presentation, isLoading, error } = useQuery({
     queryKey: ['presentation-preview', id],
@@ -36,61 +33,18 @@ export default function PresentationPreview() {
     }
   };
 
-  const handleDownloadPDF = async () => {
-    if (!iframeRef.current?.contentDocument?.body || !presentation) return;
+  const handleDownload = () => {
+    if (!presentation?.html_content) return;
     
-    setIsGeneratingPDF(true);
-    
-    try {
-      const doc = iframeRef.current.contentDocument;
-      const pages = doc.querySelectorAll('.page');
-      
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-      });
-      
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-      
-      if (pages.length === 0) {
-        const canvas = await html2canvas(doc.body, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff'
-        });
-        const imgData = canvas.toDataURL('image/jpeg', 0.98);
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-      } else {
-        for (let i = 0; i < pages.length; i++) {
-          const page = pages[i] as HTMLElement;
-          
-          const canvas = await html2canvas(page, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#ffffff'
-          });
-          
-          const imgData = canvas.toDataURL('image/jpeg', 0.98);
-          
-          if (i > 0) {
-            pdf.addPage();
-          }
-          
-          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-        }
-      }
-      
-      pdf.save(`Presentacion-${presentation.client_name || 'Navarro'}.pdf`);
-      
-    } catch (err) {
-      console.error('Error generating PDF:', err);
-    } finally {
-      setIsGeneratingPDF(false);
-    }
+    const blob = new Blob([presentation.html_content], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Presentacion-${presentation.client_name || 'Navarro'}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleBack = () => {
@@ -150,18 +104,9 @@ export default function PresentationPreview() {
         </Button>
         
         <div className="flex items-center gap-2">
-          <Button 
-            variant="outline" 
-            onClick={handleDownloadPDF} 
-            disabled={isGeneratingPDF}
-            className="shadow-lg bg-background"
-          >
-            {isGeneratingPDF ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <Download className="h-4 w-4 mr-2" />
-            )}
-            {isGeneratingPDF ? 'Generando...' : 'Descargar PDF'}
+          <Button variant="outline" onClick={handleDownload} className="shadow-lg bg-background">
+            <Download className="h-4 w-4 mr-2" />
+            Descargar HTML
           </Button>
           
           <Button onClick={handlePrint} className="shadow-lg">
