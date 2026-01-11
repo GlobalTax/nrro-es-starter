@@ -266,12 +266,15 @@ function generateHTML(presentation: GeneratedPresentation): string {
     .page {
       width: ${pageWidth};
       min-height: ${pageHeight};
+      height: ${pageHeight};
       background: var(--white);
       margin: 0 auto;
-      padding: ${isHorizontal ? '80px 100px' : '60px 50px'};
+      padding: ${isHorizontal ? '80px 100px' : '50px 40px'};
       page-break-after: always;
+      page-break-inside: avoid;
       position: relative;
       overflow: hidden;
+      box-sizing: border-box;
     }
     
     .page:last-child {
@@ -368,20 +371,20 @@ function generateHTML(presentation: GeneratedPresentation): string {
     
     /* ========== TÍTULOS DE SECCIÓN ========== */
     .section-title {
-      font-size: ${isHorizontal ? '48px' : '36px'};
+      font-size: ${isHorizontal ? '48px' : '28px'};
       font-weight: 400;
       color: var(--foreground);
-      margin-bottom: ${isHorizontal ? '48px' : '32px'};
+      margin-bottom: ${isHorizontal ? '48px' : '24px'};
       position: relative;
     }
     
     .section-title::after {
       content: '';
       display: block;
-      width: 60px;
+      width: 50px;
       height: 3px;
       background: var(--accent);
-      margin-top: 16px;
+      margin-top: 12px;
     }
     
     /* ========== SOBRE NOSOTROS ========== */
@@ -410,30 +413,32 @@ function generateHTML(presentation: GeneratedPresentation): string {
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: ${isHorizontal ? '32px' : '20px'};
+      gap: ${isHorizontal ? '32px' : '12px'};
+      width: 100%;
+      max-width: 100%;
     }
     
     .stat-item {
       text-align: center;
-      padding: ${isHorizontal ? '40px 24px' : '28px 16px'};
+      padding: ${isHorizontal ? '40px 24px' : '20px 10px'};
       background: var(--neutral-50);
       border: 1px solid var(--neutral-200);
     }
     
     .stat-value {
       font-family: 'General Sans', sans-serif;
-      font-size: ${isHorizontal ? '56px' : '40px'};
+      font-size: ${isHorizontal ? '56px' : '32px'};
       font-weight: 500;
       color: var(--accent);
       line-height: 1;
     }
     
     .stat-label {
-      font-size: ${isHorizontal ? '14px' : '12px'};
+      font-size: ${isHorizontal ? '14px' : '10px'};
       color: var(--muted);
-      margin-top: 12px;
+      margin-top: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
     }
     
     /* ========== SERVICIOS ========== */
@@ -652,14 +657,59 @@ function generateHTML(presentation: GeneratedPresentation): string {
     }
     
     @media print {
-      .page {
+      @page {
+        size: ${isHorizontal ? '1920px 1080px' : '210mm 297mm'};
         margin: 0;
-        box-shadow: none;
+      }
+      
+      html, body {
+        width: ${pageWidth};
+        height: ${pageHeight};
+        margin: 0;
+        padding: 0;
+        background: white;
       }
       
       body {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      
+      .page {
+        width: ${pageWidth} !important;
+        min-height: ${pageHeight} !important;
+        height: ${pageHeight} !important;
+        margin: 0 !important;
+        padding: ${isHorizontal ? '80px 100px' : '50px 40px'} !important;
+        box-shadow: none !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+      
+      .page:last-child {
+        page-break-after: auto !important;
+      }
+      
+      .cover, .contact-page {
+        background: var(--black) !important;
+        color: var(--white) !important;
+      }
+      
+      .stats-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      
+      .stat-item {
+        background: var(--neutral-50) !important;
+      }
+      
+      .service-card, .team-card, .case-study-card {
+        background: var(--neutral-50) !important;
+        border: 1px solid var(--neutral-200) !important;
       }
     }
   </style>
