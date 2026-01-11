@@ -411,25 +411,33 @@ const WEB_NOSOTROS = {
   },
 };
 
-// Valores reales de la web con iconos
+// Iconos SVG profesionales para valores
+const VALUE_ICONS = {
+  award: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+  target: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+  users: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  trending: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+};
+
+// Valores reales de la web con iconos SVG
 const WEB_VALORES = {
   es: [
-    { icon: "★", titulo: "Experiencia consolidada", descripcion: "25 años en el sector garantizan conocimiento profundo, visión estratégica y capacidad de anticipación ante cualquier escenario fiscal o legal." },
-    { icon: "◎", titulo: "Rigor técnico absoluto", descripcion: "Formados en los principales despachos nacionales, aplicamos los más altos estándares de calidad. Cada asesoramiento está respaldado por un análisis exhaustivo y actualización normativa constante." },
-    { icon: "◈", titulo: "Servicio 100% personalizado", descripcion: "Atención directa del socio, sin intermediarios. Conocemos tu negocio, tus objetivos y tus preocupaciones. Relación de confianza a largo plazo." },
-    { icon: "↗", titulo: "Orientación a resultados", descripcion: "No solo cumplimiento: asesoramiento estratégico orientado a optimizar tu fiscalidad, proteger tu patrimonio e impulsar el crecimiento de tu empresa." }
+    { icon: VALUE_ICONS.award, titulo: "Experiencia consolidada", descripcion: "25 años en el sector garantizan conocimiento profundo, visión estratégica y capacidad de anticipación ante cualquier escenario fiscal o legal." },
+    { icon: VALUE_ICONS.target, titulo: "Rigor técnico absoluto", descripcion: "Formados en los principales despachos nacionales, aplicamos los más altos estándares de calidad. Cada asesoramiento está respaldado por un análisis exhaustivo y actualización normativa constante." },
+    { icon: VALUE_ICONS.users, titulo: "Servicio 100% personalizado", descripcion: "Atención directa del socio, sin intermediarios. Conocemos tu negocio, tus objetivos y tus preocupaciones. Relación de confianza a largo plazo." },
+    { icon: VALUE_ICONS.trending, titulo: "Orientación a resultados", descripcion: "No solo cumplimiento: asesoramiento estratégico orientado a optimizar tu fiscalidad, proteger tu patrimonio e impulsar el crecimiento de tu empresa." }
   ],
   en: [
-    { icon: "★", titulo: "Consolidated experience", descripcion: "25 years in the sector guarantee deep knowledge, strategic vision and the ability to anticipate any tax or legal scenario." },
-    { icon: "◎", titulo: "Absolute technical rigor", descripcion: "Trained at leading national firms, we apply the highest quality standards. Every advisory is backed by thorough analysis and constant regulatory updates." },
-    { icon: "◈", titulo: "100% personalized service", descripcion: "Direct attention from the partner, no intermediaries. We know your business, your goals and your concerns. Long-term trust relationship." },
-    { icon: "↗", titulo: "Results-oriented", descripcion: "Not just compliance: strategic advisory aimed at optimizing your taxation, protecting your assets and driving your company's growth." }
+    { icon: VALUE_ICONS.award, titulo: "Consolidated experience", descripcion: "25 years in the sector guarantee deep knowledge, strategic vision and the ability to anticipate any tax or legal scenario." },
+    { icon: VALUE_ICONS.target, titulo: "Absolute technical rigor", descripcion: "Trained at leading national firms, we apply the highest quality standards. Every advisory is backed by thorough analysis and constant regulatory updates." },
+    { icon: VALUE_ICONS.users, titulo: "100% personalized service", descripcion: "Direct attention from the partner, no intermediaries. We know your business, your goals and your concerns. Long-term trust relationship." },
+    { icon: VALUE_ICONS.trending, titulo: "Results-oriented", descripcion: "Not just compliance: strategic advisory aimed at optimizing your taxation, protecting your assets and driving your company's growth." }
   ],
   ca: [
-    { icon: "★", titulo: "Experiència consolidada", descripcion: "25 anys al sector garanteixen coneixement profund, visió estratègica i capacitat d'anticipació davant qualsevol escenari fiscal o legal." },
-    { icon: "◎", titulo: "Rigor tècnic absolut", descripcion: "Formats als principals despatxos nacionals, apliquem els més alts estàndards de qualitat. Cada assessorament està recolzat per una anàlisi exhaustiva i actualització normativa constant." },
-    { icon: "◈", titulo: "Servei 100% personalitzat", descripcion: "Atenció directa del soci, sense intermediaris. Coneixem el teu negoci, els teus objectius i les teves preocupacions. Relació de confiança a llarg termini." },
-    { icon: "↗", titulo: "Orientació a resultats", descripcion: "No només compliment: assessorament estratègic orientat a optimitzar la teva fiscalitat, protegir el teu patrimoni i impulsar el creixement de la teva empresa." }
+    { icon: VALUE_ICONS.award, titulo: "Experiència consolidada", descripcion: "25 anys al sector garanteixen coneixement profund, visió estratègica i capacitat d'anticipació davant qualsevol escenari fiscal o legal." },
+    { icon: VALUE_ICONS.target, titulo: "Rigor tècnic absolut", descripcion: "Formats als principals despatxos nacionals, apliquem els més alts estàndards de qualitat. Cada assessorament està recolzat per una anàlisi exhaustiva i actualització normativa constant." },
+    { icon: VALUE_ICONS.users, titulo: "Servei 100% personalitzat", descripcion: "Atenció directa del soci, sense intermediaris. Coneixem el teu negoci, els teus objectius i les teves preocupacions. Relació de confiança a llarg termini." },
+    { icon: VALUE_ICONS.trending, titulo: "Orientació a resultats", descripcion: "No només compliment: assessorament estratègic orientat a optimitzar la teva fiscalitat, protegir el teu patrimoni i impulsar el creixement de la teva empresa." }
   ],
 };
 
@@ -908,18 +916,18 @@ function generateHTML(presentation: GeneratedPresentation): string {
       font-weight: 500;
     }
     
-    /* ========== QUIÉNES SOMOS (M2) ========== */
+    /* ========== QUIÉNES SOMOS (M2) - Full width sin stats ========== */
     .about-content {
-      display: grid;
-      grid-template-columns: ${isHorizontal ? '1fr 1fr' : '1fr'};
-      gap: ${isHorizontal ? '60px' : '28px'};
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: ${isHorizontal ? '40px' : '24px'};
     }
     
     .about-text {
       font-size: ${isHorizontal ? '22px' : '16px'};
       line-height: 1.8;
       color: var(--foreground);
+      max-width: 100%;
     }
     
     .about-text-extended {
@@ -930,9 +938,9 @@ function generateHTML(presentation: GeneratedPresentation): string {
     }
     
     .about-paragraphs p {
-      margin-bottom: 16px;
-      font-size: ${isHorizontal ? '17px' : '13px'};
-      line-height: 1.7;
+      margin-bottom: ${isHorizontal ? '24px' : '18px'};
+      font-size: ${isHorizontal ? '20px' : '15px'};
+      line-height: 1.8;
       color: var(--foreground);
     }
     
@@ -1669,7 +1677,7 @@ function generateHTML(presentation: GeneratedPresentation): string {
   </div>
   ` : ''}
   
-  <!-- M2: QUIÉNES SOMOS (contenido real de la web) -->
+  <!-- M2: QUIÉNES SOMOS (contenido real de la web - sin stats duplicados) -->
   <div class="page">
     <div class="page-header">
       <div class="logo-small">${NAVARRO_LOGO_BLACK_SVG}</div>
@@ -1683,26 +1691,6 @@ function generateHTML(presentation: GeneratedPresentation): string {
         </div>
         ${presentation.custom_intro ? `<div class="custom-intro"><p>${presentation.custom_intro}</p></div>` : ''}
       </div>
-      ${presentation.include_stats !== false ? `
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-value">${t.stats.years}</div>
-          <div class="stat-label">${t.stats.yearsLabel}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">${t.stats.clients}</div>
-          <div class="stat-label">${t.stats.clientsLabel}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">${t.stats.team}</div>
-          <div class="stat-label">${t.stats.teamLabel}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">${t.stats.operations}</div>
-          <div class="stat-label">${t.stats.operationsLabel}</div>
-        </div>
-      </div>
-      ` : ''}
     </div>
   </div>
   
