@@ -1428,12 +1428,16 @@ export type Database = {
       }
       generated_presentations: {
         Row: {
+          audience_type: string | null
           case_studies_included: Json | null
           client_company: string | null
           client_logo_url: string | null
           client_name: string
+          cover_tagline: string | null
           created_at: string
+          cta_type: string | null
           custom_intro: string | null
+          differentiators: Json | null
           format: string
           generated_by: string | null
           html_content: string | null
@@ -1443,7 +1447,11 @@ export type Database = {
           include_toc: boolean | null
           include_value_proposition: boolean | null
           language: string
+          narrative_score: number | null
           pdf_url: string | null
+          presentation_objective: string | null
+          presentation_type: string | null
+          quality_mode: string | null
           sector: string | null
           services_included: Json | null
           show_case_metrics: boolean | null
@@ -1453,14 +1461,19 @@ export type Database = {
           status: string
           team_members_included: Json | null
           updated_at: string
+          validation_passed: boolean | null
         }
         Insert: {
+          audience_type?: string | null
           case_studies_included?: Json | null
           client_company?: string | null
           client_logo_url?: string | null
           client_name: string
+          cover_tagline?: string | null
           created_at?: string
+          cta_type?: string | null
           custom_intro?: string | null
+          differentiators?: Json | null
           format?: string
           generated_by?: string | null
           html_content?: string | null
@@ -1470,7 +1483,11 @@ export type Database = {
           include_toc?: boolean | null
           include_value_proposition?: boolean | null
           language?: string
+          narrative_score?: number | null
           pdf_url?: string | null
+          presentation_objective?: string | null
+          presentation_type?: string | null
+          quality_mode?: string | null
           sector?: string | null
           services_included?: Json | null
           show_case_metrics?: boolean | null
@@ -1480,14 +1497,19 @@ export type Database = {
           status?: string
           team_members_included?: Json | null
           updated_at?: string
+          validation_passed?: boolean | null
         }
         Update: {
+          audience_type?: string | null
           case_studies_included?: Json | null
           client_company?: string | null
           client_logo_url?: string | null
           client_name?: string
+          cover_tagline?: string | null
           created_at?: string
+          cta_type?: string | null
           custom_intro?: string | null
+          differentiators?: Json | null
           format?: string
           generated_by?: string | null
           html_content?: string | null
@@ -1497,7 +1519,11 @@ export type Database = {
           include_toc?: boolean | null
           include_value_proposition?: boolean | null
           language?: string
+          narrative_score?: number | null
           pdf_url?: string | null
+          presentation_objective?: string | null
+          presentation_type?: string | null
+          quality_mode?: string | null
           sector?: string | null
           services_included?: Json | null
           show_case_metrics?: boolean | null
@@ -1507,6 +1533,7 @@ export type Database = {
           status?: string
           team_members_included?: Json | null
           updated_at?: string
+          validation_passed?: boolean | null
         }
         Relationships: []
       }
@@ -2778,6 +2805,48 @@ export type Database = {
         }
         Relationships: []
       }
+      presentation_modules: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          id: string
+          is_required: boolean | null
+          module_key: string
+          name: string
+          name_ca: string | null
+          name_en: string | null
+          objective: string | null
+          updated_at: string | null
+          variants: Json | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_required?: boolean | null
+          module_key: string
+          name: string
+          name_ca?: string | null
+          name_en?: string | null
+          objective?: string | null
+          updated_at?: string | null
+          variants?: Json | null
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_required?: boolean | null
+          module_key?: string
+          name?: string
+          name_ca?: string | null
+          name_en?: string | null
+          objective?: string | null
+          updated_at?: string | null
+          variants?: Json | null
+        }
+        Relationships: []
+      }
       presupuestos: {
         Row: {
           anio: number
@@ -3931,6 +4000,7 @@ export type Database = {
         Args: { move_date: string }
         Returns: Database["public"]["Enums"]["lead_priority"]
       }
+      calculate_presentation_score: { Args: { p_id: string }; Returns: number }
       check_login_rate_limit: {
         Args: {
           p_identifier: string
