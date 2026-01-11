@@ -1430,6 +1430,7 @@ export type Database = {
         Row: {
           case_studies_included: Json | null
           client_company: string | null
+          client_logo_url: string | null
           client_name: string
           created_at: string
           custom_intro: string | null
@@ -1456,6 +1457,7 @@ export type Database = {
         Insert: {
           case_studies_included?: Json | null
           client_company?: string | null
+          client_logo_url?: string | null
           client_name: string
           created_at?: string
           custom_intro?: string | null
@@ -1482,6 +1484,7 @@ export type Database = {
         Update: {
           case_studies_included?: Json | null
           client_company?: string | null
+          client_logo_url?: string | null
           client_name?: string
           created_at?: string
           custom_intro?: string | null

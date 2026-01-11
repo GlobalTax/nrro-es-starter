@@ -47,6 +47,7 @@ export interface CaseStudySummary {
 export interface GeneratedPresentationInsert {
   client_name: string;
   client_company?: string;
+  client_logo_url?: string;
   sector?: string;
   language: string;
   format: string;
@@ -102,6 +103,7 @@ export const useCreateGeneratedPresentation = () => {
         .insert({
           client_name: data.client_name,
           client_company: data.client_company,
+          client_logo_url: data.client_logo_url,
           sector: data.sector,
           language: data.language,
           format: data.format,

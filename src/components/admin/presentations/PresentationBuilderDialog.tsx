@@ -33,7 +33,10 @@ import {
   FileText,
   Globe,
   LayoutTemplate,
+  ImageIcon,
 } from 'lucide-react';
+import { ImageUpload } from '../ImageUpload';
+import { uploadCompanyLogo } from '@/lib/uploadCompanyLogo';
 import { useServicesSearch } from '@/hooks/useServicesSearch';
 import { useTeamMembers } from '@/hooks/useTeamMembers';
 import { useCaseStudies } from '@/hooks/useCaseStudies';
@@ -82,6 +85,8 @@ export function PresentationBuilderDialog({
   const [sector, setSector] = useState('');
   const [language, setLanguage] = useState('es');
   const [format, setFormat] = useState('horizontal');
+  const [clientLogoPreview, setClientLogoPreview] = useState<string | null>(null);
+  const [clientLogoFile, setClientLogoFile] = useState<File | null>(null);
 
   // Step 2: Services
   const [selectedServices, setSelectedServices] = useState<ServiceSummary[]>([]);
@@ -180,9 +185,21 @@ export function PresentationBuilderDialog({
 
   const handleGenerate = async () => {
     try {
+      // Upload client logo if provided
+      let clientLogoUrl: string | undefined;
+      if (clientLogoFile) {
+        try {
+          clientLogoUrl = await uploadCompanyLogo(clientLogoFile, 'client-logos');
+        } catch (error) {
+          console.error('Error uploading client logo:', error);
+          toast.error('Error al subir el logo del cliente');
+        }
+      }
+
       const presentation = await createMutation.mutateAsync({
         client_name: clientName,
         client_company: clientCompany || undefined,
+        client_logo_url: clientLogoUrl,
         sector: sector || undefined,
         language,
         format,
@@ -214,6 +231,8 @@ export function PresentationBuilderDialog({
     setSector('');
     setLanguage('es');
     setFormat('horizontal');
+    setClientLogoPreview(null);
+    setClientLogoFile(null);
     setSelectedServices([]);
     setSelectedTeamMembers([]);
     setSelectedCaseStudies([]);
@@ -296,6 +315,24 @@ export function PresentationBuilderDialog({
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4" />
+                  Logo del cliente (opcional)
+                </Label>
+                <p className="text-xs text-muted-foreground">
+                  Se mostrará en la portada junto al logo de Navarro
+                </p>
+                <ImageUpload
+                  value={clientLogoPreview}
+                  onChange={(url, file) => {
+                    setClientLogoPreview(url);
+                    setClientLogoFile(file);
+                  }}
+                  className="max-w-md"
+                />
               </div>
 
               <Separator />
