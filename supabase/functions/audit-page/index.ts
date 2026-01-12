@@ -194,7 +194,7 @@ IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura exacta:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'openai/gpt-5-nano',
         messages: [
           { role: 'system', content: 'Eres un auditor SEO experto. Responde siempre en JSON válido sin explicaciones adicionales.' },
           { role: 'user', content: aiPrompt }

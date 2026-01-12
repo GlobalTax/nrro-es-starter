@@ -51,7 +51,7 @@ Idiomas: ${language === "es" ? "Solo espa√±ol" : language === "en" ? "Solo ingl√
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "openai/gpt-5-nano",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: prompt }

@@ -54,7 +54,7 @@ Asegúrate de que:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'openai/gpt-5-nano',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Analiza este artículo y genera los metadatos:\n\n${content_es}` }
