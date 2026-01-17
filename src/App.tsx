@@ -59,6 +59,7 @@ import AdminProposals from "./pages/admin/AdminProposals";
 import AdminProposalTemplates from "./pages/admin/AdminProposalTemplates";
 import AdminCorporatePresentations from "./pages/admin/AdminCorporatePresentations";
 import AdminToolsHub from "./pages/admin/AdminToolsHub";
+import { AdminNews } from "./pages/admin/AdminNews";
 import { CompanySetupCalculator } from "./pages/CompanySetupCalculator";
 import { NIEServiceSpain } from "./pages/NIEServiceSpain";
 import { TechStartupSetup } from "./pages/TechStartupSetup";
@@ -203,6 +204,7 @@ const App = () => {
               <Route path="case-studies" element={<AdminCaseStudies />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="blog" element={<AdminBlog />} />
+              <Route path="news" element={<AdminNews />} />
               <Route path="team" element={<AdminTeam />} />
               <Route path="job-positions" element={<AdminJobPositions />} />
               <Route path="candidatos" element={<AdminCandidatos />} />
