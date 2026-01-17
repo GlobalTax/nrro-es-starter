@@ -13,6 +13,7 @@ import {
   FileCheck,
   Presentation,
   Grid3X3,
+  Rss,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +23,7 @@ const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/admin/hub', icon: Grid3X3, label: 'Hub' },
   { path: '/admin/blog', icon: Newspaper, label: 'Blog', showDraftsBadge: true },
+  { path: '/admin/news', icon: Rss, label: 'Noticias' },
   { path: '/admin/resources', icon: FileText, label: 'Recursos' },
   { path: '/admin/sitemap', icon: Map, label: 'Mapa del Sitio' },
   { path: '/admin/settings', icon: Settings, label: 'Configuración' },
