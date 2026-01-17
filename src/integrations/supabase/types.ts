@@ -2376,6 +2376,7 @@ export type Database = {
           excerpt_en: string | null
           excerpt_es: string | null
           featured_image_url: string | null
+          generated_with_ai: boolean | null
           id: string
           is_featured: boolean | null
           is_published: boolean | null
@@ -2384,7 +2385,9 @@ export type Database = {
           slug_ca: string | null
           slug_en: string | null
           slug_es: string
+          source_name: string | null
           source_site: Database["public"]["Enums"]["site_source"] | null
+          source_url: string | null
           tags: string[] | null
           title_ca: string | null
           title_en: string | null
@@ -2403,6 +2406,7 @@ export type Database = {
           excerpt_en?: string | null
           excerpt_es?: string | null
           featured_image_url?: string | null
+          generated_with_ai?: boolean | null
           id?: string
           is_featured?: boolean | null
           is_published?: boolean | null
@@ -2411,7 +2415,9 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es: string
+          source_name?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
+          source_url?: string | null
           tags?: string[] | null
           title_ca?: string | null
           title_en?: string | null
@@ -2430,6 +2436,7 @@ export type Database = {
           excerpt_en?: string | null
           excerpt_es?: string | null
           featured_image_url?: string | null
+          generated_with_ai?: boolean | null
           id?: string
           is_featured?: boolean | null
           is_published?: boolean | null
@@ -2438,12 +2445,59 @@ export type Database = {
           slug_ca?: string | null
           slug_en?: string | null
           slug_es?: string
+          source_name?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
+          source_url?: string | null
           tags?: string[] | null
           title_ca?: string | null
           title_en?: string | null
           title_es?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      news_automation_settings: {
+        Row: {
+          articles_per_run: number
+          auto_publish: boolean
+          created_at: string
+          default_categories: string[] | null
+          default_sources: string[] | null
+          id: string
+          is_enabled: boolean
+          last_run_at: string | null
+          next_run_at: string | null
+          notify_on_generation: boolean
+          run_time: string
+          updated_at: string
+        }
+        Insert: {
+          articles_per_run?: number
+          auto_publish?: boolean
+          created_at?: string
+          default_categories?: string[] | null
+          default_sources?: string[] | null
+          id?: string
+          is_enabled?: boolean
+          last_run_at?: string | null
+          next_run_at?: string | null
+          notify_on_generation?: boolean
+          run_time?: string
+          updated_at?: string
+        }
+        Update: {
+          articles_per_run?: number
+          auto_publish?: boolean
+          created_at?: string
+          default_categories?: string[] | null
+          default_sources?: string[] | null
+          id?: string
+          is_enabled?: boolean
+          last_run_at?: string | null
+          next_run_at?: string | null
+          notify_on_generation?: boolean
+          run_time?: string
+          updated_at?: string
         }
         Relationships: []
       }
