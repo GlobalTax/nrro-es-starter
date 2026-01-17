@@ -113,21 +113,21 @@ export const AdminLogin = () => {
     : 0;
 
   return (
-    <div className="bg-black min-h-screen flex items-center justify-center px-4">
+    <div className="bg-slate-900 min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo texto */}
         <div className="text-center mb-10">
-          <h1 className="font-display text-4xl font-normal lowercase text-white tracking-tight">
+          <h1 className="font-display text-3xl font-normal lowercase text-white/90 tracking-tight">
             nrro
           </h1>
-          <p className="text-white/50 text-sm mt-2">
-            Portal de Administración
+          <p className="text-slate-500 text-sm mt-1.5">
+            Panel de Administración
           </p>
         </div>
 
         {/* Alertas */}
         {isLockedOut && (
-          <Alert variant="destructive" className="mb-6 bg-destructive/10 border-destructive/30">
+          <Alert variant="destructive" className="mb-6 bg-red-500/10 border-red-500/20">
             <Clock className="h-4 w-4" />
             <AlertDescription className="text-sm">
               Demasiados intentos fallidos. Por favor espera {lockoutMinutes} minutos.
@@ -136,8 +136,8 @@ export const AdminLogin = () => {
         )}
         
         {remainingAttempts !== null && remainingAttempts < 3 && remainingAttempts > 0 && !isLockedOut && (
-          <Alert className="mb-6 bg-amber-500/10 border-amber-500/30">
-            <AlertTriangle className="h-4 w-4 text-amber-500" />
+          <Alert className="mb-6 bg-amber-500/10 border-amber-500/20">
+            <AlertTriangle className="h-4 w-4 text-amber-400" />
             <AlertDescription className="text-sm text-amber-200">
               Te quedan {remainingAttempts} intentos antes del bloqueo temporal.
             </AlertDescription>
@@ -145,9 +145,9 @@ export const AdminLogin = () => {
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-white/70 text-sm font-medium">
+            <Label htmlFor="email" className="text-slate-400 text-sm font-medium">
               Email
             </Label>
             <Input
@@ -161,15 +161,15 @@ export const AdminLogin = () => {
               }}
               required
               disabled={isLoading || isLockedOut}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-white/20"
+              className="bg-white/[0.06] border-white/10 text-white placeholder:text-slate-500 focus:border-indigo-500/50 focus:ring-indigo-500/20 h-10"
             />
             {errors.email && (
-              <p className="text-sm text-destructive">{errors.email}</p>
+              <p className="text-sm text-red-400">{errors.email}</p>
             )}
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-white/70 text-sm font-medium">
+            <Label htmlFor="password" className="text-slate-400 text-sm font-medium">
               Contraseña
             </Label>
             <Input
@@ -182,16 +182,16 @@ export const AdminLogin = () => {
               }}
               required
               disabled={isLoading || isLockedOut}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-white/20"
+              className="bg-white/[0.06] border-white/10 text-white placeholder:text-slate-500 focus:border-indigo-500/50 focus:ring-indigo-500/20 h-10"
             />
             {errors.password && (
-              <p className="text-sm text-destructive">{errors.password}</p>
+              <p className="text-sm text-red-400">{errors.password}</p>
             )}
           </div>
           
           <Button 
             type="submit" 
-            className="w-full bg-white text-black hover:bg-white/90 font-normal h-11 mt-2" 
+            className="w-full bg-indigo-500 text-white hover:bg-indigo-600 font-medium h-10 mt-3 transition-colors" 
             disabled={isLoading || isLockedOut}
           >
             {isLoading ? (

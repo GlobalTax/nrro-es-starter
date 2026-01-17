@@ -9,12 +9,12 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Bell, X } from 'lucide-react';
 
-// Fallback skeleton for sidebar
+// Fallback skeleton for sidebar - Linear style
 const SidebarFallback = () => (
-  <aside className="w-64 bg-black text-white min-h-screen flex flex-col animate-pulse">
+  <aside className="w-64 bg-slate-900 text-white min-h-screen flex flex-col animate-pulse">
     <div className="p-6">
-      <div className="h-8 w-20 bg-white/10 rounded" />
-      <div className="h-4 w-32 bg-white/5 rounded mt-2" />
+      <div className="h-7 w-16 bg-white/10 rounded" />
+      <div className="h-3 w-28 bg-white/5 rounded mt-2" />
     </div>
   </aside>
 );
@@ -28,10 +28,6 @@ export const AdminLayout = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Mostrar banner solo si:
-    // - Las notificaciones son soportadas
-    // - No se han solicitado permisos aún (default)
-    // - No se ha cerrado el banner anteriormente
     const bannerDismissed = localStorage.getItem('notification-banner-dismissed');
     
     if (isSupported && permission === 'default' && !bannerDismissed) {
@@ -51,35 +47,37 @@ export const AdminLayout = () => {
     }
   };
   
-  console.log('[AdminLayout] Rendering...');
-  
   return (
-    <div className="flex min-h-screen w-full overflow-x-hidden">
+    <div className="flex min-h-screen w-full overflow-x-hidden bg-slate-50">
       <Suspense fallback={<SidebarFallback />}>
         <AdminSidebar />
       </Suspense>
       <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader />
-        <main className="flex-1 bg-neutral-50 p-6">
+        <main className="flex-1 p-6">
           {showBanner && (
-            <Alert className="mb-4">
-              <Bell className="h-4 w-4" />
-              <AlertTitle className="flex items-center justify-between">
+            <Alert className="mb-4 border-slate-200/60 bg-white shadow-sm">
+              <Bell className="h-4 w-4 text-slate-500" />
+              <AlertTitle className="flex items-center justify-between text-slate-900">
                 <span>Activa las notificaciones push</span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleDismiss}
-                  className="h-6 w-6 p-0"
+                  className="h-6 w-6 p-0 text-slate-400 hover:text-slate-600"
                 >
                   <X className="h-4 w-4" />
                 </Button>
               </AlertTitle>
-              <AlertDescription className="flex items-center justify-between">
+              <AlertDescription className="flex items-center justify-between text-slate-500">
                 <span>
                   Recibe alertas de nuevos contactos incluso cuando el panel esté cerrado
                 </span>
-                <Button onClick={handleEnable} size="sm" className="ml-4">
+                <Button 
+                  onClick={handleEnable} 
+                  size="sm" 
+                  className="ml-4 bg-slate-900 hover:bg-slate-800 text-white"
+                >
                   Activar
                 </Button>
               </AlertDescription>

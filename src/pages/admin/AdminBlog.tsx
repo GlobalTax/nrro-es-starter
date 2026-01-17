@@ -118,13 +118,13 @@ export const AdminBlog = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "published":
-        return <Badge className="bg-green-500">Publicado</Badge>;
+        return <Badge className="bg-emerald-100 text-emerald-700 border-0 font-medium">Publicado</Badge>;
       case "draft":
-        return <Badge variant="outline">Borrador</Badge>;
+        return <Badge className="bg-slate-100 text-slate-600 border-0 font-medium">Borrador</Badge>;
       case "scheduled":
-        return <Badge className="bg-yellow-500">Programado</Badge>;
+        return <Badge className="bg-amber-100 text-amber-700 border-0 font-medium">Programado</Badge>;
       default:
-        return <Badge>{status}</Badge>;
+        return <Badge className="bg-slate-100 text-slate-600 border-0">{status}</Badge>;
     }
   };
 
@@ -168,9 +168,13 @@ export const AdminBlog = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-normal">Blog</h1>
-        <Button onClick={handleNew}>
+        <div>
+          <h1 className="text-2xl font-medium text-slate-900">Blog</h1>
+          <p className="text-sm text-slate-500">Gestiona los artículos del blog</p>
+        </div>
+        <Button onClick={handleNew} className="bg-slate-900 hover:bg-slate-800">
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Artículo
         </Button>
@@ -179,12 +183,18 @@ export const AdminBlog = () => {
       <BlogStatsCard />
 
       <Tabs defaultValue="posts" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="posts" className="gap-2">
+        <TabsList className="bg-slate-100 p-1">
+          <TabsTrigger 
+            value="posts" 
+            className="gap-2 data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
+          >
             <FileText className="h-4 w-4" />
             Artículos
           </TabsTrigger>
-          <TabsTrigger value="automation" className="gap-2">
+          <TabsTrigger 
+            value="automation" 
+            className="gap-2 data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
+          >
             <Bot className="h-4 w-4" />
             Automatización
           </TabsTrigger>
@@ -200,109 +210,121 @@ export const AdminBlog = () => {
             <TranslateBlogToEnglish />
           </div>
 
-      <Card className="p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar artículos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
-            />
-          </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="Filtrar por estado" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="published">Publicados</SelectItem>
-              <SelectItem value="draft">Borradores</SelectItem>
-              <SelectItem value="scheduled">Programados</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {isLoading ? (
-          <div className="flex items-center justify-center min-h-96">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
-        ) : (
-          <>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Título</TableHead>
-                  <TableHead>Categoría</TableHead>
-                  <TableHead>Estado</TableHead>
-                  <TableHead>Fecha</TableHead>
-                  <TableHead>Vistas</TableHead>
-                  <TableHead className="text-right">Acciones</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {posts.map((post: any) => (
-                  <TableRow key={post.id}>
-                    <TableCell className="font-medium">{post.title}</TableCell>
-                    <TableCell>
-                      {post.category && <Badge variant="outline">{post.category}</Badge>}
-                    </TableCell>
-                    <TableCell>{getStatusBadge(post.status)}</TableCell>
-                    <TableCell>
-                      {post.published_at
-                        ? format(new Date(post.published_at), "dd/MM/yyyy")
-                        : "-"}
-                    </TableCell>
-                    <TableCell>{post.view_count || 0}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handlePreview(post)}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(post)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        {post.status === "draft" && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => publishMutation.mutate(post.id)}
-                            disabled={publishMutation.isPending}
-                          >
-                            <CheckCircle className="h-4 w-4" />
-                          </Button>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setDeletePostId(post.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-6">
-                <CustomPagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
+          <Card className="border-0 shadow-sm bg-white p-6 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Input
+                  placeholder="Buscar artículos..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 border-slate-200 focus:border-slate-300 focus:ring-slate-200"
                 />
               </div>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-[180px] border-slate-200">
+                  <SelectValue placeholder="Filtrar por estado" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="published">Publicados</SelectItem>
+                  <SelectItem value="draft">Borradores</SelectItem>
+                  <SelectItem value="scheduled">Programados</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {isLoading ? (
+              <div className="flex items-center justify-center min-h-96">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-600"></div>
+              </div>
+            ) : (
+              <>
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-slate-50/50 hover:bg-slate-50/50">
+                      <TableHead className="text-slate-600 font-medium">Título</TableHead>
+                      <TableHead className="text-slate-600 font-medium">Categoría</TableHead>
+                      <TableHead className="text-slate-600 font-medium">Estado</TableHead>
+                      <TableHead className="text-slate-600 font-medium">Fecha</TableHead>
+                      <TableHead className="text-slate-600 font-medium">Vistas</TableHead>
+                      <TableHead className="text-right text-slate-600 font-medium">Acciones</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {posts.map((post: any) => (
+                      <TableRow key={post.id} className="hover:bg-slate-50/50">
+                        <TableCell className="font-medium text-slate-900">{post.title}</TableCell>
+                        <TableCell>
+                          {post.category && (
+                            <Badge variant="outline" className="border-slate-200 text-slate-600 font-normal">
+                              {post.category}
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>{getStatusBadge(post.status)}</TableCell>
+                        <TableCell className="text-slate-600">
+                          {post.published_at
+                            ? format(new Date(post.published_at), "dd/MM/yyyy")
+                            : "-"}
+                        </TableCell>
+                        <TableCell className="text-slate-600">{post.view_count || 0}</TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handlePreview(post)}
+                              className="h-8 w-8 p-0 text-slate-400 hover:text-slate-600"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => handleEdit(post)}
+                              className="h-8 w-8 p-0 text-slate-400 hover:text-slate-600"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            {post.status === "draft" && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => publishMutation.mutate(post.id)}
+                                disabled={publishMutation.isPending}
+                                className="h-8 w-8 p-0 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50"
+                              >
+                                <CheckCircle className="h-4 w-4" />
+                              </Button>
+                            )}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setDeletePostId(post.id)}
+                              className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+
+                {totalPages > 1 && (
+                  <div className="flex justify-center mt-6">
+                    <CustomPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={setCurrentPage}
+                    />
+                  </div>
+                )}
+              </>
             )}
-          </>
-        )}
-      </Card>
+          </Card>
         </TabsContent>
       </Tabs>
 
@@ -332,7 +354,7 @@ export const AdminBlog = () => {
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => deletePostId && deleteMutation.mutate(deletePostId)}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-600 text-white hover:bg-red-700"
             >
               Eliminar
             </AlertDialogAction>

@@ -57,19 +57,25 @@ export const AdminNews = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-600"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Newspaper className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Noticias Legales</h1>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-slate-100 rounded-lg">
+            <Newspaper className="h-5 w-5 text-slate-600" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-medium text-slate-900">Noticias Legales</h1>
+            <p className="text-sm text-slate-500">Gestiona las noticias del sector</p>
+          </div>
         </div>
-        <Badge variant="secondary" className="text-lg px-4 py-1">
+        <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
           {articles?.length || 0} noticias
         </Badge>
       </div>
@@ -84,21 +90,25 @@ export const AdminNews = () => {
       </div>
 
       {/* Filters */}
-      <Card className="p-4">
+      <Card className="p-4 border-0 shadow-sm bg-white">
         <div className="flex flex-wrap gap-4">
           <div className="relative flex-1 min-w-[200px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Buscar noticias..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 border-slate-200 focus:border-slate-300 focus:ring-slate-200"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
             <Badge
               variant={categoryFilter === null ? "default" : "outline"}
-              className="cursor-pointer"
+              className={`cursor-pointer transition-colors ${
+                categoryFilter === null 
+                  ? "bg-slate-900 text-white hover:bg-slate-800" 
+                  : "bg-transparent text-slate-600 border-slate-200 hover:bg-slate-50"
+              }`}
               onClick={() => setCategoryFilter(null)}
             >
               Todas
@@ -107,7 +117,11 @@ export const AdminNews = () => {
               <Badge
                 key={cat}
                 variant={categoryFilter === cat ? "default" : "outline"}
-                className="cursor-pointer"
+                className={`cursor-pointer transition-colors ${
+                  categoryFilter === cat 
+                    ? "bg-slate-900 text-white hover:bg-slate-800" 
+                    : "bg-transparent text-slate-600 border-slate-200 hover:bg-slate-50"
+                }`}
                 onClick={() => setCategoryFilter(cat as string)}
               >
                 {cat}
@@ -118,67 +132,72 @@ export const AdminNews = () => {
       </Card>
 
       {/* News Table */}
-      <Card className="p-6">
+      <Card className="border-0 shadow-sm bg-white overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Título</TableHead>
-              <TableHead>Categoría</TableHead>
-              <TableHead>Fuente</TableHead>
-              <TableHead>Fecha</TableHead>
-              <TableHead>Estado</TableHead>
+            <TableRow className="bg-slate-50/50 hover:bg-slate-50/50">
+              <TableHead className="text-slate-600 font-medium">Título</TableHead>
+              <TableHead className="text-slate-600 font-medium">Categoría</TableHead>
+              <TableHead className="text-slate-600 font-medium">Fuente</TableHead>
+              <TableHead className="text-slate-600 font-medium">Fecha</TableHead>
+              <TableHead className="text-slate-600 font-medium">Estado</TableHead>
               <TableHead className="w-[50px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredArticles?.map((article) => (
-              <TableRow key={article.id}>
+              <TableRow key={article.id} className="hover:bg-slate-50/50">
                 <TableCell>
                   <div className="space-y-1">
-                    <div className="font-medium flex items-center gap-2">
+                    <div className="font-medium text-slate-900 flex items-center gap-2">
                       {article.title_es || article.title_ca || article.title_en}
                       {article.generated_with_ai && (
                         <span title="Generado con IA">
-                          <Bot className="h-4 w-4 text-primary" />
+                          <Bot className="h-3.5 w-3.5 text-indigo-500" />
                         </span>
                       )}
                     </div>
                     {article.excerpt_es && (
-                      <p className="text-sm text-muted-foreground line-clamp-1">
+                      <p className="text-sm text-slate-500 line-clamp-1">
                         {article.excerpt_es}
                       </p>
                     )}
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline">{article.category || "Sin categoría"}</Badge>
+                  <Badge variant="outline" className="border-slate-200 text-slate-600 font-normal">
+                    {article.category || "Sin categoría"}
+                  </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-slate-500">
                     {article.source_name || "—"}
                   </span>
                 </TableCell>
                 <TableCell>
-                  {article.published_at
-                    ? format(new Date(article.published_at), "dd MMM yyyy", { locale: es })
-                    : "No publicado"}
+                  <span className="text-sm text-slate-600">
+                    {article.published_at
+                      ? format(new Date(article.published_at), "dd MMM yyyy", { locale: es })
+                      : "No publicado"}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Switch
                     checked={article.is_published}
                     onCheckedChange={() => togglePublished(article.id, article.is_published)}
+                    className="data-[state=checked]:bg-emerald-500"
                   />
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600">
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem
-                        className="text-destructive"
+                        className="text-red-600 focus:text-red-700 focus:bg-red-50"
                         onClick={() => deleteArticle.mutate(article.id)}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
@@ -191,7 +210,7 @@ export const AdminNews = () => {
             ))}
             {filteredArticles?.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-12 text-slate-500">
                   No hay noticias que mostrar. Usa el botón "Generar ahora" para crear contenido.
                 </TableCell>
               </TableRow>

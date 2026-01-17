@@ -47,19 +47,18 @@ export const AdminHeader = () => {
   };
 
   return (
-    <header className="bg-white border-b border-neutral-200 px-6 py-4">
-      <div className="flex items-center justify-between">
-
-        <div className="flex items-center gap-4">
+    <header className="bg-slate-50/80 backdrop-blur-sm border-b border-slate-200/60 px-6 py-3 sticky top-0 z-10">
+      <div className="flex items-center justify-end">
+        <div className="flex items-center gap-2">
           <Button 
             variant="ghost" 
             size="sm" 
-            className="relative"
+            className="relative text-slate-500 hover:text-slate-700 hover:bg-slate-100"
             onClick={() => navigate('/admin/contact-leads')}
           >
-            <Bell className="h-5 w-5" />
+            <Bell className="h-4 w-4" />
             {unreadLeads > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
+              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-500 text-[9px] font-medium text-white">
                 {unreadLeads > 9 ? '9+' : unreadLeads}
               </span>
             )}
@@ -67,16 +66,22 @@ export const AdminHeader = () => {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="gap-2">
-                <User className="h-4 w-4" />
-                <span>{adminUser?.full_name}</span>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              >
+                <div className="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center">
+                  <User className="h-3.5 w-3.5 text-slate-600" />
+                </div>
+                <span className="text-sm font-medium">{adminUser?.full_name}</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>
                 <div>
-                  <p className="font-medium">{adminUser?.full_name}</p>
-                  <p className="text-xs text-muted-foreground">{adminUser?.email}</p>
+                  <p className="font-medium text-slate-900">{adminUser?.full_name}</p>
+                  <p className="text-xs text-slate-500">{adminUser?.email}</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -84,11 +89,11 @@ export const AdminHeader = () => {
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     {isEnabled ? (
-                      <Bell className="h-4 w-4" />
+                      <Bell className="h-4 w-4 text-slate-500" />
                     ) : (
-                      <BellOff className="h-4 w-4" />
+                      <BellOff className="h-4 w-4 text-slate-400" />
                     )}
-                    <Label htmlFor="browser-notifications" className="cursor-pointer">
+                    <Label htmlFor="browser-notifications" className="cursor-pointer text-sm">
                       Notificaciones Push
                     </Label>
                   </div>
@@ -112,9 +117,12 @@ export const AdminHeader = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleSignOut}>
+              <DropdownMenuItem 
+                onClick={handleSignOut}
+                className="text-slate-600 focus:text-slate-900"
+              >
                 <LogOut className="mr-2 h-4 w-4" />
-                Sign Out
+                Cerrar sesión
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
