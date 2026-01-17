@@ -158,6 +158,19 @@
     --sidebar-accent-foreground: 190 63% 6%;
     --sidebar-border: 180 7% 92%;
     --sidebar-ring: 172 60% 15%;
+
+    /* Admin Panel - Linear/Apollo inspired */
+    --admin-bg: 210 40% 98%;
+    --admin-sidebar: 222 47% 11%;
+    --admin-accent: 239 84% 67%;
+    --admin-accent-muted: 239 84% 67% / 0.1;
+    --admin-border: 214 32% 91%;
+    --admin-border-muted: 214 32% 91% / 0.6;
+    --admin-text-primary: 222 47% 11%;
+    --admin-text-secondary: 215 16% 47%;
+    --admin-text-muted: 215 20% 65%;
+    --admin-card: 0 0% 100%;
+    --admin-card-hover: 210 40% 96%;
   }
 }
 

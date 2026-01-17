@@ -91,8 +91,8 @@ export default function AdminToolsHub() {
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Hub de Herramientas</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl font-medium text-slate-900">Hub de Herramientas</h1>
+            <p className="text-slate-500 text-sm">
               Accede rápidamente a todas las aplicaciones internas
             </p>
           </div>
@@ -101,12 +101,16 @@ export default function AdminToolsHub() {
               <Button
                 variant={isManageMode ? 'default' : 'outline'}
                 onClick={() => setIsManageMode(!isManageMode)}
+                className={isManageMode 
+                  ? 'bg-slate-900 hover:bg-slate-800' 
+                  : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }
               >
                 <Settings className="h-4 w-4 mr-2" />
                 {isManageMode ? 'Vista normal' : 'Gestionar'}
               </Button>
               {isManageMode && (
-                <Button onClick={() => setFormOpen(true)}>
+                <Button onClick={() => setFormOpen(true)} className="bg-slate-900 hover:bg-slate-800">
                   <Plus className="h-4 w-4 mr-2" />
                   Nueva herramienta
                 </Button>
@@ -118,12 +122,12 @@ export default function AdminToolsHub() {
         {/* Filters */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <Input
               placeholder="Buscar herramientas..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 border-slate-200 focus:border-slate-300 focus:ring-slate-200"
             />
           </div>
           <ToolCategoryFilter
@@ -136,20 +140,22 @@ export default function AdminToolsHub() {
         {isLoading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {[...Array(8)].map((_, i) => (
-              <Skeleton key={i} className="h-[200px] rounded-lg" />
+              <Skeleton key={i} className="h-[200px] rounded-lg bg-slate-100" />
             ))}
           </div>
         ) : filteredTools.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <Grid3X3 className="h-12 w-12 text-muted-foreground/50 mb-4" />
-            <h3 className="text-lg font-medium">No se encontraron herramientas</h3>
-            <p className="text-muted-foreground">
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="p-4 bg-slate-100 rounded-full mb-4">
+              <Grid3X3 className="h-8 w-8 text-slate-400" />
+            </div>
+            <h3 className="text-lg font-medium text-slate-900">No se encontraron herramientas</h3>
+            <p className="text-slate-500 text-sm mt-1">
               {searchQuery || selectedCategory
                 ? 'Intenta ajustar los filtros de búsqueda'
                 : 'Añade tu primera herramienta al hub'}
             </p>
             {isAdmin && !searchQuery && !selectedCategory && (
-              <Button className="mt-4" onClick={() => setFormOpen(true)}>
+              <Button className="mt-4 bg-slate-900 hover:bg-slate-800" onClick={() => setFormOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Añadir herramienta
               </Button>
@@ -193,7 +199,7 @@ export default function AdminToolsHub() {
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-600 text-white hover:bg-red-700"
             >
               Eliminar
             </AlertDialogAction>

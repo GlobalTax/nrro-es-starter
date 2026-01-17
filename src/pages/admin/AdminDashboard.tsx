@@ -29,36 +29,36 @@ export const AdminDashboard = () => {
       title: 'Case Studies',
       value: stats?.caseStudies || 0,
       icon: TrendingUp,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
+      color: 'text-indigo-600',
+      bgColor: 'bg-indigo-50',
     },
     {
       title: 'Team Members',
       value: stats?.team || 0,
       icon: Users,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
+      color: 'text-slate-600',
+      bgColor: 'bg-slate-100',
     },
     {
       title: 'News Articles',
       value: stats?.news || 0,
       icon: Newspaper,
-      color: 'text-cyan-600',
-      bgColor: 'bg-cyan-50',
+      color: 'text-slate-600',
+      bgColor: 'bg-slate-100',
     },
     {
       title: 'Open Positions',
       value: stats?.openJobs || 0,
       icon: Briefcase,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
     },
   ];
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-600"></div>
       </div>
     );
   }
@@ -66,35 +66,35 @@ export const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-normal">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Welcome to the admin panel</p>
+        <h1 className="text-2xl font-medium text-slate-900">Dashboard</h1>
+        <p className="text-slate-500 text-sm mt-0.5">Bienvenido al panel de administración</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map((stat) => (
-          <Card key={stat.title}>
+          <Card key={stat.title} className="border-0 shadow-sm bg-white hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+              <CardTitle className="text-sm font-medium text-slate-500">
                 {stat.title}
               </CardTitle>
-              <div className={`p-2 rounded-full ${stat.bgColor}`}>
+              <div className={`p-2 rounded-lg ${stat.bgColor}`}>
                 <stat.icon className={`h-4 w-4 ${stat.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{stat.value}</div>
+              <div className="text-3xl font-semibold text-slate-900">{stat.value}</div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card className="border-0 shadow-sm bg-white">
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle className="text-base font-medium text-slate-900">Actividad Reciente</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground text-sm">No recent activity</p>
+            <p className="text-slate-500 text-sm">No hay actividad reciente</p>
           </CardContent>
         </Card>
 
