@@ -108,7 +108,6 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        temperature: 0.7,
       }),
     });
 
