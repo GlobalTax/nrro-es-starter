@@ -92,3 +92,6 @@ verify_jwt = false
 
 [functions.generate-presentation-pdf]
 verify_jwt = false
+
+[functions.auto-generate-news]
+verify_jwt = false
