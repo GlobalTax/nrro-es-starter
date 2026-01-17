@@ -54,11 +54,11 @@ export const AdminLayout = () => {
   console.log('[AdminLayout] Rendering...');
   
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full overflow-x-hidden">
       <Suspense fallback={<SidebarFallback />}>
         <AdminSidebar />
       </Suspense>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader />
         <main className="flex-1 bg-neutral-50 p-6">
           {showBanner && (
