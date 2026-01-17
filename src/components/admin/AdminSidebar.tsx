@@ -51,7 +51,7 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-black text-white min-h-screen flex flex-col">
+    <aside className="w-64 shrink-0 bg-black text-white min-h-screen flex flex-col">
       <div className="p-6">
         <h1 className="font-display text-2xl font-normal lowercase tracking-tight">nrro</h1>
         <p className="text-xs text-white/40 mt-1">Panel de Administración</p>
