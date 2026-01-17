@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AdminSidebar } from './AdminSidebar';
 import { AdminHeader } from './AdminHeader';
@@ -8,6 +8,16 @@ import { useBrowserNotifications } from '@/hooks/useBrowserNotifications';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Bell, X } from 'lucide-react';
+
+// Fallback skeleton for sidebar
+const SidebarFallback = () => (
+  <aside className="w-64 bg-black text-white min-h-screen flex flex-col animate-pulse">
+    <div className="p-6">
+      <div className="h-8 w-20 bg-white/10 rounded" />
+      <div className="h-4 w-32 bg-white/5 rounded mt-2" />
+    </div>
+  </aside>
+);
 
 export const AdminLayout = () => {
   // Activar suscripción a notificaciones en tiempo real
@@ -41,9 +51,13 @@ export const AdminLayout = () => {
     }
   };
   
+  console.log('[AdminLayout] Rendering...');
+  
   return (
-    <div className="flex min-h-screen">
-      <AdminSidebar />
+    <div className="flex min-h-screen w-full">
+      <Suspense fallback={<SidebarFallback />}>
+        <AdminSidebar />
+      </Suspense>
       <div className="flex-1 flex flex-col">
         <AdminHeader />
         <main className="flex-1 bg-neutral-50 p-6">

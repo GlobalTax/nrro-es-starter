@@ -34,9 +34,14 @@ const comercialItems = [
 ];
 
 export const AdminSidebar = () => {
+  console.log('[AdminSidebar] Rendering...');
+  
   const location = useLocation();
   const { adminUser, canManageUsers } = useAdminAuth();
-  const { data: pendingDraftsCount } = usePendingDraftsCount();
+  const { data: pendingDraftsCount = 0 } = usePendingDraftsCount();
+  
+  console.log('[AdminSidebar] adminUser:', adminUser);
+  console.log('[AdminSidebar] location:', location.pathname);
 
   const isActive = (path: string) => {
     if (path === '/admin') {
