@@ -48,7 +48,7 @@ export const AdminLayout = () => {
   };
   
   return (
-    <div className="flex min-h-screen w-full overflow-x-hidden bg-slate-50">
+    <div className="admin-layout flex min-h-screen w-full overflow-x-hidden">
       <Suspense fallback={<SidebarFallback />}>
         <AdminSidebar />
       </Suspense>

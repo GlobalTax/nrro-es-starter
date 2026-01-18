@@ -1,0 +1,324 @@
+/* ============================================
+   INTRANET DESIGN SYSTEM TOKENS
+   Sistema de diseño unificado para CRM, HR, Marketing, Admin
+   ============================================ */
+
+:root {
+  /* ============================================
+     COLORES BASE - Intranet
+     ============================================ */
+  
+  /* Fondos */
+  --intranet-bg: 210 40% 98%;                /* #F9FAFB - Fondo general */
+  --intranet-card: 0 0% 100%;                /* #FFFFFF - Cards */
+  --intranet-card-hover: 210 40% 96%;        /* Hover en cards */
+  
+  /* Bordes */
+  --intranet-border: 220 13% 91%;            /* #E5E7EB - Bordes */
+  --intranet-border-muted: 220 13% 91% / 0.6;
+  
+  /* Texto */
+  --intranet-text-primary: 221 39% 11%;      /* #111827 - Texto principal */
+  --intranet-text-secondary: 220 9% 46%;     /* #6B7280 - Texto secundario */
+  --intranet-text-muted: 220 9% 46% / 0.7;
+  
+  /* ============================================
+     ESTADOS - Colores semánticos
+     ============================================ */
+  
+  /* Activo / Alto / Éxito - Verde suave */
+  --intranet-status-active: 160 84% 39%;           /* #10B981 - emerald-500 */
+  --intranet-status-active-bg: 152 81% 96%;        /* #ECFDF5 */
+  --intranet-status-active-border: 156 72% 67%;    /* #6EE7B7 */
+  --intranet-status-active-text: 160 84% 39%;      /* #059669 */
+  
+  /* Medio / Pendiente - Naranja */
+  --intranet-status-medium: 38 92% 50%;            /* #F59E0B - amber-500 */
+  --intranet-status-medium-bg: 48 96% 89%;         /* #FEF3C7 */
+  --intranet-status-medium-border: 45 93% 58%;     /* #FCD34D */
+  --intranet-status-medium-text: 32 95% 44%;       /* #D97706 */
+  
+  /* Bajo / Inactivo - Gris */
+  --intranet-status-low: 220 9% 46%;               /* #6B7280 - gray-500 */
+  --intranet-status-low-bg: 220 14% 96%;           /* #F3F4F6 */
+  --intranet-status-low-border: 220 13% 83%;       /* #D1D5DB */
+  --intranet-status-low-text: 220 9% 46%;          /* #6B7280 */
+  
+  /* Urgente / Error - Rojo apagado */
+  --intranet-status-urgent: 0 84% 60%;             /* #EF4444 - red-500 */
+  --intranet-status-urgent-bg: 0 86% 97%;          /* #FEF2F2 */
+  --intranet-status-urgent-border: 0 93% 82%;      /* #FECACA */
+  --intranet-status-urgent-text: 0 72% 51%;        /* #DC2626 */
+  
+  /* Completado - Igual que activo */
+  --intranet-status-completed: 160 84% 39%;
+  --intranet-status-completed-bg: 152 81% 96%;
+  --intranet-status-completed-border: 156 72% 67%;
+  --intranet-status-completed-text: 160 84% 39%;
+  
+  /* Info - Azul */
+  --intranet-status-info: 217 91% 60%;             /* #3B82F6 - blue-500 */
+  --intranet-status-info-bg: 214 95% 93%;          /* #DBEAFE */
+  --intranet-status-info-border: 213 93% 68%;      /* #93C5FD */
+  --intranet-status-info-text: 221 83% 53%;        /* #2563EB */
+  
+  /* ============================================
+     ESPACIADO - Grid de 8px
+     ============================================ */
+  --intranet-space-0: 0px;
+  --intranet-space-1: 4px;
+  --intranet-space-2: 8px;
+  --intranet-space-3: 12px;
+  --intranet-space-4: 16px;
+  --intranet-space-5: 20px;
+  --intranet-space-6: 24px;
+  --intranet-space-8: 32px;
+  --intranet-space-10: 40px;
+  --intranet-space-12: 48px;
+  
+  /* ============================================
+     BORDER RADIUS - 6px base
+     ============================================ */
+  --intranet-radius-sm: 4px;
+  --intranet-radius: 6px;
+  --intranet-radius-lg: 8px;
+  --intranet-radius-xl: 12px;
+  --intranet-radius-full: 9999px;
+  
+  /* ============================================
+     TIPOGRAFÍA - Inter
+     ============================================ */
+  --intranet-font: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Tamaños */
+  --intranet-text-xs: 12px;
+  --intranet-text-sm: 14px;
+  --intranet-text-base: 16px;
+  --intranet-text-lg: 18px;
+  --intranet-text-xl: 20px;
+  --intranet-text-2xl: 24px;
+  
+  /* Pesos */
+  --intranet-font-regular: 400;
+  --intranet-font-medium: 500;
+  --intranet-font-semibold: 600;
+  
+  /* Line heights */
+  --intranet-leading-tight: 1.25;
+  --intranet-leading-normal: 1.5;
+  --intranet-leading-relaxed: 1.625;
+  
+  /* ============================================
+     SOMBRAS
+     ============================================ */
+  --intranet-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --intranet-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --intranet-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  
+  /* ============================================
+     TRANSICIONES
+     ============================================ */
+  --intranet-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --intranet-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --intranet-transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   CLASES UTILITARIAS PARA LA INTRANET
+   ============================================ */
+
+/* Layout base del admin */
+.admin-layout {
+  font-family: var(--intranet-font);
+  background-color: hsl(var(--intranet-bg));
+  color: hsl(var(--intranet-text-primary));
+  font-size: var(--intranet-text-sm);
+  line-height: var(--intranet-leading-normal);
+}
+
+.admin-layout h1,
+.admin-layout h2,
+.admin-layout h3,
+.admin-layout h4,
+.admin-layout h5,
+.admin-layout h6 {
+  font-family: var(--intranet-font);
+  color: hsl(var(--intranet-text-primary));
+}
+
+/* Card estándar */
+.admin-card {
+  background-color: hsl(var(--intranet-card));
+  border: 1px solid hsl(var(--intranet-border));
+  border-radius: var(--intranet-radius);
+  padding: var(--intranet-space-6);
+}
+
+.admin-card-sm {
+  padding: var(--intranet-space-4);
+}
+
+/* Tabla con zebra striping */
+.admin-table tbody tr:nth-child(odd) {
+  background-color: hsl(var(--intranet-bg));
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: hsl(var(--intranet-card));
+}
+
+.admin-table tbody tr:hover {
+  background-color: hsl(var(--intranet-card-hover));
+}
+
+/* Badge base */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--intranet-text-xs);
+  font-weight: var(--intranet-font-medium);
+  border-radius: var(--intranet-radius);
+  border: 1px solid;
+  line-height: 1.5;
+}
+
+/* Badge variants */
+.admin-badge-active {
+  background-color: hsl(var(--intranet-status-active-bg));
+  color: hsl(var(--intranet-status-active-text));
+  border-color: hsl(var(--intranet-status-active-border));
+}
+
+.admin-badge-medium {
+  background-color: hsl(var(--intranet-status-medium-bg));
+  color: hsl(var(--intranet-status-medium-text));
+  border-color: hsl(var(--intranet-status-medium-border));
+}
+
+.admin-badge-low {
+  background-color: hsl(var(--intranet-status-low-bg));
+  color: hsl(var(--intranet-status-low-text));
+  border-color: hsl(var(--intranet-status-low-border));
+}
+
+.admin-badge-urgent {
+  background-color: hsl(var(--intranet-status-urgent-bg));
+  color: hsl(var(--intranet-status-urgent-text));
+  border-color: hsl(var(--intranet-status-urgent-border));
+}
+
+.admin-badge-info {
+  background-color: hsl(var(--intranet-status-info-bg));
+  color: hsl(var(--intranet-status-info-text));
+  border-color: hsl(var(--intranet-status-info-border));
+}
+
+/* Stats card */
+.admin-stats-card {
+  background-color: hsl(var(--intranet-card));
+  border: 1px solid hsl(var(--intranet-border));
+  border-radius: var(--intranet-radius);
+  padding: var(--intranet-space-6);
+}
+
+.admin-stats-card-label {
+  font-size: var(--intranet-text-sm);
+  color: hsl(var(--intranet-text-secondary));
+  font-weight: var(--intranet-font-regular);
+}
+
+.admin-stats-card-value {
+  font-size: var(--intranet-text-2xl);
+  color: hsl(var(--intranet-text-primary));
+  font-weight: var(--intranet-font-semibold);
+  margin-top: var(--intranet-space-1);
+}
+
+/* Page header */
+.admin-page-header {
+  margin-bottom: var(--intranet-space-6);
+}
+
+.admin-page-title {
+  font-size: var(--intranet-text-lg);
+  font-weight: var(--intranet-font-semibold);
+  color: hsl(var(--intranet-text-primary));
+  margin: 0;
+}
+
+.admin-page-description {
+  font-size: var(--intranet-text-sm);
+  color: hsl(var(--intranet-text-secondary));
+  margin-top: var(--intranet-space-1);
+}
+
+/* Buttons */
+.admin-button-primary {
+  background-color: hsl(var(--intranet-text-primary));
+  color: white;
+  border: none;
+  padding: var(--intranet-space-2) var(--intranet-space-4);
+  border-radius: var(--intranet-radius);
+  font-size: var(--intranet-text-sm);
+  font-weight: var(--intranet-font-medium);
+  cursor: pointer;
+  transition: background-color var(--intranet-transition-fast);
+}
+
+.admin-button-primary:hover {
+  background-color: hsl(221 39% 20%);
+}
+
+.admin-button-secondary {
+  background-color: transparent;
+  color: hsl(var(--intranet-text-primary));
+  border: 1px solid hsl(var(--intranet-border));
+  padding: var(--intranet-space-2) var(--intranet-space-4);
+  border-radius: var(--intranet-radius);
+  font-size: var(--intranet-text-sm);
+  font-weight: var(--intranet-font-medium);
+  cursor: pointer;
+  transition: all var(--intranet-transition-fast);
+}
+
+.admin-button-secondary:hover {
+  background-color: hsl(var(--intranet-bg));
+  border-color: hsl(var(--intranet-text-secondary));
+}
+
+/* Input with floating label effect */
+.admin-input {
+  width: 100%;
+  padding: var(--intranet-space-2) var(--intranet-space-3);
+  border: 1px solid hsl(var(--intranet-border));
+  border-radius: var(--intranet-radius);
+  font-size: var(--intranet-text-sm);
+  font-family: var(--intranet-font);
+  color: hsl(var(--intranet-text-primary));
+  background-color: hsl(var(--intranet-card));
+  transition: border-color var(--intranet-transition-fast), box-shadow var(--intranet-transition-fast);
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: hsl(var(--intranet-text-primary));
+  box-shadow: 0 0 0 1px hsl(var(--intranet-text-primary));
+}
+
+.admin-input::placeholder {
+  color: hsl(var(--intranet-text-secondary));
+}
+
+/* Sheet / Side panel */
+.admin-sheet {
+  width: 480px;
+  max-width: 100vw;
+}
+
+/* Section divider */
+.admin-divider {
+  height: 1px;
+  background-color: hsl(var(--intranet-border));
+  margin: var(--intranet-space-6) 0;
+}

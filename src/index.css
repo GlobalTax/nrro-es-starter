@@ -4,6 +4,9 @@
 /* Plus Jakarta Sans Font Family for service descriptions */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
+/* Inter Font for Admin Intranet */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 /* Roboto Mono already imported in index.html for monospace code/data display */
 
 /* Mapa usa iframe de OpenStreetMap - no requiere CSS externo */
@@ -11,6 +14,7 @@
 /* Design System Utilities */
 @import './styles/utilities.css';
 @import './styles/animations.css';
+@import './styles/admin-tokens.css';
 
 /* General Sans Font Family */
 @font-face {
