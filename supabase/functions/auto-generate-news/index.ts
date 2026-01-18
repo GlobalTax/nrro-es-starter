@@ -59,15 +59,16 @@ serve(async (req) => {
 
     console.log(`Generating ${articlesToGenerate} news articles from sources: ${sources.join(", ")}`);
 
-    const systemPrompt = `Eres un redactor experto en noticias legales y fiscales para España. Tu trabajo es generar noticias breves y relevantes para empresas.
+const systemPrompt = `Eres un redactor experto en noticias legales y fiscales para España. Tu trabajo es generar noticias breves y relevantes para empresas.
 
 REGLAS ESTRICTAS:
 1. Cada noticia debe tener MÁXIMO 150 caracteres en el excerpt
 2. El título debe ser conciso y directo (máximo 80 caracteres)
-3. Formato tweet-style: directo al grano, sin adornos
-4. Basado en actualidad legal REAL y reciente de España (BOE, AEAT, jurisprudencia)
-5. Tono profesional e informativo
-6. Incluir impacto práctico para empresas
+3. El contenido debe tener 2-3 párrafos explicando la noticia en detalle
+4. Formato tweet-style para excerpt: directo al grano, sin adornos
+5. Basado en actualidad legal REAL y reciente de España (BOE, AEAT, jurisprudencia)
+6. Tono profesional e informativo
+7. Incluir impacto práctico para empresas
 
 FUENTES A USAR: ${sources.map((s: string) => NEWS_SOURCES[s as keyof typeof NEWS_SOURCES] || s).join(", ")}
 CATEGORÍAS: ${categories.join(", ")}
@@ -77,6 +78,7 @@ FORMATO DE RESPUESTA (JSON array):
   {
     "title_es": "Título breve y directo",
     "excerpt_es": "Extracto de máximo 150 caracteres con el dato clave de la noticia.",
+    "content_es": "Contenido expandido de 2-3 párrafos explicando la noticia en detalle, su contexto y las implicaciones prácticas para empresas.",
     "category": "Fiscal",
     "source_name": "AEAT"
   }
@@ -179,8 +181,10 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
       const newsData = {
         title_es: item.title_es,
         excerpt_es: item.excerpt_es?.slice(0, 150) || item.excerpt_es,
+        content_es: item.content_es || item.excerpt_es, // Fallback to excerpt if no content
         category: item.category || "Fiscal",
         source_name: item.source_name || "BOE",
+        source_site: "es", // Required field for filtering in frontend
         slug_es: `${slug}-${Date.now()}`,
         is_published: settings.auto_publish,
         published_at: settings.auto_publish ? new Date().toISOString() : null,

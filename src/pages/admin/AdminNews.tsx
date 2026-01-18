@@ -5,6 +5,16 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -13,25 +23,44 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { MoreHorizontal, Trash2, Bot, Newspaper, Search } from "lucide-react";
+import { MoreHorizontal, Trash2, Bot, Newspaper, Search, Plus, Pencil } from "lucide-react";
 import { TranslateNewsToCatalan } from "@/components/admin/news/TranslateNewsToCatalan";
 import { TranslateNewsToEnglish } from "@/components/admin/news/TranslateNewsToEnglish";
 import { NewsAutomationPanel } from "@/components/admin/news/NewsAutomationPanel";
+import { NewsFormDialog } from "@/components/admin/news/NewsFormDialog";
 import { 
   useNewsArticles, 
   useDeleteNewsArticle, 
   useUpdateNewsArticle 
 } from "@/hooks/useNewsAutomation";
 
+interface NewsArticle {
+  id: string;
+  title_es: string | null;
+  title_ca: string | null;
+  title_en: string | null;
+  excerpt_es: string | null;
+  content_es: string | null;
+  category: string | null;
+  source_name: string | null;
+  is_published: boolean;
+  published_at: string | null;
+  generated_with_ai: boolean | null;
+}
+
 export const AdminNews = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const [editingArticle, setEditingArticle] = useState<NewsArticle | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [articleToDelete, setArticleToDelete] = useState<string | null>(null);
 
   const { data: articles, isLoading } = useNewsArticles();
   const deleteArticle = useDeleteNewsArticle();
   const updateArticle = useUpdateNewsArticle();
 
-  const filteredArticles = articles?.filter((article) => {
+  const filteredArticles = (articles as NewsArticle[] | undefined)?.filter((article) => {
     const matchesSearch = 
       !searchTerm || 
       article.title_es?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -52,6 +81,29 @@ export const AdminNews = () => {
         published_at: !currentStatus ? new Date().toISOString() : null,
       },
     });
+  };
+
+  const handleEdit = (article: NewsArticle) => {
+    setEditingArticle(article);
+    setFormOpen(true);
+  };
+
+  const handleCreate = () => {
+    setEditingArticle(null);
+    setFormOpen(true);
+  };
+
+  const handleDeleteClick = (id: string) => {
+    setArticleToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (articleToDelete) {
+      deleteArticle.mutate(articleToDelete);
+      setDeleteDialogOpen(false);
+      setArticleToDelete(null);
+    }
   };
 
   if (isLoading) {
@@ -75,9 +127,18 @@ export const AdminNews = () => {
             <p className="text-sm text-slate-500">Gestiona las noticias del sector</p>
           </div>
         </div>
-        <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
-          {articles?.length || 0} noticias
-        </Badge>
+        <div className="flex items-center gap-3">
+          <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
+            {articles?.length || 0} noticias
+          </Badge>
+          <Button 
+            onClick={handleCreate}
+            className="bg-slate-900 hover:bg-slate-800 text-white"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Nueva noticia
+          </Button>
+        </div>
       </div>
 
       {/* Automation Panel */}
@@ -197,8 +258,15 @@ export const AdminNews = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem
+                        className="text-slate-700 focus:text-slate-900 focus:bg-slate-50"
+                        onClick={() => handleEdit(article)}
+                      >
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Editar
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
                         className="text-red-600 focus:text-red-700 focus:bg-red-50"
-                        onClick={() => deleteArticle.mutate(article.id)}
+                        onClick={() => handleDeleteClick(article.id)}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
                         Eliminar
@@ -210,14 +278,52 @@ export const AdminNews = () => {
             ))}
             {filteredArticles?.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-12 text-slate-500">
-                  No hay noticias que mostrar. Usa el botón "Generar ahora" para crear contenido.
+                <TableCell colSpan={6} className="text-center py-12">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="p-3 bg-slate-100 rounded-full">
+                      <Newspaper className="h-6 w-6 text-slate-400" />
+                    </div>
+                    <p className="text-slate-500">No hay noticias que mostrar.</p>
+                    <p className="text-sm text-slate-400">
+                      Usa el botón "Generar ahora" o "Nueva noticia" para crear contenido.
+                    </p>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </Card>
+
+      {/* Form Dialog */}
+      <NewsFormDialog
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        article={editingArticle}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-slate-900">¿Eliminar noticia?</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500">
+              Esta acción no se puede deshacer. La noticia será eliminada permanentemente.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-slate-200 text-slate-600 hover:bg-slate-50">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

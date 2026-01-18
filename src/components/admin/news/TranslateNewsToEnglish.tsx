@@ -44,24 +44,26 @@ export const TranslateNewsToEnglish = () => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Languages className="h-5 w-5" />
-          Traducción Automática al Inglés
-        </CardTitle>
-        <CardDescription>
-          Traduce automáticamente todos los artículos de noticias al inglés usando Google Translate API.
-          Solo se traducirán los artículos que aún no tengan traducción al inglés.
+    <Card className="border-0 shadow-sm bg-white">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-2">
+          <div className="p-1.5 bg-slate-100 rounded-md">
+            <Languages className="h-4 w-4 text-slate-600" />
+          </div>
+          <CardTitle className="text-lg font-medium text-slate-900">
+            Traducir al Inglés
+          </CardTitle>
+        </div>
+        <CardDescription className="text-slate-500">
+          Traduce automáticamente todos los artículos que no tengan traducción al inglés.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {!results && (
-          <Alert>
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
+          <Alert className="bg-slate-50 border-slate-200">
+            <AlertCircle className="h-4 w-4 text-slate-500" />
+            <AlertDescription className="text-slate-600">
               Esta operación puede tardar varios minutos dependiendo del número de artículos.
-              Se traducirán automáticamente: título, extracto y contenido.
             </AlertDescription>
           </Alert>
         )}
@@ -69,55 +71,43 @@ export const TranslateNewsToEnglish = () => {
         {results && (
           <div className="space-y-3">
             <div className="grid grid-cols-3 gap-3">
-              <Card className="bg-green-50 dark:bg-green-950">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
-                    <div>
-                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        {results.success}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Exitosos</p>
-                    </div>
+              <div className="p-3 bg-emerald-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  <div>
+                    <p className="text-xl font-semibold text-emerald-700">{results.success}</p>
+                    <p className="text-xs text-emerald-600">Exitosos</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="bg-yellow-50 dark:bg-yellow-950">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-2">
-                    <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                    <div>
-                      <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-                        {results.skipped}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Omitidos</p>
-                    </div>
+              <div className="p-3 bg-amber-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 text-amber-600" />
+                  <div>
+                    <p className="text-xl font-semibold text-amber-700">{results.skipped}</p>
+                    <p className="text-xs text-amber-600">Omitidos</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="bg-red-50 dark:bg-red-950">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-2">
-                    <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-                    <div>
-                      <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                        {results.failed}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Errores</p>
-                    </div>
+              <div className="p-3 bg-red-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <XCircle className="h-4 w-4 text-red-600" />
+                  <div>
+                    <p className="text-xl font-semibold text-red-700">{results.failed}</p>
+                    <p className="text-xs text-red-600">Errores</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
             {results.errors.length > 0 && (
-              <Alert variant="destructive">
+              <Alert variant="destructive" className="bg-red-50 border-red-200">
                 <XCircle className="h-4 w-4" />
                 <AlertDescription>
-                  <p className="font-medium mb-2">Errores durante la traducción:</p>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
+                  <p className="font-medium mb-2 text-red-800">Errores durante la traducción:</p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-red-700">
                     {results.errors.map((error, idx) => (
                       <li key={idx}>{error}</li>
                     ))}
@@ -131,7 +121,7 @@ export const TranslateNewsToEnglish = () => {
         <Button 
           onClick={handleTranslate} 
           disabled={isTranslating}
-          className="w-full"
+          className="w-full bg-slate-900 hover:bg-slate-800 text-white"
         >
           {isTranslating ? (
             <>
@@ -141,7 +131,7 @@ export const TranslateNewsToEnglish = () => {
           ) : (
             <>
               <Languages className="mr-2 h-4 w-4" />
-              Traducir Noticias al Inglés
+              Traducir al Inglés
             </>
           )}
         </Button>
