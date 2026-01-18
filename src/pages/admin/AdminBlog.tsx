@@ -31,6 +31,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BlogStatsCard } from "@/components/admin/blog/BlogStatsCard";
 import { BlogFormDialog } from "@/components/admin/blog/BlogFormDialog";
@@ -38,8 +45,10 @@ import { BlogPreviewModal } from "@/components/admin/blog/BlogPreviewModal";
 import { BlogAutomationPanel } from "@/components/admin/blog/BlogAutomationPanel";
 import { TranslateBlogToCatalan } from "@/components/admin/blog/TranslateBlogToCatalan";
 import { TranslateBlogToEnglish } from "@/components/admin/blog/TranslateBlogToEnglish";
-import { useBlogSearch } from "@/hooks/useBlogSearch";
-import { Plus, Eye, Edit, Trash2, CheckCircle, Search, Bot, FileText } from "lucide-react";
+import { ContentStatusBadge, ContentOriginBadge } from "@/components/admin/content/ContentStatusBadge";
+import { useBlogSearch, useBlogFilterOptions } from "@/hooks/useBlogSearch";
+import { useDuplicateBlogPost } from "@/hooks/useDuplicateContent";
+import { Plus, Eye, Edit, Trash2, CheckCircle, Search, Bot, FileText, MoreHorizontal, Copy } from "lucide-react";
 import { format } from "date-fns";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 
@@ -50,15 +59,20 @@ export const AdminBlog = () => {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<any>(null);
   const [deletePostId, setDeletePostId] = useState<string | null>(null);
 
+  const { data: filterOptions } = useBlogFilterOptions();
+  const duplicateMutation = useDuplicateBlogPost();
+
   const { data, isLoading, refetch } = useBlogSearch({
     searchQuery: searchQuery || undefined,
     status: statusFilter === "all" ? undefined : statusFilter,
+    category: categoryFilter === "all" ? undefined : categoryFilter,
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
     sourceSite: "int",
@@ -66,6 +80,7 @@ export const AdminBlog = () => {
 
   const posts = data?.posts || [];
   const totalCount = data?.totalCount || 0;
+  const categories = filterOptions?.categories || [];
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -115,19 +130,6 @@ export const AdminBlog = () => {
     },
   });
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "published":
-        return <Badge className="bg-emerald-100 text-emerald-700 border-0 font-medium">Publicado</Badge>;
-      case "draft":
-        return <Badge className="bg-slate-100 text-slate-600 border-0 font-medium">Borrador</Badge>;
-      case "scheduled":
-        return <Badge className="bg-amber-100 text-amber-700 border-0 font-medium">Programado</Badge>;
-      default:
-        return <Badge className="bg-slate-100 text-slate-600 border-0">{status}</Badge>;
-    }
-  };
-
   const [loadingEdit, setLoadingEdit] = useState(false);
 
   const handleEdit = async (post: any) => {
@@ -164,15 +166,24 @@ export const AdminBlog = () => {
     setIsPreviewOpen(true);
   };
 
+  const handleDuplicate = (post: any) => {
+    duplicateMutation.mutate(post.id);
+  };
+
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-medium text-slate-900">Blog</h1>
-          <p className="text-sm text-slate-500">Gestiona los artículos del blog</p>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-slate-100 rounded-lg">
+            <FileText className="h-5 w-5 text-slate-600" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-medium text-slate-900">Blog</h1>
+            <p className="text-sm text-slate-500">Gestiona los artículos del blog</p>
+          </div>
         </div>
         <Button onClick={handleNew} className="bg-slate-900 hover:bg-slate-800">
           <Plus className="mr-2 h-4 w-4" />
@@ -217,13 +228,27 @@ export const AdminBlog = () => {
                 <Input
                   placeholder="Buscar artículos..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className="pl-9 border-slate-200 focus:border-slate-300 focus:ring-slate-200"
                 />
               </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <Select value={categoryFilter} onValueChange={(v) => { setCategoryFilter(v); setCurrentPage(1); }}>
                 <SelectTrigger className="w-full sm:w-[180px] border-slate-200">
-                  <SelectValue placeholder="Filtrar por estado" />
+                  <SelectValue placeholder="Categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas las categorías</SelectItem>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
+                <SelectTrigger className="w-full sm:w-[150px] border-slate-200">
+                  <SelectValue placeholder="Estado" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todos</SelectItem>
@@ -245,71 +270,93 @@ export const AdminBlog = () => {
                     <TableRow className="bg-slate-50/50 hover:bg-slate-50/50">
                       <TableHead className="text-slate-600 font-medium">Título</TableHead>
                       <TableHead className="text-slate-600 font-medium">Categoría</TableHead>
+                      <TableHead className="text-slate-600 font-medium">Origen</TableHead>
                       <TableHead className="text-slate-600 font-medium">Estado</TableHead>
                       <TableHead className="text-slate-600 font-medium">Fecha</TableHead>
-                      <TableHead className="text-slate-600 font-medium">Vistas</TableHead>
-                      <TableHead className="text-right text-slate-600 font-medium">Acciones</TableHead>
+                      <TableHead className="text-slate-600 font-medium text-center">Vistas</TableHead>
+                      <TableHead className="w-[50px]"></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {posts.map((post: any) => (
-                      <TableRow key={post.id} className="hover:bg-slate-50/50">
-                        <TableCell className="font-medium text-slate-900">{post.title}</TableCell>
-                        <TableCell>
-                          {post.category && (
-                            <Badge variant="outline" className="border-slate-200 text-slate-600 font-normal">
-                              {post.category}
-                            </Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>{getStatusBadge(post.status)}</TableCell>
-                        <TableCell className="text-slate-600">
-                          {post.published_at
-                            ? format(new Date(post.published_at), "dd/MM/yyyy")
-                            : "-"}
-                        </TableCell>
-                        <TableCell className="text-slate-600">{post.view_count || 0}</TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-1">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handlePreview(post)}
-                              className="h-8 w-8 p-0 text-slate-400 hover:text-slate-600"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => handleEdit(post)}
-                              className="h-8 w-8 p-0 text-slate-400 hover:text-slate-600"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            {post.status === "draft" && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => publishMutation.mutate(post.id)}
-                                disabled={publishMutation.isPending}
-                                className="h-8 w-8 p-0 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50"
-                              >
-                                <CheckCircle className="h-4 w-4" />
-                              </Button>
-                            )}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setDeletePostId(post.id)}
-                              className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                    {posts.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={7} className="text-center py-12">
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="p-3 bg-slate-100 rounded-full">
+                              <FileText className="h-6 w-6 text-slate-400" />
+                            </div>
+                            <p className="text-slate-500">No hay artículos que mostrar.</p>
                           </div>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ) : (
+                      posts.map((post: any) => (
+                        <TableRow key={post.id} className="hover:bg-slate-50/50">
+                          <TableCell className="font-medium text-slate-900 max-w-xs">
+                            <div className="truncate">{post.title}</div>
+                          </TableCell>
+                          <TableCell>
+                            {post.category && (
+                              <Badge variant="outline" className="border-slate-200 text-slate-600 font-normal">
+                                {post.category}
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <ContentOriginBadge origin={post.source_site || "es"} />
+                          </TableCell>
+                          <TableCell>
+                            <ContentStatusBadge status={post.status} />
+                          </TableCell>
+                          <TableCell className="text-slate-600">
+                            {post.published_at
+                              ? format(new Date(post.published_at), "dd/MM/yyyy")
+                              : "-"}
+                          </TableCell>
+                          <TableCell className="text-slate-600 text-center">{post.view_count || 0}</TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => handlePreview(post)}>
+                                  <Eye className="mr-2 h-4 w-4" />
+                                  Vista previa
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleEdit(post)}>
+                                  <Edit className="mr-2 h-4 w-4" />
+                                  Editar
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDuplicate(post)}>
+                                  <Copy className="mr-2 h-4 w-4" />
+                                  Duplicar
+                                </DropdownMenuItem>
+                                {post.status === "draft" && (
+                                  <DropdownMenuItem 
+                                    onClick={() => publishMutation.mutate(post.id)}
+                                    className="text-emerald-600"
+                                  >
+                                    <CheckCircle className="mr-2 h-4 w-4" />
+                                    Publicar
+                                  </DropdownMenuItem>
+                                )}
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem 
+                                  onClick={() => setDeletePostId(post.id)}
+                                  className="text-red-600 focus:text-red-700 focus:bg-red-50"
+                                >
+                                  <Trash2 className="mr-2 h-4 w-4" />
+                                  Eliminar
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
 
@@ -343,15 +390,15 @@ export const AdminBlog = () => {
       )}
 
       <AlertDialog open={!!deletePostId} onOpenChange={() => setDeletePostId(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-slate-900">¿Estás seguro?</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500">
               Esta acción no se puede deshacer. El artículo será eliminado permanentemente.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel className="border-slate-200">Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => deletePostId && deleteMutation.mutate(deletePostId)}
               className="bg-red-600 text-white hover:bg-red-700"

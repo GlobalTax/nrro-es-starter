@@ -54,17 +54,35 @@ export const useCaseStudyFilterOptions = () => {
   return useQuery({
     queryKey: ["case-studies-filter-options"],
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_case_studies_filter_options");
+      // Try to get from RPC first, fallback to manual query
+      try {
+        const { data, error } = await supabase.rpc("get_case_studies_filter_options");
+        
+        if (!error && data && data.length > 0) {
+          return data[0] as {
+            industries: string[];
+            services: string[];
+            all_tags: string[];
+          };
+        }
+      } catch {
+        // Fallback to manual query
+      }
       
-      if (error) throw error;
+      // Manual fallback query
+      const { data: caseStudies } = await supabase
+        .from('case_studies')
+        .select('client_industry, primary_service, tags');
       
-      const result = data && data.length > 0 ? data[0] : { 
-        industries: [], 
-        services: [], 
-        all_tags: [] 
-      };
+      const industries = [...new Set((caseStudies || []).map(cs => cs.client_industry).filter(Boolean))];
+      const services = [...new Set((caseStudies || []).map(cs => cs.primary_service).filter(Boolean))];
+      const allTags = [...new Set((caseStudies || []).flatMap(cs => cs.tags || []).filter(Boolean))];
       
-      return result as {
+      return {
+        industries,
+        services,
+        all_tags: allTags,
+      } as {
         industries: string[];
         services: string[];
         all_tags: string[];
