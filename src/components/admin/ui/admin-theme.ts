@@ -194,11 +194,10 @@ export const typography = {
     xl: '20px',
     '2xl': '24px',
   },
-  weights: {
-    regular: 400,
-    medium: 500,
-    semibold: 600,
-  },
+    weights: {
+      light: 300,
+      regular: 400,
+    },
   lineHeights: {
     tight: 1.25,
     normal: 1.5,
