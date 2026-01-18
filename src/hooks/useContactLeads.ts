@@ -6,10 +6,12 @@ export interface ContactLead {
   id: string;
   name: string;
   email: string;
+  phone: string | null;
   company: string | null;
   subject: string;
   message: string;
   service_type: string | null;
+  source_site: string | null;
   ip_address: string | null;
   user_agent: string | null;
   email_sent: boolean;
@@ -24,6 +26,7 @@ export interface ContactLeadFilters {
   search?: string;
   status?: string;
   serviceType?: string;
+  sourceSite?: string;
   dateFrom?: string;
   dateTo?: string;
 }
@@ -49,6 +52,10 @@ export const useContactLeads = (filters?: ContactLeadFilters) => {
 
       if (filters?.serviceType && filters.serviceType !== "all") {
         query = query.eq("service_type", filters.serviceType as any);
+      }
+
+      if (filters?.sourceSite && filters.sourceSite !== "all") {
+        query = query.eq("source_site", filters.sourceSite as any);
       }
 
       if (filters?.dateFrom) {
