@@ -8,6 +8,7 @@ export interface ContactLeadFiltersState {
   search: string;
   status: string;
   serviceType: string;
+  sourceSite: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -27,104 +28,98 @@ export const ContactLeadFilters = ({
     filters.search || 
     filters.status !== "all" || 
     filters.serviceType !== "all" ||
+    filters.sourceSite !== "all" ||
     filters.dateFrom ||
     filters.dateTo;
 
   return (
-    <div className="bg-card border rounded-lg p-4 space-y-4">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold">Filtros</h3>
+        <h3 className="text-sm font-medium text-slate-700">Filtros</h3>
         {hasActiveFilters && (
           <Button
             variant="ghost"
             size="sm"
             onClick={onClearFilters}
-            className="h-8"
+            className="h-7 text-xs"
           >
-            <X className="h-4 w-4 mr-1" />
+            <X className="h-3.5 w-3.5 mr-1" />
             Limpiar
           </Button>
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
         {/* Búsqueda */}
-        <div className="lg:col-span-2">
-          <Label htmlFor="search" className="text-xs">Buscar</Label>
-          <div className="relative mt-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <div className="md:col-span-2">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input
-              id="search"
-              placeholder="Nombre, email, empresa..."
+              placeholder="Buscar nombre, email, empresa..."
               value={filters.search}
               onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
-              className="pl-9"
+              className="pl-9 h-9"
             />
           </div>
         </div>
 
         {/* Estado */}
-        <div>
-          <Label htmlFor="status" className="text-xs">Estado</Label>
-          <Select
-            value={filters.status}
-            onValueChange={(value) => onFiltersChange({ ...filters, status: value })}
-          >
-            <SelectTrigger id="status" className="mt-1">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="pending">Pendientes</SelectItem>
-              <SelectItem value="responded">Respondidos</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Select
+          value={filters.status}
+          onValueChange={(value) => onFiltersChange({ ...filters, status: value })}
+        >
+          <SelectTrigger className="h-9">
+            <SelectValue placeholder="Estado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="pending">Pendientes</SelectItem>
+            <SelectItem value="responded">Respondidos</SelectItem>
+          </SelectContent>
+        </Select>
 
         {/* Tipo de Servicio */}
-        <div>
-          <Label htmlFor="service-type" className="text-xs">Tipo de Servicio</Label>
-          <Select
-            value={filters.serviceType}
-            onValueChange={(value) => onFiltersChange({ ...filters, serviceType: value })}
-          >
-            <SelectTrigger id="service-type" className="mt-1">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="tax_advisory">Asesoría Fiscal</SelectItem>
-              <SelectItem value="legal_services">Servicios Legales</SelectItem>
-              <SelectItem value="accounting">Contabilidad</SelectItem>
-              <SelectItem value="payroll">Nóminas</SelectItem>
-              <SelectItem value="other">Otro</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Select
+          value={filters.serviceType}
+          onValueChange={(value) => onFiltersChange({ ...filters, serviceType: value })}
+        >
+          <SelectTrigger className="h-9">
+            <SelectValue placeholder="Servicio" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="tax_advisory">Asesoría Fiscal</SelectItem>
+            <SelectItem value="legal_services">Servicios Legales</SelectItem>
+            <SelectItem value="accounting">Contabilidad</SelectItem>
+            <SelectItem value="payroll">Nóminas</SelectItem>
+            <SelectItem value="other">Otro</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* Origen */}
+        <Select
+          value={filters.sourceSite}
+          onValueChange={(value) => onFiltersChange({ ...filters, sourceSite: value })}
+        >
+          <SelectTrigger className="h-9">
+            <SelectValue placeholder="Origen" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="es">España (ES)</SelectItem>
+            <SelectItem value="en">English (EN)</SelectItem>
+            <SelectItem value="ca">Català (CA)</SelectItem>
+          </SelectContent>
+        </Select>
 
         {/* Fecha Desde */}
-        <div>
-          <Label htmlFor="date-from" className="text-xs">Desde</Label>
-          <Input
-            id="date-from"
-            type="date"
-            value={filters.dateFrom}
-            onChange={(e) => onFiltersChange({ ...filters, dateFrom: e.target.value })}
-            className="mt-1"
-          />
-        </div>
-
-        {/* Fecha Hasta */}
-        <div>
-          <Label htmlFor="date-to" className="text-xs">Hasta</Label>
-          <Input
-            id="date-to"
-            type="date"
-            value={filters.dateTo}
-            onChange={(e) => onFiltersChange({ ...filters, dateTo: e.target.value })}
-            className="mt-1"
-          />
-        </div>
+        <Input
+          type="date"
+          value={filters.dateFrom}
+          onChange={(e) => onFiltersChange({ ...filters, dateFrom: e.target.value })}
+          className="h-9"
+          placeholder="Desde"
+        />
       </div>
     </div>
   );

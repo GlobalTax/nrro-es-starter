@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useContactLeads, useUpdateContactLead, useDeleteContactLead, ContactLead } from "@/hooks/useContactLeads";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Trash2, Mail, ExternalLink, Eye, Download } from "lucide-react";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { ContactLeadDetailModal } from "@/components/admin/contact-leads/ContactLeadDetailModal";
+import { Download, Mail, Clock, CheckCircle2, TrendingUp } from "lucide-react";
+import { ContactLeadDetailSheet } from "@/components/admin/contact-leads/ContactLeadDetailSheet";
 import { ContactLeadFilters, ContactLeadFiltersState } from "@/components/admin/contact-leads/ContactLeadFilters";
+import { ContactLeadsTable } from "@/components/admin/contact-leads/ContactLeadsTable";
 import { exportContactLeadsToCSV, exportContactLeadsToExcel } from "@/lib/exportContactLeads";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import {
@@ -16,25 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { isThisWeek } from "date-fns";
 
 export default function AdminContactLeads() {
   const { trackDownload } = useAnalytics();
@@ -42,6 +23,7 @@ export default function AdminContactLeads() {
     search: "",
     status: "all",
     serviceType: "all",
+    sourceSite: "all",
     dateFrom: "",
     dateTo: "",
   });
@@ -50,15 +32,15 @@ export default function AdminContactLeads() {
   const updateLead = useUpdateContactLead();
   const deleteLead = useDeleteContactLead();
   
-  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [selectedLead, setSelectedLead] = useState<ContactLead | null>(null);
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   const handleClearFilters = () => {
     setFilters({
       search: "",
       status: "all",
       serviceType: "all",
+      sourceSite: "all",
       dateFrom: "",
       dateTo: "",
     });
@@ -84,15 +66,53 @@ export default function AdminContactLeads() {
 
   const handleViewDetail = (lead: ContactLead) => {
     setSelectedLead(lead);
-    setIsDetailModalOpen(true);
   };
 
-  const handleDelete = () => {
-    if (deleteId) {
-      deleteLead.mutate(deleteId);
-      setDeleteId(null);
-    }
+  const handleMarkResponded = (lead: ContactLead) => {
+    updateLead.mutate({ id: lead.id, email_sent: true });
   };
+
+  const handleOpenMailto = (lead: ContactLead) => {
+    const emailTemplate = `Estimado/a ${lead.name},
+
+Gracias por contactar con navarro.
+
+Hemos recibido su consulta y nuestro equipo la está revisando. Nos pondremos en contacto con usted en las próximas 24-48 horas.
+
+Si necesita asistencia urgente, no dude en llamarnos.
+
+Saludos cordiales,
+Equipo navarro`;
+
+    const mailtoLink = `mailto:${lead.email}?subject=Re: ${lead.subject}&body=${encodeURIComponent(emailTemplate)}`;
+    window.open(mailtoLink, '_blank');
+  };
+
+  const handleDelete = (id: string) => {
+    deleteLead.mutate(id);
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedRows(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const stats = useMemo(() => {
+    if (!leads) return { total: 0, pending: 0, responded: 0, thisWeek: 0 };
+    return {
+      total: leads.length,
+      pending: leads.filter(l => !l.email_sent).length,
+      responded: leads.filter(l => l.email_sent).length,
+      thisWeek: leads.filter(l => isThisWeek(new Date(l.created_at))).length,
+    };
+  }, [leads]);
 
   if (isLoading) {
     return (
@@ -101,34 +121,23 @@ export default function AdminContactLeads() {
           <Skeleton className="h-8 w-64" />
           <Skeleton className="h-10 w-32" />
         </div>
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-48" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <Skeleton key={i} className="h-16 w-full" />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-24 w-full" />
+          ))}
+        </div>
+        <Skeleton className="h-96 w-full" />
       </div>
     );
   }
 
-  const stats = {
-    total: leads?.length || 0,
-    responded: leads?.filter((l) => l.email_sent).length || 0,
-    pending: leads?.filter((l) => !l.email_sent).length || 0,
-  };
-
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-normal">Leads de Contacto</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl font-semibold text-slate-900">Leads de Contacto</h1>
+          <p className="text-sm text-slate-500 mt-0.5">
             Gestiona los mensajes de contacto recibidos
           </p>
         </div>
@@ -150,159 +159,94 @@ export default function AdminContactLeads() {
         </DropdownMenu>
       </div>
 
-      <ContactLeadFilters
-        filters={filters}
-        onFiltersChange={setFilters}
-        onClearFilters={handleClearFilters}
-      />
-
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.total}</div>
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card className="border-0 shadow-sm">
+          <CardContent className="pt-5 pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-500">Total</p>
+                <p className="text-2xl font-semibold text-slate-900">{stats.total}</p>
+              </div>
+              <div className="p-2.5 bg-slate-100 rounded-lg">
+                <Mail className="h-5 w-5 text-slate-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Respondidos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.responded}</div>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="pt-5 pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-500">Pendientes</p>
+                <p className="text-2xl font-semibold text-amber-600">{stats.pending}</p>
+              </div>
+              <div className="p-2.5 bg-amber-100 rounded-lg">
+                <Clock className="h-5 w-5 text-amber-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pendientes</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="pt-5 pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-500">Respondidos</p>
+                <p className="text-2xl font-semibold text-emerald-600">{stats.responded}</p>
+              </div>
+              <div className="p-2.5 bg-emerald-100 rounded-lg">
+                <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="pt-5 pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-500">Esta semana</p>
+                <p className="text-2xl font-semibold text-indigo-600">{stats.thisWeek}</p>
+              </div>
+              <div className="p-2.5 bg-indigo-100 rounded-lg">
+                <TrendingUp className="h-5 w-5 text-indigo-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Leads Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Mensajes Recibidos</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {!leads || leads.length === 0 ? (
-            <div className="text-center py-12">
-              <Mail className="mx-auto h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-medium">No hay leads aún</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Los mensajes de contacto aparecerán aquí
-              </p>
-            </div>
-          ) : (
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Fecha</TableHead>
-                    <TableHead>Nombre</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Empresa</TableHead>
-                    <TableHead>Asunto</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead className="text-right">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {leads.map((lead) => (
-                    <TableRow 
-                      key={lead.id}
-                      className="cursor-pointer hover:bg-muted/50"
-                      onClick={() => handleViewDetail(lead)}
-                    >
-                      <TableCell className="whitespace-nowrap">
-                        {format(new Date(lead.created_at), "dd MMM yyyy HH:mm", {
-                          locale: es,
-                        })}
-                      </TableCell>
-                      <TableCell className="font-medium">{lead.name}</TableCell>
-                      <TableCell>
-                        <a
-                          href={`mailto:${lead.email}`}
-                          className="text-blue-600 hover:underline flex items-center gap-1"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {lead.email}
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {lead.company || "-"}
-                      </TableCell>
-                      <TableCell className="max-w-xs truncate">{lead.subject}</TableCell>
-                      <TableCell>
-                        <Badge variant={lead.email_sent ? "default" : "secondary"}>
-                          {lead.email_sent ? "Respondido" : "Pendiente"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleViewDetail(lead);
-                            }}
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setDeleteId(lead.id);
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
+      {/* Filters */}
+      <Card className="border-0 shadow-sm">
+        <CardContent className="pt-5 pb-4">
+          <ContactLeadFilters
+            filters={filters}
+            onFiltersChange={setFilters}
+            onClearFilters={handleClearFilters}
+          />
         </CardContent>
       </Card>
 
-      <ContactLeadDetailModal
-        lead={selectedLead}
-        open={isDetailModalOpen}
-        onOpenChange={setIsDetailModalOpen}
-        onUpdateStatus={handleUpdateStatus}
-        onDelete={(id) => {
-          deleteLead.mutate(id);
-          setIsDetailModalOpen(false);
-        }}
-      />
+      {/* Table */}
+      <Card className="border-0 shadow-sm overflow-hidden">
+        <ContactLeadsTable 
+          leads={leads}
+          isLoading={isLoading}
+          expandedRows={expandedRows}
+          onToggleExpand={toggleExpand}
+          onViewDetail={handleViewDetail}
+          onMarkResponded={handleMarkResponded}
+          onOpenMailto={handleOpenMailto}
+        />
+      </Card>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Esta acción no se puede deshacer. El lead será eliminado permanentemente.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Eliminar</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Detail Sheet */}
+      <ContactLeadDetailSheet
+        lead={selectedLead}
+        open={!!selectedLead}
+        onOpenChange={(open) => !open && setSelectedLead(null)}
+        onUpdateStatus={handleUpdateStatus}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }
