@@ -24,6 +24,8 @@ export interface Empleado {
   avatar_url: string | null;
   rol: string | null;
   notas: string | null;
+  contrato_url: string | null;
+  firma_url: string | null;
   created_at: string | null;
 }
 
@@ -31,8 +33,12 @@ interface EmpleadoFilters {
   search?: string;
   departamento?: string;
   area?: string;
+  oficina?: string;
+  rol?: string;
   activo?: boolean;
 }
+
+export type { EmpleadoFilters };
 
 export function useEmpleados(filters?: EmpleadoFilters) {
   return useQuery({
@@ -52,6 +58,14 @@ export function useEmpleados(filters?: EmpleadoFilters) {
 
       if (filters?.area) {
         query = query.eq('area', filters.area);
+      }
+
+      if (filters?.oficina) {
+        query = query.eq('oficina', filters.oficina);
+      }
+
+      if (filters?.rol) {
+        query = query.eq('rol', filters.rol);
       }
 
       if (filters?.activo !== undefined) {
@@ -222,6 +236,44 @@ export function useEmpleadoAreas() {
         ...new Set(data.map((e) => e.area).filter(Boolean)),
       ] as string[];
       return areas.sort();
+    },
+  });
+}
+
+export function useEmpleadoOficinas() {
+  return useQuery({
+    queryKey: ['empleados-oficinas'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('empleados')
+        .select('oficina')
+        .not('oficina', 'is', null);
+
+      if (error) throw error;
+
+      const oficinas = [
+        ...new Set(data.map((e) => e.oficina).filter(Boolean)),
+      ] as string[];
+      return oficinas.sort();
+    },
+  });
+}
+
+export function useEmpleadoRoles() {
+  return useQuery({
+    queryKey: ['empleados-roles'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('empleados')
+        .select('rol')
+        .not('rol', 'is', null);
+
+      if (error) throw error;
+
+      const roles = [
+        ...new Set(data.map((e) => e.rol).filter(Boolean)),
+      ] as string[];
+      return roles.sort();
     },
   });
 }
