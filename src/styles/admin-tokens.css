@@ -99,9 +99,8 @@
   --intranet-text-2xl: 24px;
   
   /* Pesos */
+  --intranet-font-light: 300;
   --intranet-font-regular: 400;
-  --intranet-font-medium: 500;
-  --intranet-font-semibold: 600;
   
   /* Line heights */
   --intranet-leading-tight: 1.25;
