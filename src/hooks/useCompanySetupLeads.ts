@@ -41,12 +41,16 @@ export interface LeadFilters {
   status?: string;
   priority?: string;
   country?: string;
+  industry?: string;
   timeline?: string;
   dateFrom?: string;
   dateTo?: string;
   minScore?: number;
   maxScore?: number;
   search?: string;
+  utm_campaign?: string;
+  utm_source?: string;
+  utm_medium?: string;
 }
 
 export const useCompanySetupLeads = (filters?: LeadFilters) => {
@@ -86,12 +90,60 @@ export const useCompanySetupLeads = (filters?: LeadFilters) => {
         query = query.lte('lead_score', filters.maxScore);
       }
       if (filters?.search) {
-        query = query.or(`name.ilike.%${filters.search}%,email.ilike.%${filters.search}%,company_name.ilike.%${filters.search}%`);
+        query = query.or(`name.ilike.%${filters.search}%,email.ilike.%${filters.search}%,company_name.ilike.%${filters.search}%,phone.ilike.%${filters.search}%`);
+      }
+      if (filters?.industry && filters.industry !== 'all') {
+        query = query.eq('industry', filters.industry);
+      }
+      if (filters?.utm_campaign) {
+        query = query.eq('utm_campaign', filters.utm_campaign);
+      }
+      if (filters?.utm_source) {
+        query = query.eq('utm_source', filters.utm_source);
+      }
+      if (filters?.utm_medium) {
+        query = query.eq('utm_medium', filters.utm_medium);
       }
       
       const { data, error } = await query;
       if (error) throw error;
       return data as CompanySetupLead[];
+    },
+  });
+};
+
+// Hook to get available UTM values for filters
+export const useLeadUTMValues = () => {
+  return useQuery({
+    queryKey: ['company-setup-leads-utm-values'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('company_setup_leads')
+        .select('utm_campaign, utm_source, utm_medium');
+      
+      if (error) throw error;
+      
+      const campaigns = [...new Set(data.map(l => l.utm_campaign).filter(Boolean))] as string[];
+      const sources = [...new Set(data.map(l => l.utm_source).filter(Boolean))] as string[];
+      const mediums = [...new Set(data.map(l => l.utm_medium).filter(Boolean))] as string[];
+      
+      return { campaigns, sources, mediums };
+    },
+  });
+};
+
+// Hook to get available countries for filters
+export const useLeadCountries = () => {
+  return useQuery({
+    queryKey: ['company-setup-leads-countries'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('company_setup_leads')
+        .select('country_origin');
+      
+      if (error) throw error;
+      
+      return [...new Set(data.map(l => l.country_origin).filter(Boolean))] as string[];
     },
   });
 };
