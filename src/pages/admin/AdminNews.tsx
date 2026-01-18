@@ -18,16 +18,19 @@ import {
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
-  DropdownMenuItem, 
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { format } from "date-fns";
+import { format, subDays } from "date-fns";
 import { es } from "date-fns/locale";
-import { MoreHorizontal, Trash2, Bot, Newspaper, Search, Plus, Pencil } from "lucide-react";
+import { MoreHorizontal, Trash2, Bot, Newspaper, Search, Plus, Pencil, Copy, Eye, TrendingUp, FileText, Calendar } from "lucide-react";
 import { TranslateNewsToCatalan } from "@/components/admin/news/TranslateNewsToCatalan";
 import { TranslateNewsToEnglish } from "@/components/admin/news/TranslateNewsToEnglish";
 import { NewsAutomationPanel } from "@/components/admin/news/NewsAutomationPanel";
 import { NewsFormDialog } from "@/components/admin/news/NewsFormDialog";
+import { CustomPagination } from "@/components/ui/custom-pagination";
+import { useDuplicateNewsArticle } from "@/hooks/useDuplicateContent";
 import { 
   useNewsArticles, 
   useDeleteNewsArticle, 
@@ -43,14 +46,19 @@ interface NewsArticle {
   content_es: string | null;
   category: string | null;
   source_name: string | null;
+  tags: string[] | null;
   is_published: boolean;
   published_at: string | null;
   generated_with_ai: boolean | null;
+  created_at: string | null;
 }
+
+const PAGE_SIZE = 10;
 
 export const AdminNews = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [formOpen, setFormOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<NewsArticle | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -59,8 +67,12 @@ export const AdminNews = () => {
   const { data: articles, isLoading } = useNewsArticles();
   const deleteArticle = useDeleteNewsArticle();
   const updateArticle = useUpdateNewsArticle();
+  const duplicateMutation = useDuplicateNewsArticle();
 
-  const filteredArticles = (articles as NewsArticle[] | undefined)?.filter((article) => {
+  const allArticles = (articles as NewsArticle[] | undefined) || [];
+
+  // Filter articles
+  const filteredArticles = allArticles.filter((article) => {
     const matchesSearch = 
       !searchTerm || 
       article.title_es?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -71,7 +83,23 @@ export const AdminNews = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const categories = [...new Set(articles?.map((a) => a.category).filter(Boolean))];
+  // Pagination
+  const totalCount = filteredArticles.length;
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const paginatedArticles = filteredArticles.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  const categories = [...new Set(allArticles.map((a) => a.category).filter(Boolean))];
+
+  // Stats calculations
+  const publishedCount = allArticles.filter(a => a.is_published).length;
+  const aiGeneratedCount = allArticles.filter(a => a.generated_with_ai).length;
+  const weekAgo = subDays(new Date(), 7);
+  const thisWeekCount = allArticles.filter(a => 
+    a.created_at && new Date(a.created_at) >= weekAgo
+  ).length;
 
   const togglePublished = (id: string, currentStatus: boolean) => {
     updateArticle.mutate({
@@ -96,6 +124,10 @@ export const AdminNews = () => {
   const handleDeleteClick = (id: string) => {
     setArticleToDelete(id);
     setDeleteDialogOpen(true);
+  };
+
+  const handleDuplicate = (article: NewsArticle) => {
+    duplicateMutation.mutate(article.id);
   };
 
   const confirmDelete = () => {
@@ -127,18 +159,61 @@ export const AdminNews = () => {
             <p className="text-sm text-slate-500">Gestiona las noticias del sector</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
-            {articles?.length || 0} noticias
-          </Badge>
-          <Button 
-            onClick={handleCreate}
-            className="bg-slate-900 hover:bg-slate-800 text-white"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Nueva noticia
-          </Button>
-        </div>
+        <Button 
+          onClick={handleCreate}
+          className="bg-slate-900 hover:bg-slate-800 text-white"
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          Nueva noticia
+        </Button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="border-0 shadow-sm bg-white p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-slate-100 rounded-lg">
+              <FileText className="h-4 w-4 text-slate-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-slate-900">{allArticles.length}</p>
+              <p className="text-xs text-slate-500">Total noticias</p>
+            </div>
+          </div>
+        </Card>
+        <Card className="border-0 shadow-sm bg-white p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-emerald-100 rounded-lg">
+              <TrendingUp className="h-4 w-4 text-emerald-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-slate-900">{publishedCount}</p>
+              <p className="text-xs text-slate-500">Publicadas</p>
+            </div>
+          </div>
+        </Card>
+        <Card className="border-0 shadow-sm bg-white p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-100 rounded-lg">
+              <Bot className="h-4 w-4 text-indigo-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-slate-900">{aiGeneratedCount}</p>
+              <p className="text-xs text-slate-500">Generadas IA</p>
+            </div>
+          </div>
+        </Card>
+        <Card className="border-0 shadow-sm bg-white p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-amber-100 rounded-lg">
+              <Calendar className="h-4 w-4 text-amber-600" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-slate-900">{thisWeekCount}</p>
+              <p className="text-xs text-slate-500">Esta semana</p>
+            </div>
+          </div>
+        </Card>
       </div>
 
       {/* Automation Panel */}
@@ -158,7 +233,7 @@ export const AdminNews = () => {
             <Input
               placeholder="Buscar noticias..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
               className="pl-10 border-slate-200 focus:border-slate-300 focus:ring-slate-200"
             />
           </div>
@@ -170,7 +245,7 @@ export const AdminNews = () => {
                   ? "bg-slate-900 text-white hover:bg-slate-800" 
                   : "bg-transparent text-slate-600 border-slate-200 hover:bg-slate-50"
               }`}
-              onClick={() => setCategoryFilter(null)}
+              onClick={() => { setCategoryFilter(null); setCurrentPage(1); }}
             >
               Todas
             </Badge>
@@ -183,7 +258,7 @@ export const AdminNews = () => {
                     ? "bg-slate-900 text-white hover:bg-slate-800" 
                     : "bg-transparent text-slate-600 border-slate-200 hover:bg-slate-50"
                 }`}
-                onClick={() => setCategoryFilter(cat as string)}
+                onClick={() => { setCategoryFilter(cat as string); setCurrentPage(1); }}
               >
                 {cat}
               </Badge>
@@ -206,15 +281,15 @@ export const AdminNews = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredArticles?.map((article) => (
+            {paginatedArticles.map((article) => (
               <TableRow key={article.id} className="hover:bg-slate-50/50">
                 <TableCell>
                   <div className="space-y-1">
                     <div className="font-medium text-slate-900 flex items-center gap-2">
-                      {article.title_es || article.title_ca || article.title_en}
+                      <span className="line-clamp-1">{article.title_es || article.title_ca || article.title_en}</span>
                       {article.generated_with_ai && (
                         <span title="Generado con IA">
-                          <Bot className="h-3.5 w-3.5 text-indigo-500" />
+                          <Bot className="h-3.5 w-3.5 text-indigo-500 flex-shrink-0" />
                         </span>
                       )}
                     </div>
@@ -265,6 +340,14 @@ export const AdminNews = () => {
                         Editar
                       </DropdownMenuItem>
                       <DropdownMenuItem
+                        className="text-slate-700 focus:text-slate-900 focus:bg-slate-50"
+                        onClick={() => handleDuplicate(article)}
+                      >
+                        <Copy className="mr-2 h-4 w-4" />
+                        Duplicar
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
                         className="text-red-600 focus:text-red-700 focus:bg-red-50"
                         onClick={() => handleDeleteClick(article.id)}
                       >
@@ -276,7 +359,7 @@ export const AdminNews = () => {
                 </TableCell>
               </TableRow>
             ))}
-            {filteredArticles?.length === 0 && (
+            {paginatedArticles.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-12">
                   <div className="flex flex-col items-center gap-2">
@@ -294,6 +377,17 @@ export const AdminNews = () => {
           </TableBody>
         </Table>
       </Card>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center">
+          <CustomPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      )}
 
       {/* Form Dialog */}
       <NewsFormDialog
