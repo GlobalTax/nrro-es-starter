@@ -68,3 +68,56 @@ export function useUpdateSiteSetting() {
     },
   });
 }
+
+export function useCreateSiteSetting() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (setting: { key: string; value: string; description?: string; category: string }) => {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .insert({
+          key: setting.key,
+          value: setting.value,
+          description: setting.description || null,
+          category: setting.category,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['site-settings'] });
+      toast.success('Configuración creada correctamente');
+    },
+    onError: (error) => {
+      console.error('Error creating setting:', error);
+      toast.error('Error al crear la configuración');
+    },
+  });
+}
+
+export function useDeleteSiteSetting() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from('site_settings')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['site-settings'] });
+      toast.success('Configuración eliminada');
+    },
+    onError: (error) => {
+      console.error('Error deleting setting:', error);
+      toast.error('Error al eliminar la configuración');
+    },
+  });
+}
