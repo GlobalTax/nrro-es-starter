@@ -312,6 +312,65 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_topics_queue: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          error_message: string | null
+          generated_post_id: string | null
+          id: string
+          priority: number | null
+          processed_at: string | null
+          scheduled_for: string | null
+          status: string | null
+          target_keywords: string[] | null
+          target_language: string | null
+          target_site: string | null
+          topic: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          priority?: number | null
+          processed_at?: string | null
+          scheduled_for?: string | null
+          status?: string | null
+          target_keywords?: string[] | null
+          target_language?: string | null
+          target_site?: string | null
+          topic: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          priority?: number | null
+          processed_at?: string | null
+          scheduled_for?: string | null
+          status?: string | null
+          target_keywords?: string[] | null
+          target_language?: string | null
+          target_site?: string | null
+          topic?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_topics_queue_generated_post_id_fkey"
+            columns: ["generated_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       brand_kits: {
         Row: {
           cover_bg_url: string | null
@@ -1257,6 +1316,42 @@ export type Database = {
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
+        }
+        Relationships: []
+      }
+      email_nurture_sequences: {
+        Row: {
+          created_at: string | null
+          delay_days: number
+          html_content: string
+          id: string
+          is_active: boolean | null
+          lead_type: string
+          sequence_order: number
+          subject: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          delay_days?: number
+          html_content: string
+          id?: string
+          is_active?: boolean | null
+          lead_type: string
+          sequence_order?: number
+          subject: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          delay_days?: number
+          html_content?: string
+          id?: string
+          is_active?: boolean | null
+          lead_type?: string
+          sequence_order?: number
+          subject?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -2631,6 +2726,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      nurture_email_log: {
+        Row: {
+          clicked_at: string | null
+          id: string
+          lead_email: string
+          lead_id: string
+          lead_type: string
+          opened_at: string | null
+          sent_at: string | null
+          sequence_id: string | null
+          sequence_order: number
+          status: string | null
+        }
+        Insert: {
+          clicked_at?: string | null
+          id?: string
+          lead_email: string
+          lead_id: string
+          lead_type: string
+          opened_at?: string | null
+          sent_at?: string | null
+          sequence_id?: string | null
+          sequence_order: number
+          status?: string | null
+        }
+        Update: {
+          clicked_at?: string | null
+          id?: string
+          lead_email?: string
+          lead_id?: string
+          lead_type?: string
+          opened_at?: string | null
+          sent_at?: string | null
+          sequence_id?: string | null
+          sequence_order?: number
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nurture_email_log_sequence_id_fkey"
+            columns: ["sequence_id"]
+            isOneToOne: false
+            referencedRelation: "email_nurture_sequences"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       page_audits: {
         Row: {
