@@ -40,7 +40,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         search_query: params.searchQuery || null,
         filter_category: params.category || null,
         filter_tags: params.tags || null,
-        filter_status: params.status || 'published',
+        filter_status: params.status === undefined ? null : params.status,
         limit_count: params.limit || 10,
         offset_count: params.offset || 0,
         lang: language,
@@ -54,7 +54,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
         search_query: params.searchQuery || null,
         filter_category: params.category || null,
         filter_tags: params.tags || null,
-        filter_status: params.status || 'published',
+        filter_status: params.status === undefined ? null : params.status,
         lang: language,
         filter_site: params.sourceSite || null,
       });
