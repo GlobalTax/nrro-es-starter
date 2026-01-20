@@ -196,7 +196,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: values.seo_description_es || null,
         seo_title_en: values.seo_title_en || null,
         seo_description_en: values.seo_description_en || null,
-        author_id: values.author_id || null,
+        author_id: values.author_id || adminUser?.id || "00000000-0000-0000-0000-000000000000",
         author_name: selectedMember?.name || null,
         author_specialization: selectedMember?.specialization || null,
         source_site: "int" as const,
