@@ -83,20 +83,21 @@ export const ContactLeadsTable = ({
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow className="hover:bg-transparent">
-          <TableHead className="w-10"></TableHead>
-          <TableHead>Nombre</TableHead>
-          <TableHead>Empresa</TableHead>
-          <TableHead>Contacto</TableHead>
-          <TableHead>Asunto</TableHead>
-          <TableHead className="w-16">Origen</TableHead>
-          <TableHead>Servicio</TableHead>
-          <TableHead>Estado</TableHead>
-          <TableHead>Fecha</TableHead>
-        </TableRow>
-      </TableHeader>
+    <div className="overflow-x-auto">
+      <Table className="min-w-[900px]">
+        <TableHeader>
+          <TableRow className="hover:bg-transparent">
+            <TableHead className="w-8"></TableHead>
+            <TableHead className="min-w-[120px]">Nombre</TableHead>
+            <TableHead className="w-[100px]">Empresa</TableHead>
+            <TableHead className="min-w-[180px]">Contacto</TableHead>
+            <TableHead className="min-w-[160px] max-w-[200px]">Asunto</TableHead>
+            <TableHead className="w-14">Origen</TableHead>
+            <TableHead className="w-24">Servicio</TableHead>
+            <TableHead className="w-24">Estado</TableHead>
+            <TableHead className="min-w-[90px]">Fecha</TableHead>
+          </TableRow>
+        </TableHeader>
       <TableBody>
         {leads.map((lead, index) => {
           const isExpanded = expandedRows.has(lead.id);
@@ -113,38 +114,40 @@ export const ContactLeadsTable = ({
                     isExpanded ? "bg-indigo-50/50" : "hover:bg-slate-100/50"
                   )}
                 >
-                  <TableCell className="w-10">
+                  <TableCell className="w-8">
                     <ChevronRight 
                       className={cn(
-                        "h-4 w-4 text-slate-400 transition-transform",
+                        "h-4 w-4 text-muted-foreground transition-transform",
                         isExpanded && "rotate-90"
                       )} 
                     />
                   </TableCell>
-                  <TableCell className="font-medium text-slate-900">
+                  <TableCell className="font-medium text-foreground">
                     {lead.name}
                   </TableCell>
-                  <TableCell className="text-slate-500">
-                    {lead.company || "-"}
+                  <TableCell className="text-muted-foreground">
+                    <span className="truncate block max-w-[100px]" title={lead.company || undefined}>
+                      {lead.company || "-"}
+                    </span>
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-col gap-0.5">
                       <div className="flex items-center gap-1.5 text-sm">
-                        <Mail className="h-3.5 w-3.5 text-slate-400" />
-                        <span className="text-slate-600 truncate max-w-[140px]">
+                        <Mail className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                        <span className="text-foreground truncate max-w-[150px]" title={lead.email}>
                           {lead.email}
                         </span>
                       </div>
                       {lead.phone && (
                         <div className="flex items-center gap-1.5 text-sm">
-                          <Phone className="h-3.5 w-3.5 text-slate-400" />
-                          <span className="text-slate-500">{lead.phone}</span>
+                          <Phone className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                          <span className="text-muted-foreground">{lead.phone}</span>
                         </div>
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="max-w-[180px]">
-                    <span className="truncate block text-slate-600">
+                  <TableCell className="max-w-[200px]">
+                    <span className="truncate block text-foreground" title={lead.subject}>
                       {lead.subject}
                     </span>
                   </TableCell>
@@ -271,5 +274,6 @@ export const ContactLeadsTable = ({
         })}
       </TableBody>
     </Table>
+    </div>
   );
 };

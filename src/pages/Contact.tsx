@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { useScrollDepth } from '@/hooks/useScrollDepth';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +20,7 @@ export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick, trackContactClick } = useAnalytics();
   useScrollDepth();
   const { t } = useLanguage();
+  const siteConfig = useSiteConfig();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -43,10 +45,11 @@ export default function Contact() {
         body: {
           name: formData.name,
           email: formData.email,
-          company: '', // Company field - can be added to form if needed
+          company: '',
           phone: formData.phone,
           subject: formData.subject,
           message: formData.message,
+          source_site: siteConfig.sourceSite,
         },
       });
 

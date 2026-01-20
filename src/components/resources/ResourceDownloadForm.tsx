@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Resource } from "@/hooks/useResources";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 interface ResourceDownloadFormProps {
   resource: Resource;
@@ -28,6 +29,7 @@ type FormValues = z.infer<typeof formSchema>;
 export const ResourceDownloadForm = ({ resource }: ResourceDownloadFormProps) => {
   const { language } = useLanguage();
   const { toast } = useToast();
+  const siteConfig = useSiteConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -91,14 +93,16 @@ export const ResourceDownloadForm = ({ resource }: ResourceDownloadFormProps) =>
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      // Record the download lead
-      const { error } = await supabase.from("contact_leads").insert({
-        name: values.name,
-        email: values.email,
-        company: values.company || null,
-        subject: `Descarga: ${resource.title}`,
-        message: `Solicitud de descarga del recurso: ${resource.title} (${resource.type})`,
-        source_site: "es",
+      // Record the download lead via edge function (sends emails)
+      const { error } = await supabase.functions.invoke("submit-contact", {
+        body: {
+          name: values.name,
+          email: values.email,
+          company: values.company || '',
+          subject: `Descarga: ${resource.title}`,
+          message: `Solicitud de descarga del recurso: ${resource.title} (${resource.type})`,
+          source_site: siteConfig.sourceSite,
+        },
       });
 
       if (error) throw error;

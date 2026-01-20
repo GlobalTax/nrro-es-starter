@@ -1041,6 +1041,7 @@ export type Database = {
           email_sent: boolean | null
           id: string
           ip_address: string | null
+          lead_source: string | null
           message: string
           name: string
           phone: string | null
@@ -1060,6 +1061,7 @@ export type Database = {
           email_sent?: boolean | null
           id?: string
           ip_address?: string | null
+          lead_source?: string | null
           message: string
           name: string
           phone?: string | null
@@ -1079,6 +1081,7 @@ export type Database = {
           email_sent?: boolean | null
           id?: string
           ip_address?: string | null
+          lead_source?: string | null
           message?: string
           name?: string
           phone?: string | null

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Send, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,6 +38,7 @@ type FormValues = z.infer<ReturnType<typeof createFormSchema>>;
 export const HomeContactForm = () => {
   const { t } = useTranslation();
   const { trackFormSubmit } = useAnalytics();
+  const siteConfig = useSiteConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -61,7 +63,7 @@ export const HomeContactForm = () => {
           company: values.company,
           message: values.message,
           subject: "Consulta desde Home",
-          source_site: "navarro",
+          source_site: siteConfig.sourceSite,
         },
       });
 

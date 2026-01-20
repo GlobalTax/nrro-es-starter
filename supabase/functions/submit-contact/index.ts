@@ -15,6 +15,7 @@ const contactSchema = z.object({
   phone: z.string().trim().max(20, "Phone number too long").optional().default(""),
   subject: z.string().trim().min(1, "Subject is required").max(100, "Subject too long"),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(5000, "Message too long"),
+  source_site: z.string().trim().max(10).optional().default("es"),
 });
 
 // Send confirmation email using Resend
@@ -180,7 +181,7 @@ serve(async (req: Request) => {
       );
     }
 
-    const { name, email, company, phone, subject, message } = validation.data;
+    const { name, email, company, phone, subject, message, source_site } = validation.data;
 
     // Extract IP address and user agent
     const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
@@ -293,6 +294,7 @@ serve(async (req: Request) => {
         subject: subject,
         message: message,
         service_type: serviceType,
+        source_site: source_site,
         ip_address: ipAddress,
         user_agent: userAgent,
       })
