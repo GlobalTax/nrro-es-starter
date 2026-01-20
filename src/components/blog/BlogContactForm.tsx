@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 const formSchema = z.object({
   name: z.string().min(2, "El nombre es requerido").max(100),
@@ -26,6 +27,7 @@ interface BlogContactFormProps {
 export const BlogContactForm = ({ articleTitle, articleSlug }: BlogContactFormProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const siteConfig = useSiteConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -48,7 +50,7 @@ export const BlogContactForm = ({ articleTitle, articleSlug }: BlogContactFormPr
         body: {
           ...data,
           subject: `Consulta desde artículo: ${articleTitle}`,
-          source: `blog/${articleSlug}`,
+          source_site: siteConfig.sourceSite,
         },
       });
 
