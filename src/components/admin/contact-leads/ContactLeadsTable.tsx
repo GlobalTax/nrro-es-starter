@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ContactLead } from "@/hooks/useContactLeads";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,11 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { 
   ChevronRight, 
   Mail, 
@@ -84,37 +80,49 @@ export const ContactLeadsTable = ({
 
   return (
     <div className="overflow-x-auto">
-      <Table className="min-w-[900px]">
+      <Table className="w-full table-fixed">
+        <colgroup>
+          <col className="w-10" />
+          <col className="w-[130px]" />
+          <col className="w-[100px]" />
+          <col className="w-[180px]" />
+          <col className="w-[180px]" />
+          <col className="w-[60px]" />
+          <col className="w-[90px]" />
+          <col className="w-[90px]" />
+          <col className="w-[100px]" />
+        </colgroup>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead className="w-8"></TableHead>
-            <TableHead className="min-w-[120px]">Nombre</TableHead>
-            <TableHead className="w-[100px]">Empresa</TableHead>
-            <TableHead className="min-w-[180px]">Contacto</TableHead>
-            <TableHead className="min-w-[160px] max-w-[200px]">Asunto</TableHead>
-            <TableHead className="w-14">Origen</TableHead>
-            <TableHead className="w-24">Servicio</TableHead>
-            <TableHead className="w-24">Estado</TableHead>
-            <TableHead className="min-w-[90px]">Fecha</TableHead>
+            <TableHead></TableHead>
+            <TableHead>Nombre</TableHead>
+            <TableHead>Empresa</TableHead>
+            <TableHead>Contacto</TableHead>
+            <TableHead>Asunto</TableHead>
+            <TableHead>Origen</TableHead>
+            <TableHead>Servicio</TableHead>
+            <TableHead>Estado</TableHead>
+            <TableHead>Fecha</TableHead>
           </TableRow>
         </TableHeader>
-      <TableBody>
-        {leads.map((lead, index) => {
-          const isExpanded = expandedRows.has(lead.id);
-          const sourceConfig = SOURCE_CONFIG[lead.source_site as string] || { label: "-", className: "bg-slate-50 text-slate-500" };
-          const serviceConfig = SERVICE_CONFIG[lead.service_type as string];
+        <TableBody>
+          {leads.map((lead, index) => {
+            const isExpanded = expandedRows.has(lead.id);
+            const sourceConfig = SOURCE_CONFIG[lead.source_site as string] || { label: "-", className: "bg-slate-50 text-slate-500" };
+            const serviceConfig = SERVICE_CONFIG[lead.service_type as string];
 
-          return (
-            <Collapsible key={lead.id} open={isExpanded} onOpenChange={() => onToggleExpand(lead.id)}>
-              <CollapsibleTrigger asChild>
+            return (
+              <Fragment key={lead.id}>
+                {/* Main row */}
                 <TableRow 
+                  onClick={() => onToggleExpand(lead.id)}
                   className={cn(
-                    "cursor-pointer transition-colors group",
+                    "cursor-pointer transition-colors",
                     index % 2 === 0 ? "bg-white" : "bg-slate-50/50",
                     isExpanded ? "bg-indigo-50/50" : "hover:bg-slate-100/50"
                   )}
                 >
-                  <TableCell className="w-8">
+                  <TableCell>
                     <ChevronRight 
                       className={cn(
                         "h-4 w-4 text-muted-foreground transition-transform",
@@ -122,31 +130,29 @@ export const ContactLeadsTable = ({
                       )} 
                     />
                   </TableCell>
-                  <TableCell className="font-medium text-foreground">
-                    {lead.name}
+                  <TableCell className="font-medium text-foreground truncate">
+                    <span title={lead.name}>{lead.name}</span>
                   </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    <span className="truncate block max-w-[100px]" title={lead.company || undefined}>
-                      {lead.company || "-"}
-                    </span>
+                  <TableCell className="text-muted-foreground truncate">
+                    <span title={lead.company || undefined}>{lead.company || "-"}</span>
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-col gap-0.5">
+                    <div className="flex flex-col gap-0.5 min-w-0">
                       <div className="flex items-center gap-1.5 text-sm">
                         <Mail className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                        <span className="text-foreground truncate max-w-[150px]" title={lead.email}>
+                        <span className="text-foreground truncate" title={lead.email}>
                           {lead.email}
                         </span>
                       </div>
                       {lead.phone && (
                         <div className="flex items-center gap-1.5 text-sm">
                           <Phone className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                          <span className="text-muted-foreground">{lead.phone}</span>
+                          <span className="text-muted-foreground truncate">{lead.phone}</span>
                         </div>
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="max-w-[200px]">
+                  <TableCell>
                     <span className="truncate block text-foreground" title={lead.subject}>
                       {lead.subject}
                     </span>
@@ -157,7 +163,6 @@ export const ContactLeadsTable = ({
                         variant="outline" 
                         className={cn("text-xs font-medium", sourceConfig.className)}
                       >
-                        <Globe className="h-3 w-3 mr-1" />
                         {sourceConfig.label}
                       </Badge>
                     )}
@@ -187,93 +192,95 @@ export const ContactLeadsTable = ({
                       {lead.email_sent ? "Respondido" : "Pendiente"}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-slate-500 text-sm whitespace-nowrap">
-                    {formatDistanceToNow(new Date(lead.created_at), { 
-                      addSuffix: true, 
-                      locale: es 
-                    })}
+                  <TableCell className="text-slate-500 text-sm">
+                    <span title={format(new Date(lead.created_at), "dd/MM/yyyy HH:mm", { locale: es })}>
+                      {formatDistanceToNow(new Date(lead.created_at), { 
+                        addSuffix: true, 
+                        locale: es 
+                      })}
+                    </span>
                   </TableCell>
                 </TableRow>
-              </CollapsibleTrigger>
-              
-              <CollapsibleContent asChild>
-                <tr>
-                  <td colSpan={9} className="p-0">
-                    <div className="px-6 py-4 bg-slate-50 border-y border-slate-100">
-                      <div className="space-y-4">
-                        <div>
-                          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                            Mensaje
-                          </span>
-                          <div className="mt-2 p-4 bg-white rounded-lg border border-slate-200">
-                            <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
-                              {lead.message}
-                            </p>
-                          </div>
-                        </div>
-                        
-                        {lead.responded_at && (
-                          <div className="flex items-center gap-2 text-sm text-emerald-600">
-                            <CheckCircle2 className="h-4 w-4" />
-                            <span>
-                              Respondido el {format(new Date(lead.responded_at), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
+
+                {/* Expanded row */}
+                {isExpanded && (
+                  <TableRow className="hover:bg-transparent">
+                    <TableCell colSpan={9} className="p-0">
+                      <div className="px-6 py-4 bg-slate-50 border-y border-slate-100">
+                        <div className="space-y-4">
+                          <div>
+                            <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                              Mensaje
                             </span>
-                            {lead.response_notes && (
-                              <span className="text-slate-500">— {lead.response_notes}</span>
-                            )}
+                            <div className="mt-2 p-4 bg-white rounded-lg border border-slate-200">
+                              <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
+                                {lead.message}
+                              </p>
+                            </div>
                           </div>
-                        )}
-                        
-                        <div className="flex items-center gap-2 pt-2">
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onOpenMailto(lead);
-                            }}
-                            className="h-8"
-                          >
-                            <Mail className="h-3.5 w-3.5 mr-1.5" />
-                            Responder
-                          </Button>
-                          {!lead.email_sent && (
+                          
+                          {lead.responded_at && (
+                            <div className="flex items-center gap-2 text-sm text-emerald-600">
+                              <CheckCircle2 className="h-4 w-4" />
+                              <span>
+                                Respondido el {format(new Date(lead.responded_at), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
+                              </span>
+                              {lead.response_notes && (
+                                <span className="text-slate-500">— {lead.response_notes}</span>
+                              )}
+                            </div>
+                          )}
+                          
+                          <div className="flex items-center gap-2 pt-2">
                             <Button 
                               size="sm" 
                               variant="outline"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                onMarkResponded(lead);
+                                onOpenMailto(lead);
                               }}
                               className="h-8"
                             >
-                              <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
-                              Marcar Respondido
+                              <Mail className="h-3.5 w-3.5 mr-1.5" />
+                              Responder
                             </Button>
-                          )}
-                          <Button 
-                            size="sm" 
-                            variant="ghost"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onViewDetail(lead);
-                            }}
-                            className="h-8"
-                          >
-                            <Eye className="h-3.5 w-3.5 mr-1.5" />
-                            Ver Detalle
-                          </Button>
+                            {!lead.email_sent && (
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onMarkResponded(lead);
+                                }}
+                                className="h-8"
+                              >
+                                <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+                                Marcar Respondido
+                              </Button>
+                            )}
+                            <Button 
+                              size="sm" 
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onViewDetail(lead);
+                              }}
+                              className="h-8"
+                            >
+                              <Eye className="h-3.5 w-3.5 mr-1.5" />
+                              Ver Detalle
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              </CollapsibleContent>
-            </Collapsible>
-          );
-        })}
-      </TableBody>
-    </Table>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 };
