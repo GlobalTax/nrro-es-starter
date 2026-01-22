@@ -110,6 +110,13 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
     },
   });
 
+  // Preseleccionar el primer autor cuando se abre para crear un post nuevo
+  useEffect(() => {
+    if (!post && teamMembers?.length && !form.getValues('author_id')) {
+      form.setValue('author_id', teamMembers[0].id);
+    }
+  }, [post, teamMembers, form]);
+
   useEffect(() => {
     if (post) {
       form.reset({
@@ -173,8 +180,8 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         ? values.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
         : [];
 
-      // Buscar el team member seleccionado para auto-rellenar nombre y especialización
-      const selectedMember = teamMembers?.find(m => m.id === values.author_id);
+      // Buscar el team member seleccionado o usar el primero por defecto
+      const selectedMember = teamMembers?.find(m => m.id === values.author_id) || teamMembers?.[0];
 
       const postData = {
         title_es: values.title_es,
@@ -196,7 +203,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: values.seo_description_es || null,
         seo_title_en: values.seo_title_en || null,
         seo_description_en: values.seo_description_en || null,
-        author_id: values.author_id || adminUser?.id || "00000000-0000-0000-0000-000000000000",
+        author_id: values.author_id || selectedMember?.id || adminUser?.id || "00000000-0000-0000-0000-000000000000",
         author_name: selectedMember?.name || null,
         author_specialization: selectedMember?.specialization || null,
         source_site: "es" as const,
