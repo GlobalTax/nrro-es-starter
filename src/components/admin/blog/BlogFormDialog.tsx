@@ -61,7 +61,7 @@ const blogFormSchema = z.object({
   seo_description_es: z.string().optional(),
   seo_title_en: z.string().optional(),
   seo_description_en: z.string().optional(),
-  author_id: z.string().optional(),
+  author_id: z.string().min(1, "El autor es requerido"),
   
 });
 
@@ -180,8 +180,16 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         ? values.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
         : [];
 
-      // Buscar el team member seleccionado o usar el primero por defecto
-      const selectedMember = teamMembers?.find(m => m.id === values.author_id) || teamMembers?.[0];
+      // Validar que hay un author_id válido de team_members
+      const validAuthorId = values.author_id && values.author_id.length > 0 
+        ? values.author_id 
+        : teamMembers?.[0]?.id;
+
+      if (!validAuthorId) {
+        throw new Error("Debes seleccionar un autor válido. Asegúrate de que existe al menos un miembro del equipo.");
+      }
+
+      const selectedMember = teamMembers?.find(m => m.id === validAuthorId);
 
       const postData = {
         title_es: values.title_es,
@@ -203,7 +211,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_description_es: values.seo_description_es || null,
         seo_title_en: values.seo_title_en || null,
         seo_description_en: values.seo_description_en || null,
-        author_id: values.author_id || selectedMember?.id || adminUser?.id || "00000000-0000-0000-0000-000000000000",
+        author_id: validAuthorId,
         author_name: selectedMember?.name || null,
         author_specialization: selectedMember?.specialization || null,
         source_site: "es" as const,
