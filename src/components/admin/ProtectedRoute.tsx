@@ -4,20 +4,60 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { supabase } from '@/integrations/supabase/client';
 
+const SESSION_VERIFIED_KEY = 'navarro-session-verified';
+const VERIFICATION_CACHE_MS = 5 * 60 * 1000; // 5 minutes
+
 interface ProtectedRouteProps {
   children: ReactNode;
   requiredRole?: 'super_admin' | 'admin' | 'editor' | 'hr_viewer';
 }
 
+// Helper to get cached verification status
+const getCachedVerification = (): boolean => {
+  try {
+    const cached = sessionStorage.getItem(SESSION_VERIFIED_KEY);
+    if (cached) {
+      const { verified, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp < VERIFICATION_CACHE_MS) {
+        return verified;
+      }
+    }
+  } catch {
+    // Ignore
+  }
+  return false;
+};
+
+// Helper to cache verification status
+const setCachedVerification = (verified: boolean) => {
+  try {
+    sessionStorage.setItem(SESSION_VERIFIED_KEY, JSON.stringify({
+      verified,
+      timestamp: Date.now(),
+    }));
+  } catch {
+    // Ignore
+  }
+};
+
+// Clear cached verification
+const clearCachedVerification = () => {
+  try {
+    sessionStorage.removeItem(SESSION_VERIFIED_KEY);
+  } catch {
+    // Ignore
+  }
+};
+
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { user, isLoading } = useAuth();
   const { isAdmin, hasRole } = useAdminAuth();
-  const [isVerifying, setIsVerifying] = useState(true);
-  const [serverVerified, setServerVerified] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(!getCachedVerification());
+  const [serverVerified, setServerVerified] = useState(getCachedVerification());
   const [lastActivity, setLastActivity] = useState(Date.now());
 
-  // Session timeout (30 minutes)
-  const SESSION_TIMEOUT = 30 * 60 * 1000;
+  // Session timeout - 8 hours (full work day)
+  const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
 
   // Track user activity
   useEffect(() => {
@@ -35,7 +75,8 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   useEffect(() => {
     const checkTimeout = setInterval(() => {
       if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-        console.warn('[PROTECTED_ROUTE] Session timeout due to inactivity');
+        console.warn('[PROTECTED_ROUTE] Session timeout due to inactivity (8h)');
+        clearCachedVerification();
         supabase.auth.signOut();
       }
     }, 60000); // Check every minute
@@ -48,22 +89,40 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     const verifySession = async () => {
       if (!user) {
         setIsVerifying(false);
+        setServerVerified(false);
+        return;
+      }
+
+      // Skip if we have a recent cached verification
+      if (getCachedVerification()) {
+        setServerVerified(true);
+        setIsVerifying(false);
         return;
       }
 
       try {
         const { data, error } = await supabase.functions.invoke('verify-admin-session');
         
-        if (error || !data?.valid) {
-          console.warn('[PROTECTED_ROUTE] Server verification failed');
+        if (error) {
+          // Network error - be tolerant, assume valid temporarily
+          console.warn('[PROTECTED_ROUTE] Network error during verification, assuming valid');
+          setServerVerified(true);
+          // Don't cache this - retry on next navigation
+        } else if (!data?.valid) {
+          // Server explicitly said invalid - sign out
+          console.warn('[PROTECTED_ROUTE] Server verification failed: session invalid');
+          clearCachedVerification();
           await supabase.auth.signOut();
           setServerVerified(false);
         } else {
+          // Valid session
           setServerVerified(true);
+          setCachedVerification(true);
         }
       } catch (error) {
-        console.error('[PROTECTED_ROUTE] Verification error:', error);
-        setServerVerified(false);
+        // Catch-all for network errors - be tolerant
+        console.error('[PROTECTED_ROUTE] Verification error (network?):', error);
+        setServerVerified(true); // Assume valid on network errors
       } finally {
         setIsVerifying(false);
       }
