@@ -307,6 +307,15 @@ serve(async (req) => {
           console.log(`[auto-generate-blog] Article quality score (${articleData.quality_score}) below threshold, keeping as draft`);
         }
 
+        // Get default author from team members
+        const { data: defaultAuthor } = await supabase
+          .from("team_members")
+          .select("id, name, specialization_es")
+          .eq("is_active", true)
+          .order("order_index", { ascending: true })
+          .limit(1)
+          .single();
+
         // Insert into blog_posts with quality data
         const { data: newPost, error: insertError } = await supabase
           .from("blog_posts")
@@ -325,13 +334,14 @@ serve(async (req) => {
             read_time: articleData.read_time || 5,
             status: postStatus,
             published_at: postStatus === "published" ? new Date().toISOString() : null,
-            author_id: "system",
-            author_name: "Navarro Asesores",
+            author_id: defaultAuthor?.id || null,
+            author_name: defaultAuthor?.name || "Navarro Asesores",
+            author_specialization: defaultAuthor?.specialization_es || null,
             seo_title_es: articleData.seo_title_es,
             seo_title_en: articleData.seo_title_en,
             seo_description_es: articleData.seo_description_es,
             seo_description_en: articleData.seo_description_en,
-            source_site: "navarro",
+            source_site: "es",
             // New quality columns
             quality_score: articleData.quality_score || 0,
             quality_checks: articleData.quality_checks || {},
@@ -433,7 +443,7 @@ serve(async (req) => {
                 <ul style="list-style: none; padding: 0; margin: 0 0 24px 0; background: #f9fafb; padding: 16px; border-radius: 8px;">
                   ${articlesList}
                 </ul>
-                <a href="https://navarro.lovable.app/admin/blog" 
+                <a href="https://nrro-es.lovable.app/admin/blog" 
                    style="display: inline-block; background: #0f172a; color: white; padding: 12px 24px; 
                           text-decoration: none; border-radius: 6px; font-weight: 500;">
                   Revisar artículos
