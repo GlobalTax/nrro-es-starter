@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+const ADMIN_USER_STORAGE_KEY = 'navarro-admin-user';
+
 type AdminRole = 'super_admin' | 'admin' | 'editor' | 'viewer' | 'hr_viewer';
 
 interface AdminUser {
@@ -24,11 +26,41 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper to get cached admin user from localStorage
+const getCachedAdminUser = (): AdminUser | null => {
+  try {
+    const cached = localStorage.getItem(ADMIN_USER_STORAGE_KEY);
+    return cached ? JSON.parse(cached) : null;
+  } catch {
+    return null;
+  }
+};
+
+// Helper to cache admin user to localStorage
+const setCachedAdminUser = (user: AdminUser | null) => {
+  try {
+    if (user) {
+      localStorage.setItem(ADMIN_USER_STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(ADMIN_USER_STORAGE_KEY);
+    }
+  } catch {
+    // Ignore storage errors
+  }
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
+  // Initialize adminUser from cache for instant UI on reload
+  const [adminUser, setAdminUserState] = useState<AdminUser | null>(getCachedAdminUser);
   const [isLoading, setIsLoading] = useState(true);
   const [revalidationInterval, setRevalidationInterval] = useState<number | null>(null);
+
+  // Wrapper to persist adminUser changes
+  const setAdminUser = (user: AdminUser | null) => {
+    setCachedAdminUser(user);
+    setAdminUserState(user);
+  };
 
   const fetchAdminUser = async (userId: string): Promise<AdminUser | null> => {
     try {
