@@ -1,8 +1,7 @@
 import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft, Clock, Loader2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import DOMPurify from "dompurify";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -205,55 +204,13 @@ const BlogDetail = () => {
     );
   }
 
-  // Markdown components for styled rendering
-  const markdownComponents = {
-    h2: ({ children, ...props }: any) => (
-      <h2 className="text-2xl font-semibold mt-10 mb-4 text-foreground" {...props}>{children}</h2>
-    ),
-    h3: ({ children, ...props }: any) => (
-      <h3 className="text-xl font-semibold mt-8 mb-3 text-foreground" {...props}>{children}</h3>
-    ),
-    h4: ({ children, ...props }: any) => (
-      <h4 className="text-lg font-semibold mt-6 mb-2 text-foreground" {...props}>{children}</h4>
-    ),
-    p: ({ children, ...props }: any) => (
-      <p className="mb-4 leading-relaxed text-foreground/90" {...props}>{children}</p>
-    ),
-    ul: ({ children, ...props }: any) => (
-      <ul className="list-disc pl-6 mb-6 space-y-2" {...props}>{children}</ul>
-    ),
-    ol: ({ children, ...props }: any) => (
-      <ol className="list-decimal pl-6 mb-6 space-y-2" {...props}>{children}</ol>
-    ),
-    li: ({ children, ...props }: any) => (
-      <li className="leading-relaxed text-foreground/90" {...props}>{children}</li>
-    ),
-    strong: ({ children, ...props }: any) => (
-      <strong className="font-semibold text-foreground" {...props}>{children}</strong>
-    ),
-    blockquote: ({ children, ...props }: any) => (
-      <blockquote className="border-l-4 border-primary pl-4 italic my-6 text-muted-foreground" {...props}>
-        {children}
-      </blockquote>
-    ),
-    a: ({ children, href, ...props }: any) => (
-      <a 
-        href={href} 
-        className="text-primary hover:underline" 
-        target={href?.startsWith('http') ? '_blank' : undefined}
-        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-        {...props}
-      >
-        {children}
-      </a>
-    ),
-    code: ({ children, ...props }: any) => (
-      <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono" {...props}>{children}</code>
-    ),
-    pre: ({ children, ...props }: any) => (
-      <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-6" {...props}>{children}</pre>
-    ),
-  };
+  // Sanitize HTML content for safe rendering
+  const sanitizedContent = post.content
+    ? DOMPurify.sanitize(post.content, {
+        ALLOWED_TAGS: ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre', 'span', 'div'],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel', 'style'],
+      })
+    : "";
   
   // Generate dynamic OG image URL
   const ogImageUrl = post 
@@ -358,13 +315,11 @@ const BlogDetail = () => {
               {post.excerpt && (
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">{post.excerpt}</p>
               )}
-              {post.content && (
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={markdownComponents}
-                >
-                  {post.content}
-                </ReactMarkdown>
+              {sanitizedContent && (
+                <div 
+                  className="prose prose-lg max-w-none prose-headings:font-semibold prose-headings:text-foreground prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:mb-4 prose-p:leading-relaxed prose-p:text-foreground/90 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic prose-strong:text-foreground prose-ul:list-disc prose-ul:pl-6 prose-ol:list-decimal prose-ol:pl-6 prose-li:leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                />
               )}
             </div>
 
