@@ -70,7 +70,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .select('role')
         .eq('user_id', userId);
 
-      if (roleError) throw roleError;
+      if (roleError) {
+        // Network error - return cached user if available
+        if (roleError.message?.includes('network') || roleError.message?.includes('fetch')) {
+          console.debug('[AUTH] Network error, using cached admin user');
+          return getCachedAdminUser();
+        }
+        throw roleError;
+      }
 
       const roles = userRoles?.map(r => r.role) || [];
       const hasPanelAccess = roles.some(r => ['admin', 'editor', 'marketing', 'hr_viewer'].includes(r));
@@ -83,7 +90,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           .eq('id', userId)
           .single();
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          // Network error - return cached user if available
+          if (profileError.message?.includes('network') || profileError.message?.includes('fetch')) {
+            console.debug('[AUTH] Network error, using cached admin user');
+            return getCachedAdminUser();
+          }
+          throw profileError;
+        }
 
         const adminUserData: AdminUser = {
           id: profile.id,
@@ -97,7 +111,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return adminUserData;
       }
     } catch (err) {
-      console.warn('Error fetching admin user:', err);
+      // Check if it's a network-related error
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('Failed to fetch')) {
+        console.debug('[AUTH] Network error, using cached admin user');
+        return getCachedAdminUser();
+      }
+      console.debug('[AUTH] Error fetching admin user:', err);
     }
     setAdminUser(null);
     return null;
@@ -139,14 +159,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-          console.warn('[AUTH] Session expired, signing out');
+          console.debug('[AUTH] Session expired, signing out');
           await signOut();
         } else {
           // Refresh admin user data during revalidation
           await fetchAdminUser(session.user.id);
         }
       } catch (error) {
-        console.error('[AUTH] Session revalidation error:', error);
+        // Network errors during revalidation - keep session active
+        console.debug('[AUTH] Session revalidation skipped (network error):', error);
       }
     }, 5 * 60 * 1000); // 5 minutes
 
