@@ -232,7 +232,10 @@ export type Database = {
           excerpt_es: string | null
           featured_image: string | null
           id: string
+          passed_validation: boolean | null
           published_at: string | null
+          quality_checks: Json | null
+          quality_score: number | null
           read_time: number | null
           scheduled_at: string | null
           seo_description_en: string | null
@@ -262,7 +265,10 @@ export type Database = {
           excerpt_es?: string | null
           featured_image?: string | null
           id?: string
+          passed_validation?: boolean | null
           published_at?: string | null
+          quality_checks?: Json | null
+          quality_score?: number | null
           read_time?: number | null
           scheduled_at?: string | null
           seo_description_en?: string | null
@@ -292,7 +298,10 @@ export type Database = {
           excerpt_es?: string | null
           featured_image?: string | null
           id?: string
+          passed_validation?: boolean | null
           published_at?: string | null
+          quality_checks?: Json | null
+          quality_score?: number | null
           read_time?: number | null
           scheduled_at?: string | null
           seo_description_en?: string | null
@@ -1319,6 +1328,45 @@ export type Database = {
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: string | null
+        }
+        Relationships: []
+      }
+      editorial_calendar_events: {
+        Row: {
+          created_at: string | null
+          days_before_publish: number | null
+          event_date: string
+          event_name: string
+          id: string
+          is_active: boolean | null
+          recurrence: string | null
+          suggested_category: string | null
+          suggested_topic_template: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          days_before_publish?: number | null
+          event_date: string
+          event_name: string
+          id?: string
+          is_active?: boolean | null
+          recurrence?: string | null
+          suggested_category?: string | null
+          suggested_topic_template?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          days_before_publish?: number | null
+          event_date?: string
+          event_name?: string
+          id?: string
+          is_active?: boolean | null
+          recurrence?: string | null
+          suggested_category?: string | null
+          suggested_topic_template?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
