@@ -13,30 +13,47 @@
     <!-- Cookiebot -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="c5f326c2-c1a3-48af-89ee-2113cd3c0399" data-blockingmode="auto" type="text/javascript"></script>
     
-    <!-- Google Analytics + Google Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0CN4HCFC5"></script>
+    <!-- Google Analytics + Google Ads (carga condicional) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-R0CN4HCFC5');
-      gtag('config', 'AW-561508636');
+      
+      // Solo cargar GA si hay conexion y no estamos en admin
+      (function() {
+        if (!navigator.onLine || window.location.pathname.startsWith('/admin')) {
+          return;
+        }
+        var gaScript = document.createElement('script');
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-R0CN4HCFC5';
+        gaScript.async = true;
+        gaScript.onerror = function() { 
+          console.debug('[Analytics] GA no disponible'); 
+        };
+        document.head.appendChild(gaScript);
+        
+        gtag('js', new Date());
+        gtag('config', 'G-R0CN4HCFC5');
+        gtag('config', 'AW-561508636');
+      })();
     </script>
     
-    <!-- Apollo.io Website Tracker (requires marketing consent) -->
+    <!-- Apollo.io Website Tracker (requires marketing consent, no admin) -->
     <script data-cookieconsent="marketing" type="text/plain">
-      function initApollo(){
+      (function() {
+        if (!navigator.onLine || window.location.pathname.startsWith('/admin')) {
+          return;
+        }
         var n=Math.random().toString(36).substring(7),
             o=document.createElement("script");
         o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n;
         o.async=!0;
         o.defer=!0;
+        o.onerror=function(){ console.debug('[Apollo] Tracker no disponible'); };
         o.onload=function(){
           window.trackingFunctions.onLoad({appId:"663335e26da5c703001459c7"})
         };
         document.head.appendChild(o)
-      }
-      initApollo();
+      })();
     </script>
     
     <!-- Google Fonts: Inter (sans) -->
