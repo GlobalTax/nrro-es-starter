@@ -60,6 +60,7 @@ export const AdminBlog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [originFilter, setOriginFilter] = useState<string>("es"); // Default: nacionales
   const [currentPage, setCurrentPage] = useState(1);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -75,7 +76,7 @@ export const AdminBlog = () => {
     category: categoryFilter === "all" ? undefined : categoryFilter,
     limit: ITEMS_PER_PAGE,
     offset: (currentPage - 1) * ITEMS_PER_PAGE,
-    sourceSite: "int",
+    sourceSite: originFilter === "all" ? undefined : originFilter,
   });
 
   const posts = data?.posts || [];
@@ -244,6 +245,26 @@ export const AdminBlog = () => {
                   {categories.map((cat) => (
                     <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                   ))}
+                </SelectContent>
+              </Select>
+              <Select value={originFilter} onValueChange={(v) => { setOriginFilter(v); setCurrentPage(1); }}>
+                <SelectTrigger className="w-full sm:w-[150px] border-slate-200">
+                  <SelectValue placeholder="Origen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="es">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      Nacional (ES)
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="int">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-teal-500" />
+                      Internacional
+                    </div>
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
