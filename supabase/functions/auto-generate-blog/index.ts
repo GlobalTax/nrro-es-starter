@@ -58,6 +58,76 @@ const TOPIC_TEMPLATES = {
   ],
 };
 
+// Función para obtener eventos del calendario editorial próximos
+async function getUpcomingCalendarEvent(supabase: any): Promise<{
+  topic: string;
+  category: string;
+  eventName: string;
+} | null> {
+  try {
+    const today = new Date();
+    const futureDate = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000); // 14 días
+    const currentYear = today.getFullYear();
+
+    const { data: events, error } = await supabase
+      .from("editorial_calendar_events")
+      .select("*")
+      .eq("is_active", true)
+      .order("event_date", { ascending: true });
+
+    if (error || !events || events.length === 0) {
+      return null;
+    }
+
+    // Procesar eventos y encontrar el más próximo
+    for (const event of events) {
+      let eventDate = new Date(event.event_date);
+      
+      // Para eventos anuales, ajustar al año actual
+      if (event.recurrence === "yearly") {
+        eventDate.setFullYear(currentYear);
+        if (eventDate < today) {
+          eventDate.setFullYear(currentYear + 1);
+        }
+      }
+
+      // Calcular fecha de publicación sugerida
+      const publishDate = new Date(eventDate.getTime() - (event.days_before_publish || 7) * 24 * 60 * 60 * 1000);
+
+      // Si la fecha de publicación está dentro de los próximos 14 días
+      if (publishDate >= today && publishDate <= futureDate) {
+        // Verificar que no hayamos publicado ya sobre este tema recientemente
+        const { data: existingPosts } = await supabase
+          .from("blog_posts")
+          .select("id")
+          .ilike("title_es", `%${event.event_name.split(" ").slice(0, 2).join(" ")}%`)
+          .gte("created_at", new Date(currentYear, 0, 1).toISOString())
+          .limit(1);
+
+        if (!existingPosts || existingPosts.length === 0) {
+          const suggestedTopic = event.suggested_topic_template
+            ?.replace("{year}", eventDate.getFullYear().toString())
+            ?.replace("{year+1}", (eventDate.getFullYear() + 1).toString())
+            ?.replace("{model}", "111/115") || event.event_name;
+
+          console.log(`[auto-generate-blog] Found calendar event: ${event.event_name}`);
+
+          return {
+            topic: suggestedTopic,
+            category: event.suggested_category || "Fiscal",
+            eventName: event.event_name,
+          };
+        }
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error("[auto-generate-blog] Error checking calendar:", error);
+    return null;
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
@@ -73,12 +143,14 @@ serve(async (req) => {
     let count = 2;
     let forceTopic: string | null = null;
     let forceCategory: string | null = null;
+    let useCalendar = true;
 
     try {
       const body = await req.json();
       count = body.count || 2;
       forceTopic = body.topic || null;
       forceCategory = body.category || null;
+      useCalendar = body.useCalendar !== false;
     } catch {
       // Use defaults if no body
     }
@@ -112,7 +184,7 @@ serve(async (req) => {
       Corporativo: 0,
     };
 
-    categoryStats?.forEach((post) => {
+    categoryStats?.forEach((post: { category: string }) => {
       if (post.category && categoryCounts[post.category] !== undefined) {
         categoryCounts[post.category]++;
       }
@@ -128,6 +200,12 @@ serve(async (req) => {
     const generatedArticles: any[] = [];
     const errors: any[] = [];
     const currentYear = new Date().getFullYear();
+
+    // Check for upcoming calendar events first
+    let calendarEvent: { topic: string; category: string; eventName: string } | null = null;
+    if (useCalendar && !forceTopic) {
+      calendarEvent = await getUpcomingCalendarEvent(supabase);
+    }
 
     for (let i = 0; i < count; i++) {
       try {
@@ -146,6 +224,7 @@ serve(async (req) => {
         let tone: string;
         let language: string;
         let queueId: string | null = null;
+        let isCalendarTopic = false;
 
         if (queueItem) {
           // Use topic from queue
@@ -162,6 +241,18 @@ serve(async (req) => {
             .eq("id", queueId);
 
           console.log(`[auto-generate-blog] Using queued topic: ${topic}`);
+        } else if (calendarEvent && i === 0) {
+          // Use calendar event topic for first article
+          topic = calendarEvent.topic;
+          category = calendarEvent.category;
+          tone = settings?.default_tone || "professional";
+          language = settings?.default_language || "both";
+          isCalendarTopic = true;
+          
+          console.log(`[auto-generate-blog] Using calendar topic: ${topic} (${calendarEvent.eventName})`);
+          
+          // Clear calendar event so subsequent articles use regular topics
+          calendarEvent = null;
         } else {
           // Auto-generate topic
           category = forceCategory || sortedCategories[i % sortedCategories.length];
@@ -207,7 +298,16 @@ serve(async (req) => {
               .replace(/^-|-$/g, "")
           : slugEs;
 
-        // Insert into blog_posts with draft status
+        // Determine status based on quality validation
+        let postStatus = settings?.auto_publish ? "published" : "draft";
+        
+        // If auto_publish is enabled but validation failed, keep as draft for review
+        if (settings?.auto_publish && articleData.passed_validation === false) {
+          postStatus = "draft";
+          console.log(`[auto-generate-blog] Article quality score (${articleData.quality_score}) below threshold, keeping as draft`);
+        }
+
+        // Insert into blog_posts with quality data
         const { data: newPost, error: insertError } = await supabase
           .from("blog_posts")
           .insert({
@@ -223,8 +323,8 @@ serve(async (req) => {
             tags: articleData.tags || [],
             featured_image: articleData.featured_image_url,
             read_time: articleData.read_time || 5,
-            status: settings?.auto_publish ? "published" : "draft",
-            published_at: settings?.auto_publish ? new Date().toISOString() : null,
+            status: postStatus,
+            published_at: postStatus === "published" ? new Date().toISOString() : null,
             author_id: "system",
             author_name: "Navarro Asesores",
             seo_title_es: articleData.seo_title_es,
@@ -232,6 +332,10 @@ serve(async (req) => {
             seo_description_es: articleData.seo_description_es,
             seo_description_en: articleData.seo_description_en,
             source_site: "navarro",
+            // New quality columns
+            quality_score: articleData.quality_score || 0,
+            quality_checks: articleData.quality_checks || {},
+            passed_validation: articleData.passed_validation || false,
           })
           .select()
           .single();
@@ -240,7 +344,7 @@ serve(async (req) => {
           throw new Error(`Insert failed: ${insertError.message}`);
         }
 
-        console.log(`[auto-generate-blog] Post created with ID: ${newPost.id}`);
+        console.log(`[auto-generate-blog] Post created with ID: ${newPost.id}, Quality: ${articleData.quality_score}`);
 
         // Update queue item if exists
         if (queueId) {
@@ -257,7 +361,10 @@ serve(async (req) => {
           id: newPost.id,
           title: articleData.title_es,
           category,
-          status: settings?.auto_publish ? "published" : "draft",
+          status: postStatus,
+          quality_score: articleData.quality_score,
+          passed_validation: articleData.passed_validation,
+          is_calendar_topic: isCalendarTopic,
         });
 
         // Rotate to next category
@@ -288,8 +395,25 @@ serve(async (req) => {
     if (resendApiKey && generatedArticles.length > 0) {
       try {
         const articlesList = generatedArticles
-          .map((a) => `<li style="margin-bottom: 8px;"><strong>${a.title}</strong> <span style="color: #666;">(${a.category})</span></li>`)
+          .map((a) => {
+            const qualityBadge = a.passed_validation 
+              ? `<span style="color: #10b981;">✓ ${a.quality_score}pts</span>` 
+              : `<span style="color: #f59e0b;">⚠ ${a.quality_score}pts</span>`;
+            const calendarBadge = a.is_calendar_topic 
+              ? ` <span style="background: #dbeafe; color: #1d4ed8; padding: 2px 6px; border-radius: 4px; font-size: 11px;">📅 Tema oportuno</span>` 
+              : '';
+            return `<li style="margin-bottom: 8px;">
+              <strong>${a.title}</strong> 
+              <span style="color: #666;">(${a.category})</span>
+              ${qualityBadge}${calendarBadge}
+            </li>`;
+          })
           .join("");
+
+        const needsReview = generatedArticles.filter(a => !a.passed_validation).length;
+        const reviewNote = needsReview > 0 
+          ? `<p style="color: #f59e0b; margin-bottom: 16px;">⚠️ ${needsReview} artículo(s) requieren revisión adicional (score < 70)</p>`
+          : '';
 
         const emailResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -300,11 +424,12 @@ serve(async (req) => {
           body: JSON.stringify({
             from: "Navarro Blog <onboarding@resend.dev>",
             to: ["s.navarro@nrro.es"],
-            subject: `📝 ${generatedArticles.length} nuevos artículos pendientes de revisión`,
+            subject: `📝 ${generatedArticles.length} nuevos artículos generados`,
             html: `
               <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                 <h2 style="color: #0f172a; margin-bottom: 16px;">Nuevos artículos generados</h2>
-                <p style="color: #374151; margin-bottom: 16px;">Se han generado <strong>${generatedArticles.length} artículos</strong> en borrador:</p>
+                <p style="color: #374151; margin-bottom: 16px;">Se han generado <strong>${generatedArticles.length} artículos</strong>:</p>
+                ${reviewNote}
                 <ul style="list-style: none; padding: 0; margin: 0 0 24px 0; background: #f9fafb; padding: 16px; border-radius: 8px;">
                   ${articlesList}
                 </ul>
@@ -313,12 +438,9 @@ serve(async (req) => {
                           text-decoration: none; border-radius: 6px; font-weight: 500;">
                   Revisar artículos
                 </a>
-                <p style="color: #6b7280; margin-top: 24px; font-size: 14px;">
-                  Los artículos están en estado <strong>borrador</strong>. Revísalos y publícalos cuando estén listos.
-                </p>
                 <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;">
                 <p style="color: #9ca3af; font-size: 12px;">
-                  Este email fue enviado automáticamente por el sistema de generación de blog de Navarro Asesores.
+                  Este email fue enviado automáticamente. Los artículos con score < 70 puntos necesitan revisión antes de publicar.
                 </p>
               </div>
             `,
@@ -326,7 +448,7 @@ serve(async (req) => {
         });
 
         if (emailResponse.ok) {
-          console.log("[auto-generate-blog] Notification email sent to s.navarro@nrro.es");
+          console.log("[auto-generate-blog] Notification email sent");
         } else {
           const errorData = await emailResponse.text();
           console.error("[auto-generate-blog] Failed to send email:", errorData);
