@@ -400,6 +400,7 @@ export const AdminBlog = () => {
         open={isFormOpen}
         onOpenChange={setIsFormOpen}
         post={selectedPost}
+        defaultSourceSite={originFilter === 'all' ? 'es' : originFilter as 'es' | 'int'}
       />
 
       {selectedPost && (
