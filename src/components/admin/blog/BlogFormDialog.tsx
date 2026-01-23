@@ -62,7 +62,7 @@ const blogFormSchema = z.object({
   seo_title_en: z.string().optional(),
   seo_description_en: z.string().optional(),
   author_id: z.string().min(1, "El autor es requerido"),
-  
+  source_site: z.enum(['es', 'int']),
 });
 
 type BlogFormValues = z.infer<typeof blogFormSchema>;
@@ -71,9 +71,10 @@ interface BlogFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   post?: any;
+  defaultSourceSite?: 'es' | 'int';
 }
 
-export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps) => {
+export const BlogFormDialog = ({ open, onOpenChange, post, defaultSourceSite = 'es' }: BlogFormDialogProps) => {
   const { toast } = useToast();
   const { adminUser } = useAuth();
   const queryClient = useQueryClient();
@@ -106,7 +107,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
       seo_title_en: "",
       seo_description_en: "",
       author_id: "",
-      
+      source_site: defaultSourceSite,
     },
   });
 
@@ -139,12 +140,15 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         seo_title_en: post.seo_title_en || "",
         seo_description_en: post.seo_description_en || "",
         author_id: post.author_id || "",
-        
+        source_site: post.source_site || defaultSourceSite,
       });
       setIsAIGenerated(false);
       setShowAIGenerator(false);
+    } else {
+      // Para posts nuevos, establecer el source_site por defecto
+      form.setValue('source_site', defaultSourceSite);
     }
-  }, [post, form]);
+  }, [post, form, defaultSourceSite]);
 
   const generateSlug = (title: string) => {
     return title
@@ -214,7 +218,7 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
         author_id: validAuthorId,
         author_name: selectedMember?.name || null,
         author_specialization: selectedMember?.specialization || null,
-        source_site: "es" as const,
+        source_site: values.source_site,
         shared_sites: [] as string[],
       };
 
@@ -674,6 +678,28 @@ export const BlogFormDialog = ({ open, onOpenChange, post }: BlogFormDialogProps
                                 {member.name} {member.specialization && `- ${member.specialization}`}
                               </SelectItem>
                             ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="source_site"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Sitio destino</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecciona sitio" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="es">Nacional (nrro.es)</SelectItem>
+                            <SelectItem value="int">Internacional (int.nrro.es)</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
