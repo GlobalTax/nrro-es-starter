@@ -128,6 +128,53 @@ async function getUpcomingCalendarEvent(supabase: any): Promise<{
   }
 }
 
+// Función para limpiar elementos atascados en la cola
+async function cleanupStuckQueueItems(supabase: any): Promise<number> {
+  try {
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+    
+    const { data, error } = await supabase
+      .from("blog_generation_queue")
+      .update({ 
+        status: "pending", 
+        error_message: "Auto-recuperado después de timeout" 
+      })
+      .eq("status", "generating")
+      .lt("updated_at", thirtyMinutesAgo)
+      .select();
+
+    if (error) {
+      console.error("[auto-generate-blog] Error cleaning stuck items:", error);
+      return 0;
+    }
+
+    if (data && data.length > 0) {
+      console.log(`[auto-generate-blog] Cleaned up ${data.length} stuck queue items`);
+    }
+
+    return data?.length || 0;
+  } catch (error) {
+    console.error("[auto-generate-blog] Error in cleanup:", error);
+    return 0;
+  }
+}
+
+// Función para marcar item de cola como fallido
+async function markQueueItemFailed(supabase: any, queueId: string, errorMessage: string): Promise<void> {
+  try {
+    await supabase
+      .from("blog_generation_queue")
+      .update({ 
+        status: "failed", 
+        error_message: errorMessage.substring(0, 500) // Limitar longitud
+      })
+      .eq("id", queueId);
+    console.log(`[auto-generate-blog] Marked queue item ${queueId} as failed: ${errorMessage}`);
+  } catch (error) {
+    console.error("[auto-generate-blog] Error marking queue item failed:", error);
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
@@ -155,7 +202,14 @@ serve(async (req) => {
       // Use defaults if no body
     }
 
-    console.log(`[auto-generate-blog] Starting generation of ${count} articles`);
+    console.log(`[auto-generate-blog] === INICIO === ${new Date().toISOString()}`);
+    console.log(`[auto-generate-blog] Parámetros: count=${count}, forceTopic=${forceTopic ? 'sí' : 'no'}`);
+
+    // ========== LIMPIEZA DE ELEMENTOS ATASCADOS ==========
+    const cleanedCount = await cleanupStuckQueueItems(supabase);
+    if (cleanedCount > 0) {
+      console.log(`[auto-generate-blog] Limpiados ${cleanedCount} elementos atascados`);
+    }
 
     // Check if automation is enabled
     const { data: settings } = await supabase
@@ -208,6 +262,8 @@ serve(async (req) => {
     }
 
     for (let i = 0; i < count; i++) {
+      let queueId: string | null = null;
+      
       try {
         // Check queue for pending topics first
         const { data: queueItem } = await supabase
@@ -223,7 +279,6 @@ serve(async (req) => {
         let category: string;
         let tone: string;
         let language: string;
-        let queueId: string | null = null;
         let isCalendarTopic = false;
 
         if (queueItem) {
@@ -237,7 +292,7 @@ serve(async (req) => {
           // Mark as generating
           await supabase
             .from("blog_generation_queue")
-            .update({ status: "generating" })
+            .update({ status: "generating", updated_at: new Date().toISOString() })
             .eq("id", queueId);
 
           console.log(`[auto-generate-blog] Using queued topic: ${topic}`);
@@ -265,11 +320,19 @@ serve(async (req) => {
           console.log(`[auto-generate-blog] Auto-generated topic: ${topic} (${category})`);
         }
 
-        // Call the existing generate-blog-article function
+        // ========== LLAMAR A GENERATE-BLOG-ARTICLE CON FLAGS DE OPTIMIZACIÓN ==========
+        console.log(`[auto-generate-blog] Invocando generate-blog-article para: ${topic.substring(0, 50)}...`);
+        
         const { data: articleData, error: genError } = await supabase.functions.invoke(
           "generate-blog-article",
           {
-            body: { prompt: topic, tone, language },
+            body: { 
+              prompt: topic, 
+              tone, 
+              language,
+              skipRefinement: true,  // Evitar timeout - saltar refinamiento en automatización
+              skipImage: true        // Evitar timeout - imagen se puede añadir después
+            },
           }
         );
 
@@ -279,6 +342,11 @@ serve(async (req) => {
 
         if (!articleData) {
           throw new Error("No article data returned");
+        }
+
+        // Verificar si hubo error interno
+        if (articleData.error) {
+          throw new Error(articleData.error);
         }
 
         console.log(`[auto-generate-blog] Article generated: ${articleData.title_es}`);
@@ -379,11 +447,19 @@ serve(async (req) => {
 
         // Rotate to next category
         sortedCategories.push(sortedCategories.shift()!);
+        
       } catch (error) {
-        console.error(`[auto-generate-blog] Error generating article ${i + 1}:`, error);
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
+        console.error(`[auto-generate-blog] Error generating article ${i + 1}:`, errorMessage);
+        
+        // ========== ROLLBACK: Marcar item de cola como fallido ==========
+        if (queueId) {
+          await markQueueItemFailed(supabase, queueId, errorMessage);
+        }
+        
         errors.push({
           index: i,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: errorMessage,
         });
       }
     }
@@ -473,13 +549,14 @@ serve(async (req) => {
       generated: generatedArticles.length,
       articles: generatedArticles,
       errors: errors.length > 0 ? errors : undefined,
+      cleaned_stuck_items: cleanedCount,
       emailSent: resendApiKey && generatedArticles.length > 0,
       next_run: new Date(
         Date.now() + (settings?.run_interval_days || 2) * 24 * 60 * 60 * 1000
       ).toISOString(),
     };
 
-    console.log("[auto-generate-blog] Completed:", result);
+    console.log("[auto-generate-blog] === FIN ===", result);
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
