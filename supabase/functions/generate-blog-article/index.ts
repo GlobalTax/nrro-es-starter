@@ -157,13 +157,35 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
 }
 
+// Helper para fetch con timeout
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 25000): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    return response;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { prompt, tone = "professional", language = "both", skipRefinement = false } = await req.json();
+    const { 
+      prompt, 
+      tone = "professional", 
+      language = "both", 
+      skipRefinement = false,
+      skipImage = false  // NUEVO: permitir saltar generación de imagen
+    } = await req.json();
     
     if (!prompt || typeof prompt !== "string") {
       throw new Error("Prompt es requerido");
@@ -174,7 +196,8 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY no configurada");
     }
 
-    console.log("[GENERATE_BLOG] Iniciando generación:", { prompt, tone, language, skipRefinement });
+    console.log("[GENERATE_BLOG] === INICIO ===", new Date().toISOString());
+    console.log("[GENERATE_BLOG] Parámetros:", { prompt: prompt.substring(0, 50), tone, language, skipRefinement, skipImage });
 
     // ========== PASADA 1: Generación inicial ==========
     const systemPrompt = `Eres un redactor experto especializado en contenido legal, fiscal y corporativo para el despacho Navarro.
@@ -203,7 +226,7 @@ Categorías disponibles: Fiscal, Mercantil, Laboral, Corporativo, Análisis
 
 Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo inglés" : "Ambos (español e inglés)"}`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${LOVABLE_API_KEY}`,
@@ -283,7 +306,7 @@ Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo ingl�
         ],
         tool_choice: { type: "function", function: { name: "generate_blog_article" } }
       }),
-    });
+    }, 30000); // 30s timeout para generación principal
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -319,7 +342,7 @@ Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo ingl�
 
     let articleData = JSON.parse(data.choices[0].message.tool_calls[0].function.arguments);
 
-    // ========== PASADA 2: Refinamiento iterativo ==========
+    // ========== PASADA 2: Refinamiento iterativo (SOLO si no se salta) ==========
     if (!skipRefinement) {
       console.log("[GENERATE_BLOG] Iniciando pasada 2: Refinamiento...");
 
@@ -355,7 +378,7 @@ ${articleData.content_en}` : ''}
 Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
 
         try {
-          const refinementResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+          const refinementResponse = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
             headers: {
               "Authorization": `Bearer ${LOVABLE_API_KEY}`,
@@ -391,7 +414,7 @@ Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
               ],
               tool_choice: { type: "function", function: { name: "refined_content" } }
             }),
-          });
+          }, 25000); // 25s timeout para refinamiento
 
           if (refinementResponse.ok) {
             const refinedData = await refinementResponse.json();
@@ -419,6 +442,8 @@ Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
       } else {
         console.log("[GENERATE_BLOG] Contenido inicial es de buena calidad, saltando refinamiento");
       }
+    } else {
+      console.log("[GENERATE_BLOG] Refinamiento saltado por parámetro skipRefinement=true");
     }
 
     // ========== VALIDACIÓN DE CONTENIDO ==========
@@ -429,13 +454,14 @@ Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
     const wordCount = articleData.content_es.replace(/<[^>]*>/g, '').split(/\s+/).length;
     const readTime = Math.ceil(wordCount / 200);
     
-    // ========== GENERAR IMAGEN DESTACADA ==========
+    // ========== GENERAR IMAGEN DESTACADA (SOLO si no se salta) ==========
     let featured_image_url: string | null = null;
     
-    try {
-      console.log('[IMAGE] Generando imagen para el artículo...');
-      
-      const imagePrompt = `Create a professional, modern blog header image for an article titled "${articleData.title_es}". 
+    if (!skipImage) {
+      try {
+        console.log('[IMAGE] Generando imagen para el artículo...');
+        
+        const imagePrompt = `Create a professional, modern blog header image for an article titled "${articleData.title_es}". 
 The article is about: ${articleData.excerpt_es || articleData.title_es}
 Category: ${articleData.category}
 Style: Clean, corporate, professional suitable for a law and business consulting firm website. 
@@ -444,64 +470,67 @@ No text in the image.
 Aspect ratio: 16:9 (1200x675px)
 Ultra high resolution, professional photography style`;
 
-      const imageResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'google/gemini-2.5-flash-image-preview',
-          messages: [
-            { role: 'user', content: imagePrompt }
-          ],
-          modalities: ['image', 'text']
-        })
-      });
+        const imageResponse = await fetchWithTimeout('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'google/gemini-2.5-flash-image-preview',
+            messages: [
+              { role: 'user', content: imagePrompt }
+            ],
+            modalities: ['image', 'text']
+          })
+        }, 20000); // 20s timeout para imagen
 
-      if (imageResponse.ok) {
-        const imageData = await imageResponse.json();
-        const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+        if (imageResponse.ok) {
+          const imageData = await imageResponse.json();
+          const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-        if (base64Image) {
-          console.log('[IMAGE] Imagen generada, subiendo a storage...');
-          
-          // Convertir base64 a buffer
-          const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
-          const buffer = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
-          
-          // Crear cliente de Supabase
-          const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-          const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-          const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
-          
-          // Subir a Supabase Storage
-          const fileName = `generated/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
-          const { data: uploadData, error: uploadError } = await supabaseClient.storage
-            .from('blog-media')
-            .upload(fileName, buffer, {
-              contentType: 'image/png',
-              cacheControl: '3600',
-              upsert: false
-            });
-
-          if (uploadError) {
-            console.error('[IMAGE] Error uploading image:', uploadError);
-          } else {
-            const { data: publicUrlData } = supabaseClient.storage
-              .from('blog-media')
-              .getPublicUrl(fileName);
+          if (base64Image) {
+            console.log('[IMAGE] Imagen generada, subiendo a storage...');
             
-            featured_image_url = publicUrlData.publicUrl;
-            console.log('[IMAGE] Imagen subida exitosamente:', featured_image_url);
+            // Convertir base64 a buffer
+            const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
+            const buffer = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
+            
+            // Crear cliente de Supabase
+            const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+            const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+            const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
+            
+            // Subir a Supabase Storage
+            const fileName = `generated/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
+            const { data: uploadData, error: uploadError } = await supabaseClient.storage
+              .from('blog-media')
+              .upload(fileName, buffer, {
+                contentType: 'image/png',
+                cacheControl: '3600',
+                upsert: false
+              });
+
+            if (uploadError) {
+              console.error('[IMAGE] Error uploading image:', uploadError);
+            } else {
+              const { data: publicUrlData } = supabaseClient.storage
+                .from('blog-media')
+                .getPublicUrl(fileName);
+              
+              featured_image_url = publicUrlData.publicUrl;
+              console.log('[IMAGE] Imagen subida exitosamente:', featured_image_url);
+            }
           }
+        } else {
+          console.warn('[IMAGE] No se pudo generar la imagen, continuando sin ella');
         }
-      } else {
-        console.warn('[IMAGE] No se pudo generar la imagen, continuando sin ella');
+      } catch (imageError) {
+        console.error('[IMAGE] Error en generación de imagen:', imageError);
+        // No bloqueamos el proceso si falla la imagen
       }
-    } catch (imageError) {
-      console.error('[IMAGE] Error en generación de imagen:', imageError);
-      // No bloqueamos el proceso si falla la imagen
+    } else {
+      console.log("[GENERATE_BLOG] Generación de imagen saltada por parámetro skipImage=true");
     }
 
     const result = {
@@ -515,7 +544,7 @@ Ultra high resolution, professional photography style`;
       passed_validation: validation.passed,
     };
 
-    console.log("[GENERATE_BLOG] Artículo generado exitosamente:", {
+    console.log("[GENERATE_BLOG] === FIN === Artículo generado exitosamente:", {
       category: result.category,
       tags: result.tags,
       readTime: result.read_time,
@@ -530,12 +559,19 @@ Ultra high resolution, professional photography style`;
 
   } catch (error) {
     console.error("[GENERATE_BLOG] Error:", error);
+    
+    // Detectar si es un timeout
+    const isTimeout = error instanceof Error && error.name === 'AbortError';
+    
     return new Response(
       JSON.stringify({ 
-        error: error instanceof Error ? error.message : "Error desconocido" 
+        error: isTimeout 
+          ? "Timeout en la generación del artículo. Intenta de nuevo." 
+          : (error instanceof Error ? error.message : "Error desconocido"),
+        isTimeout
       }),
       { 
-        status: 500, 
+        status: isTimeout ? 504 : 500, 
         headers: { ...corsHeaders, "Content-Type": "application/json" } 
       }
     );
