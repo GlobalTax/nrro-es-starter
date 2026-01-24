@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bot, Calendar, CalendarDays, CheckCircle, Clock, Play, Plus, Settings, Sparkles, Trash2, Loader2, AlertTriangle, XCircle } from "lucide-react";
+import { Bot, Calendar, CalendarDays, CheckCircle, Clock, Play, Plus, Settings, Sparkles, Trash2, Loader2, AlertTriangle, XCircle, Activity } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -20,8 +20,10 @@ import {
   useAddToQueue,
   useDeleteFromQueue,
   useTriggerGeneration,
+  useQueueDiagnostics,
 } from "@/hooks/useBlogAutomation";
 import { EditorialCalendarView } from "./EditorialCalendarView";
+import { QueueDiagnosticsPanel } from "./QueueDiagnosticsPanel";
 
 const CATEGORIES = ["Fiscal", "Mercantil", "Laboral", "Corporativo"];
 const TONES = [
@@ -70,6 +72,7 @@ export function BlogAutomationPanel() {
 
   const { data: settings, isLoading: settingsLoading } = useBlogAutomationSettings();
   const { data: queue, isLoading: queueLoading } = useBlogQueue();
+  const { data: diagnostics } = useQueueDiagnostics();
   const updateSettings = useUpdateAutomationSettings();
   const addToQueue = useAddToQueue();
   const deleteFromQueue = useDeleteFromQueue();
@@ -120,6 +123,15 @@ export function BlogAutomationPanel() {
         <TabsTrigger value="calendar" className="flex items-center gap-2">
           <CalendarDays className="h-4 w-4" />
           Calendario Editorial
+        </TabsTrigger>
+        <TabsTrigger value="diagnostics" className="flex items-center gap-2">
+          <Activity className="h-4 w-4" />
+          Diagnóstico
+          {(diagnostics?.failed || diagnostics?.stuck) ? (
+            <Badge variant="destructive" className="ml-1 h-5 px-1.5 text-xs">
+              {(diagnostics?.failed || 0) + (diagnostics?.stuck || 0)}
+            </Badge>
+          ) : null}
         </TabsTrigger>
       </TabsList>
 
@@ -432,6 +444,10 @@ export function BlogAutomationPanel() {
 
       <TabsContent value="calendar">
         <EditorialCalendarView />
+      </TabsContent>
+
+      <TabsContent value="diagnostics">
+        <QueueDiagnosticsPanel />
       </TabsContent>
     </Tabs>
   );
