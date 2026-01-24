@@ -126,13 +126,13 @@ export function ExecutionHistorySection() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatCard
               title="Tasa de éxito"
-              value={`${stats?.successRate.toFixed(0) || 0}%`}
+              value={`${stats?.successRate?.toFixed(0) ?? 0}%`}
               icon={Percent}
               variant={stats && stats.successRate >= 90 ? "success" : stats && stats.successRate >= 70 ? "warning" : "error"}
             />
             <StatCard
               title="Ejecuciones"
-              value={stats?.totalRuns || 0}
+              value={stats?.totalRuns ?? 0}
               icon={History}
             />
             <StatCard
@@ -142,7 +142,7 @@ export function ExecutionHistorySection() {
             />
             <StatCard
               title="Noticias/ejecución"
-              value={stats?.averageArticlesPerRun.toFixed(1) || 0}
+              value={stats?.averageArticlesPerRun?.toFixed(1) ?? 0}
               icon={TrendingUp}
               variant="success"
             />
