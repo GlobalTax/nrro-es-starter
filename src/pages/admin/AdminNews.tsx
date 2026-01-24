@@ -26,10 +26,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format, subDays } from "date-fns";
 import { es } from "date-fns/locale";
-import { MoreHorizontal, Trash2, Bot, Newspaper, Search, Plus, Pencil, Copy, TrendingUp, FileText, Calendar, Settings2 } from "lucide-react";
+import { MoreHorizontal, Trash2, Bot, Newspaper, Search, Plus, Pencil, Copy, TrendingUp, FileText, Calendar, Settings2, Activity } from "lucide-react";
 import { TranslateNewsToCatalan } from "@/components/admin/news/TranslateNewsToCatalan";
 import { TranslateNewsToEnglish } from "@/components/admin/news/TranslateNewsToEnglish";
 import { NewsAutomationPanel } from "@/components/admin/news/NewsAutomationPanel";
+import { NewsDiagnosticsPanel } from "@/components/admin/news/NewsDiagnosticsPanel";
 import { NewsFormDialog } from "@/components/admin/news/NewsFormDialog";
 import { NewsActionsBar } from "@/components/admin/news/NewsActionsBar";
 import { CustomPagination } from "@/components/ui/custom-pagination";
@@ -37,7 +38,8 @@ import { useDuplicateNewsArticle } from "@/hooks/useDuplicateContent";
 import { 
   useNewsArticles, 
   useDeleteNewsArticle, 
-  useUpdateNewsArticle 
+  useUpdateNewsArticle,
+  useNewsAutomationSettings
 } from "@/hooks/useNewsAutomation";
 
 interface NewsArticle {
@@ -78,9 +80,14 @@ export const AdminNews = () => {
   const [mainTab, setMainTab] = useState("gestion");
 
   const { data: articles, isLoading } = useNewsArticles();
+  const { data: automationSettings } = useNewsAutomationSettings();
   const deleteArticle = useDeleteNewsArticle();
   const updateArticle = useUpdateNewsArticle();
   const duplicateMutation = useDuplicateNewsArticle();
+
+  // Check if automation is stale (last run > 48h ago)
+  const lastRunAt = automationSettings?.last_run_at ? new Date(automationSettings.last_run_at) : null;
+  const isAutomationStale = lastRunAt && (Date.now() - lastRunAt.getTime()) > 48 * 60 * 60 * 1000;
 
   const allArticles = (articles as NewsArticle[] | undefined) || [];
 
@@ -268,6 +275,15 @@ export const AdminNews = () => {
           <TabsTrigger value="automatizacion" className="data-[state=active]:bg-white">
             <Settings2 className="h-4 w-4 mr-2" />
             Automatización
+          </TabsTrigger>
+          <TabsTrigger value="diagnostico" className="data-[state=active]:bg-white">
+            <Activity className="h-4 w-4 mr-2" />
+            Diagnóstico
+            {isAutomationStale && (
+              <Badge variant="destructive" className="ml-2 h-5 w-5 p-0 flex items-center justify-center text-[10px]">
+                !
+              </Badge>
+            )}
           </TabsTrigger>
         </TabsList>
 
@@ -504,6 +520,11 @@ export const AdminNews = () => {
             <TranslateNewsToCatalan />
             <TranslateNewsToEnglish />
           </div>
+        </TabsContent>
+
+        {/* Diagnóstico Tab */}
+        <TabsContent value="diagnostico" className="space-y-6 mt-4">
+          <NewsDiagnosticsPanel />
         </TabsContent>
       </Tabs>
 

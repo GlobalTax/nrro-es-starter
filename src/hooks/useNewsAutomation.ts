@@ -2,6 +2,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+export interface NewsDiagnostics {
+  todayCount: number;
+  aiGeneratedToday: number;
+  publishedToday: number;
+  todayArticles: Array<{
+    id: string;
+    title_es: string | null;
+    source_name: string | null;
+    category: string | null;
+    is_published: boolean;
+    created_at: string | null;
+  }>;
+}
+
 export interface NewsAutomationSettings {
   id: string;
   is_enabled: boolean;
@@ -176,5 +190,33 @@ export function useUpdateNewsArticle() {
         variant: "destructive",
       });
     },
+  });
+}
+
+export function useNewsDiagnostics() {
+  return useQuery({
+    queryKey: ["news-diagnostics"],
+    queryFn: async (): Promise<NewsDiagnostics> => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const { data, error } = await supabase
+        .from("news_articles")
+        .select("id, title_es, source_name, category, is_published, created_at, generated_with_ai")
+        .gte("created_at", today.toISOString())
+        .order("created_at", { ascending: false });
+      
+      if (error) throw error;
+      
+      const articles = data || [];
+      
+      return {
+        todayCount: articles.length,
+        todayArticles: articles,
+        aiGeneratedToday: articles.filter(a => a.generated_with_ai).length,
+        publishedToday: articles.filter(a => a.is_published).length,
+      };
+    },
+    refetchInterval: 60000,
   });
 }
