@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-trigger-type",
 };
 
 const NEWS_SOURCES = {
@@ -21,18 +21,25 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const startTime = Date.now();
+  const triggerType = req.headers.get("x-trigger-type") || "cron";
+  
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  let runRecordId: string | null = null;
+  let articlesToGenerate = 0;
+  let settingsSnapshot: Record<string, unknown> | null = null;
+
   try {
     console.log("Starting auto-generate-news function");
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
 
     if (!lovableApiKey) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Get automation settings
     const { data: settings, error: settingsError } = await supabase
@@ -45,6 +52,40 @@ serve(async (req) => {
       throw new Error("Could not fetch automation settings");
     }
 
+    // Prepare settings snapshot for logging
+    settingsSnapshot = {
+      is_enabled: settings.is_enabled,
+      articles_per_run: settings.articles_per_run,
+      auto_publish: settings.auto_publish,
+      default_sources: settings.default_sources,
+      default_categories: settings.default_categories,
+    };
+    
+    articlesToGenerate = settings.articles_per_run || 3;
+
+    // Create initial run record
+    const { data: runRecord, error: runError } = await supabase
+      .from("news_automation_runs")
+      .insert({
+        status: settings.is_enabled ? "running" : "skipped",
+        articles_requested: articlesToGenerate,
+        trigger_type: triggerType,
+        settings_snapshot: settingsSnapshot,
+        ...(settings.is_enabled ? {} : {
+          completed_at: new Date().toISOString(),
+          error_message: "Automatización deshabilitada",
+          execution_time_ms: Date.now() - startTime,
+        }),
+      })
+      .select("id")
+      .single();
+
+    if (runError) {
+      console.error("Error creating run record:", runError);
+    } else {
+      runRecordId = runRecord.id;
+    }
+
     if (!settings.is_enabled) {
       console.log("News automation is disabled");
       return new Response(
@@ -53,7 +94,6 @@ serve(async (req) => {
       );
     }
 
-    const articlesToGenerate = settings.articles_per_run || 3;
     const sources = settings.default_sources || ["BOE", "AEAT"];
     const categories = settings.default_categories || ["Fiscal", "Mercantil"];
 
@@ -117,19 +157,13 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
       const errorText = await aiResponse.text();
       console.error("AI Gateway error:", aiResponse.status, errorText);
       
-      if (aiResponse.status === 429) {
-        return new Response(
-          JSON.stringify({ error: "Rate limit exceeded. Please try again later." }),
-          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-      if (aiResponse.status === 402) {
-        return new Response(
-          JSON.stringify({ error: "Payment required. Please add funds to your workspace." }),
-          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-      throw new Error(`AI Gateway error: ${aiResponse.status}`);
+      const errorMessage = aiResponse.status === 429 
+        ? "Rate limit exceeded. Please try again later."
+        : aiResponse.status === 402
+        ? "Payment required. Please add funds to your workspace."
+        : `AI Gateway error: ${aiResponse.status}`;
+      
+      throw new Error(errorMessage);
     }
 
     const aiData = await aiResponse.json();
@@ -218,6 +252,19 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
       console.error("Error updating settings:", updateError);
     }
 
+    // Update run record with success
+    if (runRecordId) {
+      await supabase
+        .from("news_automation_runs")
+        .update({
+          status: "success",
+          completed_at: new Date().toISOString(),
+          articles_generated: insertedNews.length,
+          execution_time_ms: Date.now() - startTime,
+        })
+        .eq("id", runRecordId);
+    }
+
     console.log(`Successfully generated ${insertedNews.length} news articles`);
 
     return new Response(
@@ -230,6 +277,37 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
     );
   } catch (error) {
     console.error("Error in auto-generate-news:", error);
+    
+    // Update run record with error
+    if (runRecordId) {
+      await supabase
+        .from("news_automation_runs")
+        .update({
+          status: "error",
+          completed_at: new Date().toISOString(),
+          articles_generated: 0,
+          error_message: error instanceof Error ? error.message : "Unknown error",
+          error_details: { stack: error instanceof Error ? error.stack : null },
+          execution_time_ms: Date.now() - startTime,
+        })
+        .eq("id", runRecordId);
+    } else if (settingsSnapshot) {
+      // Create error record if we couldn't create one earlier
+      await supabase
+        .from("news_automation_runs")
+        .insert({
+          status: "error",
+          completed_at: new Date().toISOString(),
+          articles_requested: articlesToGenerate,
+          articles_generated: 0,
+          trigger_type: triggerType,
+          settings_snapshot: settingsSnapshot,
+          error_message: error instanceof Error ? error.message : "Unknown error",
+          error_details: { stack: error instanceof Error ? error.stack : null },
+          execution_time_ms: Date.now() - startTime,
+        });
+    }
+    
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }

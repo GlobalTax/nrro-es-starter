@@ -92,7 +92,11 @@ export function useTriggerNewsGeneration() {
 
   return useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.functions.invoke("auto-generate-news");
+      const { data, error } = await supabase.functions.invoke("auto-generate-news", {
+        headers: {
+          "x-trigger-type": "manual",
+        },
+      });
       
       if (error) throw error;
       return data;
@@ -100,12 +104,15 @@ export function useTriggerNewsGeneration() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["news-articles"] });
       queryClient.invalidateQueries({ queryKey: ["news-automation-settings"] });
+      queryClient.invalidateQueries({ queryKey: ["news-automation-history"] });
+      queryClient.invalidateQueries({ queryKey: ["news-automation-stats"] });
       toast({
         title: "Noticias generadas",
         description: `Se han generado ${data?.generated || 0} noticias correctamente.`,
       });
     },
     onError: (error) => {
+      queryClient.invalidateQueries({ queryKey: ["news-automation-history"] });
       toast({
         title: "Error al generar noticias",
         description: error instanceof Error ? error.message : "Error desconocido",
@@ -215,6 +222,84 @@ export function useNewsDiagnostics() {
         todayArticles: articles,
         aiGeneratedToday: articles.filter(a => a.generated_with_ai).length,
         publishedToday: articles.filter(a => a.is_published).length,
+      };
+    },
+    refetchInterval: 60000,
+  });
+}
+
+// Types for automation history
+export interface NewsAutomationRun {
+  id: string;
+  started_at: string;
+  completed_at: string | null;
+  status: 'running' | 'success' | 'error' | 'skipped';
+  articles_requested: number;
+  articles_generated: number;
+  error_message: string | null;
+  execution_time_ms: number | null;
+  trigger_type: 'cron' | 'manual' | 'api';
+  settings_snapshot: Record<string, unknown> | null;
+  created_at: string;
+}
+
+export interface NewsAutomationStats {
+  successRate: number;
+  totalRuns: number;
+  successfulRuns: number;
+  errorRuns: number;
+  totalArticlesGenerated: number;
+  averageExecutionTime: number;
+  averageArticlesPerRun: number;
+}
+
+export function useNewsAutomationHistory(limit = 20) {
+  return useQuery({
+    queryKey: ["news-automation-history", limit],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("news_automation_runs")
+        .select("*")
+        .order("started_at", { ascending: false })
+        .limit(limit);
+
+      if (error) throw error;
+      return data as NewsAutomationRun[];
+    },
+    refetchInterval: 30000,
+  });
+}
+
+export function useNewsAutomationStats() {
+  return useQuery({
+    queryKey: ["news-automation-stats"],
+    queryFn: async (): Promise<NewsAutomationStats> => {
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const { data, error } = await supabase
+        .from("news_automation_runs")
+        .select("status, articles_generated, execution_time_ms")
+        .gte("started_at", thirtyDaysAgo.toISOString());
+
+      if (error) throw error;
+
+      const runs = data || [];
+      const total = runs.length;
+      const successful = runs.filter(r => r.status === "success").length;
+      const errors = runs.filter(r => r.status === "error").length;
+      const totalArticles = runs.reduce((sum, r) => sum + (r.articles_generated || 0), 0);
+      const totalTime = runs.reduce((sum, r) => sum + (r.execution_time_ms || 0), 0);
+      const avgTime = total > 0 ? totalTime / total : 0;
+
+      return {
+        successRate: total > 0 ? (successful / total) * 100 : 0,
+        totalRuns: total,
+        successfulRuns: successful,
+        errorRuns: errors,
+        totalArticlesGenerated: totalArticles,
+        averageExecutionTime: avgTime,
+        averageArticlesPerRun: successful > 0 ? totalArticles / successful : 0,
       };
     },
     refetchInterval: 60000,
