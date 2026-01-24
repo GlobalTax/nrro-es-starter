@@ -167,3 +167,138 @@ export const useTriggerGeneration = () => {
     },
   });
 };
+
+export interface QueueDiagnostics {
+  pending: number;
+  generating: number;
+  completed: number;
+  failed: number;
+  stuck: number;
+  withErrors: number;
+}
+
+export const useQueueDiagnostics = () => {
+  return useQuery({
+    queryKey: ["blog-queue-diagnostics"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_generation_queue")
+        .select("id, status, error_message, updated_at");
+
+      if (error) throw error;
+
+      const now = new Date();
+      const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
+
+      const diagnostics: QueueDiagnostics = {
+        pending: data.filter((i) => i.status === "pending").length,
+        generating: data.filter((i) => i.status === "generating").length,
+        completed: data.filter((i) => i.status === "completed").length,
+        failed: data.filter((i) => i.status === "failed").length,
+        stuck: data.filter(
+          (i) =>
+            i.status === "generating" &&
+            new Date(i.updated_at) < thirtyMinutesAgo
+        ).length,
+        withErrors: data.filter((i) => i.error_message).length,
+      };
+
+      return diagnostics;
+    },
+    refetchInterval: 30000,
+  });
+};
+
+export const useRetryQueueItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("blog_generation_queue")
+        .update({
+          status: "pending",
+          error_message: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["blog-generation-queue"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-queue-diagnostics"] });
+      toast.success("Elemento marcado para reintento");
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.message}`);
+    },
+  });
+};
+
+export const useRetryAllFailed = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_generation_queue")
+        .update({
+          status: "pending",
+          error_message: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("status", "failed")
+        .select();
+
+      if (error) throw error;
+      return data?.length || 0;
+    },
+    onSuccess: (count) => {
+      queryClient.invalidateQueries({ queryKey: ["blog-generation-queue"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-queue-diagnostics"] });
+      toast.success(`${count} elemento(s) marcados para reintento`);
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.message}`);
+    },
+  });
+};
+
+export const useCleanupStuckItems = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const thirtyMinutesAgo = new Date(
+        Date.now() - 30 * 60 * 1000
+      ).toISOString();
+
+      const { data, error } = await supabase
+        .from("blog_generation_queue")
+        .update({
+          status: "pending",
+          error_message: "Limpiado manualmente desde diagnóstico",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("status", "generating")
+        .lt("updated_at", thirtyMinutesAgo)
+        .select();
+
+      if (error) throw error;
+      return data?.length || 0;
+    },
+    onSuccess: (count) => {
+      queryClient.invalidateQueries({ queryKey: ["blog-generation-queue"] });
+      queryClient.invalidateQueries({ queryKey: ["blog-queue-diagnostics"] });
+      if (count > 0) {
+        toast.success(`${count} elemento(s) atascados limpiados`);
+      } else {
+        toast.info("No hay elementos atascados");
+      }
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.message}`);
+    },
+  });
+};
