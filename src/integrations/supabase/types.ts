@@ -4246,6 +4246,110 @@ export type Database = {
         }
         Relationships: []
       }
+      whistleblower_messages: {
+        Row: {
+          attachment_urls: string[] | null
+          created_at: string
+          id: string
+          is_visible_to_reporter: boolean
+          message: string
+          report_id: string
+          sender_type: Database["public"]["Enums"]["whistleblower_sender"]
+        }
+        Insert: {
+          attachment_urls?: string[] | null
+          created_at?: string
+          id?: string
+          is_visible_to_reporter?: boolean
+          message: string
+          report_id: string
+          sender_type: Database["public"]["Enums"]["whistleblower_sender"]
+        }
+        Update: {
+          attachment_urls?: string[] | null
+          created_at?: string
+          id?: string
+          is_visible_to_reporter?: boolean
+          message?: string
+          report_id?: string
+          sender_type?: Database["public"]["Enums"]["whistleblower_sender"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whistleblower_messages_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "whistleblower_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whistleblower_reports: {
+        Row: {
+          assigned_to: string | null
+          category: Database["public"]["Enums"]["whistleblower_category"]
+          contact_email: string | null
+          created_at: string
+          date_of_incident: string | null
+          description: string
+          evidence_urls: string[] | null
+          id: string
+          internal_notes: string | null
+          ip_hash: string | null
+          is_anonymous: boolean
+          location: string | null
+          persons_involved: string | null
+          priority: Database["public"]["Enums"]["whistleblower_priority"]
+          resolution: string | null
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["whistleblower_status"]
+          tracking_code: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category: Database["public"]["Enums"]["whistleblower_category"]
+          contact_email?: string | null
+          created_at?: string
+          date_of_incident?: string | null
+          description: string
+          evidence_urls?: string[] | null
+          id?: string
+          internal_notes?: string | null
+          ip_hash?: string | null
+          is_anonymous?: boolean
+          location?: string | null
+          persons_involved?: string | null
+          priority?: Database["public"]["Enums"]["whistleblower_priority"]
+          resolution?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["whistleblower_status"]
+          tracking_code: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: Database["public"]["Enums"]["whistleblower_category"]
+          contact_email?: string | null
+          created_at?: string
+          date_of_incident?: string | null
+          description?: string
+          evidence_urls?: string[] | null
+          id?: string
+          internal_notes?: string | null
+          ip_hash?: string | null
+          is_anonymous?: boolean
+          location?: string | null
+          persons_involved?: string | null
+          priority?: Database["public"]["Enums"]["whistleblower_priority"]
+          resolution?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["whistleblower_status"]
+          tracking_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       nominas_summary: {
@@ -4632,6 +4736,23 @@ export type Database = {
         | "referral"
         | "direct"
         | "other"
+      whistleblower_category:
+        | "fraude"
+        | "acoso"
+        | "corrupcion"
+        | "conflicto_intereses"
+        | "proteccion_datos"
+        | "medioambiente"
+        | "seguridad_laboral"
+        | "otro"
+      whistleblower_priority: "baja" | "media" | "alta" | "critica"
+      whistleblower_sender: "denunciante" | "admin"
+      whistleblower_status:
+        | "nuevo"
+        | "en_revision"
+        | "investigando"
+        | "resuelto"
+        | "archivado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -4831,6 +4952,25 @@ export const Constants = {
         "referral",
         "direct",
         "other",
+      ],
+      whistleblower_category: [
+        "fraude",
+        "acoso",
+        "corrupcion",
+        "conflicto_intereses",
+        "proteccion_datos",
+        "medioambiente",
+        "seguridad_laboral",
+        "otro",
+      ],
+      whistleblower_priority: ["baja", "media", "alta", "critica"],
+      whistleblower_sender: ["denunciante", "admin"],
+      whistleblower_status: [
+        "nuevo",
+        "en_revision",
+        "investigando",
+        "resuelto",
+        "archivado",
       ],
     },
   },
