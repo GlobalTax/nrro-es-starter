@@ -11,11 +11,11 @@ import {
   GripVertical,
   Star,
   ExternalLink,
-  Check,
-  X,
   Pencil
 } from "lucide-react";
 import { toast } from "sonner";
+import { SortableList } from "@/components/admin/SortableList";
+import { useReorderItems } from "@/hooks/useReorderItems";
 
 // AdminPageHeader inline since it's a simple component
 const AdminPageHeader = ({ title, description }: { title: string; description: string }) => (
@@ -125,6 +125,10 @@ export default function AdminTopBarSettings() {
   const updateCompany = useUpdateGroupCompany();
   const deleteCompany = useDeleteGroupCompany();
   const setCurrentCompany = useSetCurrentCompany();
+  
+  // Reorder mutations
+  const reorderLinks = useReorderItems("topbar_links", ["topbar-links", "topbar-links-all"]);
+  const reorderCompanies = useReorderItems("topbar_group_companies", ["topbar-group-companies", "topbar-group-companies-all"]);
 
   // Config form
   const configForm = useForm<ConfigFormValues>({
@@ -434,13 +438,23 @@ export default function AdminTopBarSettings() {
                   No hay enlaces configurados
                 </p>
               ) : (
-                <div className="space-y-2">
-                  {links.map((link) => (
-                    <div
-                      key={link.id}
-                      className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
-                    >
-                      <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab" />
+                <SortableList
+                  items={links}
+                  onReorder={async (newOrder) => {
+                    const updates = newOrder.map((item, index) => ({
+                      id: item.id,
+                      position: index + 1,
+                    }));
+                    try {
+                      await reorderLinks.mutateAsync(updates);
+                      toast.success("Orden actualizado");
+                    } catch (error) {
+                      toast.error("Error al reordenar");
+                    }
+                  }}
+                  renderItem={(link) => (
+                    <div className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors cursor-grab active:cursor-grabbing">
+                      <GripVertical className="h-4 w-4 text-muted-foreground" />
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">{link.label}</p>
                         <p className="text-sm text-muted-foreground truncate">{link.href}</p>
@@ -458,14 +472,18 @@ export default function AdminTopBarSettings() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleEditLink(link)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditLink(link);
+                          }}
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setItemToDelete({ type: "link", id: link.id });
                             setDeleteDialogOpen(true);
                           }}
@@ -474,8 +492,8 @@ export default function AdminTopBarSettings() {
                         </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  )}
+                />
               )}
             </CardContent>
           </Card>
@@ -518,13 +536,23 @@ export default function AdminTopBarSettings() {
                   No hay empresas configuradas
                 </p>
               ) : (
-                <div className="space-y-2">
-                  {companies.map((company) => (
-                    <div
-                      key={company.id}
-                      className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
-                    >
-                      <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab" />
+                <SortableList
+                  items={companies}
+                  onReorder={async (newOrder) => {
+                    const updates = newOrder.map((item, index) => ({
+                      id: item.id,
+                      position: index + 1,
+                    }));
+                    try {
+                      await reorderCompanies.mutateAsync(updates);
+                      toast.success("Orden actualizado");
+                    } catch (error) {
+                      toast.error("Error al reordenar");
+                    }
+                  }}
+                  renderItem={(company) => (
+                    <div className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors cursor-grab active:cursor-grabbing">
+                      <GripVertical className="h-4 w-4 text-muted-foreground" />
                       {company.is_current && (
                         <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
                       )}
@@ -539,7 +567,10 @@ export default function AdminTopBarSettings() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleSetCurrent(company.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSetCurrent(company.id);
+                            }}
                             disabled={setCurrentCompany.isPending}
                           >
                             <Star className="h-3 w-3 mr-1" />
@@ -552,14 +583,18 @@ export default function AdminTopBarSettings() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleEditCompany(company)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditCompany(company);
+                          }}
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setItemToDelete({ type: "company", id: company.id });
                             setDeleteDialogOpen(true);
                           }}
@@ -569,8 +604,8 @@ export default function AdminTopBarSettings() {
                         </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  )}
+                />
               )}
             </CardContent>
           </Card>
