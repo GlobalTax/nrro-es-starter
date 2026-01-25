@@ -10,6 +10,12 @@ export interface TopBarConfig {
   show_search: boolean;
   show_language_selector: boolean;
   source_site: string;
+  // Style fields
+  background_color: string | null;
+  text_color: string | null;
+  hover_color: string | null;
+  font_family: string | null;
+  font_size: string | null;
   created_at?: string;
   updated_at?: string;
 }

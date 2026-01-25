@@ -10,9 +10,15 @@ import { cn } from "@/lib/utils";
 
 interface GroupCompaniesDropdownProps {
   className?: string;
+  textColor?: string;
+  hoverColor?: string;
 }
 
-export const GroupCompaniesDropdown = ({ className }: GroupCompaniesDropdownProps) => {
+export const GroupCompaniesDropdown = ({ 
+  className, 
+  textColor = "rgba(255,255,255,0.8)",
+  hoverColor = "#ffffff"
+}: GroupCompaniesDropdownProps) => {
   const { currentCompany, otherCompanies, isLoading } = useTopBar();
 
   if (isLoading || !currentCompany) {
@@ -23,9 +29,12 @@ export const GroupCompaniesDropdown = ({ className }: GroupCompaniesDropdownProp
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors focus:outline-none",
+          "flex items-center gap-1.5 text-sm font-medium transition-colors focus:outline-none",
           className
         )}
+        style={{ color: textColor }}
+        onMouseEnter={(e) => e.currentTarget.style.color = hoverColor}
+        onMouseLeave={(e) => e.currentTarget.style.color = textColor}
       >
         <Star className="h-3 w-3 fill-current" />
         <span>{currentCompany.name}</span>
