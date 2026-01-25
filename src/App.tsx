@@ -68,6 +68,8 @@ import { SetupCompanySpain } from "./pages/SetupCompanySpain";
 import { DynamicLandingPage } from "./pages/DynamicLandingPage";
 import SitemapXML from "./pages/SitemapXML";
 import PresentationPreview from "./pages/PresentationPreview";
+import WhistleblowerChannel from "./pages/WhistleblowerChannel";
+import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 
 const queryClient = new QueryClient();
 
@@ -184,6 +186,9 @@ const App = () => {
             <Route path="/en/set-up-company-spain" element={<SetupCompanySpain />} />
             <Route path="/crear-empresa-espana" element={<SetupCompanySpain />} />
             <Route path="/ca/crear-empresa-espanya" element={<SetupCompanySpain />} />
+            
+            {/* Whistleblower Channel */}
+            <Route path="/canal-denuncias" element={<WhistleblowerChannel />} />
 
             {/* Admin routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -219,6 +224,7 @@ const App = () => {
               <Route path="proposal-templates" element={<AdminProposalTemplates />} />
               <Route path="presentations" element={<AdminCorporatePresentations />} />
               <Route path="hub" element={<AdminToolsHub />} />
+              <Route path="whistleblower" element={<AdminWhistleblower />} />
               <Route
                 path="users"
                 element={

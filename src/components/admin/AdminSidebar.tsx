@@ -109,6 +109,7 @@ const sidebarSections: SidebarSection[] = [
       { path: '/admin/services', icon: Briefcase, label: 'Servicios' },
       { path: '/admin/technology', icon: Grid3X3, label: 'Tecnología' },
       { path: '/admin/sitemap', icon: Map, label: 'Sitemap' },
+      { path: '/admin/whistleblower', icon: Shield, label: 'Denuncias', requiredRole: 'super_admin' },
       { path: '/admin/settings', icon: Settings, label: 'Configuración' },
       { path: '/admin/users', icon: Shield, label: 'Usuarios', requiredRole: 'super_admin' },
     ],
