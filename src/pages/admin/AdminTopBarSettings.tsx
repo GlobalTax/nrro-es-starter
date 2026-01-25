@@ -59,7 +59,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import {
-  useTopBarConfig,
+  useTopBarConfigAdmin,
   useAllTopBarLinks,
   useAllGroupCompanies,
   useUpdateTopBarConfig,
@@ -104,6 +104,7 @@ type LinkFormValues = z.infer<typeof linkSchema>;
 type CompanyFormValues = z.infer<typeof companySchema>;
 
 export default function AdminTopBarSettings() {
+  const [originFilter, setOriginFilter] = useState<"es" | "int">("es");
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<TopBarLink | null>(null);
@@ -111,10 +112,10 @@ export default function AdminTopBarSettings() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<{ type: "link" | "company"; id: string } | null>(null);
 
-  // Queries
-  const { data: config, isLoading: configLoading } = useTopBarConfig();
-  const { data: links = [], isLoading: linksLoading } = useAllTopBarLinks();
-  const { data: companies = [], isLoading: companiesLoading } = useAllGroupCompanies();
+  // Queries - filtered by selected origin
+  const { data: config, isLoading: configLoading } = useTopBarConfigAdmin(originFilter);
+  const { data: links = [], isLoading: linksLoading } = useAllTopBarLinks(originFilter);
+  const { data: companies = [], isLoading: companiesLoading } = useAllGroupCompanies(originFilter);
 
   // Mutations
   const updateConfig = useUpdateTopBarConfig();
@@ -188,6 +189,7 @@ export default function AdminTopBarSettings() {
           is_external: values.is_external,
           is_active: values.is_active,
           position: values.position,
+          source_site: originFilter,
         });
         toast.success("Enlace creado");
       }
@@ -212,6 +214,7 @@ export default function AdminTopBarSettings() {
           is_current: values.is_current,
           is_active: values.is_active,
           position: values.position,
+          source_site: originFilter,
         });
         toast.success("Empresa creada");
       }
@@ -297,6 +300,27 @@ export default function AdminTopBarSettings() {
         title="Configuración TopBar"
         description="Gestiona la barra superior del sitio: teléfono, enlaces secundarios y empresas del grupo"
       />
+
+      {/* Site selector */}
+      <div className="flex items-center gap-2">
+        <span className="text-sm text-muted-foreground">Sitio:</span>
+        <div className="flex gap-2">
+          <Button
+            variant={originFilter === "es" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setOriginFilter("es")}
+          >
+            Nacional (nrro.es)
+          </Button>
+          <Button
+            variant={originFilter === "int" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setOriginFilter("int")}
+          >
+            Internacional (global.nrro.es)
+          </Button>
+        </div>
+      </div>
 
       <Tabs defaultValue="general" className="space-y-6">
         <TabsList>

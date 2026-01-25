@@ -4227,30 +4227,48 @@ export type Database = {
       }
       topbar_config: {
         Row: {
+          background_color: string | null
           created_at: string | null
+          font_family: string | null
+          font_size: string | null
+          hover_color: string | null
           id: string
           phone_link: string | null
           phone_number: string | null
           show_language_selector: boolean | null
           show_search: boolean | null
+          source_site: string
+          text_color: string | null
           updated_at: string | null
         }
         Insert: {
+          background_color?: string | null
           created_at?: string | null
+          font_family?: string | null
+          font_size?: string | null
+          hover_color?: string | null
           id?: string
           phone_link?: string | null
           phone_number?: string | null
           show_language_selector?: boolean | null
           show_search?: boolean | null
+          source_site?: string
+          text_color?: string | null
           updated_at?: string | null
         }
         Update: {
+          background_color?: string | null
           created_at?: string | null
+          font_family?: string | null
+          font_size?: string | null
+          hover_color?: string | null
           id?: string
           phone_link?: string | null
           phone_number?: string | null
           show_language_selector?: boolean | null
           show_search?: boolean | null
+          source_site?: string
+          text_color?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -4264,6 +4282,7 @@ export type Database = {
           logo_url: string | null
           name: string
           position: number | null
+          source_site: string
           updated_at: string | null
           url: string
         }
@@ -4275,6 +4294,7 @@ export type Database = {
           logo_url?: string | null
           name: string
           position?: number | null
+          source_site?: string
           updated_at?: string | null
           url: string
         }
@@ -4286,6 +4306,7 @@ export type Database = {
           logo_url?: string | null
           name?: string
           position?: number | null
+          source_site?: string
           updated_at?: string | null
           url?: string
         }
@@ -4300,6 +4321,7 @@ export type Database = {
           is_external: boolean | null
           label: string
           position: number | null
+          source_site: string
           updated_at: string | null
         }
         Insert: {
@@ -4310,6 +4332,7 @@ export type Database = {
           is_external?: boolean | null
           label: string
           position?: number | null
+          source_site?: string
           updated_at?: string | null
         }
         Update: {
@@ -4320,6 +4343,7 @@ export type Database = {
           is_external?: boolean | null
           label?: string
           position?: number | null
+          source_site?: string
           updated_at?: string | null
         }
         Relationships: []
