@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteConfig, getSourceSite } from "./useSiteConfig";
 
 // Types
 export interface TopBarConfig {
@@ -8,6 +9,7 @@ export interface TopBarConfig {
   phone_link: string | null;
   show_search: boolean;
   show_language_selector: boolean;
+  source_site: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -19,6 +21,7 @@ export interface TopBarLink {
   is_external: boolean;
   position: number;
   is_active: boolean;
+  source_site: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -31,18 +34,22 @@ export interface GroupCompany {
   is_current: boolean;
   position: number;
   is_active: boolean;
+  source_site: string;
   created_at?: string;
   updated_at?: string;
 }
 
-// Fetch hooks
+// Fetch hooks - Filter by current domain's source_site
 export const useTopBarConfig = () => {
+  const { sourceSite } = useSiteConfig();
+  
   return useQuery({
-    queryKey: ["topbar-config"],
+    queryKey: ["topbar-config", sourceSite],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("topbar_config")
         .select("*")
+        .eq("source_site", sourceSite)
         .limit(1)
         .maybeSingle();
       
@@ -54,13 +61,16 @@ export const useTopBarConfig = () => {
 };
 
 export const useTopBarLinks = () => {
+  const { sourceSite } = useSiteConfig();
+  
   return useQuery({
-    queryKey: ["topbar-links"],
+    queryKey: ["topbar-links", sourceSite],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("topbar_links")
         .select("*")
         .eq("is_active", true)
+        .eq("source_site", sourceSite)
         .order("position", { ascending: true });
       
       if (error) throw error;
@@ -71,13 +81,16 @@ export const useTopBarLinks = () => {
 };
 
 export const useGroupCompanies = () => {
+  const { sourceSite } = useSiteConfig();
+  
   return useQuery({
-    queryKey: ["topbar-group-companies"],
+    queryKey: ["topbar-group-companies", sourceSite],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("topbar_group_companies")
         .select("*")
         .eq("is_active", true)
+        .eq("source_site", sourceSite)
         .order("position", { ascending: true });
       
       if (error) throw error;
@@ -103,33 +116,63 @@ export const useTopBar = () => {
   };
 };
 
-// Admin hooks - Fetch all (including inactive)
-export const useAllTopBarLinks = () => {
+// Admin hooks - Fetch all (including inactive) with optional source_site filter
+export const useAllTopBarLinks = (sourceSite?: string) => {
   return useQuery({
-    queryKey: ["topbar-links-all"],
+    queryKey: ["topbar-links-all", sourceSite],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("topbar_links")
         .select("*")
         .order("position", { ascending: true });
       
+      if (sourceSite) {
+        query = query.eq("source_site", sourceSite);
+      }
+      
+      const { data, error } = await query;
       if (error) throw error;
       return (data || []) as TopBarLink[];
     },
   });
 };
 
-export const useAllGroupCompanies = () => {
+export const useAllGroupCompanies = (sourceSite?: string) => {
   return useQuery({
-    queryKey: ["topbar-group-companies-all"],
+    queryKey: ["topbar-group-companies-all", sourceSite],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("topbar_group_companies")
         .select("*")
         .order("position", { ascending: true });
       
+      if (sourceSite) {
+        query = query.eq("source_site", sourceSite);
+      }
+      
+      const { data, error } = await query;
       if (error) throw error;
       return (data || []) as GroupCompany[];
+    },
+  });
+};
+
+// Admin hook for config with source_site filter
+export const useTopBarConfigAdmin = (sourceSite?: string) => {
+  return useQuery({
+    queryKey: ["topbar-config-admin", sourceSite],
+    queryFn: async () => {
+      let query = supabase
+        .from("topbar_config")
+        .select("*");
+      
+      if (sourceSite) {
+        query = query.eq("source_site", sourceSite);
+      }
+      
+      const { data, error } = await query.limit(1).maybeSingle();
+      if (error) throw error;
+      return data as TopBarConfig | null;
     },
   });
 };
