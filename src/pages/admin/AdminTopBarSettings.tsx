@@ -32,6 +32,13 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -80,6 +87,12 @@ const configSchema = z.object({
   phone_link: z.string().optional(),
   show_language_selector: z.boolean(),
   show_search: z.boolean(),
+  // Style fields
+  background_color: z.string().optional(),
+  text_color: z.string().optional(),
+  hover_color: z.string().optional(),
+  font_family: z.string().optional(),
+  font_size: z.string().optional(),
 });
 
 const linkSchema = z.object({
@@ -139,6 +152,12 @@ export default function AdminTopBarSettings() {
       phone_link: config?.phone_link || "",
       show_language_selector: config?.show_language_selector ?? true,
       show_search: config?.show_search ?? false,
+      // Style fields
+      background_color: config?.background_color || "#0f172a",
+      text_color: config?.text_color || "rgba(255,255,255,0.7)",
+      hover_color: config?.hover_color || "#ffffff",
+      font_family: config?.font_family || "inherit",
+      font_size: config?.font_size || "0.875rem",
     },
   });
 
@@ -415,6 +434,131 @@ export default function AdminTopBarSettings() {
                         </FormItem>
                       )}
                     />
+                  </div>
+
+                  {/* Style Section */}
+                  <div className="border-t pt-6 mt-6">
+                    <h3 className="text-lg font-medium mb-4">Estilo Visual</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={configForm.control}
+                        name="background_color"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Color de fondo</FormLabel>
+                            <div className="flex gap-2">
+                              <FormControl>
+                                <Input
+                                  type="color"
+                                  value={field.value || "#0f172a"}
+                                  onChange={field.onChange}
+                                  className="w-16 h-10 p-1 cursor-pointer"
+                                />
+                              </FormControl>
+                              <Input
+                                value={field.value || "#0f172a"}
+                                onChange={field.onChange}
+                                placeholder="#0f172a"
+                                className="flex-1"
+                              />
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={configForm.control}
+                        name="text_color"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Color de texto</FormLabel>
+                            <FormControl>
+                              <Input
+                                value={field.value || "rgba(255,255,255,0.7)"}
+                                onChange={field.onChange}
+                                placeholder="rgba(255,255,255,0.7)"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={configForm.control}
+                        name="hover_color"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Color al pasar cursor</FormLabel>
+                            <div className="flex gap-2">
+                              <FormControl>
+                                <Input
+                                  type="color"
+                                  value={field.value || "#ffffff"}
+                                  onChange={field.onChange}
+                                  className="w-16 h-10 p-1 cursor-pointer"
+                                />
+                              </FormControl>
+                              <Input
+                                value={field.value || "#ffffff"}
+                                onChange={field.onChange}
+                                placeholder="#ffffff"
+                                className="flex-1"
+                              />
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={configForm.control}
+                        name="font_family"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Tipografía</FormLabel>
+                            <Select value={field.value || "inherit"} onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Seleccionar fuente" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="inherit">Por defecto (sistema)</SelectItem>
+                                <SelectItem value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</SelectItem>
+                                <SelectItem value="'General Sans', sans-serif">General Sans</SelectItem>
+                                <SelectItem value="'Inter', sans-serif">Inter</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={configForm.control}
+                        name="font_size"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Tamaño de texto</FormLabel>
+                            <Select value={field.value || "0.875rem"} onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Seleccionar tamaño" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="0.75rem">Extra pequeño (12px)</SelectItem>
+                                <SelectItem value="0.875rem">Pequeño (14px)</SelectItem>
+                                <SelectItem value="1rem">Normal (16px)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   </div>
 
                   <Button type="submit" disabled={updateConfig.isPending}>
