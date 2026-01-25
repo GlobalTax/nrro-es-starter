@@ -70,6 +70,7 @@ import SitemapXML from "./pages/SitemapXML";
 import PresentationPreview from "./pages/PresentationPreview";
 import WhistleblowerChannel from "./pages/WhistleblowerChannel";
 import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
+import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 
 const queryClient = new QueryClient();
 
@@ -225,6 +226,7 @@ const App = () => {
               <Route path="presentations" element={<AdminCorporatePresentations />} />
               <Route path="hub" element={<AdminToolsHub />} />
               <Route path="whistleblower" element={<AdminWhistleblower />} />
+              <Route path="topbar" element={<AdminTopBarSettings />} />
               <Route
                 path="users"
                 element={

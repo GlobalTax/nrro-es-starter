@@ -4225,6 +4225,105 @@ export type Database = {
         }
         Relationships: []
       }
+      topbar_config: {
+        Row: {
+          created_at: string | null
+          id: string
+          phone_link: string | null
+          phone_number: string | null
+          show_language_selector: boolean | null
+          show_search: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          phone_link?: string | null
+          phone_number?: string | null
+          show_language_selector?: boolean | null
+          show_search?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          phone_link?: string | null
+          phone_number?: string | null
+          show_language_selector?: boolean | null
+          show_search?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      topbar_group_companies: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          is_current: boolean | null
+          logo_url: string | null
+          name: string
+          position: number | null
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_current?: boolean | null
+          logo_url?: string | null
+          name: string
+          position?: number | null
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_current?: boolean | null
+          logo_url?: string | null
+          name?: string
+          position?: number | null
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
+      topbar_links: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          is_active: boolean | null
+          is_external: boolean | null
+          label: string
+          position: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          is_active?: boolean | null
+          is_external?: boolean | null
+          label: string
+          position?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          is_active?: boolean | null
+          is_external?: boolean | null
+          label?: string
+          position?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
