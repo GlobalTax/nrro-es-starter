@@ -1,38 +1,31 @@
 
 
-## Plan: Hacer visible el Canal de Denuncias en la web
+## Plan: Fix "Maximum update depth exceeded" infinite loop
 
-### Problema actual
-La pagina `/canal-denuncias` existe y funciona, pero no hay ningun enlace visible en la navegacion del sitio (ni en el Navbar ni en el Footer). La Ley 2/2023 requiere que el canal de denuncias sea facilmente accesible.
+### Root cause
 
-### Cambios propuestos
+The `LanguageRedirect` component in `src/App.tsx` (line 93) includes `i18n` in the `useEffect` dependency array. When `i18n.changeLanguage()` is called, `react-i18next` emits events that trigger React store re-renders, which cause `useEffect` to re-evaluate. Since the `i18n` object reference can appear changed after a language switch, this creates an infinite loop.
 
-#### 1. Footer - Seccion de enlaces legales (Bottom Bar)
-Anadir un enlace "Canal de Denuncias" en la barra inferior del Footer, junto a los otros enlaces legales (Aviso Legal, Privacidad, Cookies, Condiciones).
+### Fix
 
-**Archivo:** `src/components/layout/Footer.tsx` (lineas 235-259)
-- Anadir un nuevo `LanguageLink` a `/canal-denuncias` con el texto traducido
+**File: `src/App.tsx` (lines 83-93)**
 
-#### 2. Footer - Columna "Empresa"
-Anadir tambien el enlace en la columna de navegacion "Empresa" del Footer, entre "Carreras" y "Contacto".
+Remove `i18n` from the dependency array. The effect only needs to react to URL path changes. The `i18n` instance is a stable singleton and does not need to be tracked as a dependency.
 
-**Archivo:** `src/components/layout/Footer.tsx` (lineas 207-217)
-- Anadir un nuevo `LanguageLink` a `/canal-denuncias`
+```tsx
+useEffect(() => {
+  let targetLang = 'es';
+  if (location.pathname.startsWith('/ca/') || location.pathname === '/ca') {
+    targetLang = 'ca';
+  } else if (location.pathname.startsWith('/en/') || location.pathname === '/en') {
+    targetLang = 'en';
+  }
+  if (i18n.language !== targetLang) {
+    i18n.changeLanguage(targetLang);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [location.pathname]);
+```
 
-#### 3. Traducciones
-Anadir las claves de traduccion necesarias para los tres idiomas:
-- ES: "Canal de Denuncias"
-- EN: "Whistleblower Channel"  
-- CA: "Canal de Denuncies"
+This is a one-line change (removing `i18n` from the dependency array and adding an eslint-disable comment). No other files need modification.
 
-**Archivos de traduccion** afectados (segun el sistema i18n del proyecto).
-
-### Resultado esperado
-- El canal de denuncias sera accesible desde cualquier pagina del sitio a traves del Footer
-- Cumple con el requisito de accesibilidad de la Ley 2/2023
-- Se mantiene el estilo visual consistente con los otros enlaces
-
-### Detalles tecnicos
-- Se usa el componente `LanguageLink` existente para manejar las rutas localizadas
-- Se anade la clave `footer.whistleblower` al sistema de traduccion con `t()`
-- No se modifica el Navbar principal para no sobrecargar la navegacion; el Footer es el lugar estandar para este tipo de enlace legal/compliance
