@@ -90,7 +90,8 @@ const LanguageRedirect = () => {
     if (i18n.language !== targetLang) {
       i18n.changeLanguage(targetLang);
     }
-  }, [location.pathname, i18n]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   return null;
 };
