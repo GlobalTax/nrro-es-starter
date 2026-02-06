@@ -210,6 +210,12 @@ export const Footer = () => {
                 {t("footer.careers")}
               </LanguageLink>
               <LanguageLink
+                to="/canal-denuncias"
+                className="text-white/80 hover:text-accent transition-colors text-base font-light"
+              >
+                {t("footer.whistleblower")}
+              </LanguageLink>
+              <LanguageLink
                 to="/contacto"
                 className="text-white/80 hover:text-accent transition-colors text-base font-light"
               >
@@ -256,6 +262,12 @@ export const Footer = () => {
               className="text-sm text-white/60 hover:text-accent transition-colors font-light"
             >
               {t("footer.terms")}
+            </LanguageLink>
+            <LanguageLink
+              to="/canal-denuncias"
+              className="text-sm text-white/60 hover:text-accent transition-colors font-light"
+            >
+              {t("footer.whistleblower")}
             </LanguageLink>
           </div>
         </div>
