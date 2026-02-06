@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Shield, Send, Search, Copy, Check, AlertTriangle, Clock, MessageSquare } from 'lucide-react';
+import { Shield, Send, Search, Copy, Check, AlertTriangle, Clock, MessageSquare, Scale, FileText, Users, Lock } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -456,35 +457,174 @@ const WhistleblowerChannel = () => {
             <Card className="mt-8 border-primary/20">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-primary" />
+                  <Scale className="w-5 h-5 text-primary" />
                   Información Legal Importante
                 </CardTitle>
+                <CardDescription>
+                  Marco normativo, plazos, derechos y garantías del canal de denuncias conforme a la Ley 2/2023
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-primary mt-0.5" />
+              <CardContent>
+                {/* Quick summary cards */}
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                    <Shield className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Confidencialidad</p>
-                      <p>Su identidad será protegida conforme a la Ley 2/2023.</p>
+                      <p className="font-medium text-sm text-foreground">Confidencialidad garantizada</p>
+                      <p className="text-xs text-muted-foreground">Art. 33 — Ley 2/2023</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-primary mt-0.5" />
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                    <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Plazo de respuesta</p>
-                      <p>Recibirá acuse de recibo en 7 días hábiles.</p>
+                      <p className="font-medium text-sm text-foreground">Acuse en 7 días hábiles</p>
+                      <p className="text-xs text-muted-foreground">Art. 9.1 — Ley 2/2023</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                    <Users className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm text-foreground">Protección frente a represalias</p>
+                      <p className="text-xs text-muted-foreground">Art. 36 — Ley 2/2023</p>
                     </div>
                   </div>
                 </div>
-                <p>
-                  Este canal cumple con la <strong>Ley 2/2023</strong> de protección de personas que informen sobre
-                  infracciones normativas y lucha contra la corrupción (transposición de la Directiva UE 2019/1937).
-                  Está prohibida cualquier forma de represalia contra las personas que presenten denuncias de buena fe.
-                </p>
-                <p>
-                  <strong>Responsable del tratamiento:</strong> Navarro Asesores Legales y Tributarios, S.L.P.
-                </p>
+
+                <Accordion type="multiple" className="w-full">
+                  {/* 1. Marco legal */}
+                  <AccordionItem value="marco-legal">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <Scale className="w-4 h-4 text-primary" />
+                        Marco legal aplicable
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>
+                        Este canal interno de información se establece conforme a la <strong>Ley 2/2023, de 20 de febrero</strong>,
+                        reguladora de la protección de las personas que informen sobre infracciones normativas y de lucha contra
+                        la corrupción, que transpone al ordenamiento jurídico español la <strong>Directiva (UE) 2019/1937</strong> del
+                        Parlamento Europeo y del Consejo, de 23 de octubre de 2019.
+                      </p>
+                      <p>
+                        Conforme al artículo 5 de la Ley 2/2023, están obligadas a disponer de un sistema interno de información
+                        todas las personas jurídicas del sector privado con 50 o más trabajadores, así como las entidades del
+                        sector público, partidos políticos, sindicatos y organizaciones empresariales.
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* 2. Plazos */}
+                  <AccordionItem value="plazos">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-primary" />
+                        Plazos de tramitación
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <ul className="list-disc pl-5 space-y-2">
+                        <li><strong>Acuse de recibo:</strong> En un plazo máximo de <strong>7 días hábiles</strong> desde la recepción de la comunicación (art. 9.1).</li>
+                        <li><strong>Plazo de resolución:</strong> Las actuaciones de investigación se llevarán a cabo en un plazo máximo de <strong>3 meses</strong> a contar desde la recepción de la comunicación (art. 9.2.e).</li>
+                        <li><strong>Ampliación excepcional:</strong> En casos de especial complejidad, el plazo podrá ampliarse hasta un máximo de <strong>6 meses</strong>, previa notificación motivada al informante.</li>
+                        <li><strong>Comunicación al informante:</strong> Se informará al denunciante de las acciones previstas o adoptadas como seguimiento, así como de los motivos de las mismas.</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* 3. Derechos del denunciante */}
+                  <AccordionItem value="derechos">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <Shield className="w-4 h-4 text-primary" />
+                        Derechos del denunciante
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <ul className="list-disc pl-5 space-y-2">
+                        <li><strong>Confidencialidad (art. 33):</strong> La identidad del informante y de cualquier tercero mencionado en la comunicación será confidencial. No podrá ser revelada a personas no autorizadas.</li>
+                        <li><strong>Protección frente a represalias (art. 36):</strong> Quedan prohibidas todas las formas de represalia, incluidas las amenazas y las tentativas de represalia.</li>
+                        <li><strong>Derecho a asistencia jurídica:</strong> El informante tiene derecho a recibir asesoramiento jurídico confidencial sobre sus derechos y protecciones.</li>
+                        <li><strong>Inversión de la carga de la prueba (art. 38):</strong> En procedimientos judiciales o administrativos, se presumirá que cualquier perjuicio sufrido por el informante constituye una represalia, correspondiendo a la entidad demostrar lo contrario.</li>
+                        <li><strong>Comunicación anónima:</strong> Se admiten comunicaciones anónimas, que serán tramitadas con las mismas garantías de investigación y seguimiento.</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* 4. Protección frente a represalias */}
+                  <AccordionItem value="represalias">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-primary" />
+                        Protección frente a represalias
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>Conforme al artículo 36.2 de la Ley 2/2023, se consideran represalias prohibidas, entre otras:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Suspensión del contrato de trabajo, despido o extinción de la relación laboral</li>
+                        <li>Daños, incluidos los de carácter reputacional, o pérdidas financieras</li>
+                        <li>Inclusión en listas negras o difusión de información que impida el acceso al empleo</li>
+                        <li>Denegación o anulación de licencias o permisos</li>
+                        <li>Discriminación, trato desfavorable o acoso</li>
+                        <li>No conversión de un contrato temporal en indefinido</li>
+                        <li>No renovación o terminación anticipada de un contrato temporal</li>
+                        <li>Evaluación o referencias negativas respecto al desempeño laboral</li>
+                        <li>Imposición de medidas disciplinarias, amonestaciones o sanciones</li>
+                        <li>Coacción, intimidación o marginación</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* 5. Protección de datos */}
+                  <AccordionItem value="datos">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-primary" />
+                        Protección de datos personales
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <ul className="list-disc pl-5 space-y-2">
+                        <li><strong>Responsable del tratamiento:</strong> Navarro Asesores Legales y Tributarios, S.L.P.</li>
+                        <li><strong>Finalidad:</strong> Gestión y tramitación de las comunicaciones recibidas a través del sistema interno de información, conforme a la Ley 2/2023.</li>
+                        <li><strong>Base jurídica:</strong> Cumplimiento de una obligación legal (art. 6.1.c RGPD) y misión de interés público (art. 6.1.e RGPD).</li>
+                        <li><strong>Conservación:</strong> Los datos personales se conservarán durante el tiempo imprescindible para la tramitación de la investigación y, en todo caso, no más de <strong>10 años</strong> desde la recepción de la comunicación.</li>
+                        <li><strong>Derechos:</strong> Puede ejercer sus derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición dirigiéndose a <strong>protecciondedatos@navarro.legal</strong>.</li>
+                        <li><strong>Limitaciones:</strong> El acceso a los datos quedará limitado exclusivamente al responsable del sistema y a las personas designadas para la investigación, conforme al artículo 32 de la Ley 2/2023.</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* 6. Infracciones denunciables */}
+                  <AccordionItem value="infracciones">
+                    <AccordionTrigger className="text-sm font-medium">
+                      <span className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-primary" />
+                        Infracciones denunciables
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>Conforme al artículo 2 de la Ley 2/2023, son denunciables las infracciones del Derecho de la Unión Europea y del ordenamiento jurídico español en los siguientes ámbitos:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Contratación pública</li>
+                        <li>Servicios, productos y mercados financieros; prevención del blanqueo de capitales</li>
+                        <li>Seguridad de los productos y conformidad</li>
+                        <li>Seguridad del transporte</li>
+                        <li>Protección del medio ambiente</li>
+                        <li>Protección frente a las radiaciones y seguridad nuclear</li>
+                        <li>Seguridad de los alimentos y los piensos, sanidad animal y bienestar de los animales</li>
+                        <li>Salud pública</li>
+                        <li>Protección de los consumidores</li>
+                        <li>Protección de la privacidad y datos personales</li>
+                        <li>Seguridad de las redes y sistemas de información</li>
+                        <li>Infracciones que afecten a los intereses financieros de la UE</li>
+                        <li>Infracciones relativas al mercado interior (competencia, ayudas de Estado)</li>
+                        <li>Infracciones penales graves (fraude, corrupción, delitos fiscales)</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </CardContent>
             </Card>
           </div>
