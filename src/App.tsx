@@ -81,12 +81,14 @@ const LanguageRedirect = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
+    let targetLang = 'es';
     if (location.pathname.startsWith('/ca/') || location.pathname === '/ca') {
-      i18n.changeLanguage('ca');
+      targetLang = 'ca';
     } else if (location.pathname.startsWith('/en/') || location.pathname === '/en') {
-      i18n.changeLanguage('en');
-    } else {
-      i18n.changeLanguage('es');
+      targetLang = 'en';
+    }
+    if (i18n.language !== targetLang) {
+      i18n.changeLanguage(targetLang);
     }
   }, [location.pathname, i18n]);
 
