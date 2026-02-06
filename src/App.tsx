@@ -8,7 +8,8 @@ import { LandingLayout } from "@/components/layout/LandingLayout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useTranslation } from 'react-i18next';
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useEffect } from "react";
 import Home from "./pages/Home";
@@ -77,19 +78,17 @@ const queryClient = new QueryClient();
 // Componente para manejar redirecciones de idioma - debe estar dentro de LanguageProvider y BrowserRouter
 const LanguageRedirect = () => {
   const location = useLocation();
-  const context = useLanguage();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
-    if (!context) return;
-    // Detectar el idioma de la URL actual y sincronizar
     if (location.pathname.startsWith('/ca/') || location.pathname === '/ca') {
-      context.setLanguage('ca');
+      i18n.changeLanguage('ca');
     } else if (location.pathname.startsWith('/en/') || location.pathname === '/en') {
-      context.setLanguage('en');
+      i18n.changeLanguage('en');
     } else {
-      context.setLanguage('es');
+      i18n.changeLanguage('es');
     }
-  }, [location.pathname, context]);
+  }, [location.pathname, i18n]);
 
   return null;
 };
