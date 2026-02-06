@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2 } from 'lucide-react';
-import '@/i18n/config';
+import i18n from '@/i18n/config';
 
 type Language = 'es' | 'ca' | 'en';
 
@@ -13,12 +13,16 @@ type LanguageContextType = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Fallback that works even outside the provider (e.g. during HMR)
+const fallbackContext: LanguageContextType = {
+  language: (i18n.language as Language) || 'es',
+  setLanguage: (lang: Language) => i18n.changeLanguage(lang),
+  t: (key: string, options?: any) => i18n.t(key, options) as string,
+};
+
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
+  return context ?? fallbackContext;
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
