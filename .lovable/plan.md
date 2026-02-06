@@ -1,28 +1,38 @@
 
 
-## Plan: Textos legales completos Ley 2/2023
+## Plan: Hacer visible el Canal de Denuncias en la web
 
-### Objetivo
-Ampliar la seccion "Informacion Legal Importante" (lineas 455-489) del archivo `src/pages/WhistleblowerChannel.tsx` con textos legales completos segun la Ley 2/2023, incluyendo plazos, derechos del denunciante y obligaciones del canal.
+### Problema actual
+La pagina `/canal-denuncias` existe y funciona, pero no hay ningun enlace visible en la navegacion del sitio (ni en el Navbar ni en el Footer). La Ley 2/2023 requiere que el canal de denuncias sea facilmente accesible.
 
-### Cambios
+### Cambios propuestos
 
-**Archivo:** `src/pages/WhistleblowerChannel.tsx`
+#### 1. Footer - Seccion de enlaces legales (Bottom Bar)
+Anadir un enlace "Canal de Denuncias" en la barra inferior del Footer, junto a los otros enlaces legales (Aviso Legal, Privacidad, Cookies, Condiciones).
 
-Se reemplaza la Card de "Informacion Legal Importante" actual (que solo tiene un parrafo generico) por una seccion legal completa con las siguientes subsecciones usando Accordion para organizar el contenido:
+**Archivo:** `src/components/layout/Footer.tsx` (lineas 235-259)
+- Anadir un nuevo `LanguageLink` a `/canal-denuncias` con el texto traducido
 
-1. **Marco legal aplicable** - Ley 2/2023 y Directiva UE 2019/1937, ambito de aplicacion
-2. **Plazos de tramitacion** - Acuse de recibo (7 dias habiles), resolucion maxima (3 meses), ampliacion excepcional a 6 meses
-3. **Derechos del denunciante** - Confidencialidad (art. 33), proteccion frente a represalias (art. 36), asistencia juridica, inversion de la carga de la prueba
-4. **Proteccion frente a represalias** - Definicion de represalias prohibidas segun art. 36.2 (despido, suspension, discriminacion, etc.)
-5. **Proteccion de datos** - Responsable del tratamiento, finalidad, conservacion, derechos RGPD
-6. **Infracciones denunciables** - Ambito material segun art. 2 (contratacion publica, servicios financieros, seguridad, medio ambiente, etc.)
+#### 2. Footer - Columna "Empresa"
+Anadir tambien el enlace en la columna de navegacion "Empresa" del Footer, entre "Carreras" y "Contacto".
+
+**Archivo:** `src/components/layout/Footer.tsx` (lineas 207-217)
+- Anadir un nuevo `LanguageLink` a `/canal-denuncias`
+
+#### 3. Traducciones
+Anadir las claves de traduccion necesarias para los tres idiomas:
+- ES: "Canal de Denuncias"
+- EN: "Whistleblower Channel"  
+- CA: "Canal de Denuncies"
+
+**Archivos de traduccion** afectados (segun el sistema i18n del proyecto).
+
+### Resultado esperado
+- El canal de denuncias sera accesible desde cualquier pagina del sitio a traves del Footer
+- Cumple con el requisito de accesibilidad de la Ley 2/2023
+- Se mantiene el estilo visual consistente con los otros enlaces
 
 ### Detalles tecnicos
-
-- Importar `Accordion, AccordionContent, AccordionItem, AccordionTrigger` de `@/components/ui/accordion`
-- Importar iconos adicionales: `Scale, FileText, Users, Lock` de `lucide-react`
-- Reemplazar las lineas 455-489 con la nueva seccion legal expandida
-- Mantener el mismo estilo visual (Card con borde primary/20)
-- Usar Accordion tipo "multiple" para que se puedan abrir varias secciones a la vez
-
+- Se usa el componente `LanguageLink` existente para manejar las rutas localizadas
+- Se anade la clave `footer.whistleblower` al sistema de traduccion con `t()`
+- No se modifica el Navbar principal para no sobrecargar la navegacion; el Footer es el lugar estandar para este tipo de enlace legal/compliance
