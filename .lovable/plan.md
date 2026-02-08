@@ -1,31 +1,47 @@
 
 
-## Plan: Fix "Maximum update depth exceeded" infinite loop
+## Hero con mosaico de fotos del equipo
 
-### Root cause
+### Objetivo
+Crear un componente hero que muestre las fotos de todos los miembros del equipo en un grid/mosaico visual similar a la imagen de referencia, con fotos en escala de grises y efecto hover.
 
-The `LanguageRedirect` component in `src/App.tsx` (line 93) includes `i18n` in the `useEffect` dependency array. When `i18n.changeLanguage()` is called, `react-i18next` emits events that trigger React store re-renders, which cause `useEffect` to re-evaluate. Since the `i18n` object reference can appear changed after a language switch, this creates an infinite loop.
+### Componente: `TeamMosaicHero`
 
-### Fix
+**Archivo nuevo**: `src/components/team/TeamMosaicHero.tsx`
 
-**File: `src/App.tsx` (lines 83-93)**
+- Carga los miembros del equipo desde Supabase usando el hook `useTeamMembers`
+- Muestra las fotos en un **CSS Grid responsivo** (8 columnas en desktop, 5 en tablet, 3 en mobile)
+- Cada foto se presenta en formato cuadrado (`aspect-square`) con `object-cover`
+- Fotos en **escala de grises** por defecto, con color al hacer hover (como ya hacen las `TeamMemberCard`)
+- Sin espacios entre fotos (gap-0) para lograr el efecto mosaico compacto de la imagen de referencia
+- Overlay con gradiente oscuro para superponer texto (titulo + subtitulo + CTA)
 
-Remove `i18n` from the dependency array. The effect only needs to react to URL path changes. The `i18n` instance is a stable singleton and does not need to be tracked as a dependency.
+### Estructura visual
 
-```tsx
-useEffect(() => {
-  let targetLang = 'es';
-  if (location.pathname.startsWith('/ca/') || location.pathname === '/ca') {
-    targetLang = 'ca';
-  } else if (location.pathname.startsWith('/en/') || location.pathname === '/en') {
-    targetLang = 'en';
-  }
-  if (i18n.language !== targetLang) {
-    i18n.changeLanguage(targetLang);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [location.pathname]);
+```text
++--------------------------------------------------+
+|  [foto][foto][foto][foto][foto][foto][foto][foto] |
+|  [foto][foto][foto][foto][foto][foto][foto][foto] |
+|  [foto][foto][foto][foto][foto][foto][foto][foto] |
+|  [foto][foto][foto][foto][foto][foto][foto][foto] |
+|                                                    |
+|        === Overlay con texto ===                   |
+|        "Nuestro equipo"                            |
+|        "33 profesionales a tu servicio"             |
+|        [Contacta con nosotros]                     |
++--------------------------------------------------+
 ```
 
-This is a one-line change (removing `i18n` from the dependency array and adding an eslint-disable comment). No other files need modification.
+### Detalles tecnicos
 
+1. **Datos**: Se reutiliza `useTeamMembers(language)` del hook existente
+2. **Grid CSS**: `grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-0`
+3. **Fotos**: `grayscale hover:grayscale-0 transition-all duration-300`
+4. **Overlay**: Gradiente `bg-gradient-to-t from-black/70 via-black/30 to-transparent` posicionado absolute sobre el grid
+5. **Texto**: Blanco sobre el overlay, centrado en la parte inferior
+6. **Animacion**: Fade-in con framer-motion al cargar
+7. **Fallback**: Si un miembro no tiene foto, se muestra su inicial (como en `TeamMemberCard`)
+
+### Integracion
+
+Se podra usar en cualquier pagina importando el componente. No se cambiara ninguna pagina existente automaticamente — se dejara listo para que lo integres donde prefieras (por ejemplo, en la pagina `/equipo` o en la home).
