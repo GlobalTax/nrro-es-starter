@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -172,7 +173,7 @@ export const AIBlogGenerator = ({ onGenerated, onCancel }: AIBlogGeneratorProps)
                 <Label className="text-sm font-medium">Vista previa del contenido (ES):</Label>
                 <div 
                   className="prose prose-sm max-w-none mt-2 p-4 bg-muted/50 rounded-md"
-                  dangerouslySetInnerHTML={{ __html: state.article.content_es.substring(0, 500) + "..." }}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(state.article.content_es.substring(0, 500) + "...") }}
                 />
               </div>
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useResources } from "@/hooks/useResources";
 import { ResourceCard } from "./ResourceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -10,6 +10,7 @@ interface RelatedResourcesProps {
 
 export const RelatedResources = ({ currentResourceId, category }: RelatedResourcesProps) => {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const { data: resources } = useResources({ category: category || undefined });
 
   const getLocalizedPath = (path: string) => {
@@ -31,8 +32,7 @@ export const RelatedResources = ({ currentResourceId, category }: RelatedResourc
   };
 
   const handleDownload = (resource: any) => {
-    // Navigate to resource detail page instead of direct download
-    window.location.href = getLocalizedPath(`/recursos/${(resource as any).slug || resource.id}`);
+    navigate(getLocalizedPath(`/recursos/${(resource as any).slug || resource.id}`));
   };
 
   return (

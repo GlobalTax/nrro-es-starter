@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -75,7 +76,7 @@ export const RelatedServices = ({ currentServiceId, category }: RelatedServicesP
                   <Card className="h-full border-border/50 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
                     <CardContent className="p-6 space-y-4">
                       {service.icon && (
-                        <div className="text-primary text-4xl" dangerouslySetInnerHTML={{ __html: service.icon }} />
+                        <div className="text-primary text-4xl" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(service.icon) }} />
                       )}
                       <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                         {service.name}

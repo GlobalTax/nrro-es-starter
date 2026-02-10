@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { Meta } from '@/components/seo/Meta';
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 import { PersonSchema } from '@/components/seo/PersonSchema';
@@ -168,7 +169,7 @@ export default function About() {
               <div className="space-y-4">
                 {story.parrafos.map((parrafo, index) => (
                   <p key={index} className="text-base md:text-lg text-foreground/80 leading-relaxed" 
-                     dangerouslySetInnerHTML={{ __html: parrafo }} />
+                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parrafo) }} />
                 ))}
                 {story.destacado && (
                   <p className="text-base md:text-lg text-foreground font-medium pt-4">

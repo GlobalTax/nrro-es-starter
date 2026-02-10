@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 const SESSION_VERIFIED_KEY = 'navarro-session-verified';
 const VERIFICATION_CACHE_MS = 5 * 60 * 1000; // 5 minutes
+const MAX_NETWORK_FAILURES = 3;
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -55,6 +56,7 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   const [isVerifying, setIsVerifying] = useState(!getCachedVerification());
   const [serverVerified, setServerVerified] = useState(getCachedVerification());
   const [lastActivity, setLastActivity] = useState(Date.now());
+  const networkFailures = useRef(0);
 
   // Session timeout - 8 hours (full work day)
   const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
@@ -101,25 +103,39 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
 
       try {
         const { data, error } = await supabase.functions.invoke('verify-admin-session');
-        
+
         if (error) {
-          // Network error - be tolerant, assume valid temporarily
-          setServerVerified(true);
-          // Don't cache this - retry on next navigation
+          // Network error - tolerate up to MAX_NETWORK_FAILURES consecutive failures
+          networkFailures.current += 1;
+          if (networkFailures.current >= MAX_NETWORK_FAILURES) {
+            clearCachedVerification();
+            await supabase.auth.signOut();
+            setServerVerified(false);
+          } else {
+            setServerVerified(true);
+          }
         } else if (!data?.valid) {
           // Server explicitly said invalid - sign out
+          networkFailures.current = 0;
           clearCachedVerification();
           await supabase.auth.signOut();
           setServerVerified(false);
         } else {
           // Valid session
+          networkFailures.current = 0;
           setServerVerified(true);
           setCachedVerification(true);
         }
-      } catch (error) {
-        // Catch-all for network errors - be tolerant
-        console.error('[PROTECTED_ROUTE] Verification error (network?):', error);
-        setServerVerified(true); // Assume valid on network errors
+      } catch {
+        // Catch-all for network errors
+        networkFailures.current += 1;
+        if (networkFailures.current >= MAX_NETWORK_FAILURES) {
+          clearCachedVerification();
+          await supabase.auth.signOut();
+          setServerVerified(false);
+        } else {
+          setServerVerified(true);
+        }
       } finally {
         setIsVerifying(false);
       }
@@ -148,8 +164,8 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   if (!isAdmin) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <h1 className="text-2xl font-bold text-destructive">Access Denied</h1>
-        <p className="text-muted-foreground">You don't have permission to access the admin panel.</p>
+        <h1 className="text-2xl font-bold text-destructive">Acceso denegado</h1>
+        <p className="text-muted-foreground">No tienes permisos para acceder al panel de administración.</p>
       </div>
     );
   }
@@ -157,8 +173,8 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   if (requiredRole && !hasRole(requiredRole)) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <h1 className="text-2xl font-bold text-destructive">Insufficient Permissions</h1>
-        <p className="text-muted-foreground">You don't have the required role to access this section.</p>
+        <h1 className="text-2xl font-bold text-destructive">Permisos insuficientes</h1>
+        <p className="text-muted-foreground">No tienes el rol necesario para acceder a esta sección.</p>
       </div>
     );
   }

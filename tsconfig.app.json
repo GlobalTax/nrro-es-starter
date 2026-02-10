@@ -16,10 +16,12 @@
 
     /* Linting */
     "strict": false,
+    // TODO: Enable progressively — currently 52 errors from Supabase auto-generated types
+    // "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": false,
+    "noFallthroughCasesInSwitch": true,
 
     "baseUrl": ".",
     "paths": {
