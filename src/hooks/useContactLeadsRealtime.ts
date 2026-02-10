@@ -3,10 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useBrowserNotifications } from "./useBrowserNotifications";
+import { useNotificationSound } from "./useNotificationSound";
 
 export const useContactLeadsRealtime = () => {
   const queryClient = useQueryClient();
   const { showNotification, isEnabled } = useBrowserNotifications();
+  const playNotificationSound = useNotificationSound();
 
   useEffect(() => {
     const channel = supabase
@@ -59,13 +61,5 @@ export const useContactLeadsRealtime = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient, showNotification, isEnabled]);
-};
-
-const playNotificationSound = () => {
-  const audio = new Audio('/notification.mp3');
-  audio.volume = 0.5;
-  audio.play().catch(() => {
-    // Silenciar error si el navegador bloquea autoplay
-  });
+  }, [queryClient, showNotification, isEnabled, playNotificationSound]);
 };

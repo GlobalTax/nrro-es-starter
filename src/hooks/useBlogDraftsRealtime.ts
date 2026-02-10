@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useBrowserNotifications } from './useBrowserNotifications';
+import { useNotificationSound } from './useNotificationSound';
 import { toast } from 'sonner';
 
 export function useBlogDraftsRealtime() {
   const { showNotification, isEnabled } = useBrowserNotifications();
   const queryClient = useQueryClient();
+  const playNotificationSound = useNotificationSound();
 
   useEffect(() => {
     const channel = supabase
@@ -40,12 +42,7 @@ export function useBlogDraftsRealtime() {
           });
         }
 
-        // Play notification sound
-        try {
-          new Audio('/notification.mp3').play().catch(() => {});
-        } catch {
-          // Ignore audio errors
-        }
+        playNotificationSound();
         
         // Invalidate queries to refresh data
         queryClient.invalidateQueries({ queryKey: ['pending-drafts'] });
@@ -57,5 +54,5 @@ export function useBlogDraftsRealtime() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient, showNotification, isEnabled]);
+  }, [queryClient, showNotification, isEnabled, playNotificationSound]);
 }
