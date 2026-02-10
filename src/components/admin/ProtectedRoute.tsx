@@ -75,7 +75,6 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   useEffect(() => {
     const checkTimeout = setInterval(() => {
       if (Date.now() - lastActivity > SESSION_TIMEOUT) {
-        console.warn('[PROTECTED_ROUTE] Session timeout due to inactivity (8h)');
         clearCachedVerification();
         supabase.auth.signOut();
       }
@@ -105,12 +104,10 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
         
         if (error) {
           // Network error - be tolerant, assume valid temporarily
-          console.warn('[PROTECTED_ROUTE] Network error during verification, assuming valid');
           setServerVerified(true);
           // Don't cache this - retry on next navigation
         } else if (!data?.valid) {
           // Server explicitly said invalid - sign out
-          console.warn('[PROTECTED_ROUTE] Server verification failed: session invalid');
           clearCachedVerification();
           await supabase.auth.signOut();
           setServerVerified(false);

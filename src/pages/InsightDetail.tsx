@@ -89,7 +89,6 @@ const InsightDetail = () => {
       const currentPath = window.location.pathname;
       
       if (currentPath !== correctPath && !previewToken) {
-        console.log(`🔄 Normalizing insight URL from ${currentPath} to ${correctPath}`);
         navigate(correctPath, { replace: true });
       }
     }

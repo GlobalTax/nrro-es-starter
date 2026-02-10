@@ -40,15 +40,6 @@ export const useJobPositions = (filters?: {
           responsibilities: job[`responsibilities_${language}`] || job.responsibilities_es || job.responsibilities || [],
         };
         
-        console.log('useJobPositions - Mapped job:', {
-          id: mapped.id,
-          title: mapped.title,
-          slug: mapped.slug,
-          hasDescription: !!mapped.description,
-          department: mapped.department,
-          location: mapped.location
-        });
-        
         return mapped;
       }) as JobPosition[];
     },

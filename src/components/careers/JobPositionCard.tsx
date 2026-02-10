@@ -10,14 +10,6 @@ interface JobPositionCardProps {
 }
 
 export const JobPositionCard = ({ position, onViewDetails }: JobPositionCardProps) => {
-  console.log('JobPositionCard - Rendering:', position.title, {
-    hasDescription: !!position.description,
-    hasTitle: !!position.title,
-    hasLocation: !!position.location,
-    hasDepartment: !!position.department,
-    position: position
-  });
-  
   const previewText = position.description 
     ? position.description.substring(0, 120) + "..." 
     : "Descripción no disponible";

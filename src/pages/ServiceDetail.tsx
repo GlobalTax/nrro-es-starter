@@ -98,7 +98,6 @@ const ServiceDetail = () => {
       const currentPath = window.location.pathname;
       
       if (currentPath !== correctPath) {
-        console.log(`🔄 Normalizing URL from ${currentPath} to ${correctPath}`);
         navigate(correctPath, { replace: true });
       }
     }

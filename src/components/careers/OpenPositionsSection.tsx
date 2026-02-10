@@ -19,8 +19,6 @@ export const OpenPositionsSection = ({ onApply, language: propLanguage }: OpenPo
   const [selectedPosition, setSelectedPosition] = useState<JobPosition | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   
-  console.log('OpenPositionsSection - isLoading:', isLoading, 'positions:', positions?.length);
-  
   // Ref para animación
   const positionsRef = useRef<HTMLDivElement>(null);
   const isPositionsInView = useInView(positionsRef, { once: true, margin: "-100px" });
@@ -92,19 +90,7 @@ export const OpenPositionsSection = ({ onApply, language: propLanguage }: OpenPo
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={positionsRef}>
-            {positions.map((position, index) => {
-              console.log('OpenPositionsSection - Rendering position:', {
-                id: position.id,
-                title: position.title,
-                slug: position.slug,
-                description: position.description?.substring(0, 50),
-                requirements: position.requirements?.length,
-                responsibilities: position.responsibilities?.length,
-                department: position.department,
-                location: position.location
-              });
-              
-              return (
+            {positions.map((position, index) => (
                 <motion.div
                   key={position.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -120,8 +106,7 @@ export const OpenPositionsSection = ({ onApply, language: propLanguage }: OpenPo
                     onViewDetails={handleViewDetails}
                   />
                 </motion.div>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>

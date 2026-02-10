@@ -94,7 +94,6 @@ export default function CaseStudyDetail() {
       const currentPath = window.location.pathname;
       
       if (currentPath !== correctPath) {
-        console.log(`🔄 Normalizing case study URL from ${currentPath} to ${correctPath}`);
         navigate(correctPath, { replace: true });
       }
     }

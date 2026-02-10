@@ -2,9 +2,6 @@
 
 export const useAnalytics = () => {
   const trackEvent = (eventName: string, properties?: Record<string, any>) => {
-    // Console log for development
-    console.log("[Analytics]", eventName, properties);
-    
     // Push to GTM dataLayer
     if (typeof window !== 'undefined' && window.dataLayer) {
       window.dataLayer.push({

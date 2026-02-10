@@ -49,7 +49,6 @@ export function useBatchAudit(options: UseBatchAuditOptions = {}) {
 
     for (let i = 0; i < pages.length; i++) {
       if (cancelledRef.current) {
-        console.log('Batch audit cancelled');
         break;
       }
 

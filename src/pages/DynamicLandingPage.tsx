@@ -101,7 +101,6 @@ export const DynamicLandingPage = () => {
           const SectionComponent = SECTION_COMPONENTS[section.type];
           
           if (!SectionComponent) {
-            console.warn(`Unknown section type: ${section.type}`);
             return null;
           }
 

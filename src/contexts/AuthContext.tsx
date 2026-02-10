@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Initialize adminUser from cache for instant UI on reload
   const [adminUser, setAdminUserState] = useState<AdminUser | null>(getCachedAdminUser);
   const [isLoading, setIsLoading] = useState(true);
-  const [revalidationInterval, setRevalidationInterval] = useState<number | null>(null);
+  const revalidationIntervalRef = useRef<number | null>(null);
 
   // Wrapper to persist adminUser changes
   const setAdminUser = (user: AdminUser | null) => {
@@ -71,9 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .eq('user_id', userId);
 
       if (roleError) {
-        // Network error - return cached user if available
         if (roleError.message?.includes('network') || roleError.message?.includes('fetch')) {
-          console.debug('[AUTH] Network error, using cached admin user');
           return getCachedAdminUser();
         }
         throw roleError;
@@ -91,9 +89,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           .single();
 
         if (profileError) {
-          // Network error - return cached user if available
           if (profileError.message?.includes('network') || profileError.message?.includes('fetch')) {
-            console.debug('[AUTH] Network error, using cached admin user');
             return getCachedAdminUser();
           }
           throw profileError;
@@ -111,13 +107,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return adminUserData;
       }
     } catch (err) {
-      // Check if it's a network-related error
       const errorMessage = err instanceof Error ? err.message : String(err);
       if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('Failed to fetch')) {
-        console.debug('[AUTH] Network error, using cached admin user');
         return getCachedAdminUser();
       }
-      console.debug('[AUTH] Error fetching admin user:', err);
     }
     setAdminUser(null);
     return null;
@@ -159,23 +152,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-          console.debug('[AUTH] Session expired, signing out');
           await signOut();
         } else {
-          // Refresh admin user data during revalidation
           await fetchAdminUser(session.user.id);
         }
-      } catch (error) {
+      } catch {
         // Network errors during revalidation - keep session active
-        console.debug('[AUTH] Session revalidation skipped (network error):', error);
       }
-    }, 5 * 60 * 1000); // 5 minutes
+    }, 5 * 60 * 1000);
 
-    setRevalidationInterval(interval);
+    revalidationIntervalRef.current = interval;
 
     return () => {
-      if (revalidationInterval) {
-        clearInterval(revalidationInterval);
+      if (revalidationIntervalRef.current) {
+        clearInterval(revalidationIntervalRef.current);
+        revalidationIntervalRef.current = null;
       }
     };
   }, [user]);
@@ -195,7 +186,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           filter: `user_id=eq.${user.id}`,
         },
         () => {
-          console.log('[AUTH] User roles changed, refreshing admin data');
           setTimeout(() => {
             fetchAdminUser(user.id);
           }, 0);
@@ -226,8 +216,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setAdminUser(data.adminUser);
           return;
         }
-      } catch (functionError) {
-        console.log('Edge Function not available, using fallback authentication');
+      } catch {
+        // Edge Function not available, using fallback authentication
       }
 
       // Si falla, intentar con supabase auth directamente

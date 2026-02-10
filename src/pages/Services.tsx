@@ -78,14 +78,6 @@ const Services = () => {
   const hasError = !isLoading && (isErrorOptions || isErrorServices);
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
 
-  console.log('Services Debug:', {
-    servicesCount: services.length,
-    totalCount,
-    totalPages,
-    currentPage,
-    isLoading
-  });
-
   return (
     <>
       <Meta

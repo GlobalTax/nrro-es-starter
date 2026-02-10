@@ -26,7 +26,6 @@ export const useBrowserNotifications = () => {
   // Solicitar permisos
   const requestPermission = useCallback(async () => {
     if (!('Notification' in window)) {
-      console.warn('Este navegador no soporta notificaciones');
       return false;
     }
 
