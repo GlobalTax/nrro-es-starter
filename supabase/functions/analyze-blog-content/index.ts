@@ -249,7 +249,7 @@ Ultra high resolution, professional photography style`;
   } catch (error) {
     console.error('Error in analyze-blog-content:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Error desconocido' }),
+      JSON.stringify({ error: 'Error al procesar el contenido. Inténtalo de nuevo.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

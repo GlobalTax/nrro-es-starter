@@ -43,7 +43,7 @@ async function sendConfirmationEmail(
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
               <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                <h1 style="color: #1a1a1a; margin-bottom: 20px;">Gracias por contactarnos, ${name}</h1>
+                <h1 style="color: #1a1a1a; margin-bottom: 20px;">Gracias por contactarnos, ${name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</h1>
                 <p>Hemos recibido tu mensaje y nos pondremos en contacto contigo lo antes posible.</p>
                 <p>Nuestro equipo revisará tu consulta y te responderemos en un plazo máximo de 24-48 horas laborables.</p>
                 <div style="margin: 30px 0; padding: 20px; background-color: #f5f5f5; border-radius: 8px;">
@@ -103,16 +103,16 @@ async function sendNotificationEmail(
               <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                 <h1 style="color: #1a1a1a; margin-bottom: 20px;">Nuevo mensaje de contacto</h1>
                 <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                  <p><strong>Nombre:</strong> ${contactData.name}</p>
-                  <p><strong>Email:</strong> <a href="mailto:${contactData.email}">${contactData.email}</a></p>
-                  ${contactData.company ? `<p><strong>Empresa:</strong> ${contactData.company}</p>` : ''}
-                  ${contactData.phone ? `<p><strong>Teléfono:</strong> ${contactData.phone}</p>` : ''}
-                  <p><strong>Asunto:</strong> ${contactData.subject}</p>
-                  <p><strong>Tipo de servicio:</strong> ${contactData.service_type}</p>
+                  <p><strong>Nombre:</strong> ${(contactData.name || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                  <p><strong>Email:</strong> ${(contactData.email || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                  ${contactData.company ? `<p><strong>Empresa:</strong> ${contactData.company.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>` : ''}
+                  ${contactData.phone ? `<p><strong>Teléfono:</strong> ${contactData.phone.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>` : ''}
+                  <p><strong>Asunto:</strong> ${(contactData.subject || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                  <p><strong>Tipo de servicio:</strong> ${(contactData.service_type || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
                 </div>
                 <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
                   <h3 style="margin-top: 0;">Mensaje:</h3>
-                  <p style="white-space: pre-wrap;">${contactData.message}</p>
+                  <p style="white-space: pre-wrap;">${(contactData.message || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
                 </div>
                 <p style="color: #666; font-size: 14px; margin-top: 20px;">
                   <strong>IP:</strong> ${contactData.ip_address || 'No disponible'}<br>

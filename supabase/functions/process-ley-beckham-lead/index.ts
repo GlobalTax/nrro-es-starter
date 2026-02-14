@@ -1,11 +1,35 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// HTML escape helper to prevent injection in emails
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Validation schema
+const leyBeckhamSchema = z.object({
+  name: z.string().trim().min(2, "Name too short").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email").max(255, "Email too long"),
+  company: z.string().trim().max(200, "Company too long").optional(),
+  phone: z.string().trim().max(20, "Phone too long").optional(),
+  country: z.string().trim().min(1, "Country required").max(100, "Country too long"),
+  jobSituation: z.enum(["contrato_espana", "oferta_empleo", "emprendedor", "autonomo", "investigador", "otro"]),
+  estimatedMoveDate: z.string().trim().max(20).optional(),
+  currentSalary: z.number().min(0).max(10000000).optional(),
+  message: z.string().trim().max(5000, "Message too long").optional(),
+});
 
 interface LeyBeckhamContactData {
   name: string;
@@ -102,7 +126,7 @@ const sendConfirmationEmail = async (resendApiKey: string, data: LeyBeckhamConta
               <h1>¡Gracias por tu interés en la Ley Beckham!</h1>
             </div>
             <div class="content">
-              <p>Hola ${data.name},</p>
+              <p>Hola ${escapeHtml(data.name)},</p>
               
               <p>Hemos recibido tu consulta sobre el <strong>Régimen Especial de Impatriados (Ley Beckham)</strong>. Entendemos que ${jobSituationText} y queremos ayudarte a optimizar tu situación fiscal.</p>
               
@@ -219,36 +243,36 @@ const sendInternalNotification = async (resendApiKey: string, data: LeyBeckhamCo
             <div class="info-grid">
               <div class="info-card">
                 <div class="info-label">👤 Nombre</div>
-                <div class="info-value">${data.name}</div>
+                <div class="info-value">${escapeHtml(data.name)}</div>
               </div>
-              
+
               <div class="info-card">
                 <div class="info-label">📧 Email</div>
-                <div class="info-value">${data.email}</div>
+                <div class="info-value">${escapeHtml(data.email)}</div>
               </div>
               
               ${data.phone ? `
               <div class="info-card">
                 <div class="info-label">📱 Teléfono</div>
-                <div class="info-value">${data.phone}</div>
+                <div class="info-value">${escapeHtml(data.phone)}</div>
               </div>
               ` : ''}
               
               ${data.company ? `
               <div class="info-card">
                 <div class="info-label">🏢 Empresa</div>
-                <div class="info-value">${data.company}</div>
+                <div class="info-value">${escapeHtml(data.company)}</div>
               </div>
               ` : ''}
               
               <div class="info-card">
                 <div class="info-label">🌍 País</div>
-                <div class="info-value">${data.country}</div>
+                <div class="info-value">${escapeHtml(data.country)}</div>
               </div>
-              
+
               <div class="info-card">
                 <div class="info-label">💼 Situación Laboral</div>
-                <div class="info-value">${data.jobSituation}</div>
+                <div class="info-value">${escapeHtml(data.jobSituation)}</div>
               </div>
               
               ${data.estimatedMoveDate ? `
@@ -269,7 +293,7 @@ const sendInternalNotification = async (resendApiKey: string, data: LeyBeckhamCo
             ${data.message ? `
             <div class="info-card" style="margin-top: 20px;">
               <div class="info-label">💬 Mensaje</div>
-              <div class="info-value">${data.message}</div>
+              <div class="info-value">${escapeHtml(data.message)}</div>
             </div>
             ` : ''}
             
@@ -305,17 +329,48 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  try {
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+  }
 
-    const contactData: LeyBeckhamContactData = await req.json();
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('[LEY_BECKHAM] Missing environment variables');
+      return new Response(
+        JSON.stringify({ error: "Server configuration error" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
-    // Extract IP address and user agent
-    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
-                     req.headers.get('x-real-ip') || 
+    const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+    const rawBody = await req.json();
+    const validation = leyBeckhamSchema.safeParse(rawBody);
+
+    if (!validation.success) {
+      console.warn('[LEY_BECKHAM] Validation failed:', validation.error.flatten());
+      return new Response(
+        JSON.stringify({
+          error: "Invalid input data",
+          fields: validation.error.flatten().fieldErrors,
+        }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Use validated data and enrich with IP/UA from headers (NOT from body)
+    const contactData: LeyBeckhamContactData = {
+      ...validation.data,
+    };
+
+    // Extract IP address and user agent from headers (never from body)
+    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] ||
+                     req.headers.get('x-real-ip') ||
                      'unknown';
     const userAgent = req.headers.get('user-agent') || 'unknown';
 
@@ -429,8 +484,8 @@ const handler = async (req: Request): Promise<Response> => {
         status: "nuevo",
         priority,
         eligibility_score: eligibilityScore,
-        ip_address: contactData.ipAddress,
-        user_agent: contactData.userAgent,
+        ip_address: ipAddress,
+        user_agent: userAgent,
       })
       .select()
       .single();
@@ -483,7 +538,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in process-ley-beckham-lead:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "An error occurred processing your request. Please try again later." }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

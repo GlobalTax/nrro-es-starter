@@ -6,6 +6,20 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Valid categories for whistleblower reports
+const VALID_CATEGORIES = [
+  "fraude_financiero",
+  "corrupcion",
+  "acoso_laboral",
+  "discriminacion",
+  "seguridad_laboral",
+  "medioambiental",
+  "proteccion_datos",
+  "blanqueo_capitales",
+  "competencia_desleal",
+  "otro",
+];
+
 interface WhistleblowerSubmission {
   category: string;
   description: string;
@@ -17,26 +31,32 @@ interface WhistleblowerSubmission {
   acceptedPolicy: boolean;
 }
 
-// Generate unique tracking code: WB-YYYY-XXXX
+// Generate unique tracking code using crypto-safe random: WB-YYYY-XXXXXX
 function generateTrackingCode(): string {
   const year = new Date().getFullYear();
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Excluding confusing chars
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const randomBytes = new Uint8Array(6);
+  crypto.getRandomValues(randomBytes);
   let code = '';
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(randomBytes[i] % chars.length);
   }
   return `WB-${year}-${code}`;
 }
 
-// Simple hash function for IP (for rate limiting, not identification)
-function hashIP(ip: string): string {
-  let hash = 0;
-  for (let i = 0; i < ip.length; i++) {
-    const char = ip.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(16);
+// Cryptographic hash for IP using HMAC-SHA256 with secret salt
+async function hashIP(ip: string): Promise<string> {
+  const salt = Deno.env.get('WHISTLEBLOWER_IP_SALT') || 'default-whistleblower-salt-change-in-production';
+  const encoder = new TextEncoder();
+  const keyData = encoder.encode(salt);
+  const ipData = encoder.encode(ip);
+
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, ipData);
+  const hashArray = Array.from(new Uint8Array(signature));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 serve(async (req) => {
@@ -44,10 +64,24 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error("[WHISTLEBLOWER] Missing environment variables");
+      return new Response(
+        JSON.stringify({ error: "Error interno del servidor" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const body: WhistleblowerSubmission = await req.json();
@@ -60,9 +94,31 @@ serve(async (req) => {
       );
     }
 
-    if (!body.description || body.description.trim().length < 50) {
+    // Validate category against allowed enum values
+    if (!VALID_CATEGORIES.includes(body.category)) {
+      return new Response(
+        JSON.stringify({ error: "Categoría no válida" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!body.description || typeof body.description !== 'string' || body.description.trim().length < 50) {
       return new Response(
         JSON.stringify({ error: "La descripción debe tener al menos 50 caracteres" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (body.description.trim().length > 10000) {
+      return new Response(
+        JSON.stringify({ error: "La descripción es demasiado larga (máximo 10000 caracteres)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (typeof body.isAnonymous !== 'boolean') {
+      return new Response(
+        JSON.stringify({ error: "El campo de anonimato es obligatorio" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -74,10 +130,32 @@ serve(async (req) => {
       );
     }
 
+    // Validate optional field lengths
+    if (body.location && body.location.length > 500) {
+      return new Response(
+        JSON.stringify({ error: "La ubicación es demasiado larga" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (body.personsInvolved && body.personsInvolved.length > 2000) {
+      return new Response(
+        JSON.stringify({ error: "El campo de personas involucradas es demasiado largo" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (body.dateOfIncident && body.dateOfIncident.length > 20) {
+      return new Response(
+        JSON.stringify({ error: "La fecha del incidente no es válida" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Validate email format if provided
     if (body.contactEmail && !body.isAnonymous) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(body.contactEmail)) {
+      if (!emailRegex.test(body.contactEmail) || body.contactEmail.length > 255) {
         return new Response(
           JSON.stringify({ error: "El formato del email no es válido" }),
           { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -85,21 +163,25 @@ serve(async (req) => {
       }
     }
 
-    // Get client IP for rate limiting (hashed for privacy)
-    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0] || 
-                     req.headers.get("x-real-ip") || 
+    // Get client IP for rate limiting (hashed for privacy with HMAC-SHA256)
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0] ||
+                     req.headers.get("x-real-ip") ||
                      "unknown";
-    const ipHash = hashIP(clientIP);
+    const ipHash = await hashIP(clientIP);
 
-    // Rate limiting: Check for recent submissions from same IP hash
+    // Rate limiting: Check for recent submissions from same IP hash (fail-closed)
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-    const { count: recentSubmissions } = await supabase
+    const { count: recentSubmissions, error: rateLimitError } = await supabase
       .from("whistleblower_reports")
       .select("*", { count: "exact", head: true })
       .eq("ip_hash", ipHash)
       .gte("created_at", oneHourAgo);
 
-    if (recentSubmissions && recentSubmissions >= 3) {
+    // SECURITY: Fail-closed - block if rate limit query fails or is exceeded
+    if (rateLimitError || (recentSubmissions !== null && recentSubmissions >= 3)) {
+      if (rateLimitError) {
+        console.error("[WHISTLEBLOWER] Rate limit query failed:", rateLimitError);
+      }
       return new Response(
         JSON.stringify({ error: "Demasiadas denuncias desde esta conexión. Intente más tarde." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -119,7 +201,7 @@ serve(async (req) => {
         .maybeSingle();
 
       if (!existing) break;
-      
+
       trackingCode = generateTrackingCode();
       attempts++;
     }
