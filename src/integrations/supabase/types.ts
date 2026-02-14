@@ -1201,6 +1201,166 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_clients: {
+        Row: {
+          assigned_to: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          estimated_value: number | null
+          fiscal_address: string | null
+          id: string
+          name: string
+          nif_cif: string | null
+          notes: string | null
+          phone: string | null
+          pipeline_stage: Database["public"]["Enums"]["crm_pipeline_stage"]
+          postal_code: string | null
+          sector: string | null
+          source: string | null
+          source_site: Database["public"]["Enums"]["site_source"] | null
+          status: Database["public"]["Enums"]["crm_client_status"]
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          estimated_value?: number | null
+          fiscal_address?: string | null
+          id?: string
+          name: string
+          nif_cif?: string | null
+          notes?: string | null
+          phone?: string | null
+          pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
+          postal_code?: string | null
+          sector?: string | null
+          source?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          status?: Database["public"]["Enums"]["crm_client_status"]
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          estimated_value?: number | null
+          fiscal_address?: string | null
+          id?: string
+          name?: string
+          nif_cif?: string | null
+          notes?: string | null
+          phone?: string | null
+          pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
+          postal_code?: string | null
+          sector?: string | null
+          source?: string | null
+          source_site?: Database["public"]["Enums"]["site_source"] | null
+          status?: Database["public"]["Enums"]["crm_client_status"]
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      crm_contracts: {
+        Row: {
+          amount: number | null
+          billing_frequency: string | null
+          client_id: string
+          created_at: string
+          end_date: string | null
+          id: string
+          notes: string | null
+          service_name: string
+          start_date: string | null
+          status: Database["public"]["Enums"]["crm_contract_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount?: number | null
+          billing_frequency?: string | null
+          client_id: string
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          service_name: string
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["crm_contract_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number | null
+          billing_frequency?: string | null
+          client_id?: string
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          service_name?: string
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["crm_contract_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_contracts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_interactions: {
+        Row: {
+          client_id: string
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          id: string
+          subject: string
+          type: Database["public"]["Enums"]["crm_interaction_type"]
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          subject: string
+          type?: Database["public"]["Enums"]["crm_interaction_type"]
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          subject?: string
+          type?: Database["public"]["Enums"]["crm_interaction_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_interactions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deck_slides: {
         Row: {
           content_json: Json
@@ -4801,6 +4961,20 @@ export type Database = {
         | "hr_manager"
         | "hr_viewer"
       case_study_status: "draft" | "review" | "published" | "archived"
+      crm_client_status: "prospecto" | "activo" | "inactivo" | "perdido"
+      crm_contract_status:
+        | "activo"
+        | "pausado"
+        | "finalizado"
+        | "renovacion_pendiente"
+      crm_interaction_type: "llamada" | "email" | "reunion" | "nota" | "tarea"
+      crm_pipeline_stage:
+        | "nuevo"
+        | "contactado"
+        | "propuesta"
+        | "negociacion"
+        | "cerrado_ganado"
+        | "cerrado_perdido"
       event_severity: "info" | "warn" | "high" | "critical"
       job_status: "draft" | "published" | "closed"
       lead_priority: "baja" | "media" | "alta" | "urgente"
@@ -5012,6 +5186,22 @@ export const Constants = {
         "hr_viewer",
       ],
       case_study_status: ["draft", "review", "published", "archived"],
+      crm_client_status: ["prospecto", "activo", "inactivo", "perdido"],
+      crm_contract_status: [
+        "activo",
+        "pausado",
+        "finalizado",
+        "renovacion_pendiente",
+      ],
+      crm_interaction_type: ["llamada", "email", "reunion", "nota", "tarea"],
+      crm_pipeline_stage: [
+        "nuevo",
+        "contactado",
+        "propuesta",
+        "negociacion",
+        "cerrado_ganado",
+        "cerrado_perdido",
+      ],
       event_severity: ["info", "warn", "high", "critical"],
       job_status: ["draft", "published", "closed"],
       lead_priority: ["baja", "media", "alta", "urgente"],

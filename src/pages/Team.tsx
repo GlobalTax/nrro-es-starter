@@ -10,8 +10,8 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { BadgeHero } from "@/components/ui/badge-hero";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
+import { TeamMosaicHero } from "@/components/team/TeamMosaicHero";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 
@@ -57,22 +57,13 @@ const Team = () => {
       ))}
 
       <div className="min-h-screen">
-        {/* Hero */}
-        <section className="bg-black py-32 md:py-48 text-center">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-6">
-              <BadgeHero>{t('team.hero.badge')}</BadgeHero>
-            </div>
-            <h1 className="service-hero-title mb-8">
-              {t('team.hero.title')}
-            </h1>
-            <p className="service-hero-subtitle max-w-3xl mx-auto">
-              {t('team.hero.subtitle')}
-            </p>
-          </div>
-          </div>
-        </section>
+        {/* Hero Mosaico */}
+        <TeamMosaicHero
+          title={t('team.hero.title')}
+          subtitle={t('team.hero.subtitle')}
+          ctaText={t('cta.contact')}
+          ctaLink="/contacto"
+        />
 
         {/* Breadcrumb Navigation */}
         <div className="bg-muted/30 border-b border-border/50">
