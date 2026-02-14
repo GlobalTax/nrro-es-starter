@@ -197,15 +197,27 @@ function generateSecurePassword(length: number = 16): string {
   const special = '!@#$%^&*()_+-=[]{}|;:,.<>?';
   const all = uppercase + lowercase + numbers + special;
 
-  let password = '';
-  password += uppercase[Math.floor(Math.random() * uppercase.length)];
-  password += lowercase[Math.floor(Math.random() * lowercase.length)];
-  password += numbers[Math.floor(Math.random() * numbers.length)];
-  password += special[Math.floor(Math.random() * special.length)];
+  const randomBytes = new Uint8Array(length);
+  crypto.getRandomValues(randomBytes);
 
-  for (let i = password.length; i < length; i++) {
-    password += all[Math.floor(Math.random() * all.length)];
+  // Ensure at least one of each character type
+  const chars: string[] = [];
+  chars.push(uppercase[randomBytes[0] % uppercase.length]);
+  chars.push(lowercase[randomBytes[1] % lowercase.length]);
+  chars.push(numbers[randomBytes[2] % numbers.length]);
+  chars.push(special[randomBytes[3] % special.length]);
+
+  for (let i = chars.length; i < length; i++) {
+    chars.push(all[randomBytes[i] % all.length]);
   }
 
-  return password.split('').sort(() => Math.random() - 0.5).join('');
+  // Fisher-Yates shuffle using crypto random
+  const shuffleBytes = new Uint8Array(chars.length);
+  crypto.getRandomValues(shuffleBytes);
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = shuffleBytes[i] % (i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
+  return chars.join('');
 }

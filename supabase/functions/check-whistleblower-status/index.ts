@@ -16,9 +16,16 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error("[WHISTLEBLOWER_STATUS] Missing environment variables");
+      return new Response(
+        JSON.stringify({ error: "Error interno del servidor" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const body: StatusRequest = await req.json();
@@ -33,7 +40,7 @@ serve(async (req) => {
     const trackingCode = body.trackingCode.trim().toUpperCase();
 
     // Validate format
-    const formatRegex = /^WB-\d{4}-[A-Z0-9]{4}$/;
+    const formatRegex = /^WB-\d{4}-[A-Z0-9]{4,6}$/;
     if (!formatRegex.test(trackingCode)) {
       return new Response(
         JSON.stringify({ error: "Formato de código inválido" }),
@@ -54,7 +61,11 @@ serve(async (req) => {
       p_window_minutes: 1,
     });
 
-    if (rateLimitResult.data === false) {
+    // SECURITY: Fail-closed - block if rate limit RPC fails OR returns false
+    if (rateLimitResult.error || rateLimitResult.data === false) {
+      if (rateLimitResult.error) {
+        console.error("[WHISTLEBLOWER_STATUS] Rate limit RPC failed:", rateLimitResult.error);
+      }
       return new Response(
         JSON.stringify({ error: "Demasiadas consultas. Espere un momento." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }

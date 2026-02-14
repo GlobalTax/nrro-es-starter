@@ -58,9 +58,9 @@ async function sendCandidateConfirmationEmail(
                   <h1>¡Gracias por tu interés en unirte a NRRO!</h1>
                 </div>
                 <div class="content">
-                  <p>Hola ${name},</p>
-                  
-                  <p>Hemos recibido tu candidatura para el puesto de <strong>${position}</strong>.</p>
+                  <p>Hola ${name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')},</p>
+
+                  <p>Hemos recibido tu candidatura para el puesto de <strong>${position.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</strong>.</p>
                   
                   <div class="info-box">
                     <h3 style="margin-top: 0;">⏱️ Próximos pasos</h3>
@@ -156,18 +156,18 @@ async function sendHRNotificationEmail(
                   <div class="info-grid">
                     <div class="info-card">
                       <div class="info-label">👤 Nombre</div>
-                      <div class="info-value">${candidateData.nombre}</div>
+                      <div class="info-value">${(candidateData.nombre || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                     </div>
-                    
+
                     <div class="info-card">
                       <div class="info-label">📧 Email</div>
-                      <div class="info-value">${candidateData.email}</div>
+                      <div class="info-value">${(candidateData.email || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                     </div>
-                    
+
                     ${candidateData.telefono ? `
                     <div class="info-card">
                       <div class="info-label">📱 Teléfono</div>
-                      <div class="info-value">${candidateData.telefono}</div>
+                      <div class="info-value">${candidateData.telefono.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                     </div>
                     ` : ''}
                     
@@ -180,7 +180,7 @@ async function sendHRNotificationEmail(
                     
                     <div class="info-card">
                       <div class="info-label">💼 Puesto Solicitado</div>
-                      <div class="info-value">${candidateData.puesto_solicitado}</div>
+                      <div class="info-value">${(candidateData.puesto_solicitado || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                     </div>
                     
                     ${candidateData.departamento ? `
@@ -193,7 +193,7 @@ async function sendHRNotificationEmail(
                   
                   <div class="info-card" style="margin-top: 20px;">
                     <div class="info-label">💬 Mensaje Motivacional</div>
-                    <div class="info-value" style="white-space: pre-wrap;">${candidateData.notas}</div>
+                    <div class="info-value" style="white-space: pre-wrap;">${(candidateData.notas || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                   </div>
                   
                   <div style="margin-top: 20px; text-align: center;">

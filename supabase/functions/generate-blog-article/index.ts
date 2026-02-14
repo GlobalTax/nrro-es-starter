@@ -567,7 +567,7 @@ Ultra high resolution, professional photography style`;
       JSON.stringify({ 
         error: isTimeout 
           ? "Timeout en la generación del artículo. Intenta de nuevo." 
-          : (error instanceof Error ? error.message : "Error desconocido"),
+          : "Error al generar el artículo. Inténtalo de nuevo.",
         isTimeout
       }),
       { 

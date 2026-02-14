@@ -42,7 +42,7 @@ async function sendConfirmationEmail(
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
               <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                <h1 style="color: #1a1a1a; margin-bottom: 20px;">Gracias por tu interés, ${name}</h1>
+                <h1 style="color: #1a1a1a; margin-bottom: 20px;">Gracias por tu interés, ${name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</h1>
                 <p>Hemos recibido tu solicitud de demo para la solución Orquest + KairosHR.</p>
                 <p>Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas para coordinar una presentación personalizada.</p>
                 <div style="margin: 30px 0; padding: 20px; background-color: #f5f5f5; border-radius: 8px;">
@@ -111,14 +111,14 @@ async function sendNotificationEmail(
               <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                 <h1 style="color: #1a1a1a; margin-bottom: 20px;">Nueva solicitud de demo Orquest + KairosHR</h1>
                 <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                  <p><strong>Nombre:</strong> ${requestData.name}</p>
-                  <p><strong>Email:</strong> <a href="mailto:${requestData.email}">${requestData.email}</a></p>
-                  ${requestData.restaurant_name ? `<p><strong>Restaurante:</strong> ${requestData.restaurant_name}</p>` : ''}
+                  <p><strong>Nombre:</strong> ${(requestData.name || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                  <p><strong>Email:</strong> ${(requestData.email || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                  ${requestData.restaurant_name ? `<p><strong>Restaurante:</strong> ${requestData.restaurant_name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>` : ''}
                 </div>
                 ${requestData.message ? `
                 <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
                   <h3 style="margin-top: 0;">Mensaje:</h3>
-                  <p style="white-space: pre-wrap;">${requestData.message}</p>
+                  <p style="white-space: pre-wrap;">${requestData.message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
                 </div>
                 ` : ''}
                 <p style="color: #666; font-size: 14px; margin-top: 20px;">
@@ -152,7 +152,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
     if (!supabaseUrl || !supabaseKey) {

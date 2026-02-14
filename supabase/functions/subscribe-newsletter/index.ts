@@ -286,8 +286,8 @@ const getNotificationEmailContent = (subscriberEmail: string, sourcePage?: strin
         <h2 style="color: #1a365d;">Nueva suscripción a la newsletter</h2>
         <p>Se ha registrado una nueva suscripción:</p>
         <ul>
-          <li><strong>Email:</strong> ${subscriberEmail}</li>
-          <li><strong>Página de origen:</strong> ${sourcePage || 'No especificada'}</li>
+          <li><strong>Email:</strong> ${subscriberEmail.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>
+          <li><strong>Página de origen:</strong> ${(sourcePage || 'No especificada').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>
           <li><strong>Fecha:</strong> ${new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })}</li>
         </ul>
         <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
@@ -306,11 +306,19 @@ serve(async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+
   try {
     const { email, consent, source_page, language }: SubscribeRequest = await req.json();
 
-    // Validate required fields
-    if (!email || typeof email !== 'string' || !email.includes('@')) {
+    // Validate required fields with proper email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || typeof email !== 'string' || !emailRegex.test(email) || email.length > 255) {
       return new Response(
         JSON.stringify({ error: "Invalid email address" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -325,9 +333,43 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     // Initialize Supabase client
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("[NEWSLETTER] Missing environment variables");
+      return new Response(
+        JSON.stringify({ error: "Server configuration error" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Extract IP for rate limiting
+    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] ||
+                     req.headers.get('x-real-ip') ||
+                     'unknown';
+
+    // Rate limiting by IP (10 subscriptions per hour, fail-closed)
+    const { data: rateLimitOk, error: rateLimitError } = await supabase.rpc(
+      'check_rate_limit_enhanced_safe',
+      {
+        p_identifier: ipAddress,
+        p_category: 'newsletter_subscription',
+        p_max_requests: 10,
+        p_window_minutes: 60,
+      }
+    );
+
+    if (rateLimitError || rateLimitOk === false) {
+      console.warn('[NEWSLETTER] Rate limit exceeded:', { ip: ipAddress });
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json", "Retry-After": "3600" }
+        }
+      );
+    }
 
     // Check for existing subscription
     const { data: existingSubscription } = await supabase
@@ -436,7 +478,7 @@ serve(async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in subscribe-newsletter function:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Internal server error" }),
+      JSON.stringify({ error: "An error occurred. Please try again later." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
