@@ -1205,6 +1205,7 @@ export type Database = {
         Row: {
           assigned_to: string | null
           city: string | null
+          client_type: string
           country: string | null
           created_at: string
           email: string | null
@@ -1227,6 +1228,7 @@ export type Database = {
         Insert: {
           assigned_to?: string | null
           city?: string | null
+          client_type?: string
           country?: string | null
           created_at?: string
           email?: string | null
@@ -1249,6 +1251,7 @@ export type Database = {
         Update: {
           assigned_to?: string | null
           city?: string | null
+          client_type?: string
           country?: string | null
           created_at?: string
           email?: string | null
@@ -1357,6 +1360,75 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_invoices: {
+        Row: {
+          amount: number
+          client_id: string
+          contract_id: string | null
+          created_at: string
+          due_date: string | null
+          id: string
+          invoice_number: string
+          issue_date: string
+          notes: string | null
+          service_description: string
+          service_type: string | null
+          status: Database["public"]["Enums"]["crm_invoice_status"]
+          tax_amount: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          client_id: string
+          contract_id?: string | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          notes?: string | null
+          service_description?: string
+          service_type?: string | null
+          status?: Database["public"]["Enums"]["crm_invoice_status"]
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          client_id?: string
+          contract_id?: string | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          notes?: string | null
+          service_description?: string
+          service_type?: string | null
+          status?: Database["public"]["Enums"]["crm_invoice_status"]
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_invoices_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_invoices_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contracts"
             referencedColumns: ["id"]
           },
         ]
@@ -4968,6 +5040,12 @@ export type Database = {
         | "finalizado"
         | "renovacion_pendiente"
       crm_interaction_type: "llamada" | "email" | "reunion" | "nota" | "tarea"
+      crm_invoice_status:
+        | "borrador"
+        | "emitida"
+        | "pagada"
+        | "vencida"
+        | "anulada"
       crm_pipeline_stage:
         | "nuevo"
         | "contactado"
@@ -5194,6 +5272,13 @@ export const Constants = {
         "renovacion_pendiente",
       ],
       crm_interaction_type: ["llamada", "email", "reunion", "nota", "tarea"],
+      crm_invoice_status: [
+        "borrador",
+        "emitida",
+        "pagada",
+        "vencida",
+        "anulada",
+      ],
       crm_pipeline_stage: [
         "nuevo",
         "contactado",

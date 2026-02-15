@@ -1,36 +1,28 @@
 import { useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+
+const SUPABASE_URL = "https://zntotcpagkunvkwpubqu.supabase.co";
 
 const SitemapXML = () => {
   useEffect(() => {
-    const fetchAndServeSitemap = async () => {
-      try {
-        // Obtener el sitemap desde Supabase Storage
-        const { data: urlData } = supabase.storage
-          .from('public-files')
-          .getPublicUrl('sitemap.xml');
-
-        // Descargar el contenido del sitemap
-        const response = await fetch(urlData.publicUrl);
-        const xmlContent = await response.text();
-
-        // Crear un nuevo documento con el contenido XML
-        const blob = new Blob([xmlContent], { type: 'application/xml' });
-        const url = URL.createObjectURL(blob);
-
-        // Reemplazar el contenido de la página con el XML
-        window.location.replace(urlData.publicUrl);
-      } catch (error) {
-        console.error('Error serving sitemap:', error);
-        // Si hay error, redirigir a la URL de Storage directamente
-        const { data: urlData } = supabase.storage
-          .from('public-files')
-          .getPublicUrl('sitemap.xml');
-        window.location.replace(urlData.publicUrl);
-      }
-    };
-
-    fetchAndServeSitemap();
+    const domain = window.location.hostname;
+    // Redirect to the edge function that generates the sitemap dynamically
+    const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/generate-sitemap?domain=${encodeURIComponent(domain)}`;
+    
+    // Try the dynamic endpoint first, fallback to storage
+    fetch(edgeFunctionUrl, { method: 'HEAD' })
+      .then(res => {
+        if (res.ok) {
+          window.location.replace(edgeFunctionUrl);
+        } else {
+          // Fallback to static sitemap in storage
+          const storageUrl = `${SUPABASE_URL}/storage/v1/object/public/public-files/sitemap.xml`;
+          window.location.replace(storageUrl);
+        }
+      })
+      .catch(() => {
+        const storageUrl = `${SUPABASE_URL}/storage/v1/object/public/public-files/sitemap.xml`;
+        window.location.replace(storageUrl);
+      });
   }, []);
 
   return null;

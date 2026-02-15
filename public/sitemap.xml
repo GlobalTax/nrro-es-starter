@@ -1,81 +1,444 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Spanish (default) -->
   <url>
-    <loc>https://int.nrro.es/</loc>
-    <lastmod>2025-11-12</lastmod>
+    <loc>https://nrro.es/</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/"/>
   </url>
   <url>
-    <loc>https://int.nrro.es/servicios</loc>
-    <lastmod>2025-11-10</lastmod>
+    <loc>https://nrro.es/servicios</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/serveis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/services"/>
   </url>
   <url>
-    <loc>https://int.nrro.es/equipo</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://nrro.es/nosotros</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/nosaltres"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/about"/>
   </url>
   <url>
-    <loc>https://int.nrro.es/casos-exito</loc>
-    <lastmod>2025-11-10</lastmod>
+    <loc>https://nrro.es/equipo</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/equipo"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/equip"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/team"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/casos-exito</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/casos-exito"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/casos-exit"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/case-studies"/>
   </url>
   <url>
-    <loc>https://int.nrro.es/blog</loc>
-    <lastmod>2025-11-12</lastmod>
+    <loc>https://nrro.es/blog</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog"/>
   </url>
   <url>
-    <loc>https://int.nrro.es/contacto</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://nrro.es/contacto</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/contacto"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/contacte"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/contact"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/metodologia</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/metodologia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/methodology"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/estrategia</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/estrategia"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/estrategia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/strategy"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/sectores</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/sectores"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/sectors"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/sectors"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/carreras</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/carreras"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/carreres"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/careers"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/recursos</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/recursos"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/recursos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/resources"/>
+  </url>
+
+  <!-- Special landings -->
+  <url>
+    <loc>https://nrro.es/ley-beckham</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/ley-beckham"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/llei-beckham"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/beckham-law"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/orquest-kairoshr</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/orquest-kairoshr"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/orquest-kairoshr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/orquest-kairoshr"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/set-up-company-spain</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/crear-empresa-espana"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/crear-empresa-espanya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/set-up-company-spain"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/crear-empresa-espana</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/talento</loc>
-    <lastmod>2025-11-10</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://nrro.es/canal-denuncias</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Company setup EN landings -->
+  <url>
+    <loc>https://nrro.es/en/company-setup-calculator</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/ley-beckham</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://nrro.es/en/nie-spain-foreigners</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/startup-company-setup-spain</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/fast-company-registration-spain</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Catalan versions -->
+  <url>
+    <loc>https://nrro.es/ca/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/serveis</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/orquest-kairoshr</loc>
-    <lastmod>2025-11-01</lastmod>
+    <loc>https://nrro.es/ca/nosaltres</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/equip</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/casos-exit</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/privacidad</loc>
-    <lastmod>2025-11-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://nrro.es/ca/blog</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/aviso-legal</loc>
-    <lastmod>2025-11-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://nrro.es/ca/contacte</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/cookies</loc>
-    <lastmod>2025-11-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://nrro.es/ca/metodologia</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://int.nrro.es/condiciones-contratacion</loc>
-    <lastmod>2025-11-12</lastmod>
+    <loc>https://nrro.es/ca/estrategia</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/sectors</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/carreres</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/recursos</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/llei-beckham</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/orquest-kairoshr</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/crear-empresa-espanya</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- English versions -->
+  <url>
+    <loc>https://nrro.es/en/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/services</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/about</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/team</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/case-studies</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/blog</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/contact</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/methodology</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/strategy</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/sectors</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/careers</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/resources</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/beckham-law</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/set-up-company-spain</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Legal pages -->
+  <url>
+    <loc>https://nrro.es/privacidad</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/privacidad"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/privacitat"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/privacy"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/aviso-legal</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/aviso-legal"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/avis-legal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/legal-notice"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/cookies</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/cookies"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/cookies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/cookies"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/condiciones-contratacion</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/condiciones-contratacion"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://nrro.es/ca/condicions-contractacio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/terms"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/privacitat</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/avis-legal</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/cookies</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/ca/condicions-contractacio</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/privacy</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/legal-notice</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/cookies</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/en/terms</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
 </urlset>
