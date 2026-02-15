@@ -1,45 +1,68 @@
 
 
-## Plan: Desplegar y corregir el sistema de sitemap
+## Plan: Optimizar title tags y meta descriptions por pagina
 
-### Problema
+### Situacion actual
 
-La Edge Function `generate-sitemap` (la correcta, con logica multi-dominio) nunca fue desplegada. La funcion `regenerate-sitemap` esta desplegada pero genera todas las URLs con `int.nrro.es` en lugar de `nrro.es`, y tiene un bug con `slug_ca` en blog_posts.
+Todas las paginas YA tienen el componente `<Meta>` integrado y funcionando. Los valores se leen de las traducciones en `public/locales/{es,ca,en}/common.json`. No hace falta instalar nada ni anadir `<Helmet>` — el sistema actual ya es equivalente.
 
-### Solucion (2 pasos)
+**Nota importante sobre las URLs**: Las rutas mencionadas en tu prompt (`/es/solucion-fiscal`, `/es/orientacion-global`, `/es/sobre-navarro`) no existen en la app. Las rutas reales son:
+
+| URL solicitada | Ruta real en la app |
+|---|---|
+| `/es/solucion-fiscal` | `/servicios` (listado de servicios) |
+| `/es/orientacion-global` | Servicio dinamico via `/servicios/:slug` |
+| `/es/sobre-navarro` | `/nosotros` |
+| `/es/equipo` | `/equipo` |
+| `/blog` | `/blog` |
+| `/ley-beckham` | `/ley-beckham` |
+| `/en/` | `/en` |
+
+### Que hay que cambiar
+
+Solo actualizar los textos de las claves de traduccion `meta.title` y `meta.description` en los 3 archivos de locales para que sean mas descriptivos y optimizados para SEO.
 
 ---
 
-#### Paso 1: Desplegar `generate-sitemap`
+### Cambios concretos
 
-La funcion ya tiene el codigo correcto. Solo necesita ser desplegada. Esto hara que `SitemapXML.tsx` funcione correctamente, sirviendo un sitemap dinamico correcto segun el dominio.
+#### Archivo: `public/locales/es/common.json`
 
-No se requieren cambios de codigo — solo despliegue.
+| Clave | Valor actual | Nuevo valor |
+|---|---|---|
+| `index.meta.title` | "Navarro Tax Legal \| Asesoria Fiscal y Legal para Empresas Familiares" | "NRRO - Asesoria Fiscal y Legal en Barcelona \| +25 Anos" |
+| `index.meta.description` | "Asesoramiento estrategico, fiscal y legal..." | "Asesoria fiscal, contable, laboral y legal para empresas en Barcelona. +25 anos de experiencia, +60 profesionales. Primera consulta gratuita." |
+| `services.meta.title` | "Servicios" | "Asesoria Fiscal en Barcelona \| Servicios para Empresas y Autonomos" |
+| `services.meta.description` | (actual) | "Asesor fiscal en Barcelona para empresas, autonomos y particulares. IRPF, IVA, Impuesto de Sociedades, planificacion fiscal internacional. +25 anos. Consulta gratuita." |
+| `about.meta.title` | "Nosotros - Navarro Tax Legal" | "Sobre NRRO \| Asesoria Lider en Barcelona \| +60 Profesionales" |
+| `about.meta.description` | "25 anos de experiencia..." | "NRRO - Navarro Tax & Legal, despacho multidisciplinar en Barcelona con +25 anos de experiencia. +60 profesionales especializados en fiscal, legal, laboral y mercantil." |
+| `team.meta.title` | "Equipo" | "Nuestro Equipo \| +60 Profesionales \| NRRO Navarro Tax & Legal" |
+| `team.meta.description` | (actual) | "Conoce al equipo de NRRO: abogados, asesores fiscales, economistas y profesionales especializados al servicio de empresas y particulares en Barcelona." |
+| `blog.meta.title` | "Blog - NRRO" | "Blog Fiscal y Legal \| Novedades 2026 \| NRRO Barcelona" |
+| `blog.meta.description` | (actual) | "Articulos sobre novedades fiscales, laborales y legales en Espana. Guias practicas para empresas, autonomos y particulares en Barcelona." |
+| `leyBeckham.seo.title` | "Ley Beckham - Regimen Fiscal Especial..." | "Ley Beckham 2026 \| Regimen Impatriados Espana \| NRRO Barcelona" |
+| `leyBeckham.seo.description` | (actual) | "Expertos en Ley Beckham en Barcelona. Asesoramiento completo para profesionales extranjeros: requisitos, ventajas fiscales, solicitud y planificacion." |
 
----
+#### Archivo: `public/locales/en/common.json`
 
-#### Paso 2: Corregir `regenerate-sitemap`
+| Clave | Nuevo valor |
+|---|---|
+| `index.meta.title` | "NRRO - Tax & Legal Advisory in Barcelona \| 25+ Years Experience" |
+| `index.meta.description` | "Tax, accounting, and legal advisory firm in Barcelona for businesses and individuals. Beckham Law, international taxation, company formation. Free consultation." |
+| `team.meta.title` | "Our Team \| 60+ Professionals \| NRRO Navarro Tax & Legal" |
+| `blog.meta.title` | "Tax & Legal Blog \| Latest Updates \| NRRO Barcelona" |
 
-Actualizar la funcion `regenerate-sitemap` para que:
-1. Acepte un parametro `domain` (default: `nrro.es`) para generar el sitemap correcto
-2. Elimine la referencia a `slug_ca` en blog_posts (no existe en la tabla)
-3. Use la misma logica multi-dominio que `generate-sitemap`
+#### Archivo: `public/locales/ca/common.json`
 
-Alternativa mas simple: hacer que `regenerate-sitemap` llame internamente a `generate-sitemap` para generar el XML y luego lo suba a Storage, evitando duplicacion de logica.
+Mismas claves actualizadas con equivalentes en catalan (ajustados al contexto linguistico).
 
 ---
 
 ### Detalles tecnicos
 
-#### Cambio en `regenerate-sitemap/index.ts`
-
-- Reemplazar `const BASE_URL = 'https://int.nrro.es'` por logica de deteccion de dominio
-- Eliminar `slug_ca` de la query de blog_posts (linea 204: cambiar `slug_es, slug_ca, slug_en` a `slug_es, slug_en`)
-- Generar dos sitemaps separados y subir ambos a Storage (o uno principal para nrro.es)
-
-#### Verificacion post-despliegue
-
-Tras el despliegue, verificar que:
-- `GET /functions/v1/generate-sitemap?domain=nrro.es` devuelve XML con URLs de `nrro.es`
-- `GET /functions/v1/generate-sitemap?domain=int.nrro.es` devuelve XML con URLs de `int.nrro.es`
+- No se instala ninguna libreria nueva
+- No se modifica ningun componente `.tsx`
+- Solo se editan 3 archivos JSON de traducciones
+- El componente `Meta.tsx` existente ya aplica estos valores automaticamente al DOM
+- Los canonical URLs se generan automaticamente via `useAlternateUrls` segun la ruta actual
 
