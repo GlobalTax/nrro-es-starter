@@ -1215,6 +1215,7 @@ export type Database = {
           name: string
           nif_cif: string | null
           notes: string | null
+          num_empleados: number | null
           phone: string | null
           pipeline_stage: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code: string | null
@@ -1222,6 +1223,8 @@ export type Database = {
           source: string | null
           source_site: Database["public"]["Enums"]["site_source"] | null
           status: Database["public"]["Enums"]["crm_client_status"]
+          total_activo: number | null
+          total_facturacion: number | null
           updated_at: string
           website: string | null
         }
@@ -1238,6 +1241,7 @@ export type Database = {
           name: string
           nif_cif?: string | null
           notes?: string | null
+          num_empleados?: number | null
           phone?: string | null
           pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code?: string | null
@@ -1245,6 +1249,8 @@ export type Database = {
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["crm_client_status"]
+          total_activo?: number | null
+          total_facturacion?: number | null
           updated_at?: string
           website?: string | null
         }
@@ -1261,6 +1267,7 @@ export type Database = {
           name?: string
           nif_cif?: string | null
           notes?: string | null
+          num_empleados?: number | null
           phone?: string | null
           pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code?: string | null
@@ -1268,6 +1275,8 @@ export type Database = {
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
           status?: Database["public"]["Enums"]["crm_client_status"]
+          total_activo?: number | null
+          total_facturacion?: number | null
           updated_at?: string
           website?: string | null
         }
