@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock } from 'lucide-react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { useScrollDepth } from '@/hooks/useScrollDepth';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -10,11 +10,30 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Meta } from '@/components/seo/Meta';
 import { useToast } from '@/hooks/use-toast';
 import { BadgeHero } from '@/components/ui/badge-hero';
 import { supabase } from '@/integrations/supabase/client';
 import { LocationMap } from '@/components/map/LocationMap';
+
+const SERVICE_TYPES = [
+  { value: 'fiscal', label: 'Fiscal' },
+  { value: 'contable', label: 'Contable' },
+  { value: 'laboral', label: 'Laboral' },
+  { value: 'mercantil', label: 'Mercantil' },
+  { value: 'legal', label: 'Legal' },
+  { value: 'internacional', label: 'Internacional' },
+  { value: 'compliance', label: 'Compliance' },
+  { value: 'otra', label: 'Otra' },
+];
 
 export default function Contact() {
   const { trackPageView, trackFormSubmit, trackCTAClick, trackContactClick } = useAnalytics();
@@ -26,18 +45,81 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
+    company: '',
+    serviceType: '',
     subject: '',
     message: '',
   });
+  const [acceptPrivacy, setAcceptPrivacy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  // Track page view
+
   useEffect(() => {
     trackPageView("contacto");
   }, []);
 
+  // Inject LocalBusiness schema
+  useEffect(() => {
+    const localBusinessSchema = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "NRRO - Navarro Tax & Legal",
+      "image": "https://nrro.es/assets/logos/navarro-tax-legal.svg",
+      "url": "https://nrro.es",
+      "telephone": "+34934593600",
+      "email": "info@nrro.es",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ausiàs March 36, Principal",
+        "addressLocality": "Barcelona",
+        "postalCode": "08010",
+        "addressRegion": "Catalunya",
+        "addressCountry": "ES"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Friday",
+          "opens": "09:00",
+          "closes": "15:00"
+        }
+      ],
+      "priceRange": "€€"
+    };
+
+    const scriptId = "localbusiness-schema";
+    let script = document.querySelector(`script#${scriptId}`);
+    if (!script) {
+      script = document.createElement("script");
+      script.id = scriptId;
+      (script as HTMLScriptElement).type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(localBusinessSchema);
+
+    return () => {
+      const s = document.querySelector(`script#${scriptId}`);
+      if (s) s.remove();
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!acceptPrivacy) {
+      toast({
+        title: "Política de privacidad",
+        description: "Debes aceptar la política de privacidad para continuar.",
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -45,20 +127,22 @@ export default function Contact() {
         body: {
           name: formData.name,
           email: formData.email,
-          company: '',
+          company: formData.company,
           phone: formData.phone,
-          subject: formData.subject,
+          subject: formData.serviceType ? `[${formData.serviceType}] ${formData.subject}` : formData.subject,
           message: formData.message,
+          service_type: formData.serviceType || null,
           source_site: siteConfig.sourceSite,
         },
       });
 
       if (error) throw error;
 
-      // Track form submission
-      trackFormSubmit("contacto_general", {
+      trackFormSubmit("contact_form_submit", {
         subject: formData.subject,
+        service_type: formData.serviceType,
         has_phone: !!formData.phone,
+        has_company: !!formData.company,
       });
 
       toast({
@@ -70,9 +154,12 @@ export default function Contact() {
         name: '',
         email: '',
         phone: '',
+        company: '',
+        serviceType: '',
         subject: '',
         message: '',
       });
+      setAcceptPrivacy(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
@@ -89,7 +176,7 @@ export default function Contact() {
     {
       icon: Phone,
       title: t("contact.info.phone"),
-      value: '93 459 36 00',
+      value: '+34 934 593 600',
       href: 'tel:+34934593600',
     },
     {
@@ -101,7 +188,7 @@ export default function Contact() {
     {
       icon: MapPin,
       title: t("contact.info.address"),
-      value: t("contact.info.addressValue"),
+      value: 'Ausiàs March 36, Principal, 08010 Barcelona',
       href: 'https://maps.app.goo.gl/JjwmToznoU9Vx7zu9',
     },
   ];
@@ -109,10 +196,10 @@ export default function Contact() {
   return (
     <>
       <Meta
-        title={t("contact.meta.title")}
-        description={t("contact.meta.description")}
+        title="Contacto | NRRO Navarro Tax & Legal Barcelona"
+        description="Contacta con NRRO en Barcelona. Ausiàs March 36, Principal. Tel: 934 593 600. Primera consulta gratuita. Asesoría fiscal, laboral, contable y legal."
         keywords={t("contact.meta.keywords")}
-        canonicalUrl={`${window.location.origin}/contacto`}
+        canonicalUrl="https://nrro.es/es/contacto"
       />
 
       {/* Hero Section */}
@@ -123,7 +210,7 @@ export default function Contact() {
               <BadgeHero>{t("contact.hero.badge")}</BadgeHero>
             </div>
             <h1 className="service-hero-title mb-8">
-              {t("contact.hero.title")}
+              Contacta con nosotros
             </h1>
             <p className="service-hero-subtitle max-w-3xl mx-auto">
               {t("contact.hero.subtitle")}
@@ -138,12 +225,12 @@ export default function Contact() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="animate-slide-up">
-                <Card className="shadow-medium border-border/50">
+              <Card className="shadow-medium border-border/50">
                 <CardHeader>
                   <CardTitle className="text-2xl font-serif">{t("contact.form.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="space-y-2">
                       <Label htmlFor="name">{t("contact.form.name")}</Label>
                       <Input
@@ -152,6 +239,7 @@ export default function Contact() {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder={t("contact.form.namePlaceholder")}
                         required
+                        maxLength={100}
                         className="border-border/50 focus:border-accent"
                       />
                     </div>
@@ -166,21 +254,54 @@ export default function Contact() {
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder={t("contact.form.emailPlaceholder")}
                           required
+                          maxLength={255}
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone">{t("contact.form.phone")}</Label>
+                        <Label htmlFor="phone">Teléfono *</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder={t("contact.form.phonePlaceholder")}
+                          required
                           className="border-border/50 focus:border-accent"
                         />
                       </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="company">Empresa (opcional)</Label>
+                      <Input
+                        id="company"
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        placeholder="Nombre de tu empresa"
+                        maxLength={200}
+                        className="border-border/50 focus:border-accent"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="serviceType">Tipo de consulta</Label>
+                      <Select
+                        value={formData.serviceType}
+                        onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
+                      >
+                        <SelectTrigger className="border-border/50 focus:border-accent">
+                          <SelectValue placeholder="Selecciona un área" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {SERVICE_TYPES.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -191,20 +312,22 @@ export default function Contact() {
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder={t("contact.form.subjectPlaceholder")}
                         required
+                        maxLength={200}
                         className="border-border/50 focus:border-accent"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">{t("contact.form.message")}</Label>
+                      <Label htmlFor="message">Cuéntanos tu caso *</Label>
                       <Textarea
                         id="message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder={t("contact.form.messagePlaceholder")}
-                        rows={6}
+                        rows={5}
                         required
                         minLength={10}
+                        maxLength={2000}
                         className="border-border/50 focus:border-accent resize-none"
                       />
                       {formData.message.length > 0 && formData.message.length < 10 && (
@@ -212,15 +335,34 @@ export default function Contact() {
                       )}
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      disabled={isSubmitting}
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        id="privacy"
+                        checked={acceptPrivacy}
+                        onCheckedChange={(checked) => setAcceptPrivacy(checked === true)}
+                      />
+                      <Label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                        Acepto la{' '}
+                        <a href="/privacidad" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                          política de privacidad
+                        </a>
+                        {' '}y el tratamiento de mis datos personales.
+                      </Label>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={isSubmitting || !acceptPrivacy}
                       className="w-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-soft"
                     >
-                      {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
+                      {isSubmitting ? t("contact.form.submitting") : 'Enviar consulta'}
                       <Send className="ml-2 h-4 w-4" />
                     </Button>
+
+                    <p className="text-xs text-muted-foreground text-center">
+                      Respuesta garantizada en menos de 24 horas laborables.
+                    </p>
                   </form>
                 </CardContent>
               </Card>
@@ -242,7 +384,7 @@ export default function Contact() {
                   const Icon = item.icon;
                   const isPhone = item.href.startsWith('tel:');
                   const isEmail = item.href.startsWith('mailto:');
-                  
+
                   return (
                     <Card
                       key={index}
@@ -259,8 +401,8 @@ export default function Contact() {
                             </h3>
                             <a
                               href={item.href}
-                              target={item.title === 'Dirección' ? '_blank' : undefined}
-                              rel={item.title === 'Dirección' ? 'noopener noreferrer' : undefined}
+                              target={!isPhone && !isEmail ? '_blank' : undefined}
+                              rel={!isPhone && !isEmail ? 'noopener noreferrer' : undefined}
                               className="text-muted-foreground hover:text-accent transition-colors"
                               onClick={() => {
                                 if (isPhone) {
@@ -285,7 +427,8 @@ export default function Contact() {
               {/* Office Hours */}
               <Card className="border-border/50 shadow-soft">
                 <CardContent className="p-6">
-                  <h3 className="font-display font-normal text-foreground mb-4">
+                  <h3 className="font-display font-normal text-foreground mb-4 flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-accent" />
                     {t("contact.info.hours")}
                   </h3>
                   <div className="space-y-2 text-sm">
