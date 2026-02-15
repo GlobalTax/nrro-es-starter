@@ -70,6 +70,7 @@ import { DynamicLandingPage } from "./pages/DynamicLandingPage";
 import SitemapXML from "./pages/SitemapXML";
 import PresentationPreview from "./pages/PresentationPreview";
 import WhistleblowerChannel from "./pages/WhistleblowerChannel";
+import AsesoriaContable from "./pages/AsesoriaContable";
 import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 
@@ -173,6 +174,7 @@ const App = () => {
             <Route path="/en/resources" element={<Layout><Resources /></Layout>} />
             <Route path="/en/resources/:slug" element={<Layout><ResourceDetail /></Layout>} />
             {/* Special landings */}
+            <Route path="/es/asesoria-contable-barcelona" element={<Layout><AsesoriaContable /></Layout>} />
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/en/beckham-law" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
