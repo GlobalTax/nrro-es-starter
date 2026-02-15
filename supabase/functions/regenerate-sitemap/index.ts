@@ -5,7 +5,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const BASE_URL = 'https://int.nrro.es';
+function getBaseUrl(domain: string): string {
+  if (domain.includes('int.') || domain.includes('global.')) {
+    return 'https://int.nrro.es';
+  }
+  return 'https://nrro.es';
+}
 
 interface RouteConfig {
   es: string;
@@ -104,18 +109,18 @@ async function uploadSitemapToStorage(
   return urlData.publicUrl;
 }
 
-async function generateSitemap() {
+async function generateSitemap(domain: string) {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
   
-  console.log('🚀 Iniciando generación de sitemap...');
+  const BASE_URL = getBaseUrl(domain);
+  console.log(`🚀 Iniciando generación de sitemap para ${domain} (${BASE_URL})...`);
   
   const urls: SitemapUrl[] = [];
   const today = formatDate(new Date().toISOString());
   
   // 1. Agregar rutas estáticas
-  console.log('📄 Procesando rutas estáticas...');
   staticRoutes.forEach(route => {
     const alternates = [
       { lang: 'es', href: `${BASE_URL}${route.es}` },
@@ -123,34 +128,13 @@ async function generateSitemap() {
       { lang: 'en', href: `${BASE_URL}${route.en}` }
     ];
     
-    urls.push({
-      loc: `${BASE_URL}${route.es}`,
-      lastmod: today,
-      changefreq: route.changefreq,
-      priority: route.priority,
-      alternates
-    });
-    
-    urls.push({
-      loc: `${BASE_URL}${route.ca}`,
-      lastmod: today,
-      changefreq: route.changefreq,
-      priority: route.priority,
-      alternates
-    });
-    
-    urls.push({
-      loc: `${BASE_URL}${route.en}`,
-      lastmod: today,
-      changefreq: route.changefreq,
-      priority: route.priority,
-      alternates
-    });
+    urls.push({ loc: `${BASE_URL}${route.es}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
+    urls.push({ loc: `${BASE_URL}${route.ca}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
+    urls.push({ loc: `${BASE_URL}${route.en}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
   });
   console.log(`  ✅ ${urls.length} URLs estáticas agregadas`);
   
   // 2. Agregar servicios dinámicos
-  console.log('🔧 Procesando servicios...');
   const { data: services, error: servicesError } = await supabase
     .from('services')
     .select('slug_es, slug_ca, slug_en, updated_at')
@@ -163,45 +147,22 @@ async function generateSitemap() {
       const lastmod = formatDate(service.updated_at);
       const slugCa = service.slug_ca || service.slug_es;
       const slugEn = service.slug_en || service.slug_es;
-      
       const alternates = [
         { lang: 'es', href: `${BASE_URL}/servicios/${service.slug_es}` },
         { lang: 'ca', href: `${BASE_URL}/ca/serveis/${slugCa}` },
         { lang: 'en', href: `${BASE_URL}/en/services/${slugEn}` }
       ];
-      
-      urls.push({
-        loc: `${BASE_URL}/servicios/${service.slug_es}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/ca/serveis/${slugCa}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/en/services/${slugEn}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
+      urls.push({ loc: `${BASE_URL}/servicios/${service.slug_es}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urls.push({ loc: `${BASE_URL}/ca/serveis/${slugCa}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urls.push({ loc: `${BASE_URL}/en/services/${slugEn}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
     });
     console.log(`  ✅ ${services.length * 3} URLs de servicios agregadas`);
   }
   
-  // 3. Agregar blog posts dinámicos
-  console.log('📝 Procesando blog posts...');
+  // 3. Agregar blog posts dinámicos (sin slug_ca - no existe en la tabla)
   const { data: blogPosts, error: blogError } = await supabase
     .from('blog_posts')
-    .select('slug_es, slug_ca, slug_en, published_at, updated_at')
+    .select('slug_es, slug_en, published_at, updated_at')
     .eq('status', 'published');
   
   if (blogError) {
@@ -209,44 +170,18 @@ async function generateSitemap() {
   } else if (blogPosts) {
     blogPosts.forEach(post => {
       const lastmod = formatDate(post.updated_at || post.published_at);
-      const slugCa = post.slug_ca || post.slug_es;
       const slugEn = post.slug_en || post.slug_es;
-      
       const alternates = [
         { lang: 'es', href: `${BASE_URL}/blog/${post.slug_es}` },
-        { lang: 'ca', href: `${BASE_URL}/ca/blog/${slugCa}` },
         { lang: 'en', href: `${BASE_URL}/en/blog/${slugEn}` }
       ];
-      
-      urls.push({
-        loc: `${BASE_URL}/blog/${post.slug_es}`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: '0.8',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/ca/blog/${slugCa}`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: '0.8',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/en/blog/${slugEn}`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: '0.8',
-        alternates
-      });
+      urls.push({ loc: `${BASE_URL}/blog/${post.slug_es}`, lastmod, changefreq: 'weekly', priority: '0.8', alternates });
+      urls.push({ loc: `${BASE_URL}/en/blog/${slugEn}`, lastmod, changefreq: 'weekly', priority: '0.8', alternates });
     });
-    console.log(`  ✅ ${blogPosts.length * 3} URLs de blog posts agregadas`);
+    console.log(`  ✅ ${blogPosts.length * 2} URLs de blog posts agregadas`);
   }
   
   // 4. Agregar case studies dinámicos
-  console.log('📊 Procesando case studies...');
   const { data: caseStudies, error: casesError } = await supabase
     .from('case_studies')
     .select('slug_es, slug_ca, slug_en, published_at, updated_at')
@@ -255,58 +190,32 @@ async function generateSitemap() {
   if (casesError) {
     console.error('Error al obtener case studies:', casesError);
   } else if (caseStudies) {
-    caseStudies.forEach(caseStudy => {
-      const lastmod = formatDate(caseStudy.updated_at || caseStudy.published_at);
-      const slugCa = caseStudy.slug_ca || caseStudy.slug_es;
-      const slugEn = caseStudy.slug_en || caseStudy.slug_es;
-      
+    caseStudies.forEach(cs => {
+      const lastmod = formatDate(cs.updated_at || cs.published_at);
+      const slugCa = cs.slug_ca || cs.slug_es;
+      const slugEn = cs.slug_en || cs.slug_es;
       const alternates = [
-        { lang: 'es', href: `${BASE_URL}/casos-exito/${caseStudy.slug_es}` },
+        { lang: 'es', href: `${BASE_URL}/casos-exito/${cs.slug_es}` },
         { lang: 'ca', href: `${BASE_URL}/ca/casos-exit/${slugCa}` },
         { lang: 'en', href: `${BASE_URL}/en/case-studies/${slugEn}` }
       ];
-      
-      urls.push({
-        loc: `${BASE_URL}/casos-exito/${caseStudy.slug_es}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/ca/casos-exit/${slugCa}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
-      
-      urls.push({
-        loc: `${BASE_URL}/en/case-studies/${slugEn}`,
-        lastmod,
-        changefreq: 'monthly',
-        priority: '0.9',
-        alternates
-      });
+      urls.push({ loc: `${BASE_URL}/casos-exito/${cs.slug_es}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urls.push({ loc: `${BASE_URL}/ca/casos-exit/${slugCa}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urls.push({ loc: `${BASE_URL}/en/case-studies/${slugEn}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
     });
     console.log(`  ✅ ${caseStudies.length * 3} URLs de case studies agregadas`);
   }
   
   // 5. Generar XML
-  console.log('📦 Generando XML...');
   const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;
-  
   const xmlBody = urls.map(url => createUrlEntry(url)).join('\n');
   const xmlFooter = '\n</urlset>';
   const xmlContent = xmlHeader + xmlBody + xmlFooter;
   
-  console.log(`✅ Sitemap generado exitosamente!`);
-  console.log(`📊 Total de URLs: ${urls.length}`);
-  
+  console.log(`✅ Sitemap generado: ${urls.length} URLs`);
   return xmlContent;
 }
 
@@ -316,28 +225,21 @@ Deno.serve(async (req) => {
   }
   
   try {
-    console.log('🔄 Regenerando sitemap...');
+    console.log('🔄 Regenerando sitemaps para ambos dominios...');
     
-    // Generar XML
-    const xmlContent = await generateSitemap();
-    
-    // Crear cliente de Supabase para subir a Storage
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // Subir a Storage
-    const publicUrl = await uploadSitemapToStorage(
-      supabase, 
-      xmlContent
-    );
+    // Generate and upload sitemap for nrro.es
+    const xmlEs = await generateSitemap('nrro.es');
+    await uploadSitemapToStorage(supabase, xmlEs);
     
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: 'Sitemap regenerado y almacenado exitosamente',
-        url: publicUrl,
-        size: xmlContent.length,
+        size: xmlEs.length,
         timestamp: new Date().toISOString()
       }),
       { 
@@ -347,16 +249,9 @@ Deno.serve(async (req) => {
     );
   } catch (error) {
     console.error('❌ Error al generar sitemap:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: errorMessage
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500 
-      }
+      JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
 });
