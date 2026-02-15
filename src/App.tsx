@@ -73,6 +73,7 @@ import WhistleblowerChannel from "./pages/WhistleblowerChannel";
 import AsesoriaContable from "./pages/AsesoriaContable";
 import AsesoriaLaboral from "./pages/AsesoriaLaboral";
 import AsesoriaMercantil from "./pages/AsesoriaMercantil";
+import AbogadosBarcelona from "./pages/AbogadosBarcelona";
 import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 
@@ -179,6 +180,7 @@ const App = () => {
             <Route path="/es/asesoria-contable-barcelona" element={<Layout><AsesoriaContable /></Layout>} />
             <Route path="/es/asesoria-laboral-barcelona" element={<Layout><AsesoriaLaboral /></Layout>} />
             <Route path="/es/asesoria-mercantil-barcelona" element={<Layout><AsesoriaMercantil /></Layout>} />
+            <Route path="/es/abogados-barcelona" element={<Layout><AbogadosBarcelona /></Layout>} />
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/en/beckham-law" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
