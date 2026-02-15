@@ -37,8 +37,8 @@
     },
     "contactSubtitle": "Cuéntanos qué necesitas y te responderemos",
     "meta": {
-      "title": "Servicios",
-      "description": "Servicios fiscales, legales y estratégicos para empresas familiares en Barcelona: sucesión empresarial, compraventa, valoración y reestructuración. Solicita consulta."
+     "title": "Asesoría Fiscal en Barcelona | Servicios para Empresas y Autónomos",
+      "description": "Asesor fiscal en Barcelona para empresas, autónomos y particulares. IRPF, IVA, Impuesto de Sociedades, planificación fiscal internacional. +25 años. Consulta gratuita."
     },
     "hero": {
       "title": "Servicios",
@@ -64,8 +64,8 @@
   },
   "blog": {
     "meta": {
-      "title": "Blog - NRRO",
-      "description": "Blog jurídico y fiscal: análisis expertos sobre empresas familiares, compraventa de empresas, fiscalidad y sucesión empresarial en Barcelona. Lee nuestros insights.",
+      "title": "Blog Fiscal y Legal | Novedades 2026 | NRRO Barcelona",
+      "description": "Artículos sobre novedades fiscales, laborales y legales en España. Guías prácticas para empresas, autónomos y particulares en Barcelona.",
       "keywords": "blog jurídico, análisis legal, empresas familiares, compraventa empresas, fiscalidad, sucesión empresarial Barcelona"
     },
     "hero": {
@@ -114,8 +114,8 @@
   },
   "team": {
     "meta": {
-      "title": "Equipo",
-      "description": "Equipo de abogados y asesores fiscales especializados en empresas familiares en Barcelona. Expertos en M&A, sucesión empresarial y derecho societario. Conócenos."
+      "title": "Nuestro Equipo | +60 Profesionales | NRRO Navarro Tax & Legal",
+      "description": "Conoce al equipo de NRRO: abogados, asesores fiscales, economistas y profesionales especializados al servicio de empresas y particulares en Barcelona."
     },
     "hero": {
       "badge": "Equipo",
@@ -723,8 +723,8 @@
   },
   "leyBeckham": {
     "seo": {
-      "title": "Ley Beckham - Régimen Fiscal Especial para Impatriados en España",
-      "description": "Asesoría especializada en la Ley Beckham: reduce tu IRPF al 24% durante 6 años al trasladarte a España. Expertos en fiscalidad para impatriados en Barcelona.",
+      "title": "Ley Beckham 2026 | Régimen Impatriados España | NRRO Barcelona",
+      "description": "Expertos en Ley Beckham en Barcelona. Asesoramiento completo para profesionales extranjeros: requisitos, ventajas fiscales, solicitud y planificación.",
       "keywords": "ley beckham, régimen fiscal especial impatriados, IRPF 24%, fiscalidad españa, traslado a españa, impuestos impatriados barcelona"
     },
     "breadcrumb": "Ley Beckham",
@@ -1048,14 +1048,14 @@
   },
   "index": {
     "meta": {
-      "title": "Navarro Tax Legal | Asesoría Fiscal y Legal para Empresas Familiares",
-      "description": "Asesoramiento estratégico, fiscal y legal especializado en empresas familiares y grupos empresariales en Barcelona y Madrid."
+      "title": "NRRO - Asesoría Fiscal y Legal en Barcelona | +25 Años",
+      "description": "Asesoría fiscal, contable, laboral y legal para empresas en Barcelona. +25 años de experiencia, +60 profesionales. Primera consulta gratuita."
     }
   },
   "about": {
     "meta": {
-      "title": "Nosotros - Navarro Tax Legal",
-      "description": "25 años de experiencia asesorando a empresas familiares en Barcelona. Conoce nuestra historia, valores y equipo de profesionales.",
+      "title": "Sobre NRRO | Asesoría Líder en Barcelona | +60 Profesionales",
+      "description": "NRRO - Navarro Tax & Legal, despacho multidisciplinar en Barcelona con +25 años de experiencia. +60 profesionales especializados en fiscal, legal, laboral y mercantil.",
       "keywords": "nosotros, navarro tax legal, historia, valores, equipo, empresa familiar, Barcelona"
     },
     "cta": {
