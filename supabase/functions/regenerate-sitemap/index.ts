@@ -31,11 +31,11 @@ interface SitemapUrl {
 const staticRoutes: RouteConfig[] = [
   { es: '/', ca: '/ca/', en: '/en/', priority: '1.0', changefreq: 'weekly' },
   { es: '/servicios', ca: '/ca/serveis', en: '/en/services', priority: '0.9', changefreq: 'weekly' },
-  { es: '/nosotros', ca: '/ca/nosaltres', en: '/en/about', priority: '0.8', changefreq: 'monthly' },
-  { es: '/equipo', ca: '/ca/equip', en: '/en/team', priority: '0.8', changefreq: 'monthly' },
+  { es: '/nosotros', ca: '/ca/nosaltres', en: '/en/about', priority: '0.5', changefreq: 'monthly' },
+  { es: '/equipo', ca: '/ca/equip', en: '/en/team', priority: '0.5', changefreq: 'monthly' },
   { es: '/casos-exito', ca: '/ca/casos-exit', en: '/en/case-studies', priority: '0.9', changefreq: 'weekly' },
-  { es: '/blog', ca: '/ca/blog', en: '/en/blog', priority: '0.9', changefreq: 'daily' },
-  { es: '/contacto', ca: '/ca/contacte', en: '/en/contact', priority: '0.8', changefreq: 'monthly' },
+  { es: '/blog', ca: '/ca/blog', en: '/en/blog', priority: '0.6', changefreq: 'daily' },
+  { es: '/contacto', ca: '/ca/contacte', en: '/en/contact', priority: '0.6', changefreq: 'monthly' },
   { es: '/carreras', ca: '/ca/carreres', en: '/en/careers', priority: '0.7', changefreq: 'weekly' },
   { es: '/metodologia', ca: '/ca/metodologia', en: '/en/methodology', priority: '0.7', changefreq: 'monthly' },
   { es: '/ley-beckham', ca: '/ca/llei-beckham', en: '/en/beckham-law', priority: '0.8', changefreq: 'monthly' },
@@ -44,6 +44,27 @@ const staticRoutes: RouteConfig[] = [
   { es: '/aviso-legal', ca: '/ca/avis-legal', en: '/en/legal-notice', priority: '0.5', changefreq: 'yearly' },
   { es: '/cookies', ca: '/ca/cookies', en: '/en/cookies', priority: '0.5', changefreq: 'yearly' },
   { es: '/condiciones-contratacion', ca: '/ca/condicions-contractacio', en: '/en/terms', priority: '0.5', changefreq: 'yearly' },
+];
+
+// Service landing pages (ES-only, no multilingual alternates generated via staticRoutes)
+const serviceLandingPages = [
+  { path: '/es/asesoria-fiscal-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/asesoria-contable-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/asesoria-laboral-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/asesoria-mercantil-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/abogados-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/orientacion-global', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/compliance-penal', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/empresa-familiar', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/due-diligence', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/proteccion-datos-rgpd', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/segunda-oportunidad', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/constitucion-sociedades', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/sobre-navarro', priority: '0.5', changefreq: 'monthly' },
+  { path: '/es/contacto', priority: '0.6', changefreq: 'monthly' },
+  { path: '/en/tax-advisor-barcelona', priority: '0.8', changefreq: 'monthly' },
+  { path: '/en/beckham-law-spain', priority: '0.8', changefreq: 'monthly' },
+  { path: '/en/services/accounting-and-labor-consulting', priority: '0.7', changefreq: 'monthly' },
 ];
 
 function formatDate(date: string | null | undefined): string {
@@ -133,6 +154,24 @@ async function generateSitemap(domain: string) {
     urls.push({ loc: `${BASE_URL}${route.en}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
   });
   console.log(`  ✅ ${urls.length} URLs estáticas agregadas`);
+  
+  // 1b. Add service landing pages (single-language, with hreflang pairs where applicable)
+  const hreflangPairs: Record<string, string> = {
+    '/es/asesoria-fiscal-barcelona': '/en/tax-advisor-barcelona',
+    '/en/tax-advisor-barcelona': '/es/asesoria-fiscal-barcelona',
+  };
+  serviceLandingPages.forEach(page => {
+    const alternates: Array<{ lang: string; href: string }> = [];
+    const pair = hreflangPairs[page.path];
+    if (pair) {
+      const lang = page.path.startsWith('/en/') ? 'en' : 'es';
+      const pairLang = lang === 'es' ? 'en' : 'es';
+      alternates.push({ lang, href: `${BASE_URL}${page.path}` });
+      alternates.push({ lang: pairLang, href: `${BASE_URL}${pair}` });
+    }
+    urls.push({ loc: `${BASE_URL}${page.path}`, lastmod: today, changefreq: page.changefreq, priority: page.priority, alternates: alternates.length > 0 ? alternates : undefined });
+  });
+  console.log(`  ✅ ${serviceLandingPages.length} URLs de landing pages agregadas`);
   
   // 2. Agregar servicios dinámicos
   const { data: services, error: servicesError } = await supabase
