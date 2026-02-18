@@ -1204,12 +1204,20 @@ export type Database = {
       crm_clients: {
         Row: {
           assigned_to: string | null
+          caja: number | null
           city: string | null
           client_type: string
+          comentarios: string | null
+          contact_email: string | null
+          contact_linkedin: string | null
+          contact_person: string | null
+          contact_position: string | null
           country: string | null
           created_at: string
+          deuda: number | null
           email: string | null
           estimated_value: number | null
+          financial_data: Json | null
           fiscal_address: string | null
           id: string
           name: string
@@ -1219,6 +1227,7 @@ export type Database = {
           phone: string | null
           pipeline_stage: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code: string | null
+          ranking_position: number | null
           sector: string | null
           source: string | null
           source_site: Database["public"]["Enums"]["site_source"] | null
@@ -1230,12 +1239,20 @@ export type Database = {
         }
         Insert: {
           assigned_to?: string | null
+          caja?: number | null
           city?: string | null
           client_type?: string
+          comentarios?: string | null
+          contact_email?: string | null
+          contact_linkedin?: string | null
+          contact_person?: string | null
+          contact_position?: string | null
           country?: string | null
           created_at?: string
+          deuda?: number | null
           email?: string | null
           estimated_value?: number | null
+          financial_data?: Json | null
           fiscal_address?: string | null
           id?: string
           name: string
@@ -1245,6 +1262,7 @@ export type Database = {
           phone?: string | null
           pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code?: string | null
+          ranking_position?: number | null
           sector?: string | null
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
@@ -1256,12 +1274,20 @@ export type Database = {
         }
         Update: {
           assigned_to?: string | null
+          caja?: number | null
           city?: string | null
           client_type?: string
+          comentarios?: string | null
+          contact_email?: string | null
+          contact_linkedin?: string | null
+          contact_person?: string | null
+          contact_position?: string | null
           country?: string | null
           created_at?: string
+          deuda?: number | null
           email?: string | null
           estimated_value?: number | null
+          financial_data?: Json | null
           fiscal_address?: string | null
           id?: string
           name?: string
@@ -1271,6 +1297,7 @@ export type Database = {
           phone?: string | null
           pipeline_stage?: Database["public"]["Enums"]["crm_pipeline_stage"]
           postal_code?: string | null
+          ranking_position?: number | null
           sector?: string | null
           source?: string | null
           source_site?: Database["public"]["Enums"]["site_source"] | null
@@ -3481,6 +3508,92 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      project_boards: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          deadline: string | null
+          description: string | null
+          id: string
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_tasks: {
+        Row: {
+          assignee: string | null
+          board_id: string
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          priority: string
+          sort_order: number
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee?: string | null
+          board_id: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string
+          sort_order?: number
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee?: string | null
+          board_id?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string
+          sort_order?: number
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_tasks_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "project_boards"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       proposal_services: {
         Row: {
