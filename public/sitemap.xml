@@ -549,4 +549,250 @@
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
+
+  <!-- Blog articles (ES) -->
+  <url>
+    <loc>https://nrro.es/blog/novedades-fiscales-2026-cambios-clave-y-efectos-practicos</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/novedades-fiscales-2026-cambios-clave-y-efectos-practicos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/2026-tax-updates-key-changes-and-practical-implications"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/principales-medidas-fiscales-2026-en-espana-para-empresarios</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/principales-medidas-fiscales-2026-en-espana-para-empresarios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/key-tax-measures-for-2026-in-spain-for-businesses-and-economy"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/ley-beckham-2025-guia-completa-profesionales-extranjeros</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/due-diligence-errores-operacion-ma</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/holding-familiar-estructura-ventajas-fiscales</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/pactos-socios-empresa-familiar</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/ertes-despidos-colectivos-guia-legal-empresas-2025</loc>
+    <lastmod>2025-12-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/retribucion-administradores-optimizacion-fiscal</loc>
+    <lastmod>2025-12-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/inspeccion-hacienda-como-prepararse-que-esperar</loc>
+    <lastmod>2025-12-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/constitucion-sociedades-espana-sl-vs-sa-2025</loc>
+    <lastmod>2025-12-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/registro-jornada-obligaciones-sanciones-2025</loc>
+    <lastmod>2025-12-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/valoracion-empresas-metodos-guia-practica</loc>
+    <lastmod>2025-12-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/verifactu-como-elegir-software-contable-compatible</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/verifactu-como-elegir-software-contable-compatible"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/verifactu-how-to-choose-compatible-accounting-software"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/verifactu-mas-alla-de-la-sancion-la-reputacion-empresarial</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/verifactu-mas-alla-de-la-sancion-la-reputacion-empresarial"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/verifactu-beyond-the-sanction-corporate-reputation"/>
+  </url>
+
+  <!-- Blog articles (EN - international) -->
+  <url>
+    <loc>https://nrro.es/blog/registro-mercantil-espana-guia</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/registro-mercantil-espana-guia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/mercantile-registry-spain-guide"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/consideraciones-fiscales-lanzar-negocio</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/consideraciones-fiscales-lanzar-negocio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/tax-considerations-launching-spain"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/errores-comunes-constituir-empresa-espana</loc>
+    <lastmod>2026-01-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/errores-comunes-constituir-empresa-espana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/common-mistakes-setting-up-spain"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/obligaciones-nomina-nuevas-empresas</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/obligaciones-nomina-nuevas-empresas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/payroll-obligations-new-spanish-companies"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/novedades-laborales-2026</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/novedades-laborales-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/spanish-labour-law-updates-2026"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/nie-requisitos-fiscales-administradores</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/nie-requisitos-fiscales-administradores"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/nie-tax-id-requirements-foreign-directors"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/cronograma-registro-empresas-espana</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/cronograma-registro-empresas-espana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/spain-company-registration-timeline"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/abrir-cuenta-bancaria-espana-inversor</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/abrir-cuenta-bancaria-espana-inversor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/open-bank-account-spain-foreign-investor"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/registro-mercantil-2026</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/registro-mercantil-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/spanish-commercial-registry-requirements-2026"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/forma-juridica-empresa-espana</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/forma-juridica-empresa-espana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/legal-form-spain-company"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/calendario-fiscal-2026</loc>
+    <lastmod>2025-12-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/calendario-fiscal-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/2026-spanish-tax-calendar-international-businesses"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/contratos-mercantiles</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/contratos-mercantiles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/commercial-contracts-spain-legal"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/permisos-trabajo</loc>
+    <lastmod>2025-12-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/permisos-trabajo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/work-permits-immigration-spain"/>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/incentivos-fiscales-id</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/incentivos-fiscales-id"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/spain-tax-incentives-rd-innovation"/>
+  </url>
+
+  <!-- Blog articles (Audit) -->
+  <url>
+    <loc>https://nrro.es/blog/guia-completa-auditoria-cuentas-anuales-2025</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/csrd-esrs-reporte-sostenibilidad-guia-completa</loc>
+    <lastmod>2026-01-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/due-diligence-financiera-claves-operaciones-ma</loc>
+    <lastmod>2026-01-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/auditoria-subvenciones-publicas-evitar-sanciones</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/huella-carbono-empresarial-preparacion-verificacion</loc>
+    <lastmod>2026-01-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nrro.es/blog/control-interno-coso-guia-practica-directivos</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
