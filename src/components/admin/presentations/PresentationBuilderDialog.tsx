@@ -106,6 +106,7 @@ export function PresentationBuilderDialog({
   const [clientLogoPreview, setClientLogoPreview] = useState<string | null>(null);
   const [clientLogoFile, setClientLogoFile] = useState<File | null>(null);
   const [ctaType, setCtaType] = useState('strategic_conversation');
+  const [customTagline, setCustomTagline] = useState('');
 
   // Step 2: Services
   const [selectedServices, setSelectedServices] = useState<ServiceSummary[]>([]);
@@ -260,6 +261,7 @@ export function PresentationBuilderDialog({
         presentation_objective: presentationObjective,
         quality_mode: qualityMode,
         cta_type: ctaType,
+        cover_tagline: customTagline || undefined,
       });
 
       // Generate PDF
@@ -295,6 +297,7 @@ export function PresentationBuilderDialog({
     setSelectedCaseStudies([]);
     setIncludeStats(true);
     setCustomIntro('');
+    setCustomTagline('');
     onOpenChange(false);
   };
 
@@ -503,6 +506,19 @@ export function PresentationBuilderDialog({
                   }}
                   className="max-w-md"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="customTagline">Tagline de portada (opcional)</Label>
+                <Input
+                  id="customTagline"
+                  placeholder="Ej: Asesoramiento integral para la empresa familiar"
+                  value={customTagline}
+                  onChange={(e) => setCustomTagline(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Si se deja vacío, se generará automáticamente según el tipo de presentación y audiencia
+                </p>
               </div>
 
               <Separator />
