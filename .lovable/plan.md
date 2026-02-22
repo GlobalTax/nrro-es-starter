@@ -1,33 +1,32 @@
 
+## Añadir campo "Tagline personalizado" al wizard de presentaciones
 
-## Añadir URLs de blog al sitemap dinámicamente
+### Resumen
 
-### Estado actual
+El campo `cover_tagline` ya existe en la base de datos, en el hook (`useGeneratedPresentations.ts`) y en la Edge Function (`generate-presentation-pdf`). La Edge Function ya prioriza el tagline personalizado sobre el automatico. Solo falta exponer el campo en el wizard UI.
 
-Las dos Edge Functions (`generate-sitemap` y `regenerate-sitemap`) **ya consultan la tabla `blog_posts`** y generan URLs dinamicas con `hreflang` ES/EN. Esto ya funciona correctamente.
+### Cambios
 
-El archivo estatico `public/sitemap.xml` sirve como fallback inmediato pero **no incluye URLs individuales de articulos**.
+**Archivo: `PresentationBuilderDialog.tsx`**
 
-### Plan
+1. Añadir estado `customTagline` (junto a los demas estados del Step 1, linea ~108):
+   ```ts
+   const [customTagline, setCustomTagline] = useState('');
+   ```
 
-1. **Actualizar `public/sitemap.xml`** con las ~30 URLs de blog posts publicados actualmente (ES + EN donde exista `slug_en`), con `priority 0.6`, `changefreq yearly`, y `hreflang` alternates.
+2. Añadir el campo en el Step 1 (Configuracion), despues del logo del cliente (~linea 506), con un `Input` o `Textarea`:
+   - Label: "Tagline de portada (opcional)"
+   - Placeholder: "Ej: Asesoramiento integral para la empresa familiar"
+   - Texto de ayuda: "Si se deja vacio, se generara automaticamente segun el tipo de presentacion y audiencia"
 
-2. **Forzar regeneracion del sitemap dinamico** invocando la edge function `regenerate-sitemap` para que el sitemap almacenado en Storage este actualizado con los ultimos articulos.
+3. Pasar `cover_tagline: customTagline || undefined` en `handleGenerate` (~linea 245-263), dentro del objeto que se envia a `createMutation.mutateAsync`.
 
-### Detalles tecnicos
+4. Resetear `customTagline` a `''` en `handleClose` (~linea 279-298).
 
-- Se añadiran las URLs de los ~30 articulos publicados al XML estatico con formato:
-  ```xml
-  <url>
-    <loc>https://nrro.es/blog/slug-del-articulo</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://nrro.es/blog/slug-es"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nrro.es/en/blog/slug-en"/>
-  </url>
-  ```
-- Solo se incluiran articulos con `status = 'published'`
-- Los articulos sin `slug_en` solo tendran la URL en español
-- Se mantendra la coherencia con la logica de `source_site` ya implementada en las edge functions
+5. Opcionalmente, mostrar el tagline en el Step 4 (Preview) para que el usuario vea que se usara.
 
+### Sin cambios necesarios en
+
+- `useGeneratedPresentations.ts` — ya acepta `cover_tagline`
+- `generate-presentation-pdf` Edge Function — ya lo consume con fallback automatico
+- Base de datos — la columna `cover_tagline` ya existe
