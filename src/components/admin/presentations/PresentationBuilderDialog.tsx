@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -129,6 +129,37 @@ export function PresentationBuilderDialog({
   const generatePdfMutation = useGeneratePresentationPdf();
 
   const services = servicesData?.services || [];
+
+  // Re-sync selected items when language changes
+  useEffect(() => {
+    if (selectedServices.length > 0 && services.length > 0) {
+      setSelectedServices(prev => prev.map(sel => {
+        const fresh = services.find((s: any) => s.id === sel.id);
+        if (!fresh) return sel;
+        return { ...sel, name: fresh.name, area: fresh.area, description: fresh.description, features: fresh.features || [], benefits: fresh.benefits || [] };
+      }));
+    }
+  }, [language, services]);
+
+  useEffect(() => {
+    if (selectedTeamMembers.length > 0 && teamMembers && teamMembers.length > 0) {
+      setSelectedTeamMembers(prev => prev.map(sel => {
+        const fresh = teamMembers.find((m: any) => m.id === sel.id);
+        if (!fresh) return sel;
+        return { ...sel, position: fresh.position, bio: fresh.bio, specialization: fresh.specialization };
+      }));
+    }
+  }, [language, teamMembers]);
+
+  useEffect(() => {
+    if (selectedCaseStudies.length > 0 && caseStudies && caseStudies.length > 0) {
+      setSelectedCaseStudies(prev => prev.map(sel => {
+        const fresh = caseStudies.find((c: any) => c.id === sel.id);
+        if (!fresh) return sel;
+        return { ...sel, title: fresh.title, results_summary: fresh.results_summary, challenge: fresh.challenge, solution: fresh.solution };
+      }));
+    }
+  }, [language, caseStudies]);
 
   // Group services by area
   const servicesByArea = services.reduce((acc: Record<string, typeof services>, service: any) => {
