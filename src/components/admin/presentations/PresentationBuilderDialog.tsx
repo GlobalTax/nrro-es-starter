@@ -41,6 +41,8 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { ImageUpload } from '../ImageUpload';
+import { PresentationSlidePreview } from './PresentationSlidePreview';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { uploadCompanyLogo } from '@/lib/uploadCompanyLogo';
 import { useServicesSearch } from '@/hooks/useServicesSearch';
 import { useTeamMembers } from '@/hooks/useTeamMembers';
@@ -770,102 +772,87 @@ export function PresentationBuilderDialog({
                 )}
               </div>
 
-              <div className="bg-muted/50 rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold">Resumen de la presentación</h3>
+              {/* Live Preview */}
+              <PresentationSlidePreview
+                data={{
+                  client_name: clientName,
+                  client_company: clientCompany || null,
+                  client_logo_url: clientLogoPreview || null,
+                  sector: sector || null,
+                  language,
+                  format,
+                  services_included: selectedServices,
+                  team_members_included: selectedTeamMembers,
+                  case_studies_included: selectedCaseStudies,
+                  include_stats: includeStats,
+                  custom_intro: customIntro || null,
+                  presentation_type: presentationType,
+                  audience_type: audienceType,
+                  presentation_objective: presentationObjective,
+                  quality_mode: qualityMode,
+                  cover_tagline: customTagline || null,
+                  cta_type: ctaType,
+                }}
+              />
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-muted-foreground">Cliente</p>
-                    <p className="font-medium">{clientName}</p>
-                    {clientCompany && <p className="text-muted-foreground">{clientCompany}</p>}
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">Configuración</p>
-                    <p className="font-medium">
-                      {LANGUAGES.find((l) => l.value === language)?.label} ·{' '}
-                      {FORMATS.find((f) => f.value === format)?.label}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-muted-foreground">Tipo</p>
-                    <p className="font-medium">
-                      {PRESENTATION_TYPES.find((t) => t.value === presentationType)?.label}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">Audiencia</p>
-                    <p className="font-medium">
-                      {AUDIENCE_TYPES.find((t) => t.value === audienceType)?.label}
-                    </p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <p className="text-muted-foreground text-sm mb-2">
-                    Servicios incluidos ({selectedServices.length})
-                  </p>
-                  <div className="flex flex-wrap gap-1">
-                    {selectedServices.map((s) => (
-                      <Badge key={s.id} variant="secondary">
-                        {s.name}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {selectedTeamMembers.length > 0 && (
-                  <div>
-                    <p className="text-muted-foreground text-sm mb-2">
-                      Equipo ({selectedTeamMembers.length})
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedTeamMembers.map((m) => (
-                        <Badge key={m.id} variant="outline">
-                          {m.name}
-                        </Badge>
-                      ))}
+              {/* Collapsible summary */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-full justify-center py-2">
+                  <FileText className="h-4 w-4" />
+                  Ver resumen de configuración
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-4 mt-2">
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-muted-foreground">Cliente</p>
+                        <p className="font-medium">{clientName}</p>
+                        {clientCompany && <p className="text-muted-foreground">{clientCompany}</p>}
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Configuración</p>
+                        <p className="font-medium">
+                          {LANGUAGES.find((l) => l.value === language)?.label} ·{' '}
+                          {FORMATS.find((f) => f.value === format)?.label}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )}
-
-                {selectedCaseStudies.length > 0 && (
-                  <div>
-                    <p className="text-muted-foreground text-sm mb-2">
-                      Casos de éxito ({selectedCaseStudies.length})
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedCaseStudies.map((c) => (
-                        <Badge key={c.id} variant="outline">
-                          {c.title}
-                        </Badge>
-                      ))}
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-muted-foreground">Tipo</p>
+                        <p className="font-medium">{PRESENTATION_TYPES.find((t) => t.value === presentationType)?.label}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Audiencia</p>
+                        <p className="font-medium">{AUDIENCE_TYPES.find((t) => t.value === audienceType)?.label}</p>
+                      </div>
                     </div>
+                    <Separator />
+                    <div>
+                      <p className="text-muted-foreground text-sm mb-2">Servicios ({selectedServices.length})</p>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedServices.map((s) => <Badge key={s.id} variant="secondary">{s.name}</Badge>)}
+                      </div>
+                    </div>
+                    {selectedTeamMembers.length > 0 && (
+                      <div>
+                        <p className="text-muted-foreground text-sm mb-2">Equipo ({selectedTeamMembers.length})</p>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedTeamMembers.map((m) => <Badge key={m.id} variant="outline">{m.name}</Badge>)}
+                        </div>
+                      </div>
+                    )}
+                    {selectedCaseStudies.length > 0 && (
+                      <div>
+                        <p className="text-muted-foreground text-sm mb-2">Casos ({selectedCaseStudies.length})</p>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedCaseStudies.map((c) => <Badge key={c.id} variant="outline">{c.title}</Badge>)}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-
-                <div className="flex items-center gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${includeStats ? 'bg-green-500' : 'bg-muted'}`} />
-                    <span>Estadísticas</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${customIntro ? 'bg-green-500' : 'bg-muted'}`} />
-                    <span>Intro personalizada</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
-                <FileText className="h-12 w-12 mx-auto text-primary mb-2" />
-                <p className="text-sm text-muted-foreground">
-                  La presentación se generará con narrativa adaptativa según el contexto seleccionado
-                </p>
-              </div>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
           )}
         </ScrollArea>
