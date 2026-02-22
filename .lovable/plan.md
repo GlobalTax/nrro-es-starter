@@ -1,80 +1,55 @@
 
+## Exportar presentacion en ingles desde el wizard
 
-## Vista previa en vivo de la presentacion en el wizard
+### Situacion actual
 
-### Resumen
+El wizard ya tiene un selector de idioma (es/en/ca) en el Step 1, y toda la infraestructura multilingue esta lista:
 
-Crear un componente de preview que renderice las slides de la presentacion directamente en el navegador, dentro del Step 4 del wizard, usando la misma logica HTML/CSS que la Edge Function `generate-presentation-pdf`. Esto permite al usuario ver como quedara la presentacion antes de generar el PDF.
+- `generatePresentationHTML.ts` tiene TODOS los textos estaticos traducidos (taglines, diferenciadores, KPIs, valores, metodologia, CTAs, traducciones UI) en es/en/ca
+- Los hooks `useServicesSearch`, `useTeamMembers` y `useCaseStudies` ya aceptan `language` y devuelven datos localizados desde la BD
+- El wizard ya pasa `language` a estos hooks (lineas 123-125)
 
-### Arquitectura
+### Problema
 
-La Edge Function contiene una funcion `generateHTML()` de ~1300 lineas que produce HTML completo con CSS embebido. La estrategia es:
+Cuando el usuario selecciona servicios, equipo o casos en un idioma (ej. espanol) y luego cambia el idioma a ingles, los items **ya seleccionados** conservan los textos del idioma original porque se almacenan como copia en el estado (`selectedServices`, `selectedTeamMembers`, `selectedCaseStudies`).
 
-1. Extraer la logica de generacion de HTML a un archivo compartido en el frontend
-2. Renderizar el HTML resultante en un iframe escalado dentro del Step 4
-3. El usuario ve un carrusel de slides navegable antes de hacer clic en "Generar PDF"
+### Solucion
 
-### Archivos nuevos
+Actualizar `PresentationBuilderDialog.tsx` para re-sincronizar los textos de los items seleccionados cuando cambie el idioma. Al cambiar `language`, se recalculan los items seleccionados usando los datos recien cargados del hook (que ya vienen en el nuevo idioma).
 
-**`src/lib/generatePresentationHTML.ts`**
-- Portar la funcion `generateHTML()` y todos los datos estaticos (taglines, traducciones, diferenciadores, KPIs, valores, logos SVG, CTAs, etc.) desde `supabase/functions/generate-presentation-pdf/index.ts`
-- Exportar como `generatePresentationHTML(params)` que acepta los mismos campos que el wizard ya tiene en estado
-- Adaptar los tipos (usar los mismos interfaces `ServiceSummary`, `TeamMemberSummary`, etc. que ya existen en `useGeneratedPresentations.ts`)
+### Cambios en `PresentationBuilderDialog.tsx`
 
-**`src/components/admin/presentations/PresentationSlidePreview.tsx`**
-- Componente que recibe los datos del wizard y genera el HTML con `generatePresentationHTML()`
-- Renderiza un iframe con `srcDoc={html}` escalado al contenedor (similar a `PresentationPreview.tsx`)
-- Incluye navegacion entre slides (anterior/siguiente) contando las paginas `.page` del HTML
-- Controles: flechas de navegacion, indicador de pagina actual (e.g. "3 / 12"), zoom in/out opcional
-- El iframe se escala con `transform: scale()` para caber en el espacio del dialog (~500px de ancho)
+1. **Importar `useEffect`** (anadirlo al import de React si no esta)
 
-### Cambios en archivos existentes
+2. **Anadir un `useEffect`** que observe cambios en `language` y en los datos cargados (`services`, `teamMembers.data`, `caseStudies.data`). Cuando cambien:
+   - Recorrer `selectedServices` y para cada item, buscar su `id` en el array `services` (ya localizado). Si lo encuentra, actualizar `name`, `area`, `description`, `features`, `benefits` con los valores del nuevo idioma. Si no lo encuentra, mantener el original.
+   - Hacer lo mismo con `selectedTeamMembers` cruzando con `teamMembers.data` (actualizar `position`, `bio`, `specialization`)
+   - Hacer lo mismo con `selectedCaseStudies` cruzando con `caseStudies.data` (actualizar `title`, `results_summary`, `challenge`, `solution`)
 
-**`src/components/admin/presentations/PresentationBuilderDialog.tsx`**
-- Importar `PresentationSlidePreview`
-- En el Step 4, reemplazar el bloque estatico de resumen (lineas 731-869) por dos secciones:
-  1. La tarjeta de puntuacion de calidad (mantener tal cual, lineas 733-771)
-  2. El nuevo componente `PresentationSlidePreview` que recibe todos los estados del wizard como props
-- El resumen textual (cliente, servicios, equipo, etc.) se puede mover debajo del preview o dentro de un Collapsible
+3. **Sin cambios en la UI**: el selector de idioma ya existe y funciona. Al seleccionar "English", los datos se recargan, el effect re-sincroniza los seleccionados, y el preview se regenera automaticamente en ingles.
 
-### Detalles tecnicos
+### Detalle tecnico del useEffect
 
-**Escalado del iframe:**
 ```text
-+----------------------------------+
-|  Dialog (~700px ancho)           |
-|  +----------------------------+  |
-|  | Quality Score Card         |  |
-|  +----------------------------+  |
-|  | +------------------------+ |  |
-|  | | iframe (srcDoc)        | |  |
-|  | | 1920x1080 o 210x297mm  | |  |
-|  | | scale(0.33)            | |  |
-|  | +------------------------+ |  |
-|  | [<]  Slide 3 / 12  [>]    |  |
-|  +----------------------------+  |
-|  | Resumen (collapsible)      |  |
-|  +----------------------------+  |
-+----------------------------------+
+useEffect cuando [language, services, teamMembers, caseStudies] cambian:
+  - Para cada servicio seleccionado:
+      buscar en services[] por id
+      si existe -> actualizar name, area, description, features, benefits
+  - Para cada team member seleccionado:
+      buscar en teamMembers[] por id
+      si existe -> actualizar position, bio, specialization
+  - Para cada case study seleccionado:
+      buscar en caseStudies[] por id
+      si existe -> actualizar title, results_summary, challenge, solution
 ```
 
-- Para formato horizontal (1920x1080): escalar a ~600px de ancho -> `scale(0.3125)`
-- Para formato vertical (210mm/794px x 297mm/1123px): escalar a ~400px de ancho -> `scale(0.50)`
-- El contenedor del iframe tiene altura fija proporcional y `overflow: hidden`
+### Archivos afectados
 
-**Navegacion entre slides:**
-- Inyectar un script en el HTML que expone `window.slideCount` y permite scroll a slide N via `window.goToSlide(n)`
-- O alternativamente, usar CSS scroll-snap en el iframe para navegar entre `.page` divs
-- Comunicacion iframe <-> parent via `postMessage`
+- `src/components/admin/presentations/PresentationBuilderDialog.tsx` -- unico archivo a modificar
 
-**Datos que se pasan al preview:**
-- Todos los estados del wizard ya disponibles: `clientName`, `clientCompany`, `language`, `format`, `presentationType`, `audienceType`, `selectedServices`, `selectedTeamMembers`, `selectedCaseStudies`, `includeStats`, `customIntro`, `customTagline`, `ctaType`, `qualityMode`
-- Se construye un objeto `GeneratedPresentation` mock con estos datos y se pasa a `generatePresentationHTML()`
+### Sin cambios en
 
-### Consideraciones
-
-- La generacion de HTML es puramente en el cliente (sin llamada a la Edge Function), asi que es instantanea
-- El HTML generado en preview sera identico al que produce la Edge Function porque usa la misma logica
-- Si en el futuro se modifica la Edge Function, habra que sincronizar `generatePresentationHTML.ts` -- alternativamente se podria hacer que la Edge Function tambien use este archivo compartido, pero eso requiere cambiar la arquitectura de deploy
-- El preview se regenera cada vez que el usuario llega al Step 4 o cambia configuracion
-
+- `src/lib/generatePresentationHTML.ts` -- ya soporta es/en/ca
+- `supabase/functions/generate-presentation-pdf/index.ts` -- ya genera en el idioma indicado
+- Hooks de datos -- ya aceptan `language`
+- Base de datos -- columnas multilingues ya existen
