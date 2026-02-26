@@ -2582,6 +2582,51 @@ export type Database = {
           },
         ]
       }
+      marketing_audits: {
+        Row: {
+          category_scores: Json | null
+          checklist_data: Json | null
+          created_at: string
+          created_by: string | null
+          global_score: number | null
+          id: string
+          notes: Json | null
+          quick_wins: Json | null
+          raw_analysis: Json | null
+          recommendations: Json | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          category_scores?: Json | null
+          checklist_data?: Json | null
+          created_at?: string
+          created_by?: string | null
+          global_score?: number | null
+          id?: string
+          notes?: Json | null
+          quick_wins?: Json | null
+          raw_analysis?: Json | null
+          recommendations?: Json | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          category_scores?: Json | null
+          checklist_data?: Json | null
+          created_at?: string
+          created_by?: string | null
+          global_score?: number | null
+          id?: string
+          notes?: Json | null
+          quick_wins?: Json | null
+          raw_analysis?: Json | null
+          recommendations?: Json | null
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       media_files: {
         Row: {
           alt_text: string | null

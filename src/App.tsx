@@ -77,6 +77,7 @@ import AbogadosBarcelona from "./pages/AbogadosBarcelona";
 import EmpresaFamiliar from "./pages/EmpresaFamiliar";
 import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
+import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
 
 const queryClient = new QueryClient();
 
@@ -239,6 +240,7 @@ const App = () => {
               <Route path="hub" element={<AdminToolsHub />} />
               <Route path="whistleblower" element={<AdminWhistleblower />} />
               <Route path="topbar" element={<AdminTopBarSettings />} />
+              <Route path="marketing-audit" element={<AdminMarketingAudit />} />
               <Route
                 path="users"
                 element={
