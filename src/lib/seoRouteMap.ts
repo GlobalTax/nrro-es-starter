@@ -227,6 +227,53 @@ export const seoRouteMap: Record<string, SeoRouteData> = {
     schemaType: 'AboutPage',
   },
 
+  '/es/abogados-herencias-barcelona': {
+    title: 'Abogados de Herencias en Barcelona — Sucesiones y Testamentos | NRRO',
+    description: 'Abogados especializados en herencias en Barcelona: aceptación de herencia, impuesto de sucesiones, testamentos, partición hereditaria y reclamación de legítima.',
+    canonical: `${BASE}/es/abogados-herencias-barcelona`,
+    keywords: 'abogados herencias barcelona, herencias barcelona, impuesto sucesiones barcelona, testamentos abogado',
+  },
+
+  // English landings
+  '/en/company-setup-calculator': {
+    title: 'Company Setup Cost Calculator — Spain Business Registration | NRRO',
+    description: 'Calculate the costs of setting up a company in Spain. Interactive calculator with notary fees, taxes, registration costs and professional fees.',
+    canonical: `${BASE}/en/company-setup-calculator`,
+    keywords: 'company setup calculator spain, business registration cost spain, SL formation cost',
+  },
+  '/en/nie-spain-foreigners': {
+    title: 'NIE Spain for Foreigners — How to Get Your NIE Number | NRRO',
+    description: 'Complete guide to obtaining your NIE number in Spain. Requirements, process, documents and professional assistance for foreigners.',
+    canonical: `${BASE}/en/nie-spain-foreigners`,
+    keywords: 'NIE spain, NIE number foreigners, get NIE spain, foreigner identification number',
+  },
+  '/en/startup-company-setup-spain': {
+    title: 'Startup Company Setup in Spain — Tech & Innovation | NRRO',
+    description: 'Set up your tech startup in Spain: Startup Act benefits, tax incentives for R&D, visa for entrepreneurs and fast-track registration.',
+    canonical: `${BASE}/en/startup-company-setup-spain`,
+    keywords: 'startup spain, tech company setup spain, startup act spain, entrepreneur visa spain',
+  },
+  '/en/fast-company-registration-spain': {
+    title: 'Fast Company Registration in Spain — Express Setup | NRRO',
+    description: 'Register your company in Spain in record time. Express SL formation, PAE fast-track, digital incorporation and same-day NIF.',
+    canonical: `${BASE}/en/fast-company-registration-spain`,
+    keywords: 'fast company registration spain, express company setup, quick SL formation spain',
+  },
+
+  // Other landings
+  '/orquest-kairoshr': {
+    title: 'Orquest + KairosHR — Solución Integral de Gestión Laboral | NRRO',
+    description: 'La combinación perfecta de Orquest para optimización de turnos y KairosHR para gestión de recursos humanos en restaurantes y retail.',
+    canonical: `${BASE}/orquest-kairoshr`,
+    keywords: 'orquest, kairoshr, gestión laboral, optimización turnos, recursos humanos, software restaurantes',
+  },
+  '/insights': {
+    title: 'Insights — Análisis Fiscal, Legal y Económico | NRRO',
+    description: 'Análisis y perspectivas sobre fiscalidad, derecho mercantil, empresa familiar y tendencias económicas para empresas en España.',
+    canonical: `${BASE}/insights`,
+    keywords: 'insights fiscales, análisis legal, tendencias económicas españa',
+  },
+
   // Special landings
   '/ley-beckham': {
     title: 'Ley Beckham España — Régimen Fiscal para Impatriados | NRRO',

@@ -75,6 +75,7 @@ import AsesoriaLaboral from "./pages/AsesoriaLaboral";
 import AsesoriaMercantil from "./pages/AsesoriaMercantil";
 import AbogadosBarcelona from "./pages/AbogadosBarcelona";
 import EmpresaFamiliar from "./pages/EmpresaFamiliar";
+import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
 import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
@@ -184,6 +185,7 @@ const App = () => {
             <Route path="/es/asesoria-mercantil-barcelona" element={<Layout><AsesoriaMercantil /></Layout>} />
             <Route path="/es/abogados-barcelona" element={<Layout><AbogadosBarcelona /></Layout>} />
             <Route path="/es/empresa-familiar" element={<Layout><EmpresaFamiliar /></Layout>} />
+            <Route path="/es/abogados-herencias-barcelona" element={<Layout><HerenciasBarcelona /></Layout>} />
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/en/beckham-law" element={<LandingLayout><LeyBeckham /></LandingLayout>} />

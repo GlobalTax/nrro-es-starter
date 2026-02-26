@@ -199,6 +199,54 @@ const routes: Record<string, RouteData> = {
     canonical: `${BASE}/en/tax-advisor-barcelona`,
     bodyContent: `<h1>Tax Advisor in Barcelona</h1><p>Professional tax advisory: tax planning, VAT, corporate tax, personal income tax, tax inspections, international taxation and transfer pricing.</p>`,
   },
+  '/es/abogados-herencias-barcelona': {
+    title: 'Abogados de Herencias en Barcelona — Sucesiones y Testamentos | NRRO',
+    description: 'Abogados especializados en herencias en Barcelona: aceptación de herencia, impuesto de sucesiones, testamentos, partición hereditaria y reclamación de legítima.',
+    canonical: `${BASE}/es/abogados-herencias-barcelona`,
+    keywords: 'abogados herencias barcelona, herencias barcelona, impuesto sucesiones barcelona',
+    bodyContent: `<h1>Abogados de Herencias en Barcelona</h1><p>Asesoramiento legal especializado en herencias y sucesiones: aceptación de herencia, impuesto de sucesiones y donaciones, testamentos, partición hereditaria, reclamación de legítima y planificación sucesoria.</p><h2>Servicios de herencias</h2><ul><li>Aceptación y renuncia de herencias</li><li>Impuesto de Sucesiones y Donaciones en Cataluña</li><li>Testamentos y planificación sucesoria</li><li>Partición hereditaria y mediación familiar</li><li>Reclamación de legítima</li></ul>`,
+  },
+  '/en/company-setup-calculator': {
+    title: 'Company Setup Cost Calculator — Spain Business Registration | NRRO',
+    description: 'Calculate the costs of setting up a company in Spain. Interactive calculator with notary fees, taxes, registration costs.',
+    canonical: `${BASE}/en/company-setup-calculator`,
+    keywords: 'company setup calculator spain, business registration cost spain',
+    bodyContent: `<h1>Company Setup Cost Calculator — Spain</h1><p>Use our interactive calculator to estimate the total cost of setting up a company in Spain, including notary fees, registration taxes, and professional advisory fees.</p>`,
+  },
+  '/en/nie-spain-foreigners': {
+    title: 'NIE Spain for Foreigners — How to Get Your NIE Number | NRRO',
+    description: 'Complete guide to obtaining your NIE number in Spain. Requirements, process, documents and professional assistance.',
+    canonical: `${BASE}/en/nie-spain-foreigners`,
+    keywords: 'NIE spain, NIE number foreigners, foreigner identification number',
+    bodyContent: `<h1>NIE Number in Spain for Foreigners</h1><p>The NIE (Número de Identidad de Extranjero) is mandatory for any foreigner conducting business or fiscal activities in Spain. We guide you through the entire process: requirements, documents, appointments and follow-up.</p>`,
+  },
+  '/en/startup-company-setup-spain': {
+    title: 'Startup Company Setup in Spain — Tech & Innovation | NRRO',
+    description: 'Set up your tech startup in Spain: Startup Act benefits, tax incentives for R&D, visa for entrepreneurs.',
+    canonical: `${BASE}/en/startup-company-setup-spain`,
+    keywords: 'startup spain, tech company setup spain, startup act spain',
+    bodyContent: `<h1>Startup Company Setup in Spain</h1><p>Spain's Startup Act offers significant benefits for tech and innovation companies: reduced corporate tax, digital nomad visa, fast-track registration and R&D tax incentives.</p>`,
+  },
+  '/en/fast-company-registration-spain': {
+    title: 'Fast Company Registration in Spain — Express Setup | NRRO',
+    description: 'Register your company in Spain in record time. Express SL formation, PAE fast-track, digital incorporation.',
+    canonical: `${BASE}/en/fast-company-registration-spain`,
+    keywords: 'fast company registration spain, express company setup',
+    bodyContent: `<h1>Fast Company Registration in Spain</h1><p>Register your Spanish SL (Sociedad Limitada) in as little as 48 hours using PAE fast-track and digital incorporation. We handle notary, registry, tax registration and bank account setup.</p>`,
+  },
+  '/orquest-kairoshr': {
+    title: 'Orquest + KairosHR — Solución Integral de Gestión Laboral | NRRO',
+    description: 'La combinación perfecta de Orquest para optimización de turnos y KairosHR para gestión de recursos humanos.',
+    canonical: `${BASE}/orquest-kairoshr`,
+    keywords: 'orquest, kairoshr, gestión laboral, optimización turnos',
+    bodyContent: `<h1>Orquest + KairosHR — Solución Integral de Gestión Laboral</h1><p>Combinamos Orquest para la optimización inteligente de turnos con KairosHR para la gestión integral de recursos humanos. Ideal para restaurantes, retail y empresas con plantillas variables.</p>`,
+  },
+  '/insights': {
+    title: 'Insights — Análisis Fiscal, Legal y Económico | NRRO',
+    description: 'Análisis y perspectivas sobre fiscalidad, derecho mercantil, empresa familiar y tendencias económicas.',
+    canonical: `${BASE}/insights`,
+    bodyContent: `<h1>Insights — Navarro Tax & Legal</h1><p>Análisis, perspectivas y tendencias sobre fiscalidad, derecho mercantil, empresa familiar y economía para empresas en España.</p>`,
+  },
 };
 
 function getRouteData(path: string): RouteData {
