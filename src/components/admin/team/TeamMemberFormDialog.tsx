@@ -37,6 +37,8 @@ import { Loader2 } from 'lucide-react';
 
 // Opciones permitidas para Position (ordenadas por jerarquía)
 const POSITION_OPTIONS = [
+  { value: 'SOCIO', label: 'Socio' },
+  { value: 'MANAGER', label: 'Manager' },
   { value: 'SENIOR', label: 'Senior' },
   { value: 'ASOCIADO', label: 'Asociado' },
   { value: 'JUNIOR', label: 'Junior' },
@@ -49,6 +51,7 @@ const SPECIALIZATION_OPTIONS = [
   { value: 'FISCALIDAD', label: 'Fiscalidad' },
   { value: 'LABORAL', label: 'Laboral' },
   { value: 'M&A', label: 'M&A' },
+  { value: 'SERVICIOS CORPORATIVOS', label: 'Servicios Corporativos' },
   { value: 'SERVICIOS GLOBALES', label: 'Servicios Globales' },
 ] as const;
 

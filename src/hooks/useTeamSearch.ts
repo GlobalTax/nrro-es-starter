@@ -87,10 +87,12 @@ export function useTeamPositionOptions(language: string = 'es') {
       );
 
       const orderMap: Record<string, number> = {
-        'SENIOR': 1,
-        'ASOCIADO': 2,
-        'JUNIOR': 3,
-        'MASTER SCHOLAR': 4
+        'SOCIO': 1,
+        'MANAGER': 2,
+        'SENIOR': 3,
+        'ASOCIADO': 4,
+        'JUNIOR': 5,
+        'MASTER SCHOLAR': 6
       };
 
       return uniquePositions.sort((a, b) => {
