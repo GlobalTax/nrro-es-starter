@@ -1,55 +1,127 @@
 
-## Exportar presentacion en ingles desde el wizard
+## Herramienta de Auditoría de Marketing Digital y SEO
 
-### Situacion actual
+### Resumen
 
-El wizard ya tiene un selector de idioma (es/en/ca) en el Step 1, y toda la infraestructura multilingue esta lista:
+Crear una aplicacion completa de auditoria de marketing digital y SEO integrada en el panel de administracion existente, accesible desde `/admin/marketing-audit`. La herramienta permite introducir una URL, ejecutar un analisis automatizado via Firecrawl + analisis client-side, y mostrar resultados con puntuaciones visuales, checklists interactivos, graficos radar y exportacion PDF.
 
-- `generatePresentationHTML.ts` tiene TODOS los textos estaticos traducidos (taglines, diferenciadores, KPIs, valores, metodologia, CTAs, traducciones UI) en es/en/ca
-- Los hooks `useServicesSearch`, `useTeamMembers` y `useCaseStudies` ya aceptan `language` y devuelven datos localizados desde la BD
-- El wizard ya pasa `language` a estos hooks (lineas 123-125)
-
-### Problema
-
-Cuando el usuario selecciona servicios, equipo o casos en un idioma (ej. espanol) y luego cambia el idioma a ingles, los items **ya seleccionados** conservan los textos del idioma original porque se almacenan como copia en el estado (`selectedServices`, `selectedTeamMembers`, `selectedCaseStudies`).
-
-### Solucion
-
-Actualizar `PresentationBuilderDialog.tsx` para re-sincronizar los textos de los items seleccionados cuando cambie el idioma. Al cambiar `language`, se recalculan los items seleccionados usando los datos recien cargados del hook (que ya vienen en el nuevo idioma).
-
-### Cambios en `PresentationBuilderDialog.tsx`
-
-1. **Importar `useEffect`** (anadirlo al import de React si no esta)
-
-2. **Anadir un `useEffect`** que observe cambios en `language` y en los datos cargados (`services`, `teamMembers.data`, `caseStudies.data`). Cuando cambien:
-   - Recorrer `selectedServices` y para cada item, buscar su `id` en el array `services` (ya localizado). Si lo encuentra, actualizar `name`, `area`, `description`, `features`, `benefits` con los valores del nuevo idioma. Si no lo encuentra, mantener el original.
-   - Hacer lo mismo con `selectedTeamMembers` cruzando con `teamMembers.data` (actualizar `position`, `bio`, `specialization`)
-   - Hacer lo mismo con `selectedCaseStudies` cruzando con `caseStudies.data` (actualizar `title`, `results_summary`, `challenge`, `solution`)
-
-3. **Sin cambios en la UI**: el selector de idioma ya existe y funciona. Al seleccionar "English", los datos se recargan, el effect re-sincroniza los seleccionados, y el preview se regenera automaticamente en ingles.
-
-### Detalle tecnico del useEffect
+### Arquitectura general
 
 ```text
-useEffect cuando [language, services, teamMembers, caseStudies] cambian:
-  - Para cada servicio seleccionado:
-      buscar en services[] por id
-      si existe -> actualizar name, area, description, features, benefits
-  - Para cada team member seleccionado:
-      buscar en teamMembers[] por id
-      si existe -> actualizar position, bio, specialization
-  - Para cada case study seleccionado:
-      buscar en caseStudies[] por id
-      si existe -> actualizar title, results_summary, challenge, solution
++------------------------------------------+
+|  /admin/marketing-audit                  |
+|  +--------------------------------------+|
+|  | URL Input + "Auditar" button         ||
+|  +--------------------------------------+|
+|  | Global Score (0-100) + Radar Chart   ||
+|  +--------------------------------------+|
+|  | Tabs:                                ||
+|  |  SEO On-Page | SEO Tecnico |         ||
+|  |  Contenido | UX/CRO | Analitica |   ||
+|  |  Presencia Digital | Legal           ||
+|  |  Each tab: checklist + score         ||
+|  +--------------------------------------+|
+|  | Quick Wins | Recomendaciones         ||
+|  +--------------------------------------+|
+|  | [Exportar PDF]                       ||
+|  +--------------------------------------+|
++------------------------------------------+
 ```
 
-### Archivos afectados
+### Nuevos archivos a crear
 
-- `src/components/admin/presentations/PresentationBuilderDialog.tsx` -- unico archivo a modificar
+**Pagina principal:**
+- `src/pages/admin/AdminMarketingAudit.tsx` — Pagina principal con input de URL, puntuacion global, pestanas de categorias, graficos y exportacion
 
-### Sin cambios en
+**Componentes:**
+- `src/components/admin/marketing-audit/AuditDashboard.tsx` — Dashboard con score global, radar chart y resumen
+- `src/components/admin/marketing-audit/AuditCategoryTab.tsx` — Componente reutilizable para cada pestana de categoria con checklist
+- `src/components/admin/marketing-audit/AuditChecklistItem.tsx` — Item individual del checklist con estados (correcto/mejorable/falta), notas y puntuacion
+- `src/components/admin/marketing-audit/AuditRadarChart.tsx` — Grafico radar con Recharts comparando las 7 categorias
+- `src/components/admin/marketing-audit/AuditScoreCard.tsx` — Tarjeta de puntuacion con codigo de colores (rojo/amarillo/verde)
+- `src/components/admin/marketing-audit/AuditQuickWins.tsx` — Seccion de Quick Wins con las 10 acciones de mayor impacto
+- `src/components/admin/marketing-audit/AuditRecommendations.tsx` — Recomendaciones a medio y largo plazo
+- `src/components/admin/marketing-audit/AuditPdfExport.tsx` — Boton y logica de exportacion PDF
 
-- `src/lib/generatePresentationHTML.ts` -- ya soporta es/en/ca
-- `supabase/functions/generate-presentation-pdf/index.ts` -- ya genera en el idioma indicado
-- Hooks de datos -- ya aceptan `language`
-- Base de datos -- columnas multilingues ya existen
+**Logica y tipos:**
+- `src/lib/marketingAuditTypes.ts` — Tipos TypeScript para categorias, items, estados, puntuaciones
+- `src/lib/marketingAuditChecklist.ts` — Definicion de todas las categorias y sus items con pesos y descripciones
+- `src/lib/marketingAuditAnalyzer.ts` — Logica de analisis automatico del HTML scrapeado (detectar meta tags, headers, schema, SSL, etc.)
+- `src/lib/marketingAuditPdf.ts` — Generacion del informe PDF exportable
+- `src/hooks/useMarketingAudit.ts` — Hook principal que orquesta el scraping (via Firecrawl), analisis y estado
+
+**Edge Function:**
+- `supabase/functions/marketing-audit/index.ts` — Edge Function que usa Firecrawl para scrapear la URL objetivo y devolver HTML + metadata para analisis client-side
+
+**Base de datos (migracion):**
+- Tabla `marketing_audits` para persistir auditorias: id, url, created_at, updated_at, global_score, category_scores (jsonb), checklist_data (jsonb), notes (jsonb), quick_wins (jsonb), created_by (uuid)
+
+### Detalle de las 7 categorias
+
+Cada categoria tiene un peso en la puntuacion global y contiene items con 3 estados posibles:
+
+1. **SEO On-Page** (20%) — 10 items: title tags, meta descriptions, encabezados H1-H6, keywords, URLs amigables, alt tags, enlaces internos, canonical, schema markup, contenido duplicado
+2. **SEO Tecnico** (20%) — 11 items: Core Web Vitals, mobile-friendly, SSL, sitemap XML, robots.txt, errores 404, indexacion, hreflang, compresion, lazy loading, formatos imagen
+3. **Contenido y Copywriting** (15%) — 7 items: calidad contenido, legibilidad, CTAs, propuesta valor, blog/frecuencia, evergreen, multimedia
+4. **UX y Conversion (CRO)** (15%) — 8 items: navegacion, formularios, velocidad interaccion, responsive, botones CTA, chat, trust signals, pagina 404
+5. **Analitica y Tracking** (10%) — 7 items: GA4, GTM, Meta Pixel, LinkedIn tag, eventos/conversiones, Search Console, Hotjar/Clarity
+6. **Presencia Digital y Off-Page** (10%) — 6 items: Google Business, NAP, redes sociales, backlinks, menciones, directorios
+7. **Legal y Compliance** (10%) — 4 items: aviso legal, privacidad RGPD, cookies banner, consentimiento formularios
+
+### Flujo de uso
+
+1. El usuario introduce una URL y pulsa "Auditar"
+2. Se llama a la Edge Function `marketing-audit` que scrapea via Firecrawl (formatos: html, links, markdown)
+3. El analyzer client-side procesa el HTML para auto-detectar items (meta tags, headers, schema, scripts de analytics, SSL, etc.)
+4. Los items auto-detectados se marcan automaticamente; los demas quedan como "pendiente" para revision manual
+5. El usuario puede cambiar el estado de cualquier item y anadir notas
+6. Las puntuaciones se recalculan en tiempo real
+7. Se generan Quick Wins automaticamente basados en items fallidos con mayor peso
+8. El usuario puede exportar el informe completo a PDF
+9. La auditoria se guarda en Supabase para historico
+
+### Analisis automatico (lo que se puede detectar del HTML)
+
+Del scraping con Firecrawl se puede auto-detectar:
+- Title tag (existencia, longitud)
+- Meta description (existencia, longitud)
+- Estructura H1-H6 (cantidad, jerarquia)
+- Alt tags en imagenes
+- Canonical tags
+- Schema markup (JSON-LD)
+- SSL (URL empieza con https)
+- Scripts de GA4, GTM, Meta Pixel, LinkedIn, Hotjar/Clarity
+- Sitemap.xml y robots.txt (via fetch adicional)
+- Open Graph tags
+- Hreflang tags
+- Aviso legal, privacidad, cookies (deteccion de links en footer)
+
+Items que requieren revision manual:
+- Core Web Vitals (se puede sugerir usar PageSpeed Insights)
+- Calidad de backlinks
+- Google Business Profile
+- Coherencia NAP
+- Frecuencia de publicacion del blog
+
+### Integracion en el admin
+
+- Anadir ruta `/admin/marketing-audit` en `App.tsx`
+- Anadir entrada "Auditoría Web" en la seccion Marketing del sidebar (`AdminSidebar.tsx`)
+- Usar el icono `Search` o `ScanLine` de lucide-react
+
+### Exportacion PDF
+
+Usar html2canvas + jsPDF para generar un PDF profesional con:
+- Portada con logo, URL auditada y fecha
+- Resumen ejecutivo con puntuacion global y radar chart
+- Desglose por categoria con checklist y notas
+- Seccion Quick Wins
+- Recomendaciones priorizadas
+
+### Diseno visual
+
+- Fondo oscuro con acentos en azul corporativo (consistente con el admin existente)
+- Cards con bordes sutiles y sombras
+- Codigo de colores: rojo (#ef4444) para 0-49, amarillo (#eab308) para 50-74, verde (#22c55e) para 75-100
+- Animaciones sutiles en las barras de progreso
+- Radar chart con area semitransparente azul
