@@ -27,6 +27,7 @@ import {
   Shield,
   FolderOpen,
   PanelTop,
+  ScanLine,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -99,6 +100,7 @@ const sidebarSections: SidebarSection[] = [
       { path: '/admin/case-studies', icon: TrendingUp, label: 'Case Studies' },
       { path: '/admin/resources', icon: FolderOpen, label: 'Recursos' },
       { path: '/admin/landings', icon: Layout, label: 'Landings' },
+      { path: '/admin/marketing-audit', icon: ScanLine, label: 'Auditoría Web' },
     ],
   },
   {
