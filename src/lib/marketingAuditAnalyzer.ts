@@ -1,4 +1,18 @@
-import { AuditCategory, AuditItemStatus, ScrapedData } from './marketingAuditTypes';
+import { AuditCategory, AuditItemStatus, ScrapedData, AiAnalysisItem } from './marketingAuditTypes';
+
+// Apply AI qualitative analysis to items that are not autoDetectable
+const applyAiAnalysis = (categories: AuditCategory[], aiItems: AiAnalysisItem[]): void => {
+  for (const aiItem of aiItems) {
+    for (const cat of categories) {
+      const item = cat.items.find(i => i.id === aiItem.id);
+      if (item && !item.autoDetectable && item.status === 'pending') {
+        item.status = aiItem.status as AuditItemStatus;
+        item.autoResult = aiItem.note;
+        item.note = aiItem.note;
+      }
+    }
+  }
+};
 
 export const analyzeScrapedData = (data: ScrapedData, categories: AuditCategory[]): AuditCategory[] => {
   const html = data.html || '';
@@ -213,6 +227,11 @@ export const analyzeScrapedData = (data: ScrapedData, categories: AuditCategory[
   const hasConsent = formHtml.some(f => /type=["']checkbox["']/i.test(f) && /consent|acepto|privacidad|rgpd|gdpr/i.test(f));
   setItem('legal', 'form-consent', hasConsent ? 'correct' : formCount > 0 ? 'improvable' : 'pending',
     hasConsent ? 'Consentimiento en formularios detectado' : formCount > 0 ? 'Formularios sin checkbox de consentimiento visible' : 'No se detectaron formularios');
+
+  // Apply AI qualitative analysis if available
+  if (data.aiAnalysis && data.aiAnalysis.length > 0) {
+    applyAiAnalysis(updated, data.aiAnalysis);
+  }
 
   return updated;
 };
