@@ -1,4 +1,4 @@
-import { Bot, Newspaper, Languages, ScanLine } from 'lucide-react';
+import { Bot, Newspaper, Languages, ScanLine, Database } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAIUsageStats } from '@/hooks/useAIUsageStats';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -39,6 +39,14 @@ export const AIUsageStatsWidget = () => {
       color: 'text-orange-600',
       bgColor: 'bg-orange-50',
     },
+    {
+      title: 'Caché traducciones',
+      value: stats?.cacheEntries ?? 0,
+      subtitle: `${stats?.cacheHitsTotal ?? 0} hits totales`,
+      icon: Database,
+      color: 'text-cyan-600',
+      bgColor: 'bg-cyan-50',
+    },
   ];
 
   if (isLoading) {
@@ -48,8 +56,8 @@ export const AIUsageStatsWidget = () => {
           <Skeleton className="h-4 w-4" />
           <Skeleton className="h-5 w-40" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {[...Array(5)].map((_, i) => (
             <Card key={i} className="border-0 shadow-sm bg-white">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <Skeleton className="h-4 w-24" />
@@ -72,7 +80,7 @@ export const AIUsageStatsWidget = () => {
         <Bot className="h-4 w-4 text-slate-400" />
         <h2 className="text-base font-medium text-slate-900">Inteligencia Artificial</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {cards.map((card) => (
           <Card key={card.title} className="border-0 shadow-sm bg-white hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
