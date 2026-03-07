@@ -127,18 +127,6 @@ export const AdminUsers = () => {
   // Create admin user mutation
   const createAdminMutation = useMutation({
     mutationFn: async (userData: { email: string; full_name: string; role: AdminRole }) => {
-      const newUserId = crypto.randomUUID();
-      
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: newUserId,
-          email: userData.email,
-          created_at: new Date().toISOString(),
-        });
-
-      if (profileError) throw new Error('Error al crear perfil: ' + profileError.message);
-
       const roleMapping: Record<AdminRole, string> = {
         super_admin: 'admin',
         admin: 'admin',
@@ -149,19 +137,19 @@ export const AdminUsers = () => {
         viewer: 'user',
       };
 
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_id: newUserId,
-          role: roleMapping[userData.role] as any,
-        });
+      const { data, error } = await supabase.functions.invoke('create-admin-user', {
+        body: {
+          email: userData.email,
+          full_name: userData.full_name,
+          role: roleMapping[userData.role],
+          send_invite: false,
+        },
+      });
 
-      if (roleError) {
-        await supabase.from('profiles').delete().eq('id', newUserId);
-        throw new Error('Error al asignar rol: ' + roleError.message);
-      }
+      if (error) throw new Error('Error al crear usuario: ' + error.message);
+      if (data?.error) throw new Error(data.error);
 
-      return { user_id: newUserId, email: userData.email };
+      return { user_id: data.user?.id, email: userData.email };
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
