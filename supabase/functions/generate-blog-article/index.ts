@@ -53,10 +53,7 @@ function analyzeContent(content: string): {
   const headings = content.match(/<h[2-3][^>]*>/gi) || [];
   const lists = content.match(/<[uo]l[^>]*>/gi) || [];
   
-  // Detectar ejemplos
   const hasExample = /ejemplo|case|caso práctico|por ejemplo|for example|such as|como por ejemplo/i.test(content);
-  
-  // Detectar CTA
   const hasCTA = /contacta|contáctanos|contact us|solicita|consúltanos|llámanos|call us|get in touch|habla con nosotros/i.test(content);
 
   return {
@@ -83,7 +80,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   const checks: Record<string, { passed: boolean; score: number; details?: string }> = {};
   let totalScore = 0;
 
-  // 1. Ejemplo real (20 pts)
   const hasExample = statsEs.hasExample || (statsEn?.hasExample ?? false);
   checks.has_example = {
     passed: hasExample,
@@ -92,7 +88,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.has_example.score;
 
-  // 2. Párrafos cortos (15 pts) - promedio < 100 palabras
   const avgWords = statsEs.avgWordsPerParagraph;
   const shortParagraphs = avgWords < 100;
   checks.short_paragraphs = {
@@ -102,7 +97,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.short_paragraphs.score;
 
-  // 3. Voz activa (15 pts) - menos de 20% pasiva (simplificado)
   const passiveIndicators = (contentEs.match(/es\s+\w+ado|es\s+\w+ido|son\s+\w+ados|son\s+\w+idos|fue\s+\w+ado|fueron\s+\w+ados/gi) || []).length;
   const sentences = contentEs.split(/[.!?]+/).length;
   const passiveRatio = sentences > 0 ? passiveIndicators / sentences : 0;
@@ -114,7 +108,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.active_voice.score;
 
-  // 4. CTA presente (15 pts)
   const hasCTA = statsEs.hasCTA || (statsEn?.hasCTA ?? false);
   checks.has_cta = {
     passed: hasCTA,
@@ -123,7 +116,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.has_cta.score;
 
-  // 5. Longitud óptima (15 pts) - 800-1500 palabras
   const optimalLength = statsEs.wordCount >= 800 && statsEs.wordCount <= 1500;
   checks.optimal_length = {
     passed: optimalLength,
@@ -132,7 +124,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.optimal_length.score;
 
-  // 6. Subtítulos (10 pts) - al menos 3 secciones
   const hasSubtitles = statsEs.headingCount >= 3;
   checks.has_subtitles = {
     passed: hasSubtitles,
@@ -141,7 +132,6 @@ function validateContent(contentEs: string, contentEn: string | null): {
   };
   totalScore += checks.has_subtitles.score;
 
-  // 7. Sin clichés (10 pts)
   const noCliches = statsEs.genericPhraseCount === 0;
   checks.no_cliches = {
     passed: noCliches,
@@ -173,6 +163,129 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: nu
   }
 }
 
+// ========== CLAUDE + FALLBACK HELPER ==========
+interface ClaudeToolCall {
+  systemPrompt: string;
+  userPrompt: string;
+  toolName: string;
+  toolDescription: string;
+  toolParameters: Record<string, unknown>;
+  requiredFields: string[];
+  timeoutMs?: number;
+}
+
+async function callClaudeWithFallback(params: ClaudeToolCall): Promise<Record<string, unknown>> {
+  const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  const timeoutMs = params.timeoutMs || 30000;
+
+  // Try Claude first
+  if (ANTHROPIC_API_KEY) {
+    try {
+      console.log(`[AI] Calling Claude (claude-sonnet-4-20250514) for ${params.toolName}...`);
+      
+      const claudeResponse = await fetchWithTimeout("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 8192,
+          system: params.systemPrompt,
+          messages: [{ role: "user", content: params.userPrompt }],
+          tools: [{
+            name: params.toolName,
+            description: params.toolDescription,
+            input_schema: {
+              type: "object",
+              properties: params.toolParameters,
+              required: params.requiredFields,
+            }
+          }],
+          tool_choice: { type: "tool", name: params.toolName },
+        }),
+      }, timeoutMs);
+
+      if (claudeResponse.ok) {
+        const claudeData = await claudeResponse.json();
+        const toolUse = claudeData.content?.find((b: { type: string }) => b.type === "tool_use");
+        if (toolUse?.input) {
+          console.log(`[AI] ✅ Claude response OK for ${params.toolName}`);
+          return toolUse.input;
+        }
+        console.warn(`[AI] Claude returned no tool_use, falling back...`);
+      } else {
+        const errText = await claudeResponse.text();
+        console.warn(`[AI] Claude error ${claudeResponse.status}: ${errText.substring(0, 200)}, falling back...`);
+      }
+    } catch (err) {
+      console.warn(`[AI] Claude failed (${err instanceof Error ? err.message : 'unknown'}), falling back...`);
+    }
+  } else {
+    console.log(`[AI] No ANTHROPIC_API_KEY, using Lovable Gateway directly`);
+  }
+
+  // Fallback to Lovable AI Gateway
+  if (!LOVABLE_API_KEY) {
+    throw new Error("Neither ANTHROPIC_API_KEY nor LOVABLE_API_KEY configured");
+  }
+
+  console.log(`[AI] Calling Lovable Gateway (gemini-3-flash-preview) for ${params.toolName}...`);
+  
+  const gatewayResponse = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "google/gemini-3-flash-preview",
+      messages: [
+        { role: "system", content: params.systemPrompt },
+        { role: "user", content: params.userPrompt },
+      ],
+      tools: [{
+        type: "function",
+        function: {
+          name: params.toolName,
+          description: params.toolDescription,
+          parameters: {
+            type: "object",
+            properties: params.toolParameters,
+            required: params.requiredFields,
+            additionalProperties: false,
+          }
+        }
+      }],
+      tool_choice: { type: "function", function: { name: params.toolName } },
+    }),
+  }, timeoutMs);
+
+  if (!gatewayResponse.ok) {
+    const errorText = await gatewayResponse.text();
+    
+    if (gatewayResponse.status === 429) {
+      throw Object.assign(new Error("Rate limit exceeded"), { status: 429 });
+    }
+    if (gatewayResponse.status === 402) {
+      throw Object.assign(new Error("Payment required"), { status: 402 });
+    }
+    throw new Error(`Lovable Gateway error ${gatewayResponse.status}: ${errorText.substring(0, 200)}`);
+  }
+
+  const gwData = await gatewayResponse.json();
+  const args = gwData.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
+  if (!args) {
+    throw new Error("No tool call in Lovable Gateway response");
+  }
+  
+  console.log(`[AI] ✅ Lovable Gateway response OK for ${params.toolName}`);
+  return JSON.parse(args);
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -184,7 +297,7 @@ serve(async (req) => {
       tone = "professional", 
       language = "both", 
       skipRefinement = false,
-      skipImage = false  // NUEVO: permitir saltar generación de imagen
+      skipImage = false
     } = await req.json();
     
     if (!prompt || typeof prompt !== "string") {
@@ -192,14 +305,11 @@ serve(async (req) => {
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY no configurada");
-    }
 
     console.log("[GENERATE_BLOG] === INICIO ===", new Date().toISOString());
     console.log("[GENERATE_BLOG] Parámetros:", { prompt: prompt.substring(0, 50), tone, language, skipRefinement, skipImage });
 
-    // ========== PASADA 1: Generación inicial ==========
+    // ========== PASADA 1: Generación inicial (Claude + fallback) ==========
     const systemPrompt = `Eres un redactor experto especializado en contenido legal, fiscal y corporativo para el despacho Navarro.
 
 Genera artículos profesionales, informativos y optimizados para SEO sobre temas legales, fiscales, mercantiles y laborales.
@@ -226,131 +336,59 @@ Categorías disponibles: Fiscal, Mercantil, Laboral, Corporativo, Análisis
 
 Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo inglés" : "Ambos (español e inglés)"}`;
 
-    const response = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "openai/gpt-5-nano",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: prompt }
-        ],
-        tools: [
-          {
-            type: "function",
-            function: {
-              name: "generate_blog_article",
-              description: "Genera un artículo completo de blog bilingüe con metadata SEO",
-              parameters: {
-                type: "object",
-                properties: {
-                  title_es: { 
-                    type: "string", 
-                    description: "Título en español (50-70 caracteres)" 
-                  },
-                  title_en: { 
-                    type: "string", 
-                    description: "Title in English (50-70 characters)" 
-                  },
-                  excerpt_es: { 
-                    type: "string", 
-                    description: "Resumen breve en español (150-200 caracteres)" 
-                  },
-                  excerpt_en: { 
-                    type: "string", 
-                    description: "Brief summary in English (150-200 characters)" 
-                  },
-                  content_es: { 
-                    type: "string", 
-                    description: "Contenido HTML completo en español (800-1500 palabras). Usa <h2>, <h3>, <p>, <ul>, <ol>, <strong>, <em>" 
-                  },
-                  content_en: { 
-                    type: "string", 
-                    description: "Full HTML content in English (800-1500 words). Use <h2>, <h3>, <p>, <ul>, <ol>, <strong>, <em>" 
-                  },
-                  category: {
-                    type: "string",
-                    enum: ["Fiscal", "Mercantil", "Laboral", "Corporativo", "Análisis"],
-                    description: "Categoría más apropiada para el artículo"
-                  },
-                  tags: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "4-6 tags relevantes para SEO y categorización"
-                  },
-                  seo_title_es: { 
-                    type: "string", 
-                    description: "Título SEO optimizado en español (50-60 caracteres)" 
-                  },
-                  seo_title_en: { 
-                    type: "string", 
-                    description: "SEO optimized title in English (50-60 characters)" 
-                  },
-                  seo_description_es: { 
-                    type: "string", 
-                    description: "Meta descripción SEO en español (150-160 caracteres)" 
-                  },
-                  seo_description_en: { 
-                    type: "string", 
-                    description: "SEO meta description in English (150-160 characters)" 
-                  }
-                },
-                required: ["title_es", "title_en", "content_es", "content_en", "category", "tags"],
-                additionalProperties: false
-              }
-            }
-          }
-        ],
-        tool_choice: { type: "function", function: { name: "generate_blog_article" } }
-      }),
-    }, 30000); // 30s timeout para generación principal
+    const toolParameters = {
+      title_es: { type: "string", description: "Título en español (50-70 caracteres)" },
+      title_en: { type: "string", description: "Title in English (50-70 characters)" },
+      excerpt_es: { type: "string", description: "Resumen breve en español (150-200 caracteres)" },
+      excerpt_en: { type: "string", description: "Brief summary in English (150-200 characters)" },
+      content_es: { type: "string", description: "Contenido HTML completo en español (800-1500 palabras). Usa <h2>, <h3>, <p>, <ul>, <ol>, <strong>, <em>" },
+      content_en: { type: "string", description: "Full HTML content in English (800-1500 words). Use <h2>, <h3>, <p>, <ul>, <ol>, <strong>, <em>" },
+      category: { type: "string", enum: ["Fiscal", "Mercantil", "Laboral", "Corporativo", "Análisis"], description: "Categoría más apropiada" },
+      tags: { type: "array", items: { type: "string" }, description: "4-6 tags relevantes para SEO" },
+      seo_title_es: { type: "string", description: "Título SEO en español (50-60 caracteres)" },
+      seo_title_en: { type: "string", description: "SEO title in English (50-60 characters)" },
+      seo_description_es: { type: "string", description: "Meta descripción SEO en español (150-160 caracteres)" },
+      seo_description_en: { type: "string", description: "SEO meta description in English (150-160 characters)" },
+    };
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("[GENERATE_BLOG] Error de Lovable AI:", response.status, errorText);
-      
-      if (response.status === 429) {
+    let articleData: Record<string, unknown>;
+    
+    try {
+      articleData = await callClaudeWithFallback({
+        systemPrompt,
+        userPrompt: prompt,
+        toolName: "generate_blog_article",
+        toolDescription: "Genera un artículo completo de blog bilingüe con metadata SEO",
+        toolParameters,
+        requiredFields: ["title_es", "title_en", "content_es", "content_en", "category", "tags"],
+        timeoutMs: 30000,
+      });
+    } catch (err: unknown) {
+      const error = err as { status?: number; message?: string };
+      if (error.status === 429) {
         return new Response(
-          JSON.stringify({ 
-            error: "Límite de solicitudes excedido. Por favor, intenta de nuevo en unos minutos." 
-          }),
+          JSON.stringify({ error: "Límite de solicitudes excedido. Intenta de nuevo en unos minutos." }),
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      
-      if (response.status === 402) {
+      if (error.status === 402) {
         return new Response(
-          JSON.stringify({ 
-            error: "Sin créditos de IA disponibles. Contacta con soporte para añadir más créditos." 
-          }),
+          JSON.stringify({ error: "Sin créditos de IA disponibles." }),
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      
-      throw new Error(`Error de Lovable AI: ${response.status}`);
+      throw err;
     }
 
-    const data = await response.json();
     console.log("[GENERATE_BLOG] Pasada 1 completada");
-
-    if (!data.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments) {
-      throw new Error("Formato de respuesta inesperado de Lovable AI");
-    }
-
-    let articleData = JSON.parse(data.choices[0].message.tool_calls[0].function.arguments);
 
     // ========== PASADA 2: Refinamiento iterativo (SOLO si no se salta) ==========
     if (!skipRefinement) {
       console.log("[GENERATE_BLOG] Iniciando pasada 2: Refinamiento...");
 
-      // Analizar contenido inicial
-      const initialAnalysis = analyzeContent(articleData.content_es);
+      const initialAnalysis = analyzeContent(articleData.content_es as string);
       console.log("[GENERATE_BLOG] Análisis inicial:", initialAnalysis);
 
-      // Solo refinar si hay problemas detectados
       const needsRefinement = 
         initialAnalysis.genericPhraseCount > 0 ||
         !initialAnalysis.hasExample ||
@@ -378,66 +416,29 @@ ${articleData.content_en}` : ''}
 Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
 
         try {
-          const refinementResponse = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${LOVABLE_API_KEY}`,
-              "Content-Type": "application/json",
+          const refinedContent = await callClaudeWithFallback({
+            systemPrompt: "Eres un editor profesional de contenido legal y fiscal.",
+            userPrompt: refinementPrompt,
+            toolName: "refined_content",
+            toolDescription: "Contenido refinado del artículo",
+            toolParameters: {
+              content_es: { type: "string", description: "Contenido HTML refinado en español" },
+              content_en: { type: "string", description: "Contenido HTML refinado en inglés (si aplica)" },
             },
-            body: JSON.stringify({
-              model: "openai/gpt-5-nano",
-              messages: [
-                { role: "user", content: refinementPrompt }
-              ],
-              tools: [
-                {
-                  type: "function",
-                  function: {
-                    name: "refined_content",
-                    description: "Contenido refinado del artículo",
-                    parameters: {
-                      type: "object",
-                      properties: {
-                        content_es: { 
-                          type: "string", 
-                          description: "Contenido HTML refinado en español" 
-                        },
-                        content_en: { 
-                          type: "string", 
-                          description: "Contenido HTML refinado en inglés (si aplica)" 
-                        }
-                      },
-                      required: ["content_es"]
-                    }
-                  }
-                }
-              ],
-              tool_choice: { type: "function", function: { name: "refined_content" } }
-            }),
-          }, 25000); // 25s timeout para refinamiento
+            requiredFields: ["content_es"],
+            timeoutMs: 25000,
+          });
 
-          if (refinementResponse.ok) {
-            const refinedData = await refinementResponse.json();
-            
-            if (refinedData.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments) {
-              const refinedContent = JSON.parse(refinedData.choices[0].message.tool_calls[0].function.arguments);
-              
-              // Actualizar contenido con la versión refinada
-              if (refinedContent.content_es) {
-                articleData.content_es = refinedContent.content_es;
-                console.log("[GENERATE_BLOG] Contenido ES refinado");
-              }
-              if (refinedContent.content_en && articleData.content_en) {
-                articleData.content_en = refinedContent.content_en;
-                console.log("[GENERATE_BLOG] Contenido EN refinado");
-              }
-            }
-          } else {
-            console.warn("[GENERATE_BLOG] Refinamiento falló, usando contenido original");
+          if (refinedContent.content_es) {
+            articleData.content_es = refinedContent.content_es;
+            console.log("[GENERATE_BLOG] Contenido ES refinado");
+          }
+          if (refinedContent.content_en && articleData.content_en) {
+            articleData.content_en = refinedContent.content_en;
+            console.log("[GENERATE_BLOG] Contenido EN refinado");
           }
         } catch (refineError) {
           console.error("[GENERATE_BLOG] Error en refinamiento:", refineError);
-          // Continuar con el contenido original si falla el refinamiento
         }
       } else {
         console.log("[GENERATE_BLOG] Contenido inicial es de buena calidad, saltando refinamiento");
@@ -447,21 +448,23 @@ Responde SOLO con el contenido mejorado en el mismo formato HTML.`;
     }
 
     // ========== VALIDACIÓN DE CONTENIDO ==========
-    const validation = validateContent(articleData.content_es, articleData.content_en);
+    const validation = validateContent(articleData.content_es as string, articleData.content_en as string | null);
     console.log("[GENERATE_BLOG] Validación:", { score: validation.score, passed: validation.passed });
     
-    // Calcular tiempo de lectura
-    const wordCount = articleData.content_es.replace(/<[^>]*>/g, '').split(/\s+/).length;
+    const wordCount = (articleData.content_es as string).replace(/<[^>]*>/g, '').split(/\s+/).length;
     const readTime = Math.ceil(wordCount / 200);
     
-    // ========== GENERAR IMAGEN DESTACADA (SOLO si no se salta) ==========
+    // ========== GENERAR IMAGEN DESTACADA (sin cambio - sigue con Gemini) ==========
     let featured_image_url: string | null = null;
     
     if (!skipImage) {
       try {
         console.log('[IMAGE] Generando imagen para el artículo...');
         
-        const imagePrompt = `Create a professional, modern blog header image for an article titled "${articleData.title_es}". 
+        if (!LOVABLE_API_KEY) {
+          console.warn('[IMAGE] No LOVABLE_API_KEY, saltando imagen');
+        } else {
+          const imagePrompt = `Create a professional, modern blog header image for an article titled "${articleData.title_es}". 
 The article is about: ${articleData.excerpt_es || articleData.title_es}
 Category: ${articleData.category}
 Style: Clean, corporate, professional suitable for a law and business consulting firm website. 
@@ -470,64 +473,57 @@ No text in the image.
 Aspect ratio: 16:9 (1200x675px)
 Ultra high resolution, professional photography style`;
 
-        const imageResponse = await fetchWithTimeout('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash-image-preview',
-            messages: [
-              { role: 'user', content: imagePrompt }
-            ],
-            modalities: ['image', 'text']
-          })
-        }, 20000); // 20s timeout para imagen
+          const imageResponse = await fetchWithTimeout('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash-image-preview',
+              messages: [{ role: 'user', content: imagePrompt }],
+              modalities: ['image', 'text']
+            })
+          }, 20000);
 
-        if (imageResponse.ok) {
-          const imageData = await imageResponse.json();
-          const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+          if (imageResponse.ok) {
+            const imageData = await imageResponse.json();
+            const base64Image = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
-          if (base64Image) {
-            console.log('[IMAGE] Imagen generada, subiendo a storage...');
-            
-            // Convertir base64 a buffer
-            const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
-            const buffer = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
-            
-            // Crear cliente de Supabase
-            const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-            const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-            const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
-            
-            // Subir a Supabase Storage
-            const fileName = `generated/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
-            const { data: uploadData, error: uploadError } = await supabaseClient.storage
-              .from('blog-media')
-              .upload(fileName, buffer, {
-                contentType: 'image/png',
-                cacheControl: '3600',
-                upsert: false
-              });
-
-            if (uploadError) {
-              console.error('[IMAGE] Error uploading image:', uploadError);
-            } else {
-              const { data: publicUrlData } = supabaseClient.storage
-                .from('blog-media')
-                .getPublicUrl(fileName);
+            if (base64Image) {
+              console.log('[IMAGE] Imagen generada, subiendo a storage...');
+              const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
+              const buffer = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
               
-              featured_image_url = publicUrlData.publicUrl;
-              console.log('[IMAGE] Imagen subida exitosamente:', featured_image_url);
+              const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+              const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+              const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
+              
+              const fileName = `generated/${Date.now()}-${Math.random().toString(36).substring(7)}.png`;
+              const { error: uploadError } = await supabaseClient.storage
+                .from('blog-media')
+                .upload(fileName, buffer, {
+                  contentType: 'image/png',
+                  cacheControl: '3600',
+                  upsert: false
+                });
+
+              if (uploadError) {
+                console.error('[IMAGE] Error uploading image:', uploadError);
+              } else {
+                const { data: publicUrlData } = supabaseClient.storage
+                  .from('blog-media')
+                  .getPublicUrl(fileName);
+                featured_image_url = publicUrlData.publicUrl;
+                console.log('[IMAGE] Imagen subida exitosamente:', featured_image_url);
+              }
             }
+          } else {
+            console.warn('[IMAGE] No se pudo generar la imagen, continuando sin ella');
           }
-        } else {
-          console.warn('[IMAGE] No se pudo generar la imagen, continuando sin ella');
         }
       } catch (imageError) {
         console.error('[IMAGE] Error en generación de imagen:', imageError);
-        // No bloqueamos el proceso si falla la imagen
       }
     } else {
       console.log("[GENERATE_BLOG] Generación de imagen saltada por parámetro skipImage=true");
@@ -538,7 +534,6 @@ Ultra high resolution, professional photography style`;
       read_time: readTime,
       generated_with_ai: true,
       featured_image_url,
-      // Añadir datos de validación
       quality_score: validation.score,
       quality_checks: validation.checks,
       passed_validation: validation.passed,
@@ -560,7 +555,6 @@ Ultra high resolution, professional photography style`;
   } catch (error) {
     console.error("[GENERATE_BLOG] Error:", error);
     
-    // Detectar si es un timeout
     const isTimeout = error instanceof Error && error.name === 'AbortError';
     
     return new Response(
