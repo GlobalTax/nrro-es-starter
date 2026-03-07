@@ -6,6 +6,7 @@ import {
   BarChart3, PieChart as PieChartIcon, TrendingUp 
 } from 'lucide-react';
 import { PendingDraftsWidget } from '@/components/admin/PendingDraftsWidget';
+import { AIUsageStatsWidget } from '@/components/admin/AIUsageStatsWidget';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { 
   ChartContainer, 
@@ -136,6 +137,9 @@ export const AdminDashboard = () => {
           </Card>
         ))}
       </div>
+
+      {/* AI Usage Stats */}
+      <AIUsageStatsWidget />
 
       {/* Charts Row - 2 columns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
