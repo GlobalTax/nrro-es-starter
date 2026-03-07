@@ -6,6 +6,7 @@ import {
   BarChart3, PieChart as PieChartIcon, TrendingUp 
 } from 'lucide-react';
 import { PendingDraftsWidget } from '@/components/admin/PendingDraftsWidget';
+import { AIUsageStatsWidget } from '@/components/admin/AIUsageStatsWidget';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { 
   ChartContainer, 
