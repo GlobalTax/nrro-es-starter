@@ -138,6 +138,9 @@ export const AdminDashboard = () => {
         ))}
       </div>
 
+      {/* AI Usage Stats */}
+      <AIUsageStatsWidget />
+
       {/* Charts Row - 2 columns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Bar Chart: Leads por Estado */}
