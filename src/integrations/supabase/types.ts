@@ -4747,6 +4747,42 @@ export type Database = {
         }
         Relationships: []
       }
+      translation_cache: {
+        Row: {
+          created_at: string
+          hit_count: number
+          id: string
+          last_used_at: string
+          source_hash: string
+          source_lang: string
+          source_text: string
+          target_lang: string
+          translated_text: string
+        }
+        Insert: {
+          created_at?: string
+          hit_count?: number
+          id?: string
+          last_used_at?: string
+          source_hash: string
+          source_lang?: string
+          source_text: string
+          target_lang: string
+          translated_text: string
+        }
+        Update: {
+          created_at?: string
+          hit_count?: number
+          id?: string
+          last_used_at?: string
+          source_hash?: string
+          source_lang?: string
+          source_text?: string
+          target_lang?: string
+          translated_text?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -4942,6 +4978,7 @@ export type Database = {
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
       cleanup_old_sitemap_history: { Args: never; Returns: undefined }
+      cleanup_old_translation_cache: { Args: never; Returns: undefined }
       count_blog_posts:
         | {
             Args: {
