@@ -228,6 +228,11 @@ export const analyzeScrapedData = (data: ScrapedData, categories: AuditCategory[
   setItem('legal', 'form-consent', hasConsent ? 'correct' : formCount > 0 ? 'improvable' : 'pending',
     hasConsent ? 'Consentimiento en formularios detectado' : formCount > 0 ? 'Formularios sin checkbox de consentimiento visible' : 'No se detectaron formularios');
 
+  // Apply AI qualitative analysis if available
+  if (data.aiAnalysis && data.aiAnalysis.length > 0) {
+    applyAiAnalysis(updated, data.aiAnalysis);
+  }
+
   return updated;
 };
 
