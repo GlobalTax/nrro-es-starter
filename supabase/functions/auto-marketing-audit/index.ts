@@ -1,4 +1,63 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+
+// Claude with fallback to Lovable Gateway
+async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: string): Promise<string> {
+  // Try Claude first
+  if (ANTHROPIC_API_KEY) {
+    try {
+      console.log('Auto-audit: Calling Claude for qualitative analysis...');
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4096,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.content?.[0]?.text;
+        if (text) {
+          console.log('Auto-audit: Claude response received');
+          return text;
+        }
+      }
+      console.warn('Auto-audit: Claude failed, falling back to Gateway');
+    } catch (e) {
+      console.warn('Auto-audit: Claude error, falling back:', e);
+    }
+  }
+
+  // Fallback to Lovable Gateway
+  if (!LOVABLE_API_KEY) throw new Error('No AI API key available');
+  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'google/gemini-3-flash-preview',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+    }),
+  });
+  if (!response.ok) throw new Error(`Gateway error: ${response.status}`);
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content || '';
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -353,6 +412,72 @@ async function scrapeUrl(url: string, apiKey: string): Promise<ScrapedData> {
   };
 }
 
+// ── AI qualitative analysis for non-autodetectable items ──
+async function enrichWithAI(categories: any[], markdown: string, url: string): Promise<any[]> {
+  if (!ANTHROPIC_API_KEY && !LOVABLE_API_KEY) {
+    console.log('Auto-audit: No AI key available, skipping qualitative analysis');
+    return categories;
+  }
+
+  const contentSnippet = markdown.substring(0, 6000);
+
+  const systemPrompt = `Eres un experto en marketing digital, SEO, UX y copywriting. Analiza el contenido de una web y evalúa los siguientes aspectos cualitativos que no se pueden detectar automáticamente con regex. Responde SOLO en JSON válido con este formato exacto:
+{
+  "content-quality": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "readability": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "ctas": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "value-proposition": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "blog-frequency": { "status": "correct|improvable|missing|pending", "note": "explicación breve" },
+  "evergreen": { "status": "correct|improvable|missing|pending", "note": "explicación breve" },
+  "navigation": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "cta-buttons": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "trust-signals": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "keywords": { "status": "correct|improvable|missing", "note": "explicación breve" },
+  "duplicate-content": { "status": "correct|improvable|missing|pending", "note": "explicación breve" }
+}`;
+
+  const userPrompt = `URL: ${url}\n\nContenido de la web:\n${contentSnippet}`;
+
+  try {
+    const rawResponse = await callClaudeTextWithFallback(systemPrompt, userPrompt);
+    
+    // Extract JSON from response
+    const jsonMatch = rawResponse.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.warn('Auto-audit: AI response not valid JSON');
+      return categories;
+    }
+
+    const aiResults = JSON.parse(jsonMatch[0]);
+    console.log(`Auto-audit: AI enriched ${Object.keys(aiResults).length} items`);
+
+    // Map AI results to checklist items
+    const itemCategoryMap: Record<string, string> = {
+      'content-quality': 'content', 'readability': 'content', 'ctas': 'content',
+      'value-proposition': 'content', 'blog-frequency': 'content', 'evergreen': 'content',
+      'navigation': 'ux-cro', 'cta-buttons': 'ux-cro', 'trust-signals': 'ux-cro',
+      'keywords': 'seo-onpage', 'duplicate-content': 'seo-onpage',
+    };
+
+    for (const [itemId, result] of Object.entries(aiResults)) {
+      const catId = itemCategoryMap[itemId];
+      if (!catId || !result || typeof result !== 'object') continue;
+      const r = result as { status: string; note: string };
+      const cat = categories.find((c: any) => c.id === catId);
+      if (!cat) continue;
+      const item = cat.items.find((i: any) => i.id === itemId);
+      if (!item || item.status !== 'pending') continue; // Don't overwrite auto-detected
+      item.status = r.status;
+      item.note = r.note;
+      item.autoResult = `[IA] ${r.note}`;
+    }
+  } catch (e) {
+    console.error('Auto-audit: AI enrichment failed:', e);
+  }
+
+  return categories;
+}
+
 // ── Run full audit for a single URL and persist ──
 async function auditAndSave(url: string, firecrawlKey: string, supabase: any) {
   console.log(`Auto-audit: scraping ${url}`);
@@ -360,6 +485,10 @@ async function auditAndSave(url: string, firecrawlKey: string, supabase: any) {
 
   let categories = createDefaultChecklist();
   categories = analyzeScrapedData(scraped, categories);
+  
+  // Enrich non-autodetectable items with AI
+  categories = await enrichWithAI(categories, scraped.markdown, url);
+  
   categories = categories.map(c => ({ ...c, score: calculateCategoryScore(c.items) }));
   const globalScore = calculateGlobalScore(categories);
   const quickWins = generateQuickWins(categories);
@@ -375,7 +504,7 @@ async function auditAndSave(url: string, firecrawlKey: string, supabase: any) {
     checklist_data: categories,
     quick_wins: quickWins,
     recommendations,
-    raw_analysis: { metadata: scraped.metadata, linksCount: scraped.links.length },
+    raw_analysis: { metadata: scraped.metadata, linksCount: scraped.links.length, aiEnriched: true },
   }).select('id, global_score').single();
 
   if (error) {

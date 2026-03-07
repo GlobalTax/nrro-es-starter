@@ -2,10 +2,65 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Claude with fallback for generating personalized proposal text
+async function generatePersonalizedIntro(clientName: string, clientCompany: string | undefined, services: any[]): Promise<string> {
+  const serviceNames = services.map(s => s.name).join(', ');
+  const prompt = `Genera un párrafo introductorio profesional (3-4 frases) para una propuesta de honorarios de un despacho de abogados y asesores fiscales (navarro tax & legal) dirigida a ${clientName}${clientCompany ? ` de ${clientCompany}` : ''}. Los servicios propuestos son: ${serviceNames}. El tono debe ser profesional, cercano y orientado al valor. Escribe en español. Responde SOLO con el párrafo, sin comillas ni explicaciones.`;
+
+  if (ANTHROPIC_API_KEY) {
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 500,
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.content?.[0]?.text;
+        if (text) return text;
+      }
+    } catch (e) {
+      console.warn('Claude failed for proposal intro:', e);
+    }
+  }
+
+  if (LOVABLE_API_KEY) {
+    try {
+      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'google/gemini-3-flash-preview',
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.choices?.[0]?.message?.content || '';
+      }
+    } catch (e) {
+      console.warn('Gateway failed for proposal intro:', e);
+    }
+  }
+
+  return '';
+}
 
 interface ProposalData {
   proposal_number: string;
