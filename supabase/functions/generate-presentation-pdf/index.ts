@@ -1,4 +1,55 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+
+// AI helper for generating personalized presentation content
+async function generatePresentationText(prompt: string): Promise<string> {
+  if (ANTHROPIC_API_KEY) {
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 500,
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.content?.[0]?.text;
+        if (text) return text;
+      }
+    } catch (e) {
+      console.warn('Claude failed for presentation text:', e);
+    }
+  }
+  if (LOVABLE_API_KEY) {
+    try {
+      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'google/gemini-3-flash-preview',
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.choices?.[0]?.message?.content || '';
+      }
+    } catch (e) {
+      console.warn('Gateway failed for presentation text:', e);
+    }
+  }
+  return '';
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -2038,6 +2089,19 @@ Deno.serve(async (req) => {
       cover_tagline: presentation.cover_tagline || null,
       cta_type: presentation.cta_type || 'strategic_conversation',
     };
+
+    // Generate AI-personalized intro if not provided
+    if (!parsedPresentation.custom_intro) {
+      const serviceNames = parsedPresentation.services_included.map(s => s.name).join(', ');
+      const lang = parsedPresentation.language === 'en' ? 'English' : parsedPresentation.language === 'ca' ? 'Catalan' : 'Spanish';
+      const aiIntro = await generatePresentationText(
+        `Write a 2-3 sentence personalized introduction for a professional services presentation from navarro tax & legal (law firm in Barcelona) to ${parsedPresentation.client_name}${parsedPresentation.client_company ? ` (${parsedPresentation.client_company})` : ''}${parsedPresentation.sector ? ` in the ${parsedPresentation.sector} sector` : ''}. Services: ${serviceNames}. Write in ${lang}. Professional, warm tone. Reply ONLY with the text, no quotes.`
+      );
+      if (aiIntro) {
+        parsedPresentation.custom_intro = aiIntro;
+        console.log('AI-generated custom intro for presentation');
+      }
+    }
 
     // Generate HTML
     const htmlContent = generateHTML(parsedPresentation);
