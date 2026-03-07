@@ -59,17 +59,25 @@ serve(async (req) => {
         .maybeSingle();
 
       if (data) {
-        // Update hit_count and last_used_at in background
+        // Update hit_count and last_used_at in background (increment hit_count manually)
         supabaseAdmin
           .from('translation_cache')
-          .update({ hit_count: undefined, last_used_at: new Date().toISOString() })
+          .select('hit_count')
           .eq('source_hash', hash)
           .eq('source_lang', sourceLang)
           .eq('target_lang', targetLang)
-          .then(() => {});
-        
-        // Use raw SQL increment via rpc would be better, but simple update works
-        supabaseAdmin.rpc('', {}).catch(() => {});
+          .maybeSingle()
+          .then(({ data: row }) => {
+            if (row) {
+              supabaseAdmin
+                .from('translation_cache')
+                .update({ hit_count: (row.hit_count || 0) + 1, last_used_at: new Date().toISOString() })
+                .eq('source_hash', hash)
+                .eq('source_lang', sourceLang)
+                .eq('target_lang', targetLang)
+                .then(() => {});
+            }
+          });
         
         cacheHits++;
         return data.translated_text;
