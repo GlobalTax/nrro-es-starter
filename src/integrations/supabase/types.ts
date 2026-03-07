@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_usage_logs: {
+        Row: {
+          completion_tokens: number | null
+          created_at: string | null
+          error_message: string | null
+          estimated_cost_usd: number | null
+          function_name: string
+          id: string
+          metadata: Json | null
+          model: string
+          prompt_tokens: number | null
+          status: string | null
+          total_tokens: number | null
+        }
+        Insert: {
+          completion_tokens?: number | null
+          created_at?: string | null
+          error_message?: string | null
+          estimated_cost_usd?: number | null
+          function_name: string
+          id?: string
+          metadata?: Json | null
+          model: string
+          prompt_tokens?: number | null
+          status?: string | null
+          total_tokens?: number | null
+        }
+        Update: {
+          completion_tokens?: number | null
+          created_at?: string | null
+          error_message?: string | null
+          estimated_cost_usd?: number | null
+          function_name?: string
+          id?: string
+          metadata?: Json | null
+          model?: string
+          prompt_tokens?: number | null
+          status?: string | null
+          total_tokens?: number | null
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string | null
@@ -43,6 +85,56 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      audit_schedule: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          frequency: string
+          id: string
+          is_active: boolean
+          label: string
+          last_audit_at: string | null
+          last_audit_id: string | null
+          last_score: number | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          frequency?: string
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_audit_at?: string | null
+          last_audit_id?: string | null
+          last_score?: number | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          frequency?: string
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_audit_at?: string | null
+          last_audit_id?: string | null
+          last_score?: number | null
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_schedule_last_audit_id_fkey"
+            columns: ["last_audit_id"]
+            isOneToOne: false
+            referencedRelation: "marketing_audits"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       awards: {
         Row: {
@@ -1062,6 +1154,7 @@ export type Database = {
           subject: string
           updated_at: string | null
           user_agent: string | null
+          website: string | null
         }
         Insert: {
           company?: string | null
@@ -1082,6 +1175,7 @@ export type Database = {
           subject: string
           updated_at?: string | null
           user_agent?: string | null
+          website?: string | null
         }
         Update: {
           company?: string | null
@@ -1102,6 +1196,7 @@ export type Database = {
           subject?: string
           updated_at?: string | null
           user_agent?: string | null
+          website?: string | null
         }
         Relationships: []
       }
