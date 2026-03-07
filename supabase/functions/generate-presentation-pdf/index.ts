@@ -2090,6 +2090,19 @@ Deno.serve(async (req) => {
       cta_type: presentation.cta_type || 'strategic_conversation',
     };
 
+    // Generate AI-personalized intro if not provided
+    if (!parsedPresentation.custom_intro) {
+      const serviceNames = parsedPresentation.services_included.map(s => s.name).join(', ');
+      const lang = parsedPresentation.language === 'en' ? 'English' : parsedPresentation.language === 'ca' ? 'Catalan' : 'Spanish';
+      const aiIntro = await generatePresentationText(
+        `Write a 2-3 sentence personalized introduction for a professional services presentation from navarro tax & legal (law firm in Barcelona) to ${parsedPresentation.client_name}${parsedPresentation.client_company ? ` (${parsedPresentation.client_company})` : ''}${parsedPresentation.sector ? ` in the ${parsedPresentation.sector} sector` : ''}. Services: ${serviceNames}. Write in ${lang}. Professional, warm tone. Reply ONLY with the text, no quotes.`
+      );
+      if (aiIntro) {
+        parsedPresentation.custom_intro = aiIntro;
+        console.log('AI-generated custom intro for presentation');
+      }
+    }
+
     // Generate HTML
     const htmlContent = generateHTML(parsedPresentation);
     console.log('HTML generated, length:', htmlContent.length);
