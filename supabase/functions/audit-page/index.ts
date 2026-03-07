@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.76.0";
 
 const corsHeaders = {
@@ -10,26 +9,17 @@ const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-// Helper para fetch con timeout
-async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 25000): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-// ========== CLAUDE + FALLBACK (text only, no tool_call) ==========
-async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: string): Promise<string> {
+// ========== AI Helper: Claude + Gateway fallback with tool_use ==========
+async function callClaudeWithFallback(systemPrompt: string, userPrompt: string, tools: any[], toolChoice: any): Promise<any> {
   const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
   if (ANTHROPIC_API_KEY) {
     try {
-      console.log("[AI] Calling Claude for audit analysis...");
-      const resp = await fetchWithTimeout("https://api.anthropic.com/v1/messages", {
+      console.log("[AI] Calling Claude for SEO audit...");
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
           "x-api-key": ANTHROPIC_API_KEY,
@@ -41,15 +31,19 @@ async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: stri
           max_tokens: 4096,
           system: systemPrompt,
           messages: [{ role: "user", content: userPrompt }],
+          tools,
+          tool_choice: toolChoice,
         }),
-      }, 30000);
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
 
       if (resp.ok) {
         const data = await resp.json();
-        const text = data.content?.find((b: { type: string }) => b.type === "text")?.text;
-        if (text) {
-          console.log("[AI] ✅ Claude OK for audit");
-          return text;
+        const toolBlock = data.content?.find((b: any) => b.type === "tool_use");
+        if (toolBlock?.input) {
+          console.log("[AI] ✅ Claude tool_use OK");
+          return toolBlock.input;
         }
       } else {
         console.warn(`[AI] Claude ${resp.status}, falling back...`);
@@ -61,8 +55,19 @@ async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: stri
 
   if (!LOVABLE_API_KEY) throw new Error("No AI keys configured");
 
-  console.log("[AI] Using Lovable Gateway for audit...");
-  const resp = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
+  console.log("[AI] Using Lovable Gateway for SEO audit...");
+  const gatewayTools = tools.map((t: any) => ({
+    type: "function",
+    function: {
+      name: t.name,
+      description: t.description,
+      parameters: t.input_schema,
+    },
+  }));
+
+  const controller2 = new AbortController();
+  const timeout2 = setTimeout(() => controller2.abort(), 30000);
+  const resp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${LOVABLE_API_KEY}`,
@@ -74,8 +79,12 @@ async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: stri
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
       ],
+      tools: gatewayTools,
+      tool_choice: { type: "function", function: { name: toolChoice.name } },
     }),
-  }, 30000);
+    signal: controller2.signal,
+  });
+  clearTimeout(timeout2);
 
   if (!resp.ok) {
     if (resp.status === 429) throw Object.assign(new Error("Rate limit"), { status: 429 });
@@ -84,30 +93,69 @@ async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: stri
   }
 
   const data = await resp.json();
-  const content = data.choices?.[0]?.message?.content || '';
-  console.log("[AI] ✅ Gateway OK for audit");
-  return content;
+  const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+  if (toolCall?.function?.arguments) {
+    const parsed = typeof toolCall.function.arguments === 'string'
+      ? JSON.parse(toolCall.function.arguments)
+      : toolCall.function.arguments;
+    console.log("[AI] ✅ Gateway tool_use OK");
+    return parsed;
+  }
+
+  throw new Error("No tool_use response from AI");
 }
+
+// ========== Audit Result Tool Schema ==========
+const auditResultTool = {
+  name: "audit_result",
+  description: "Return the complete SEO audit result with scores, issues, and recommendations for a web page.",
+  input_schema: {
+    type: "object",
+    properties: {
+      seo_score: { type: "number", description: "SEO score 0-100 (meta tags, headings, keywords, URLs)" },
+      content_score: { type: "number", description: "Content quality score 0-100 (clarity, value, CTAs)" },
+      structure_score: { type: "number", description: "Structure score 0-100 (hierarchy, accessibility, images, links)" },
+      overall_score: { type: "number", description: "Weighted overall score 0-100" },
+      issues: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            type: { type: "string", enum: ["seo", "content", "structure"] },
+            severity: { type: "string", enum: ["error", "warning", "info"] },
+            message: { type: "string" },
+            recommendation: { type: "string" },
+          },
+          required: ["type", "severity", "message", "recommendation"],
+        },
+      },
+      recommendations: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            priority: { type: "string", enum: ["high", "medium", "low"] },
+            category: { type: "string" },
+            action: { type: "string" },
+          },
+          required: ["priority", "category", "action"],
+        },
+      },
+    },
+    required: ["seo_score", "content_score", "structure_score", "overall_score", "issues", "recommendations"],
+  },
+};
 
 interface AuditResult {
   seo_score: number;
   content_score: number;
   structure_score: number;
   overall_score: number;
-  issues: Array<{
-    type: 'seo' | 'content' | 'structure';
-    severity: 'error' | 'warning' | 'info';
-    message: string;
-    recommendation: string;
-  }>;
-  recommendations: Array<{
-    priority: 'high' | 'medium' | 'low';
-    category: string;
-    action: string;
-  }>;
+  issues: Array<{ type: string; severity: string; message: string; recommendation: string }>;
+  recommendations: Array<{ priority: string; category: string; action: string }>;
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -155,14 +203,14 @@ serve(async (req) => {
     if (!firecrawlResponse.ok) {
       const errorData = await firecrawlResponse.json().catch(() => ({ error: 'Unknown error' }));
       console.error('Firecrawl error:', firecrawlResponse.status, errorData);
-      
+
       if (errorData.code === 'SCRAPE_TIMEOUT' || firecrawlResponse.status === 408) {
         return new Response(
           JSON.stringify({ success: false, error: 'La página tardó demasiado en cargar.', code: 'TIMEOUT' }),
           { status: 408, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
+
       return new Response(
         JSON.stringify({ success: false, error: `Failed to scrape page: ${errorData.error || errorData.message || 'Unknown error'}` }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -188,15 +236,16 @@ serve(async (req) => {
       h1Text: h1Matches.map((h: string) => h.replace(/<[^>]*>/g, '')),
       imagesWithoutAlt: imgWithoutAlt,
       totalImages,
-      internalLinks: pageLinks.filter((l: string) => l.includes(new URL(formattedUrl).hostname)).length,
-      externalLinks: pageLinks.filter((l: string) => !l.includes(new URL(formattedUrl).hostname)).length,
+      internalLinks: pageLinks.filter((l: string) => { try { return new URL(l).hostname === new URL(formattedUrl).hostname; } catch { return false; } }).length,
+      externalLinks: pageLinks.filter((l: string) => { try { return !new URL(l).hostname.includes(new URL(formattedUrl).hostname); } catch { return false; } }).length,
       contentLength: pageContent.length,
       url: formattedUrl,
     };
 
-    // Step 2: AI analysis (Claude + fallback)
-    const aiPrompt = `Eres un experto auditor SEO y UX para sitios web de asesorías legales y fiscales en España. 
-Analiza los siguientes datos de una página web y proporciona una evaluación detallada.
+    // Step 2: AI analysis with tool_use (structured output)
+    const systemPrompt = 'Eres un experto auditor SEO y UX para sitios web de asesorías legales y fiscales en España. Analiza páginas web y evalúa su calidad SEO, contenido y estructura.';
+
+    const userPrompt = `Analiza los siguientes datos de una página web y proporciona una evaluación detallada.
 
 ## Datos de la página:
 - URL: ${seoData.url}
@@ -212,54 +261,44 @@ Analiza los siguientes datos de una página web y proporciona una evaluación de
 ## Contenido de la página (primeros 3000 caracteres):
 ${pageContent.substring(0, 3000)}
 
-## Instrucciones:
 Evalúa la página en tres categorías (puntuación 0-100):
 1. **SEO Score**: Meta tags, estructura de encabezados, keywords, URLs amigables
 2. **Content Score**: Calidad, claridad, valor para el usuario, llamadas a la acción
 3. **Structure Score**: Jerarquía visual, accesibilidad, imágenes, links internos
 
-IMPORTANTE: Responde ÚNICAMENTE con un JSON válido:
-{
-  "seo_score": number,
-  "content_score": number,
-  "structure_score": number,
-  "overall_score": number,
-  "issues": [{"type": "seo"|"content"|"structure", "severity": "error"|"warning"|"info", "message": "...", "recommendation": "..."}],
-  "recommendations": [{"priority": "high"|"medium"|"low", "category": "...", "action": "..."}]
-}`;
+Identifica issues y proporciona recomendaciones priorizadas.`;
 
     let auditResult: AuditResult;
     try {
-      const aiContent = await callClaudeTextWithFallback(
-        'Eres un auditor SEO experto. Responde siempre en JSON válido sin explicaciones adicionales.',
-        aiPrompt
+      auditResult = await callClaudeWithFallback(
+        systemPrompt,
+        userPrompt,
+        [auditResultTool],
+        { type: "tool", name: "audit_result" }
       );
 
-      let cleanedContent = aiContent.trim();
-      if (cleanedContent.startsWith('```json')) cleanedContent = cleanedContent.slice(7);
-      else if (cleanedContent.startsWith('```')) cleanedContent = cleanedContent.slice(3);
-      if (cleanedContent.endsWith('```')) cleanedContent = cleanedContent.slice(0, -3);
-      
-      auditResult = JSON.parse(cleanedContent.trim());
-    } catch (parseError) {
-      console.error('Failed to parse AI response:', parseError);
+      // Ensure overall_score is calculated if missing
+      if (!auditResult.overall_score) {
+        auditResult.overall_score = Math.round(
+          (auditResult.seo_score + auditResult.content_score + auditResult.structure_score) / 3
+        );
+      }
+    } catch (aiError) {
+      console.error('AI analysis failed:', aiError);
+      // Heuristic fallback
       auditResult = {
         seo_score: seoData.title.length >= 30 && seoData.title.length <= 60 ? 70 : 50,
         content_score: seoData.contentLength > 1000 ? 70 : 50,
         structure_score: seoData.h1Count === 1 ? 70 : 50,
         overall_score: 60,
-        issues: [{ type: 'seo', severity: 'warning', message: 'No se pudo completar el análisis detallado', recommendation: 'Intenta auditar la página de nuevo' }],
-        recommendations: []
+        issues: [{ type: 'seo', severity: 'warning', message: 'No se pudo completar el análisis IA', recommendation: 'Intenta auditar la página de nuevo' }],
+        recommendations: [],
       };
-    }
-
-    if (!auditResult.overall_score) {
-      auditResult.overall_score = Math.round((auditResult.seo_score + auditResult.content_score + auditResult.structure_score) / 3);
     }
 
     // Step 3: Save to database
     const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
-    
+
     const { data: insertedAudit, error: insertError } = await supabase
       .from('page_audits')
       .insert({
