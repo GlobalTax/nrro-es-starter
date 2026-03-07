@@ -601,6 +601,13 @@ serve(async (req) => {
       );
     }
 
+    // Generate personalized intro with AI
+    const personalizedIntro = await generatePersonalizedIntro(
+      proposal.client_name,
+      proposal.client_company,
+      proposal.services || []
+    );
+
     // Generate HTML
     const html = generateProposalHTML({
       proposal_number: proposal.proposal_number,
@@ -610,7 +617,8 @@ serve(async (req) => {
       services: proposal.services || [],
       total_amount: proposal.total_amount || 0,
       valid_until: proposal.valid_until,
-      notes: proposal.notes
+      notes: proposal.notes,
+      personalizedIntro: personalizedIntro || undefined,
     });
 
     // Return HTML for now - PDF generation would require additional library
