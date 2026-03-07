@@ -884,6 +884,36 @@ export type Database = {
         }
         Relationships: []
       }
+      chatbot_knowledge: {
+        Row: {
+          category: string
+          created_at: string | null
+          data: Json
+          description: string | null
+          id: string
+          last_reviewed_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          data: Json
+          description?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          data?: Json
+          description?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       cierres_nomina: {
         Row: {
           anio: number
