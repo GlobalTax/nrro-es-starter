@@ -99,6 +99,9 @@ verify_jwt = false
 [functions.generate-sitemap]
 verify_jwt = false
 
+[functions.auto-marketing-audit]
+verify_jwt = false
+
 [functions.marketing-audit]
 verify_jwt = false
 
