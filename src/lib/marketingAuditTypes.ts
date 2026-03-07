@@ -48,6 +48,12 @@ export interface MarketingAuditState {
   rawData?: any;
 }
 
+export interface AiAnalysisItem {
+  id: string;
+  status: 'correct' | 'improvable' | 'missing';
+  note: string;
+}
+
 export interface ScrapedData {
   html: string;
   markdown: string;
@@ -56,4 +62,5 @@ export interface ScrapedData {
   robotsTxt: string | null;
   sitemapXml: string | null;
   scrapedUrl: string;
+  aiAnalysis: AiAnalysisItem[] | null;
 }
