@@ -16,6 +16,87 @@ const NEWS_SOURCES = {
 
 const NEWS_CATEGORIES = ["Fiscal", "Mercantil", "Laboral", "Internacional", "M&A"];
 
+// Helper para fetch con timeout
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 25000): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// ========== CLAUDE + FALLBACK (text response) ==========
+async function callClaudeTextWithFallback(systemPrompt: string, userPrompt: string): Promise<string> {
+  const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+
+  if (ANTHROPIC_API_KEY) {
+    try {
+      console.log("[AI] Calling Claude for news generation...");
+      const resp = await fetchWithTimeout("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 4096,
+          system: systemPrompt,
+          messages: [{ role: "user", content: userPrompt }],
+        }),
+      }, 30000);
+
+      if (resp.ok) {
+        const data = await resp.json();
+        const text = data.content?.find((b: { type: string }) => b.type === "text")?.text;
+        if (text) {
+          console.log("[AI] ✅ Claude OK for news");
+          return text;
+        }
+      } else {
+        console.warn(`[AI] Claude ${resp.status}, falling back...`);
+      }
+    } catch (err) {
+      console.warn(`[AI] Claude failed: ${err instanceof Error ? err.message : 'unknown'}, falling back...`);
+    }
+  }
+
+  if (!LOVABLE_API_KEY) throw new Error("No AI keys configured");
+
+  console.log("[AI] Using Lovable Gateway for news...");
+  const resp = await fetchWithTimeout("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "google/gemini-3-flash-preview",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+    }),
+  }, 30000);
+
+  if (!resp.ok) {
+    const errorText = await resp.text();
+    if (resp.status === 429) throw new Error("Rate limit exceeded. Please try again later.");
+    if (resp.status === 402) throw new Error("Payment required. Please add funds to your workspace.");
+    throw new Error(`AI Gateway error: ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) throw new Error("No content from AI");
+  console.log("[AI] ✅ Gateway OK for news");
+  return content;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -35,12 +116,6 @@ serve(async (req) => {
   try {
     console.log("Starting auto-generate-news function");
 
-    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
-
-    if (!lovableApiKey) {
-      throw new Error("LOVABLE_API_KEY is not configured");
-    }
-
     // Get automation settings
     const { data: settings, error: settingsError } = await supabase
       .from("news_automation_settings")
@@ -48,11 +123,9 @@ serve(async (req) => {
       .single();
 
     if (settingsError) {
-      console.error("Error fetching settings:", settingsError);
       throw new Error("Could not fetch automation settings");
     }
 
-    // Prepare settings snapshot for logging
     settingsSnapshot = {
       is_enabled: settings.is_enabled,
       articles_per_run: settings.articles_per_run,
@@ -63,7 +136,6 @@ serve(async (req) => {
     
     articlesToGenerate = settings.articles_per_run || 3;
 
-    // Create initial run record
     const { data: runRecord, error: runError } = await supabase
       .from("news_automation_runs")
       .insert({
@@ -80,14 +152,9 @@ serve(async (req) => {
       .select("id")
       .single();
 
-    if (runError) {
-      console.error("Error creating run record:", runError);
-    } else {
-      runRecordId = runRecord.id;
-    }
+    if (!runError) runRecordId = runRecord.id;
 
     if (!settings.is_enabled) {
-      console.log("News automation is disabled");
       return new Response(
         JSON.stringify({ message: "News automation is disabled" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -97,9 +164,7 @@ serve(async (req) => {
     const sources = settings.default_sources || ["BOE", "AEAT"];
     const categories = settings.default_categories || ["Fiscal", "Mercantil"];
 
-    console.log(`Generating ${articlesToGenerate} news articles from sources: ${sources.join(", ")}`);
-
-const systemPrompt = `Eres un redactor experto en noticias legales y fiscales para España. Tu trabajo es generar noticias breves y relevantes para empresas.
+    const systemPrompt = `Eres un redactor experto en noticias legales y fiscales para España. Tu trabajo es generar noticias breves y relevantes para empresas.
 
 REGLAS ESTRICTAS:
 1. Cada noticia debe tener MÁXIMO 150 caracteres en el excerpt
@@ -118,13 +183,13 @@ FORMATO DE RESPUESTA (JSON array):
   {
     "title_es": "Título breve y directo",
     "excerpt_es": "Extracto de máximo 150 caracteres con el dato clave de la noticia.",
-    "content_es": "Contenido expandido de 2-3 párrafos explicando la noticia en detalle, su contexto y las implicaciones prácticas para empresas.",
+    "content_es": "Contenido expandido de 2-3 párrafos.",
     "category": "Fiscal",
     "source_name": "AEAT"
   }
 ]
 
-Genera exactamente ${articlesToGenerate} noticias diferentes, cada una de una categoría distinta si es posible.
+Genera exactamente ${articlesToGenerate} noticias diferentes.
 Responde SOLO con el JSON, sin explicaciones adicionales.`;
 
     const userPrompt = `Genera ${articlesToGenerate} noticias legales/fiscales actuales para hoy, ${new Date().toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}.
@@ -137,69 +202,23 @@ Las noticias deben ser relevantes para:
 
 Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real española.`;
 
-    // Call Lovable AI Gateway
-    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "openai/gpt-5-nano",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
-      }),
-    });
-
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error("AI Gateway error:", aiResponse.status, errorText);
-      
-      const errorMessage = aiResponse.status === 429 
-        ? "Rate limit exceeded. Please try again later."
-        : aiResponse.status === 402
-        ? "Payment required. Please add funds to your workspace."
-        : `AI Gateway error: ${aiResponse.status}`;
-      
-      throw new Error(errorMessage);
-    }
-
-    const aiData = await aiResponse.json();
-    const content = aiData.choices?.[0]?.message?.content;
-
-    if (!content) {
-      throw new Error("No content received from AI");
-    }
-
-    console.log("AI Response:", content);
+    const content = await callClaudeTextWithFallback(systemPrompt, userPrompt);
 
     // Parse the JSON response
     let newsItems;
     try {
-      // Clean the response - remove markdown code blocks if present
       let cleanContent = content.trim();
-      if (cleanContent.startsWith("```json")) {
-        cleanContent = cleanContent.slice(7);
-      }
-      if (cleanContent.startsWith("```")) {
-        cleanContent = cleanContent.slice(3);
-      }
-      if (cleanContent.endsWith("```")) {
-        cleanContent = cleanContent.slice(0, -3);
-      }
+      if (cleanContent.startsWith("```json")) cleanContent = cleanContent.slice(7);
+      if (cleanContent.startsWith("```")) cleanContent = cleanContent.slice(3);
+      if (cleanContent.endsWith("```")) cleanContent = cleanContent.slice(0, -3);
       newsItems = JSON.parse(cleanContent.trim());
     } catch (parseError) {
-      console.error("Failed to parse AI response:", parseError);
       throw new Error("Failed to parse news items from AI response");
     }
 
     if (!Array.isArray(newsItems) || newsItems.length === 0) {
       throw new Error("Invalid news items format");
     }
-
-    console.log(`Parsed ${newsItems.length} news items`);
 
     // Insert news articles
     const insertedNews = [];
@@ -212,22 +231,20 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
         .replace(/(^-|-$)/g, "")
         .slice(0, 50);
 
-      const newsData = {
-        title_es: item.title_es,
-        excerpt_es: item.excerpt_es?.slice(0, 150) || item.excerpt_es,
-        content_es: item.content_es || item.excerpt_es, // Fallback to excerpt if no content
-        category: item.category || "Fiscal",
-        source_name: item.source_name || "BOE",
-        source_site: "es", // Required field for filtering in frontend
-        slug_es: `${slug}-${Date.now()}`,
-        is_published: settings.auto_publish,
-        published_at: settings.auto_publish ? new Date().toISOString() : null,
-        generated_with_ai: true,
-      };
-
       const { data: inserted, error: insertError } = await supabase
         .from("news_articles")
-        .insert(newsData)
+        .insert({
+          title_es: item.title_es,
+          excerpt_es: item.excerpt_es?.slice(0, 150) || item.excerpt_es,
+          content_es: item.content_es || item.excerpt_es,
+          category: item.category || "Fiscal",
+          source_name: item.source_name || "BOE",
+          source_site: "es",
+          slug_es: `${slug}-${Date.now()}`,
+          is_published: settings.auto_publish,
+          published_at: settings.auto_publish ? new Date().toISOString() : null,
+          generated_with_ai: true,
+        })
         .select()
         .single();
 
@@ -235,12 +252,11 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
         console.error("Error inserting news:", insertError);
       } else {
         insertedNews.push(inserted);
-        console.log(`Inserted news: ${inserted.title_es}`);
       }
     }
 
     // Update last_run_at
-    const { error: updateError } = await supabase
+    await supabase
       .from("news_automation_settings")
       .update({
         last_run_at: new Date().toISOString(),
@@ -248,11 +264,6 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
       })
       .eq("id", settings.id);
 
-    if (updateError) {
-      console.error("Error updating settings:", updateError);
-    }
-
-    // Update run record with success
     if (runRecordId) {
       await supabase
         .from("news_automation_runs")
@@ -265,20 +276,13 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
         .eq("id", runRecordId);
     }
 
-    console.log(`Successfully generated ${insertedNews.length} news articles`);
-
     return new Response(
-      JSON.stringify({
-        success: true,
-        generated: insertedNews.length,
-        articles: insertedNews,
-      }),
+      JSON.stringify({ success: true, generated: insertedNews.length, articles: insertedNews }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("Error in auto-generate-news:", error);
     
-    // Update run record with error
     if (runRecordId) {
       await supabase
         .from("news_automation_runs")
@@ -292,7 +296,6 @@ Recuerda: máximo 150 caracteres por excerpt, basado en actualidad real español
         })
         .eq("id", runRecordId);
     } else if (settingsSnapshot) {
-      // Create error record if we couldn't create one earlier
       await supabase
         .from("news_automation_runs")
         .insert({
