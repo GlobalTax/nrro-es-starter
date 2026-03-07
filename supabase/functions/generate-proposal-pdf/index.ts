@@ -78,6 +78,7 @@ interface ProposalData {
   total_amount: number;
   valid_until?: string;
   notes?: string;
+  personalizedIntro?: string;
 }
 
 // Generate HTML template for the proposal
@@ -506,9 +507,9 @@ function generateProposalHTML(data: ProposalData): string {
     <h2>Servicios Propuestos</h2>
     
     <p class="intro-text">
-      Estimado/a ${data.client_name},<br/><br/>
+      ${data.personalizedIntro || `Estimado/a ${data.client_name},<br/><br/>
       Nos complace presentarle nuestra propuesta de servicios profesionales adaptada a las necesidades de 
-      ${data.client_company || 'su empresa'}. A continuación, detallamos los servicios incluidos y sus correspondientes honorarios.
+      ${data.client_company || 'su empresa'}. A continuación, detallamos los servicios incluidos y sus correspondientes honorarios.`}
     </p>
     
     ${servicesHTML}
