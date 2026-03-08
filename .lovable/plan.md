@@ -1,28 +1,20 @@
 
 
-## Plan: Eliminar módulo Empleados
+## Instalar DataFast analytics
 
-El módulo de Empleados (7 registros, equipo pequeño) se elimina de la UI admin. Las tablas en Supabase se mantienen intactas.
+Dos cambios en `index.html`:
 
-### Cambios
+1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+```html
+<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+```
 
-**1. Sidebar** — `AdminSidebar.tsx`
-- Eliminar el item `{ path: '/admin/empleados', ... }` de la sección "Equipo"
-- Si "Ofertas" queda solo, renombrar el grupo o moverlo a otra sección
+2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
 
-**2. Dashboard** — `AdminDashboard.tsx`  
-- Eliminar la KPI card "Empleados activos" que enlaza a `/admin/empleados`
-- Actualizar `useDashboardStats.ts` para no consultar la tabla empleados
+Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
 
-**3. Eliminar archivos**
-- `src/pages/admin/AdminEmpleados.tsx`
-- `src/components/admin/empleados/EmpleadosTable.tsx`
-- `src/components/admin/empleados/EmpleadoDetailSheet.tsx`
-- `src/hooks/useEmpleados.ts`
-
-**4. Verificar dependencias**
-- `EmpleadoDetailSheet.tsx` importa `useNominas` (ya stub) — se elimina con el archivo
-- La ruta `/admin/empleados` no existe en `App.tsx` (ya fue removida), solo queda el enlace en sidebar
-
-**Nota**: No se toca la tabla `empleados` en Supabase. Solo se quita el acceso desde la UI.
+| Archivo | Cambio |
+|---|---|
+| `index.html` | Anadir script + actualizar CSP meta tag |
+| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
 

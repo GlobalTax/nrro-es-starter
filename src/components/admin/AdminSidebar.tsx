@@ -68,7 +68,6 @@ const sidebarSections: SidebarSection[] = [
     icon: UserCog,
     requiredRole: 'hr_viewer',
     items: [
-      { path: '/admin/empleados', icon: Users, label: 'Empleados' },
       { path: '/admin/job-positions', icon: Briefcase, label: 'Ofertas' },
     ],
   },
