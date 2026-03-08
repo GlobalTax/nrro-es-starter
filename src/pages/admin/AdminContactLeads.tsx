@@ -236,7 +236,7 @@ Equipo navarro`;
           onViewDetail={handleViewDetail}
           onMarkResponded={handleMarkResponded}
           onOpenMailto={handleOpenMailto}
-        />
+          onDelete={(lead) => handleDelete(lead.id)}
       </Card>
 
       {/* Detail Sheet */}
