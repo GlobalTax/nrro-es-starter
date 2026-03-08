@@ -93,7 +93,7 @@ export const LandingHealthCheck = ({ landing }: LandingHealthCheckProps) => {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Puntuación</span>
             <div className="flex items-center gap-2">
-              <span className={`text-2xl font-bold ${getGradeColor(result.grade)}`}>
+              <span className={`text-2xl font-medium ${getGradeColor(result.grade)}`}>
                 {result.score}
               </span>
               <span className="text-sm text-muted-foreground">/100</span>
