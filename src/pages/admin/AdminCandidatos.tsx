@@ -247,6 +247,7 @@ export default function AdminCandidatos() {
                 <TableRow>
                   <TableHead>Candidato</TableHead>
                   <TableHead>Puesto</TableHead>
+                  <TableHead>Oferta vinculada</TableHead>
                   <TableHead>Departamento</TableHead>
                   <TableHead>Estado</TableHead>
                   <TableHead>Fecha</TableHead>
@@ -256,13 +257,13 @@ export default function AdminCandidatos() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8">
+                    <TableCell colSpan={7} className="text-center py-8">
                       Cargando candidatos...
                     </TableCell>
                   </TableRow>
                 ) : candidatos.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                       No se encontraron candidatos
                     </TableCell>
                   </TableRow>
