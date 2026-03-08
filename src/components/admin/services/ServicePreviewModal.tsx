@@ -94,7 +94,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
                   <p>{service.metodologia.introduccion}</p>
                   {service.metodologia.pilares && service.metodologia.pilares.map((pilar, idx) => (
                     <div key={idx} className="mt-4">
-                      <h4 className="font-semibold">{pilar.numero}. {pilar.titulo}</h4>
+                      <h4 className="font-medium">{pilar.numero}. {pilar.titulo}</h4>
                       <ul className="list-disc list-inside ml-4 mt-2">
                         {pilar.puntos.map((punto, pIdx) => (
                           <li key={pIdx}>{punto}</li>
