@@ -35,23 +35,23 @@ serve(async (req: Request) => {
       },
     });
 
-    // Verify JWT using getClaims (works with ES256 signing keys on Lovable Cloud)
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
+    // Use service role key to verify user (bypasses ES256 signing key issues)
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const adminClient = createClient(supabaseUrl, serviceKey);
 
-    if (claimsError || !claimsData?.claims) {
-      console.error('[VERIFY_SESSION] Invalid session (getClaims):', claimsError);
+    // Verify user session using service role client
+    const { data: { user }, error: userError } = await adminClient.auth.getUser(token);
+
+    if (userError || !user) {
+      console.error('[VERIFY_SESSION] Invalid session:', userError);
       return new Response(
         JSON.stringify({ error: 'Invalid or expired session' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const userId = claimsData.claims.sub as string;
-    const userEmail = claimsData.claims.email as string;
-
-    // Use service role key to query user_roles (bypass RLS)
-    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const adminClient = createClient(supabaseUrl, serviceKey);
+    const userId = user.id;
+    const userEmail = user.email || '';
 
     // Get user roles
     const { data: userRoles, error: rolesError } = await adminClient
