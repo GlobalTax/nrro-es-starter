@@ -127,7 +127,7 @@ export const spacing = {
 } as const;
 
 export const typography = {
-  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+  fontFamily: "'General Sans', system-ui, -apple-system, sans-serif",
   sizes: { xs: '12px', sm: '13px', base: '14px', lg: '16px', xl: '18px', '2xl': '22px' },
   weights: { regular: 400, medium: 500, semibold: 600 },
   lineHeights: { tight: 1.25, normal: 1.5, relaxed: 1.625 },
