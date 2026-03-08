@@ -209,7 +209,7 @@ export const SitemapMetricsCard = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Català (CA)</span>
-                <span className="text-2xl font-bold">{metrics.urlsByLanguage.ca}</span>
+                <span className="text-2xl font-medium">{metrics.urlsByLanguage.ca}</span>
               </div>
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div 

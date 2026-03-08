@@ -27,7 +27,7 @@ export const AuditCategoryTab = ({ category, onStatusChange, onNoteChange }: Aud
             <div className="text-slate-400">Mejorables</div>
           </div>
           <div className="bg-red-500/10 rounded-lg p-2 text-center">
-            <div className="text-red-400 font-bold text-lg">{missingCount}</div>
+            <div className="text-red-400 font-medium text-lg">{missingCount}</div>
             <div className="text-slate-400">Faltan</div>
           </div>
         </div>
