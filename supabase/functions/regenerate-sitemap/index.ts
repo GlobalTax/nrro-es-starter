@@ -49,25 +49,32 @@ const staticRoutes: RouteConfig[] = [
   { es: '/condiciones-contratacion', ca: '/ca/condicions-contractacio', en: '/en/terms', priority: '0.5', changefreq: 'yearly' },
 ];
 
-// Service landing pages (ES-only, no multilingual alternates generated via staticRoutes)
+// Service landing pages (single-language SEO landings with real routes in App.tsx)
 const serviceLandingPages = [
+  // ES - SEO landings Barcelona
   { path: '/es/asesoria-fiscal-barcelona', priority: '0.8', changefreq: 'monthly' },
   { path: '/es/asesoria-contable-barcelona', priority: '0.8', changefreq: 'monthly' },
   { path: '/es/asesoria-laboral-barcelona', priority: '0.8', changefreq: 'monthly' },
   { path: '/es/asesoria-mercantil-barcelona', priority: '0.8', changefreq: 'monthly' },
   { path: '/es/abogados-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/orientacion-global', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/compliance-penal', priority: '0.7', changefreq: 'monthly' },
   { path: '/es/empresa-familiar', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/due-diligence', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/proteccion-datos-rgpd', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/segunda-oportunidad', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/constitucion-sociedades', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/sobre-navarro', priority: '0.5', changefreq: 'monthly' },
-  { path: '/es/contacto', priority: '0.6', changefreq: 'monthly' },
+  { path: '/es/abogados-herencias-barcelona', priority: '0.8', changefreq: 'monthly' },
+  // ES - Company setup
+  { path: '/crear-empresa-espana', priority: '0.8', changefreq: 'monthly' },
+  // CA - Company setup
+  { path: '/ca/crear-empresa-espanya', priority: '0.7', changefreq: 'monthly' },
+  // EN - SEO landings
   { path: '/en/tax-advisor-barcelona', priority: '0.8', changefreq: 'monthly' },
   { path: '/en/beckham-law-spain', priority: '0.8', changefreq: 'monthly' },
-  { path: '/en/services/accounting-and-labor-consulting', priority: '0.7', changefreq: 'monthly' },
+  // EN - Company setup landings
+  { path: '/set-up-company-spain', priority: '0.9', changefreq: 'monthly' },
+  { path: '/en/set-up-company-spain', priority: '0.9', changefreq: 'monthly' },
+  { path: '/en/company-setup-calculator', priority: '0.8', changefreq: 'monthly' },
+  { path: '/en/nie-spain-foreigners', priority: '0.8', changefreq: 'monthly' },
+  { path: '/en/startup-company-setup-spain', priority: '0.8', changefreq: 'monthly' },
+  { path: '/en/fast-company-registration-spain', priority: '0.8', changefreq: 'monthly' },
+  // Legal
+  { path: '/canal-denuncias', priority: '0.3', changefreq: 'yearly' },
 ];
 
 function formatDate(date: string | null | undefined): string {
