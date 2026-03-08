@@ -19,7 +19,7 @@ export const AuditCategoryTab = ({ category, onStatusChange, onNoteChange }: Aud
         <AuditScoreCard score={category.score} label={`${category.name} (${category.weight}%)`} />
         <div className="flex-1 grid grid-cols-3 gap-2 text-xs">
           <div className="bg-emerald-500/10 rounded-lg p-2 text-center">
-            <div className="text-emerald-400 font-bold text-lg">{correctCount}</div>
+            <div className="text-emerald-400 font-medium text-lg">{correctCount}</div>
             <div className="text-slate-400">Correctos</div>
           </div>
           <div className="bg-yellow-500/10 rounded-lg p-2 text-center">
