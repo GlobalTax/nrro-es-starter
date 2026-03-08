@@ -280,6 +280,15 @@ export default function AdminCandidatos() {
                       </TableCell>
                       <TableCell>{candidato.puesto_solicitado}</TableCell>
                       <TableCell>
+                        {getJobPositionName(candidato.job_position_id) ? (
+                          <Badge variant="outline" className="text-xs">
+                            {getJobPositionName(candidato.job_position_id)}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">—</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
                         {candidato.departamento ? (
                           <Badge variant="outline">{candidato.departamento}</Badge>
                         ) : (
