@@ -88,7 +88,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
                   <p className="text-sm text-muted-foreground">{service.metodologia.overline}</p>
                   <div>
                     {service.metodologia.titulos.map((titulo, idx) => (
-                      <h3 key={idx} className="text-xl font-semibold">{titulo}</h3>
+                      <h3 key={idx} className="text-xl font-medium">{titulo}</h3>
                     ))}
                   </div>
                   <p>{service.metodologia.introduccion}</p>
