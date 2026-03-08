@@ -186,7 +186,7 @@ export const LandingDashboard = () => {
               </PieChart>
             </ResponsiveContainer>
             <div className="text-center mt-4">
-              <p className="text-3xl font-bold text-foreground">{totalForDonut}</p>
+              <p className="text-3xl font-medium text-foreground">{totalForDonut}</p>
               <p className="text-sm text-muted-foreground">Total Landings</p>
             </div>
           </CardContent>
