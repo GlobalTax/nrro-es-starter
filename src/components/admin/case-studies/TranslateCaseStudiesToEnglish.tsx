@@ -74,7 +74,7 @@ export const TranslateCaseStudiesToEnglish = () => {
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                     <div>
-                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                      <p className="text-2xl font-medium text-green-600 dark:text-green-400">
                         {results.success}
                       </p>
                       <p className="text-xs text-muted-foreground">Exitosos</p>
