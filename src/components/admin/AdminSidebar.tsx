@@ -236,7 +236,7 @@ export const AdminSidebar = () => {
         {adminUser && (
           <div className="flex items-center gap-2.5">
             <div className="h-7 w-7 rounded-full bg-indigo-50 flex items-center justify-center shrink-0">
-              <span className="text-[11px] font-medium text-indigo-600">
+              <span className="text-[11px] font-normal text-indigo-600">
                 {adminUser.full_name?.charAt(0)?.toUpperCase()}
               </span>
             </div>
