@@ -42,7 +42,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
                   <Badge variant="outline" className={`${getAreaColor(service.area)} mb-2`}>
                     {service.area}
                   </Badge>
-                  <h1 className="text-4xl font-bold mb-2">{service.name}</h1>
+                  <h1 className="text-4xl font-medium mb-2">{service.name}</h1>
                   <p className="text-lg text-muted-foreground">{service.description}</p>
                 </div>
               </div>
