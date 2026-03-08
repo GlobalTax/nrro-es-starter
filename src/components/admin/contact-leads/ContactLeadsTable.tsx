@@ -20,17 +20,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { 
   ChevronRight, 
   Mail, 
   Phone, 
   CheckCircle2, 
   Eye,
-  Globe
+  Globe,
+  Trash2
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
