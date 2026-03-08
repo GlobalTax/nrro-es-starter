@@ -1,4 +1,3 @@
-// Simplified browser notifications hook - stub
 export function useBrowserNotifications() {
   const isEnabled = false;
   const isSupported = false;
@@ -8,12 +7,12 @@ export function useBrowserNotifications() {
     // No-op
   };
 
-  const toggleNotifications = () => {
-    // No-op
+  const toggleNotifications = async (): Promise<boolean> => {
+    return false;
   };
 
-  const requestPermission = async () => {
-    // No-op
+  const requestPermission = async (): Promise<boolean> => {
+    return false;
   };
 
   return { isEnabled, isSupported, permission, showNotification, toggleNotifications, requestPermission };
