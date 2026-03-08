@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { ContactLead } from "@/hooks/useContactLeads";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,13 +10,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { 
   ChevronRight, 
   Mail, 
   Phone, 
   CheckCircle2, 
   Eye,
-  Globe
+  Globe,
+  Trash2
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
@@ -31,6 +42,7 @@ interface ContactLeadsTableProps {
   onViewDetail: (lead: ContactLead) => void;
   onMarkResponded: (lead: ContactLead) => void;
   onOpenMailto: (lead: ContactLead) => void;
+  onDelete: (lead: ContactLead) => void;
 }
 
 const SOURCE_CONFIG: Record<string, { label: string; className: string }> = {
@@ -55,7 +67,9 @@ export const ContactLeadsTable = ({
   onViewDetail,
   onMarkResponded,
   onOpenMailto,
+  onDelete,
 }: ContactLeadsTableProps) => {
+  const [deleteTarget, setDeleteTarget] = useState<ContactLead | null>(null);
   if (isLoading) {
     return (
       <div className="p-6 space-y-4">
@@ -270,6 +284,18 @@ export const ContactLeadsTable = ({
                               <Eye className="h-3.5 w-3.5 mr-1.5" />
                               Ver Detalle
                             </Button>
+                            <Button 
+                              size="sm" 
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setDeleteTarget(lead);
+                              }}
+                              className="h-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                            >
+                              <Trash2 className="h-3.5 w-3.5 mr-1.5" />
+                              Eliminar
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -281,6 +307,31 @@ export const ContactLeadsTable = ({
           })}
         </TableBody>
       </Table>
+
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar este contacto?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Se eliminará permanentemente el mensaje de <strong>{deleteTarget?.name}</strong>. Esta acción no se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => {
+                if (deleteTarget) {
+                  onDelete(deleteTarget);
+                  setDeleteTarget(null);
+                }
+              }}
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
