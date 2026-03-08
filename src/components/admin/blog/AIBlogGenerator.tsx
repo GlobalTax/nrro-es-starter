@@ -178,7 +178,7 @@ export const AIBlogGenerator = ({ onGenerated, onCancel }: AIBlogGeneratorProps)
 
               {state.article.title_en && (
                 <div className="pt-4 border-t">
-                  <h4 className="text-lg font-semibold">{state.article.title_en}</h4>
+                  <h4 className="text-lg font-medium">{state.article.title_en}</h4>
                   <p className="text-sm text-muted-foreground mt-1">{state.article.excerpt_en}</p>
                 </div>
               )}

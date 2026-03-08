@@ -150,7 +150,7 @@ export function PageAuditModal({
                       </pre>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-sm mb-2">Metadatos de la página</h4>
+                      <h4 className="font-medium text-sm mb-2">Metadatos de la página</h4>
                       <pre className="p-3 rounded-lg bg-muted/50 text-xs overflow-auto max-h-40">
                         {JSON.stringify(rawData.metadata || {}, null, 2)}
                       </pre>

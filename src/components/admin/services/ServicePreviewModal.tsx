@@ -113,7 +113,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {service.stats.map((stat, idx) => (
                     <div key={idx} className="bg-muted p-4 rounded-lg">
-                      <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                      <div className="text-3xl font-medium mb-1">{stat.value}</div>
                       <div className="text-sm font-medium mb-1">{stat.label}</div>
                       <div className="text-xs text-muted-foreground">{stat.description}</div>
                     </div>
