@@ -947,7 +947,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
                 <TabsContent value="transversales" className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-base font-semibold">Servicios Transversales</Label>
+                    <Label className="text-base font-medium">Servicios Transversales</Label>
                     <Button
                       type="button"
                       variant="outline"
