@@ -108,7 +108,7 @@ export function PageAuditModal({
                   {/* SEO Data Summary */}
                   {Object.keys(seoData).length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Datos SEO detectados</h4>
+                      <h4 className="font-medium text-sm">Datos SEO detectados</h4>
                       <div className="grid gap-2 text-sm">
                         {seoData.title && (
                           <div className="p-2 rounded bg-muted/50">
