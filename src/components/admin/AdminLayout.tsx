@@ -11,9 +11,9 @@ import { Bell, X } from 'lucide-react';
 
 // Fallback skeleton for sidebar - Apollo style
 const SidebarFallback = () => (
-  <aside className="w-[232px] bg-[#1B1F3B] text-white min-h-screen flex flex-col animate-pulse">
+  <aside className="w-[220px] bg-white border-r border-gray-200 min-h-screen flex flex-col animate-pulse">
     <div className="p-4">
-      <div className="h-7 w-7 bg-white/10 rounded-lg" />
+      <div className="h-5 w-20 bg-gray-100 rounded" />
     </div>
   </aside>
 );
