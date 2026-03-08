@@ -969,7 +969,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                     <Card key={field.id} className="p-4">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <h4 className="font-semibold">Servicio {index + 1}</h4>
+                          <h4 className="font-medium">Servicio {index + 1}</h4>
                           <Button
                             type="button"
                             variant="ghost"
