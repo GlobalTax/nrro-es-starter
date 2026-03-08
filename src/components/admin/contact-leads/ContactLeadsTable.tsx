@@ -42,6 +42,7 @@ interface ContactLeadsTableProps {
   onViewDetail: (lead: ContactLead) => void;
   onMarkResponded: (lead: ContactLead) => void;
   onOpenMailto: (lead: ContactLead) => void;
+  onDelete: (lead: ContactLead) => void;
 }
 
 const SOURCE_CONFIG: Record<string, { label: string; className: string }> = {
