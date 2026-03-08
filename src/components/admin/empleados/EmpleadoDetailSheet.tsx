@@ -82,6 +82,10 @@ export function EmpleadoDetailSheet({
 }: EmpleadoDetailSheetProps) {
   const [formData, setFormData] = useState<Partial<Empleado>>({});
   const [activeTab, setActiveTab] = useState('info');
+  const [uploadingContrato, setUploadingContrato] = useState(false);
+  const [uploadingFirma, setUploadingFirma] = useState(false);
+  const contratoInputRef = useRef<HTMLInputElement>(null);
+  const firmaInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch nóminas for this employee
   const { data: nominas } = useNominas({
