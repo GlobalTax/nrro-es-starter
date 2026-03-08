@@ -88,7 +88,7 @@ export function PageAuditModal({
                   {/* Quick Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.issues.filter(i => i.severity === 'error').length}</p>
+                      <p className="text-2xl font-medium">{audit.issues.filter(i => i.severity === 'error').length}</p>
                       <p className="text-xs text-muted-foreground">Errores</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
