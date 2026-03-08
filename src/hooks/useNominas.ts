@@ -6,10 +6,14 @@ export interface Nomina {
   empleado_id: string;
   mes: number;
   anio: number;
-  salario_bruto: number | null;
-  salario_neto: number | null;
+  bruto: number | null;
+  neto: number | null;
   coste_empresa: number | null;
-  created_at: string | null;
+  salario_bruto?: number | null;
+  salario_neto?: number | null;
+  pdf_url: string | null;
+  fecha_subida: string | null;
+  created_at?: string | null;
 }
 
 export const useNominas = (filters?: { empleado_id?: string }) => {
@@ -23,7 +27,12 @@ export const useNominas = (filters?: { empleado_id?: string }) => {
       query = query.order('anio', { ascending: false }).order('mes', { ascending: false });
       const { data, error } = await query;
       if (error) throw error;
-      return data as Nomina[];
+      return (data || []).map((n: any) => ({
+        ...n,
+        salario_bruto: n.bruto,
+        salario_neto: n.neto,
+        created_at: n.fecha_subida,
+      })) as Nomina[];
     },
     enabled: !!filters?.empleado_id,
   });
