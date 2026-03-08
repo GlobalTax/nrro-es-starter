@@ -48,7 +48,9 @@ import { TranslateBlogToEnglish } from "@/components/admin/blog/TranslateBlogToE
 import { ContentStatusBadge, ContentOriginBadge } from "@/components/admin/content/ContentStatusBadge";
 import { useBlogSearch, useBlogFilterOptions } from "@/hooks/useBlogSearch";
 import { useDuplicateBlogPost } from "@/hooks/useDuplicateContent";
-import { Plus, Eye, Edit, Trash2, CheckCircle, Search, Bot, FileText, MoreHorizontal, Copy } from "lucide-react";
+import { Plus, Eye, Edit, Trash2, CheckCircle, Search, Bot, FileText, MoreHorizontal, Copy, Globe, ExternalLink } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { CustomPagination } from "@/components/ui/custom-pagination";
 

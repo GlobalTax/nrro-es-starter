@@ -29,6 +29,7 @@ export interface BlogPostResult {
   read_time: number;
   status: string;
   view_count: number;
+  research_sources: any[] | null;
 }
 
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {
