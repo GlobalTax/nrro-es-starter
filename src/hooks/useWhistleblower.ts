@@ -32,7 +32,7 @@ export const useCheckWhistleblowerStatus = () => {
     mutationFn: async (trackingCode: string): Promise<StatusCheckResult | null> => {
       const { data, error } = await supabase
         .from('whistleblower_reports')
-        .select('id, status, admin_response, created_at, updated_at, resolved_at')
+        .select('id, status, resolution, created_at, updated_at, resolved_at')
         .eq('tracking_code', trackingCode)
         .maybeSingle();
       if (error) throw error;
@@ -49,7 +49,7 @@ export const useCheckWhistleblowerStatus = () => {
         id: data.id,
         status: data.status,
         statusLabel: statusMap[data.status] || data.status,
-        response: data.admin_response,
+        response: data.resolution,
         created_at: data.created_at,
         createdAt: data.created_at,
         updated_at: data.updated_at,
