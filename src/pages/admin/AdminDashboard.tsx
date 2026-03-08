@@ -33,14 +33,6 @@ export const AdminDashboard = () => {
       link: '/admin/contact-leads',
     },
     {
-      title: 'Empleados activos',
-      value: stats?.empleadosActivos || 0,
-      icon: Users,
-      color: 'text-slate-600',
-      bgColor: 'bg-slate-100',
-      link: '/admin/empleados',
-    },
-    {
       title: 'Posts publicados',
       value: stats?.postsPublicados || 0,
       icon: Newspaper,

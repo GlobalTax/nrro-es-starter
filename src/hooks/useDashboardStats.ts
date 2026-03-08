@@ -29,7 +29,6 @@ export const useDashboardStats = () => {
       const [
         leadsCountResult,
         leadsPendientesResult,
-        empleadosResult,
         postsResult,
         leadsRecientesResult,
       ] = await Promise.all([
@@ -40,10 +39,6 @@ export const useDashboardStats = () => {
           .from('contact_leads')
           .select('id', { count: 'exact', head: true })
           .eq('email_sent', false),
-        supabase
-          .from('empleados')
-          .select('id', { count: 'exact', head: true })
-          .eq('activo', true),
         supabase
           .from('blog_posts')
           .select('id', { count: 'exact', head: true })
@@ -58,7 +53,6 @@ export const useDashboardStats = () => {
       return {
         leadsTotal: leadsCountResult.count || 0,
         leadsPendientes: leadsPendientesResult.count || 0,
-        empleadosActivos: empleadosResult.count || 0,
         postsPublicados: postsResult.count || 0,
         leadsRecientes: (leadsRecientesResult.data || []) as LeadRecent[],
       };
