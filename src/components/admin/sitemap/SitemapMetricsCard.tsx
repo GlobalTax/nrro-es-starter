@@ -148,7 +148,7 @@ export const SitemapMetricsCard = () => {
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-bold">
+                <div className="text-2xl font-medium">
                   {stat.value}
                 </div>
                 <p className="text-xs text-muted-foreground">
