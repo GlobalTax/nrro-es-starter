@@ -24,6 +24,7 @@ export default function AdminContactLeads() {
     status: "all",
     serviceType: "all",
     sourceSite: "all",
+    leadSource: "all",
     dateFrom: "",
     dateTo: "",
   });
@@ -41,6 +42,7 @@ export default function AdminContactLeads() {
       status: "all",
       serviceType: "all",
       sourceSite: "all",
+      leadSource: "all",
       dateFrom: "",
       dateTo: "",
     });

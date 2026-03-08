@@ -12,6 +12,7 @@ export interface ContactLead {
   message: string;
   service_type: string | null;
   source_site: string | null;
+  lead_source: string | null;
   ip_address: string | null;
   user_agent: string | null;
   email_sent: boolean;
@@ -27,6 +28,7 @@ export interface ContactLeadFilters {
   status?: string;
   serviceType?: string;
   sourceSite?: string;
+  leadSource?: string;
   dateFrom?: string;
   dateTo?: string;
 }
@@ -56,6 +58,14 @@ export const useContactLeads = (filters?: ContactLeadFilters) => {
 
       if (filters?.sourceSite && filters.sourceSite !== "all") {
         query = query.eq("source_site", filters.sourceSite as any);
+      }
+
+      if (filters?.leadSource && filters.leadSource !== "all") {
+        if (filters.leadSource === "contact") {
+          query = query.is("lead_source", null);
+        } else {
+          query = query.eq("lead_source", filters.leadSource);
+        }
       }
 
       if (filters?.dateFrom) {

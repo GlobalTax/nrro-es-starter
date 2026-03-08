@@ -495,6 +495,31 @@ const handler = async (req: Request): Promise<Response> => {
       throw leadError;
     }
 
+    // Dual write to contact_leads for unified view
+    const messageParts = [
+      `País: ${contactData.country}`,
+      `Situación laboral: ${contactData.jobSituation}`,
+      contactData.estimatedMoveDate ? `Fecha traslado: ${contactData.estimatedMoveDate}` : null,
+      contactData.currentSalary ? `Salario actual: ${contactData.currentSalary}€` : null,
+      `Score elegibilidad: ${eligibilityScore}/100`,
+      contactData.message ? `\nMensaje: ${contactData.message}` : null,
+    ].filter(Boolean).join('\n');
+
+    await supabaseClient.from('contact_leads').insert({
+      name: contactData.name,
+      email: contactData.email,
+      phone: contactData.phone || null,
+      company: contactData.company || null,
+      subject: 'Consulta Ley Beckham',
+      message: messageParts,
+      lead_source: 'ley_beckham',
+      ip_address: ipAddress,
+      user_agent: userAgent,
+    }).then(({ error: clError }) => {
+      if (clError) console.error('[LEY_BECKHAM] Error inserting into contact_leads:', clError);
+      else console.log('[LEY_BECKHAM] Dual write to contact_leads OK');
+    });
+
     // Initialize document checklist
     const documents = [
       { document_type: "identificacion", document_name: "Pasaporte o DNI" },

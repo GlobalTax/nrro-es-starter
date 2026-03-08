@@ -51,6 +51,12 @@ const SOURCE_CONFIG: Record<string, { label: string; className: string }> = {
   ca: { label: "CA", className: "bg-amber-50 text-amber-600 border-amber-200" },
 };
 
+const LEAD_SOURCE_CONFIG: Record<string, { label: string; className: string }> = {
+  company_setup: { label: "Company Setup", className: "bg-violet-50 text-violet-700 border-violet-200" },
+  ley_beckham: { label: "Ley Beckham", className: "bg-sky-50 text-sky-700 border-sky-200" },
+  demo_request: { label: "Demo", className: "bg-orange-50 text-orange-700 border-orange-200" },
+};
+
 const SERVICE_CONFIG: Record<string, { label: string; className: string }> = {
   tax_advisory: { label: "Fiscal", className: "bg-indigo-50 text-indigo-600" },
   legal_services: { label: "Legal", className: "bg-purple-50 text-purple-600" },
@@ -145,7 +151,17 @@ export const ContactLeadsTable = ({
                     />
                   </TableCell>
                   <TableCell className="font-medium text-foreground truncate">
-                    <span title={lead.name}>{lead.name}</span>
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="truncate" title={lead.name}>{lead.name}</span>
+                      {lead.lead_source && LEAD_SOURCE_CONFIG[lead.lead_source] && (
+                        <Badge 
+                          variant="outline" 
+                          className={cn("text-[10px] px-1.5 py-0 flex-shrink-0", LEAD_SOURCE_CONFIG[lead.lead_source].className)}
+                        >
+                          {LEAD_SOURCE_CONFIG[lead.lead_source].label}
+                        </Badge>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell className="text-muted-foreground truncate">
                     <span title={lead.company || undefined}>{lead.company || "-"}</span>
