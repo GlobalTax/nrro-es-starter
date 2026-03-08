@@ -193,7 +193,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Gallery */}
             {caseStudy.gallery.length > 0 && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Galería</h3>
+                <h3 className="text-lg font-medium mb-4">Galería</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {caseStudy.gallery.map((image, index) => (
                     <div key={index} className="space-y-2">
