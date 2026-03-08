@@ -182,7 +182,7 @@ export const AdminSidebar = () => {
 
             return (
               <div key={section.id} className="space-y-0.5">
-                <p className="px-2.5 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">
+                <p className="px-2.5 text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-1">
                   {section.title}
                 </p>
                 {section.items.map((item) => {
