@@ -1,20 +1,24 @@
 
 
-## Instalar DataFast analytics
+## Plan: Corregir la tipografía de la intranet — cargar Inter
 
-Dos cambios en `index.html`:
+### Problema
+La hoja de estilos `admin-tokens.css` y `admin-theme.ts` definen `'Inter'` como fuente de la intranet, pero **Inter nunca se carga**. En `index.html` línea 72, solo se importan `Plus Jakarta Sans` y `Roboto Mono`. El navegador cae al fallback `system-ui`.
 
-1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
-```html
-<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+### Solución
+
+**1 solo archivo: `index.html` (línea 72)**
+
+Añadir `Inter:wght@300;400;500;600` al `<link>` de Google Fonts existente. Los pesos 300 (Light) y 400 (Regular) son los principales según el design system; 500 y 600 se usan en badges y botones.
+
+Cambiar línea 72 de:
+```
+family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700
+```
+a:
+```
+family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700
 ```
 
-2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
-
-Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
-
-| Archivo | Cambio |
-|---|---|
-| `index.html` | Anadir script + actualizar CSP meta tag |
-| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
+No se tocan más archivos. La definición en `admin-tokens.css` y `admin-theme.ts` ya es correcta.
 
