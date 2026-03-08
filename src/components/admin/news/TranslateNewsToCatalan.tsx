@@ -76,7 +76,7 @@ export function TranslateNewsToCatalan() {
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                   <div>
-                    <p className="text-xl font-semibold text-emerald-700">{results.success}</p>
+                    <p className="text-xl font-medium text-emerald-700">{results.success}</p>
                     <p className="text-xs text-emerald-600">Exitosos</p>
                   </div>
                 </div>
