@@ -585,7 +585,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                     <Card className="p-6 border-2">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <h3 className="text-lg font-medium flex items-center gap-2">
                             🇪🇸 Versión Catalán
                           </h3>
                           <Button
@@ -662,7 +662,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                     <Card className="p-6 border-2">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <h3 className="text-lg font-medium flex items-center gap-2">
                             🇬🇧 English Version
                           </h3>
                           <Button
@@ -832,7 +832,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
                       <div className="space-y-4 mt-6">
                         <div className="flex items-center justify-between">
-                          <Label className="text-base font-semibold">Pilares</Label>
+                          <Label className="text-base font-medium">Pilares</Label>
                           <Button
                             type="button"
                             variant="outline"
@@ -854,7 +854,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                           <Card key={pilarIndex} className="p-4 border-2">
                             <div className="space-y-3">
                               <div className="flex items-center justify-between">
-                                <h4 className="font-semibold">Pilar {pilarIndex + 1}</h4>
+                                <h4 className="font-medium">Pilar {pilarIndex + 1}</h4>
                                 <Button
                                   type="button"
                                   variant="ghost"
@@ -947,7 +947,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
                 <TabsContent value="transversales" className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-base font-semibold">Servicios Transversales</Label>
+                    <Label className="text-base font-medium">Servicios Transversales</Label>
                     <Button
                       type="button"
                       variant="outline"
@@ -969,7 +969,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                     <Card key={field.id} className="p-4">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <h4 className="font-semibold">Servicio {index + 1}</h4>
+                          <h4 className="font-medium">Servicio {index + 1}</h4>
                           <Button
                             type="button"
                             variant="ghost"
@@ -1019,7 +1019,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
                 <TabsContent value="stats" className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-base font-semibold">Estadísticas</Label>
+                    <Label className="text-base font-medium">Estadísticas</Label>
                     <Button
                       type="button"
                       variant="outline"
@@ -1042,7 +1042,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                       <Card key={field.id} className="p-4">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
-                            <h4 className="font-semibold">Stat {index + 1}</h4>
+                            <h4 className="font-medium">Stat {index + 1}</h4>
                             <Button
                               type="button"
                               variant="ghost"

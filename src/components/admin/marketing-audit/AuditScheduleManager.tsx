@@ -41,7 +41,7 @@ export const AuditScheduleManager = () => {
     <div className="space-y-6">
       <div className="flex items-center gap-2 mb-4">
         <Calendar className="h-5 w-5 text-blue-400" />
-        <h2 className="text-lg font-semibold text-white">Auditorías Programadas</h2>
+        <h2 className="text-lg font-medium text-white">Auditorías Programadas</h2>
       </div>
 
       {/* Add new entry */}

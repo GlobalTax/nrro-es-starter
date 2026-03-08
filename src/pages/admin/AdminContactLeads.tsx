@@ -138,7 +138,7 @@ Equipo navarro`;
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Leads de Contacto</h1>
+          <h1 className="text-2xl font-medium text-slate-900">Leads de Contacto</h1>
           <p className="text-sm text-slate-500 mt-0.5">
             Gestiona los mensajes de contacto recibidos
           </p>
@@ -168,7 +168,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Total</p>
-                <p className="text-2xl font-semibold text-slate-900">{stats.total}</p>
+                <p className="text-2xl font-medium text-slate-900">{stats.total}</p>
               </div>
               <div className="p-2.5 bg-slate-100 rounded-lg">
                 <Mail className="h-5 w-5 text-slate-600" />
@@ -181,7 +181,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Pendientes</p>
-                <p className="text-2xl font-semibold text-amber-600">{stats.pending}</p>
+                <p className="text-2xl font-medium text-amber-600">{stats.pending}</p>
               </div>
               <div className="p-2.5 bg-amber-100 rounded-lg">
                 <Clock className="h-5 w-5 text-amber-600" />
@@ -194,7 +194,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Respondidos</p>
-                <p className="text-2xl font-semibold text-emerald-600">{stats.responded}</p>
+                <p className="text-2xl font-medium text-emerald-600">{stats.responded}</p>
               </div>
               <div className="p-2.5 bg-emerald-100 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-emerald-600" />
@@ -207,7 +207,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Esta semana</p>
-                <p className="text-2xl font-semibold text-indigo-600">{stats.thisWeek}</p>
+                <p className="text-2xl font-medium text-indigo-600">{stats.thisWeek}</p>
               </div>
               <div className="p-2.5 bg-indigo-100 rounded-lg">
                 <TrendingUp className="h-5 w-5 text-indigo-600" />

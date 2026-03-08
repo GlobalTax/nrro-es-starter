@@ -134,7 +134,7 @@ export default function AdminJobPositions() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-900">Vacantes Laborales</h1>
+            <h1 className="text-2xl font-medium text-slate-900">Vacantes Laborales</h1>
             <p className="text-sm text-slate-500 mt-0.5">
               Gestiona las posiciones abiertas en tu empresa
             </p>
@@ -156,7 +156,7 @@ export default function AdminJobPositions() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-slate-500">{stat.title}</p>
-                    <p className="text-2xl font-semibold text-slate-900">{stat.value}</p>
+                    <p className="text-2xl font-medium text-slate-900">{stat.value}</p>
                   </div>
                   <div className={`p-2 rounded-lg ${stat.bgColor}`}>
                     <stat.icon className={`h-5 w-5 ${stat.color}`} />

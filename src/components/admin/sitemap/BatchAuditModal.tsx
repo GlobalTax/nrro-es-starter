@@ -130,7 +130,7 @@ export function BatchAuditModal({
                     {result.success && result.overallScore !== undefined ? (
                       <Badge 
                         variant="outline" 
-                        className={cn("font-bold", getScoreColor(result.overallScore))}
+                        className={cn("font-medium", getScoreColor(result.overallScore))}
                       >
                         {result.overallScore}
                       </Badge>

@@ -11,14 +11,14 @@ export const AuditQuickWins = ({ quickWins }: AuditQuickWinsProps) => {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+      <h3 className="text-lg font-medium text-white flex items-center gap-2">
         <Zap className="h-5 w-5 text-yellow-400" />
         Quick Wins — Top 10 acciones de mayor impacto
       </h3>
       <div className="space-y-2">
         {quickWins.map((win, idx) => (
           <div key={win.itemId} className="flex items-start gap-3 rounded-lg border border-slate-700/50 bg-slate-800/50 p-3">
-            <span className="flex items-center justify-center h-6 w-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold shrink-0">
+            <span className="flex items-center justify-center h-6 w-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium shrink-0">
               {idx + 1}
             </span>
             <div className="flex-1 min-w-0">

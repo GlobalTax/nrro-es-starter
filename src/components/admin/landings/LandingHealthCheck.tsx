@@ -93,7 +93,7 @@ export const LandingHealthCheck = ({ landing }: LandingHealthCheckProps) => {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Puntuación</span>
             <div className="flex items-center gap-2">
-              <span className={`text-2xl font-bold ${getGradeColor(result.grade)}`}>
+              <span className={`text-2xl font-medium ${getGradeColor(result.grade)}`}>
                 {result.score}
               </span>
               <span className="text-sm text-muted-foreground">/100</span>
@@ -116,7 +116,7 @@ export const LandingHealthCheck = ({ landing }: LandingHealthCheckProps) => {
 
         {/* Lista de Checks */}
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold">Verificaciones</h4>
+          <h4 className="text-sm font-medium">Verificaciones</h4>
           <div className="space-y-2">
             {result.checks.map((check, index) => (
               <div 

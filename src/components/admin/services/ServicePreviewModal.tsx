@@ -42,7 +42,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
                   <Badge variant="outline" className={`${getAreaColor(service.area)} mb-2`}>
                     {service.area}
                   </Badge>
-                  <h1 className="text-4xl font-bold mb-2">{service.name}</h1>
+                  <h1 className="text-4xl font-medium mb-2">{service.name}</h1>
                   <p className="text-lg text-muted-foreground">{service.description}</p>
                 </div>
               </div>
@@ -51,7 +51,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Features */}
             {service.features && service.features.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Features</h2>
+                <h2 className="text-2xl font-medium mb-4">Features</h2>
                 <ul className="list-disc list-inside space-y-2">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="text-foreground">{feature}</li>
@@ -63,7 +63,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Typical Clients */}
             {service.typical_clients && service.typical_clients.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Typical Clients</h2>
+                <h2 className="text-2xl font-medium mb-4">Typical Clients</h2>
                 <ul className="list-disc list-inside space-y-2">
                   {service.typical_clients.map((client, idx) => (
                     <li key={idx} className="text-foreground">{client}</li>
@@ -75,7 +75,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Benefits */}
             {service.benefits && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Benefits</h2>
+                <h2 className="text-2xl font-medium mb-4">Benefits</h2>
                 <p className="text-foreground whitespace-pre-wrap">{service.benefits}</p>
               </div>
             )}
@@ -83,18 +83,18 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Metodología */}
             {service.metodologia && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Metodología</h2>
+                <h2 className="text-2xl font-medium mb-4">Metodología</h2>
                 <div className="bg-muted p-6 rounded-lg space-y-4">
                   <p className="text-sm text-muted-foreground">{service.metodologia.overline}</p>
                   <div>
                     {service.metodologia.titulos.map((titulo, idx) => (
-                      <h3 key={idx} className="text-xl font-semibold">{titulo}</h3>
+                      <h3 key={idx} className="text-xl font-medium">{titulo}</h3>
                     ))}
                   </div>
                   <p>{service.metodologia.introduccion}</p>
                   {service.metodologia.pilares && service.metodologia.pilares.map((pilar, idx) => (
                     <div key={idx} className="mt-4">
-                      <h4 className="font-semibold">{pilar.numero}. {pilar.titulo}</h4>
+                      <h4 className="font-medium">{pilar.numero}. {pilar.titulo}</h4>
                       <ul className="list-disc list-inside ml-4 mt-2">
                         {pilar.puntos.map((punto, pIdx) => (
                           <li key={pIdx}>{punto}</li>
@@ -109,11 +109,11 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Stats */}
             {service.stats && service.stats.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Statistics</h2>
+                <h2 className="text-2xl font-medium mb-4">Statistics</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {service.stats.map((stat, idx) => (
                     <div key={idx} className="bg-muted p-4 rounded-lg">
-                      <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                      <div className="text-3xl font-medium mb-1">{stat.value}</div>
                       <div className="text-sm font-medium mb-1">{stat.label}</div>
                       <div className="text-xs text-muted-foreground">{stat.description}</div>
                     </div>

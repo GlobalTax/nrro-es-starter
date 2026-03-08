@@ -75,7 +75,7 @@ export function AuditScoreCard({ label, score, size = 'md', showLabel = true }: 
         </svg>
         {/* Score text */}
         <span className={cn(
-          "absolute inset-0 flex items-center justify-center font-bold",
+          "absolute inset-0 flex items-center justify-center font-medium",
           getScoreColor(displayScore),
           config.fontSize
         )}>

@@ -26,7 +26,7 @@ export function AdminPageHeader({ title, description, actions, className }: Admi
   return (
     <div className={cn("flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5", className)}>
       <div>
-        <h1 className="text-[15px] font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-[15px] font-medium text-gray-900">{title}</h1>
         {description && (
           <p className="text-[13px] text-gray-500 mt-0.5">{description}</p>
         )}
@@ -61,7 +61,7 @@ export function AdminStatsCard({ label, value, icon, trend, className }: AdminSt
         <p className="text-[12px] text-gray-500 font-medium uppercase tracking-wider">{label}</p>
       </div>
       <div className="flex items-baseline gap-2">
-        <p className="text-2xl font-semibold text-gray-900">{value}</p>
+        <p className="text-2xl font-medium text-gray-900">{value}</p>
         {trend && (
           <span className={cn(
             "text-xs font-medium",

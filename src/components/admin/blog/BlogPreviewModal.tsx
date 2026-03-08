@@ -56,7 +56,7 @@ export const BlogPreviewModal = ({ open, onOpenChange, post }: BlogPreviewModalP
               {post.category && (
                 <Overline className="mb-4">{post.category}</Overline>
               )}
-              <h1 className="text-4xl font-bold mb-6">{post.title_es || "Sin título"}</h1>
+              <h1 className="text-4xl font-medium mb-6">{post.title_es || "Sin título"}</h1>
 
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <time>

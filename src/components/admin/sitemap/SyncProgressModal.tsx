@@ -62,7 +62,7 @@ export const SyncProgressModal = ({
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+                  <div className="text-2xl font-medium text-green-700 dark:text-green-400">
                     {summary.pagesAdded}
                   </div>
                   <div className="text-xs text-green-600 dark:text-green-500 mt-1">
@@ -71,7 +71,7 @@ export const SyncProgressModal = ({
                 </div>
 
                 <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+                  <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">
                     {summary.pagesUpdated}
                   </div>
                   <div className="text-xs text-blue-600 dark:text-blue-500 mt-1">
@@ -80,7 +80,7 @@ export const SyncProgressModal = ({
                 </div>
 
                 <div className="text-center p-4 bg-orange-50 dark:bg-orange-950 rounded-lg">
-                  <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
+                  <div className="text-2xl font-medium text-orange-700 dark:text-orange-400">
                     {summary.pagesArchived}
                   </div>
                   <div className="text-xs text-orange-600 dark:text-orange-500 mt-1">
@@ -89,7 +89,7 @@ export const SyncProgressModal = ({
                 </div>
 
                 <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
-                  <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+                  <div className="text-2xl font-medium text-purple-700 dark:text-purple-400">
                     {summary.pagesTotal}
                   </div>
                   <div className="text-xs text-purple-600 dark:text-purple-500 mt-1">

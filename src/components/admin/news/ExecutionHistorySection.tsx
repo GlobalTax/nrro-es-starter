@@ -41,7 +41,7 @@ function StatCard({ title, value, icon: Icon, variant = "default" }: StatCardPro
         <Icon className="h-4 w-4" />
       </div>
       <div>
-        <p className="text-lg font-semibold text-slate-900">{value}</p>
+        <p className="text-lg font-medium text-slate-900">{value}</p>
         <p className="text-xs text-slate-500">{title}</p>
       </div>
     </div>

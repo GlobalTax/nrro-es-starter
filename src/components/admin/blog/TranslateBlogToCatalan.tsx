@@ -75,7 +75,7 @@ export const TranslateBlogToCatalan = () => {
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                     <div>
-                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                      <p className="text-2xl font-medium text-green-600 dark:text-green-400">
                         {results.success}
                       </p>
                       <p className="text-xs text-muted-foreground">Exitosos</p>
@@ -89,7 +89,7 @@ export const TranslateBlogToCatalan = () => {
                   <div className="flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                     <div>
-                      <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                      <p className="text-2xl font-medium text-yellow-600 dark:text-yellow-400">
                         {results.skipped}
                       </p>
                       <p className="text-xs text-muted-foreground">Omitidos</p>
@@ -103,7 +103,7 @@ export const TranslateBlogToCatalan = () => {
                   <div className="flex items-center gap-2">
                     <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
                     <div>
-                      <p className="text-2xl font-bold text-red-600 dark:text-red-400">
+                      <p className="text-2xl font-medium text-red-600 dark:text-red-400">
                         {results.failed}
                       </p>
                       <p className="text-xs text-muted-foreground">Fallidos</p>

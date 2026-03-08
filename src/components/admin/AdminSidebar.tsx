@@ -156,7 +156,7 @@ export const AdminSidebar = () => {
       {/* Logo */}
       <div className="px-4 py-3.5 flex items-center">
         <Link to="/admin" className="flex items-center gap-2">
-          <h1 className="text-[15px] font-semibold text-gray-900 tracking-tight">
+          <h1 className="text-[15px] font-medium text-gray-900 tracking-tight">
             nrro<span className="text-gray-400 font-normal">CRM</span>
           </h1>
         </Link>
@@ -182,7 +182,7 @@ export const AdminSidebar = () => {
 
             return (
               <div key={section.id} className="space-y-0.5">
-                <p className="px-2.5 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">
+                <p className="px-2.5 text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-1">
                   {section.title}
                 </p>
                 {section.items.map((item) => {
@@ -216,7 +216,7 @@ export const AdminSidebar = () => {
           {/* Quick actions */}
           <div className="h-px bg-gray-100" />
           <div className="space-y-0.5">
-            <p className="px-2.5 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">
+            <p className="px-2.5 text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-1">
               ACCIONES RÁPIDAS
             </p>
             {quickActions.map((action) => (
@@ -236,12 +236,12 @@ export const AdminSidebar = () => {
         {adminUser && (
           <div className="flex items-center gap-2.5">
             <div className="h-7 w-7 rounded-full bg-indigo-50 flex items-center justify-center shrink-0">
-              <span className="text-[11px] font-medium text-indigo-600">
+              <span className="text-[11px] font-normal text-indigo-600">
                 {adminUser.full_name?.charAt(0)?.toUpperCase()}
               </span>
             </div>
             <div className="min-w-0">
-              <p className="truncate font-medium text-gray-700 text-[12px] leading-tight">
+              <p className="truncate font-normal text-gray-700 text-[12px] leading-tight">
                 {adminUser.full_name}
               </p>
               <p className="text-[10px] text-gray-400 truncate">{adminUser.email}</p>

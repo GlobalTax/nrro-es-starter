@@ -11,7 +11,7 @@ export const AuditRecommendations = ({ recommendations }: AuditRecommendationsPr
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+      <h3 className="text-lg font-medium text-white flex items-center gap-2">
         <Lightbulb className="h-5 w-5 text-blue-400" />
         Recomendaciones
       </h3>

@@ -88,19 +88,19 @@ export function PageAuditModal({
                   {/* Quick Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.issues.filter(i => i.severity === 'error').length}</p>
+                      <p className="text-2xl font-medium">{audit.issues.filter(i => i.severity === 'error').length}</p>
                       <p className="text-xs text-muted-foreground">Errores</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.issues.filter(i => i.severity === 'warning').length}</p>
+                      <p className="text-2xl font-medium">{audit.issues.filter(i => i.severity === 'warning').length}</p>
                       <p className="text-xs text-muted-foreground">Avisos</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.recommendations.filter(r => r.priority === 'high').length}</p>
+                      <p className="text-2xl font-medium">{audit.recommendations.filter(r => r.priority === 'high').length}</p>
                       <p className="text-xs text-muted-foreground">Prioridad Alta</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.recommendations.length}</p>
+                      <p className="text-2xl font-medium">{audit.recommendations.length}</p>
                       <p className="text-xs text-muted-foreground">Mejoras</p>
                     </div>
                   </div>
@@ -108,7 +108,7 @@ export function PageAuditModal({
                   {/* SEO Data Summary */}
                   {Object.keys(seoData).length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Datos SEO detectados</h4>
+                      <h4 className="font-medium text-sm">Datos SEO detectados</h4>
                       <div className="grid gap-2 text-sm">
                         {seoData.title && (
                           <div className="p-2 rounded bg-muted/50">
@@ -144,13 +144,13 @@ export function PageAuditModal({
                 <TabsContent value="data" className="mt-0">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-sm mb-2">Datos SEO extraídos</h4>
+                      <h4 className="font-medium text-sm mb-2">Datos SEO extraídos</h4>
                       <pre className="p-3 rounded-lg bg-muted/50 text-xs overflow-auto max-h-40">
                         {JSON.stringify(seoData, null, 2)}
                       </pre>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-sm mb-2">Metadatos de la página</h4>
+                      <h4 className="font-medium text-sm mb-2">Metadatos de la página</h4>
                       <pre className="p-3 rounded-lg bg-muted/50 text-xs overflow-auto max-h-40">
                         {JSON.stringify(rawData.metadata || {}, null, 2)}
                       </pre>

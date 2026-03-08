@@ -46,7 +46,7 @@ export const AdminDashboard = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-lg font-semibold text-gray-900">Dashboard</h1>
+        <h1 className="text-lg font-medium text-gray-900">Dashboard</h1>
         <p className="text-gray-500 text-[13px] mt-0.5">Panel de administración</p>
       </div>
 
@@ -59,7 +59,7 @@ export const AdminDashboard = () => {
                 <stat.icon className="h-3.5 w-3.5 text-gray-400" />
                 <span className="text-[12px] text-gray-500 font-medium uppercase tracking-wider">{stat.title}</span>
               </div>
-              <div className="text-2xl font-semibold text-gray-900">{stat.value}</div>
+              <div className="text-2xl font-medium text-gray-900">{stat.value}</div>
             </div>
           </Link>
         ))}

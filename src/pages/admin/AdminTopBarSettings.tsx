@@ -20,7 +20,7 @@ import { useReorderItems } from "@/hooks/useReorderItems";
 // AdminPageHeader inline since it's a simple component
 const AdminPageHeader = ({ title, description }: { title: string; description: string }) => (
   <div className="mb-6">
-    <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
+    <h1 className="text-2xl font-medium text-gray-900">{title}</h1>
     {description && <p className="text-gray-500 mt-1">{description}</p>}
   </div>
 );

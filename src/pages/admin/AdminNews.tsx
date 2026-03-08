@@ -225,7 +225,7 @@ export const AdminNews = () => {
               <FileText className="h-4 w-4 text-slate-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{allArticles.length}</p>
+              <p className="text-2xl font-medium text-slate-900">{allArticles.length}</p>
               <p className="text-xs text-slate-500">Total noticias</p>
             </div>
           </div>
@@ -236,7 +236,7 @@ export const AdminNews = () => {
               <TrendingUp className="h-4 w-4 text-emerald-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{publishedCount}</p>
+              <p className="text-2xl font-medium text-slate-900">{publishedCount}</p>
               <p className="text-xs text-slate-500">Publicadas</p>
             </div>
           </div>
@@ -247,7 +247,7 @@ export const AdminNews = () => {
               <Bot className="h-4 w-4 text-indigo-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{aiGeneratedCount}</p>
+              <p className="text-2xl font-medium text-slate-900">{aiGeneratedCount}</p>
               <p className="text-xs text-slate-500">Generadas IA</p>
             </div>
           </div>
@@ -258,7 +258,7 @@ export const AdminNews = () => {
               <Calendar className="h-4 w-4 text-amber-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{thisWeekCount}</p>
+              <p className="text-2xl font-medium text-slate-900">{thisWeekCount}</p>
               <p className="text-xs text-slate-500">Esta semana</p>
             </div>
           </div>

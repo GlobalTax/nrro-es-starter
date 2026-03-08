@@ -49,7 +49,7 @@ function StatCard({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className={`text-2xl font-bold ${variants[variant]}`}>{value}</p>
+            <p className={`text-2xl font-medium ${variants[variant]}`}>{value}</p>
           </div>
           <Icon className={`h-8 w-8 ${variants[variant]} opacity-80`} />
         </div>

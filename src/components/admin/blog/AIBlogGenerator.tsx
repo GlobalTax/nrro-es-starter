@@ -155,7 +155,7 @@ export const AIBlogGenerator = ({ onGenerated, onCancel }: AIBlogGeneratorProps)
                   <Badge variant="outline">{state.article.category}</Badge>
                   <Badge variant="secondary">{state.article.read_time} min lectura</Badge>
                 </div>
-                <h3 className="text-xl font-bold">{state.article.title_es}</h3>
+                <h3 className="text-xl font-medium">{state.article.title_es}</h3>
                 <p className="text-sm text-muted-foreground mt-2">{state.article.excerpt_es}</p>
               </div>
 
@@ -178,7 +178,7 @@ export const AIBlogGenerator = ({ onGenerated, onCancel }: AIBlogGeneratorProps)
 
               {state.article.title_en && (
                 <div className="pt-4 border-t">
-                  <h4 className="text-lg font-semibold">{state.article.title_en}</h4>
+                  <h4 className="text-lg font-medium">{state.article.title_en}</h4>
                   <p className="text-sm text-muted-foreground mt-1">{state.article.excerpt_en}</p>
                 </div>
               )}

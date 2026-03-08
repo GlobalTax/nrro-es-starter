@@ -1,27 +1,20 @@
 
 
-## Plan: Eliminar títulos en bold de la intranet
+## Instalar DataFast analytics
 
-El usuario quiere que no haya títulos en negrita en la intranet. Hay dos ámbitos:
+Dos cambios en `index.html`:
 
-### 1. Sidebar (`AdminSidebar.tsx`)
-- Section headers: `font-semibold` → `font-medium`
-- Logo "nrroCRM": `font-semibold` → `font-medium`
+1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+```html
+<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+```
 
-### 2. Páginas admin (content area)
-Cambiar `font-bold` y `font-semibold` a `font-medium` en títulos `<h1>`, `<CardTitle>`, y números de stats en los siguientes archivos:
+2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
 
-| Archivo | Instancias aprox. |
-|---------|-------------------|
-| `AdminSidebar.tsx` | 3 |
-| `LandingDashboard.tsx` | ~5 |
-| `AdminMarketingAudit.tsx` | 1 |
-| `AdminResources.tsx` | 4 |
-| `AdminJobPositions.tsx` | 2 |
-| `AdminContactLeads.tsx` | ~5 |
-| + otros 4 archivos admin | ~10 |
+Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
 
-**Regla**: `font-bold` → `font-medium`, `font-semibold` → `font-medium` en todos los títulos y headings de `src/pages/admin/` y `src/components/admin/`.
-
-Los números de estadísticas grandes (stats cards) también pasarán a `font-medium` para mantener consistencia.
+| Archivo | Cambio |
+|---|---|
+| `index.html` | Anadir script + actualizar CSP meta tag |
+| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
 

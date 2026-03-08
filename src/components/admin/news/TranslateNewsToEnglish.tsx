@@ -75,7 +75,7 @@ export const TranslateNewsToEnglish = () => {
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                   <div>
-                    <p className="text-xl font-semibold text-emerald-700">{results.success}</p>
+                    <p className="text-xl font-medium text-emerald-700">{results.success}</p>
                     <p className="text-xs text-emerald-600">Exitosos</p>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ export const TranslateNewsToEnglish = () => {
                 <div className="flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 text-amber-600" />
                   <div>
-                    <p className="text-xl font-semibold text-amber-700">{results.skipped}</p>
+                    <p className="text-xl font-medium text-amber-700">{results.skipped}</p>
                     <p className="text-xs text-amber-600">Omitidos</p>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ export const TranslateNewsToEnglish = () => {
                 <div className="flex items-center gap-2">
                   <XCircle className="h-4 w-4 text-red-600" />
                   <div>
-                    <p className="text-xl font-semibold text-red-700">{results.failed}</p>
+                    <p className="text-xl font-medium text-red-700">{results.failed}</p>
                     <p className="text-xs text-red-600">Errores</p>
                   </div>
                 </div>

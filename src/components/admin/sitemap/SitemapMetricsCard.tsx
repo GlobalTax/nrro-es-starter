@@ -111,7 +111,7 @@ export const SitemapMetricsCard = () => {
       {/* Header con botones de acción */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">Métricas del Sitemap</h2>
+          <h2 className="text-2xl font-medium">Métricas del Sitemap</h2>
           <p className="text-sm text-muted-foreground mt-1">
             Estadísticas en tiempo real desde CDN
           </p>
@@ -148,7 +148,7 @@ export const SitemapMetricsCard = () => {
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-bold">
+                <div className="text-2xl font-medium">
                   {stat.value}
                 </div>
                 <p className="text-xs text-muted-foreground">
@@ -173,7 +173,7 @@ export const SitemapMetricsCard = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Español (ES)</span>
-                <span className="text-2xl font-bold">{metrics.urlsByLanguage.es}</span>
+                <span className="text-2xl font-medium">{metrics.urlsByLanguage.es}</span>
               </div>
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div 
@@ -191,7 +191,7 @@ export const SitemapMetricsCard = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">English (EN)</span>
-                <span className="text-2xl font-bold">{metrics.urlsByLanguage.en}</span>
+                <span className="text-2xl font-medium">{metrics.urlsByLanguage.en}</span>
               </div>
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div 
@@ -209,7 +209,7 @@ export const SitemapMetricsCard = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Català (CA)</span>
-                <span className="text-2xl font-bold">{metrics.urlsByLanguage.ca}</span>
+                <span className="text-2xl font-medium">{metrics.urlsByLanguage.ca}</span>
               </div>
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div 

@@ -25,13 +25,13 @@ export const LandingTable = ({ landings, onEdit }: LandingTableProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-semibold">Title</TableHead>
-            <TableHead className="font-semibold">Category</TableHead>
-            <TableHead className="font-semibold">Status</TableHead>
-            <TableHead className="font-semibold">URL</TableHead>
-            <TableHead className="font-semibold text-center">Version</TableHead>
-            <TableHead className="font-semibold">Created</TableHead>
-            <TableHead className="font-semibold text-right">Actions</TableHead>
+            <TableHead className="font-medium">Title</TableHead>
+            <TableHead className="font-medium">Category</TableHead>
+            <TableHead className="font-medium">Status</TableHead>
+            <TableHead className="font-medium">URL</TableHead>
+            <TableHead className="font-medium text-center">Version</TableHead>
+            <TableHead className="font-medium">Created</TableHead>
+            <TableHead className="font-medium text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

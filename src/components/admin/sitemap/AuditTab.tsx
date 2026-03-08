@@ -112,7 +112,7 @@ export function AuditTab() {
     }
     
     return (
-      <Badge variant="outline" className={cn("font-bold", className)}>
+      <Badge variant="outline" className={cn("font-medium", className)}>
         {score}
       </Badge>
     );

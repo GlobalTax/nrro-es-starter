@@ -23,7 +23,7 @@ export const AuditScoreCard = ({ score, label, size = 'sm' }: AuditScoreCardProp
       isLarge && 'p-8'
     )}>
       <div className={cn(
-        'font-bold tabular-nums',
+        'font-medium tabular-nums',
         colors.text,
         isLarge ? 'text-6xl' : 'text-3xl'
       )}>
