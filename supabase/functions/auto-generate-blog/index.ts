@@ -58,6 +58,28 @@ const TOPIC_TEMPLATES = {
   ],
 };
 
+// Sanitizar source_site para que coincida con el enum site_source
+function sanitizeSourceSite(val: string | null | undefined): string {
+  if (!val) return "es";
+  const lower = val.toLowerCase().trim();
+  if (["domestic", "es", "nacional"].includes(lower)) return "es";
+  if (["international", "int", "global"].includes(lower)) return "int";
+  if (lower === "audit") return "audit";
+  return "es";
+}
+
+// Sanitizar contenido para eliminar secuencias Unicode inválidas y caracteres de control
+function sanitizeContent(text: string | null | undefined): string | null {
+  if (!text) return text as null;
+  let sanitized = text;
+  // Remove malformed Unicode escape sequences
+  sanitized = sanitized.replace(/\\u[0-9a-fA-F]{0,3}(?![0-9a-fA-F])/g, "");
+  sanitized = sanitized.replace(/\\u\{[^}]*\}/g, "");
+  // Remove control characters (except newline, tab, carriage return)
+  sanitized = sanitized.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "");
+  return sanitized;
+}
+
 // Función para obtener eventos del calendario editorial próximos
 async function getUpcomingCalendarEvent(supabase: any): Promise<{
   topic: string;
