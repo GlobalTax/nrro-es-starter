@@ -26,7 +26,7 @@ serve(async (req: Request) => {
 
     const token = authHeader.replace('Bearer ', '');
 
-    // Create authenticated client with user's token for RLS queries
+    // Create authenticated client with user's token
     const supabase = createClient(supabaseUrl, supabaseKey, {
       global: {
         headers: {
@@ -35,8 +35,12 @@ serve(async (req: Request) => {
       },
     });
 
-    // Verify user session
-    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+    // Use service role key to verify user (bypasses ES256 signing key issues)
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const adminClient = createClient(supabaseUrl, serviceKey);
+
+    // Verify user session using service role client
+    const { data: { user }, error: userError } = await adminClient.auth.getUser(token);
 
     if (userError || !user) {
       console.error('[VERIFY_SESSION] Invalid session:', userError);
@@ -46,11 +50,14 @@ serve(async (req: Request) => {
       );
     }
 
+    const userId = user.id;
+    const userEmail = user.email || '';
+
     // Get user roles
-    const { data: userRoles, error: rolesError } = await supabase
+    const { data: userRoles, error: rolesError } = await adminClient
       .from('user_roles')
       .select('role')
-      .eq('user_id', user.id);
+      .eq('user_id', userId);
 
     if (rolesError) {
       console.error('[VERIFY_SESSION] Error fetching roles:', rolesError);
@@ -61,37 +68,27 @@ serve(async (req: Request) => {
     }
 
     const roles = userRoles?.map(r => r.role) || [];
-    console.log('[VERIFY_SESSION] User roles:', roles, 'for user:', user.id);
+    console.log('[VERIFY_SESSION] User roles:', roles, 'for user:', userId);
     
     const allowedRoles = ['admin', 'editor', 'marketing', 'hr_manager', 'hr_viewer'];
-    console.log('[VERIFY_SESSION] Allowed roles:', allowedRoles);
-    
     const hasPanelAccess = roles.some(r => allowedRoles.includes(r));
-    console.log('[VERIFY_SESSION] Has panel access:', hasPanelAccess);
 
     if (!hasPanelAccess) {
-      console.warn('[VERIFY_SESSION] User has no panel access:', user.id, 'roles:', roles);
+      console.warn('[VERIFY_SESSION] User has no panel access:', userId, 'roles:', roles);
       return new Response(
         JSON.stringify({ error: 'Access denied' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Get profile info
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('email')
-      .eq('id', user.id)
-      .single();
-
-    console.log('[VERIFY_SESSION] Session valid for user:', user.id);
+    console.log('[VERIFY_SESSION] Session valid for user:', userId);
 
     return new Response(
       JSON.stringify({
         valid: true,
         user: {
-          id: user.id,
-          email: profile?.email || user.email,
+          id: userId,
+          email: userEmail,
           roles: roles,
         },
       }),
