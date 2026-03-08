@@ -168,7 +168,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Total</p>
-                <p className="text-2xl font-semibold text-slate-900">{stats.total}</p>
+                <p className="text-2xl font-medium text-slate-900">{stats.total}</p>
               </div>
               <div className="p-2.5 bg-slate-100 rounded-lg">
                 <Mail className="h-5 w-5 text-slate-600" />
