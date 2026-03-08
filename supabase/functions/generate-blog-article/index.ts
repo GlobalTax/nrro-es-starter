@@ -296,6 +296,7 @@ serve(async (req) => {
       prompt, 
       tone = "professional", 
       language = "both", 
+      researchContext = null,
       skipRefinement = false,
       skipImage = false
     } = await req.json();
