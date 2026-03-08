@@ -136,7 +136,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {caseStudy.metrics.map((metric, index) => (
                     <div key={index} className="text-center p-4 border rounded-lg">
-                      <div className="text-2xl font-bold text-primary">{metric.value}</div>
+                      <div className="text-2xl font-medium text-primary">{metric.value}</div>
                       <div className="text-sm font-medium mt-1">{metric.label}</div>
                       {metric.description && (
                         <div className="text-xs text-muted-foreground mt-1">{metric.description}</div>
