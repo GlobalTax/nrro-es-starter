@@ -429,7 +429,17 @@ serve(async (req) => {
           console.log(`[auto-generate-blog] Auto-generated topic: ${topic} (${category})`);
         }
 
-        // ========== LLAMAR A GENERATE-BLOG-ARTICLE CON FLAGS DE OPTIMIZACIÓN ==========
+        // ========== FASE DE INVESTIGACIÓN CON FIRECRAWL ==========
+        console.log(`[auto-generate-blog] Investigando tema: ${topic.substring(0, 50)}...`);
+        const research = await researchTopic(topic, category);
+        
+        if (research) {
+          console.log(`[auto-generate-blog] Research: ${research.sources.length} fuentes encontradas`);
+        } else {
+          console.log(`[auto-generate-blog] Sin research disponible, generando sin contexto externo`);
+        }
+
+        // ========== LLAMAR A GENERATE-BLOG-ARTICLE CON RESEARCH ==========
         console.log(`[auto-generate-blog] Invocando generate-blog-article para: ${topic.substring(0, 50)}...`);
         
         const { data: articleData, error: genError } = await supabase.functions.invoke(
@@ -439,8 +449,9 @@ serve(async (req) => {
               prompt: topic, 
               tone, 
               language,
-              skipRefinement: true,  // Evitar timeout - saltar refinamiento en automatización
-              skipImage: true        // Evitar timeout - imagen se puede añadir después
+              researchContext: research?.context || null,
+              skipRefinement: true,
+              skipImage: true
             },
           }
         );
