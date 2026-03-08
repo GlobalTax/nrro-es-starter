@@ -1,20 +1,24 @@
 
 
-## Instalar DataFast analytics
+## Plan: Crear `public/llms.txt`
 
-Dos cambios en `index.html`:
+Crear un único archivo `public/llms.txt` siguiendo el estándar llms.txt (similar a robots.txt pero para LLMs). El archivo contendrá:
 
-1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
-```html
-<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
-```
+### Contenido
 
-2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
+- **Identidad**: Nombre, descripción, ubicación (Barcelona)
+- **Servicios**: Fiscal, Mercantil, Laboral & Contabilidad, M&A, Empresa Familiar, Compliance, RGPD, Ley Beckham, Constitución de sociedades
+- **URLs clave**: Página principal, servicios, contacto, blog, casos de éxito
+- **Contacto**: Teléfono 934 593 600, web nrro.es
+- **Idiomas**: ES, EN, CA
 
-Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
+### Archivo a crear
 
-| Archivo | Cambio |
-|---|---|
-| `index.html` | Anadir script + actualizar CSP meta tag |
-| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
+| Archivo | Acción |
+|---------|--------|
+| `public/llms.txt` | Crear nuevo |
+
+### Opcional: Referencia en robots.txt
+
+Añadir una línea al final de `robots.txt` apuntando a `llms.txt` (no es parte del estándar formal, pero algunos bots lo buscan).
 
