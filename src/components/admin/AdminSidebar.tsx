@@ -6,28 +6,20 @@ import {
   Home,
   Settings,
   Map,
-  UserCog,
   FileText,
   Newspaper,
   Briefcase,
-  FileCheck,
-  Presentation,
-  Grid3X3,
   Rss,
   Users,
-  Building,
-  Globe,
   TrendingUp,
-  UserPlus,
-  Calendar,
-  Receipt,
-  Megaphone,
   Layout,
   ChevronDown,
   Shield,
   FolderOpen,
   PanelTop,
   ScanLine,
+  UserCog,
+  Megaphone,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -60,39 +52,29 @@ const sidebarSections: SidebarSection[] = [
     id: 'main',
     items: [
       { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-      { path: '/admin/hub', icon: Grid3X3, label: 'Hub' },
     ],
   },
   {
-    id: 'crm',
-    title: 'CRM',
-    icon: Users,
+    id: 'leads',
+    title: 'Leads',
+    icon: FileText,
     items: [
       { path: '/admin/contact-leads', icon: FileText, label: 'Contactos' },
-      { path: '/admin/company-setup-leads', icon: Building, label: 'Company Setup' },
-      { path: '/admin/ley-beckham-leads', icon: Globe, label: 'Ley Beckham' },
-      { path: '/admin/demo-requests', icon: Presentation, label: 'Demo Requests' },
-      { path: '/admin/proposals', icon: Briefcase, label: 'Propuestas' },
-      { path: '/admin/proposal-templates', icon: FileCheck, label: 'Plantillas' },
-      { path: '/admin/presentations', icon: Presentation, label: 'Presentaciones' },
     ],
   },
   {
-    id: 'hr',
-    title: 'Recursos Humanos',
+    id: 'team',
+    title: 'Equipo',
     icon: UserCog,
     requiredRole: 'hr_viewer',
     items: [
       { path: '/admin/empleados', icon: Users, label: 'Empleados' },
-      { path: '/admin/candidatos', icon: UserPlus, label: 'Candidatos' },
       { path: '/admin/job-positions', icon: Briefcase, label: 'Ofertas' },
-      { path: '/admin/entrevistas', icon: Calendar, label: 'Entrevistas' },
-      { path: '/admin/nominas', icon: Receipt, label: 'Nóminas' },
     ],
   },
   {
     id: 'content',
-    title: 'Marketing',
+    title: 'Contenido',
     icon: Megaphone,
     items: [
       { path: '/admin/blog', icon: Newspaper, label: 'Blog', showDraftsBadge: true },
@@ -104,17 +86,14 @@ const sidebarSections: SidebarSection[] = [
     ],
   },
   {
-    id: 'admin',
-    title: 'Administración',
+    id: 'config',
+    title: 'Configuración',
     icon: Settings,
     items: [
-      { path: '/admin/team', icon: Users, label: 'Equipo' },
+      { path: '/admin/team', icon: Users, label: 'Equipo web' },
       { path: '/admin/services', icon: Briefcase, label: 'Servicios' },
-      { path: '/admin/technology', icon: Grid3X3, label: 'Tecnología' },
       { path: '/admin/sitemap', icon: Map, label: 'Sitemap' },
       { path: '/admin/topbar', icon: PanelTop, label: 'TopBar' },
-      { path: '/admin/whistleblower', icon: Shield, label: 'Denuncias', requiredRole: 'super_admin' },
-      { path: '/admin/settings', icon: Settings, label: 'Configuración' },
       { path: '/admin/users', icon: Shield, label: 'Usuarios', requiredRole: 'super_admin' },
     ],
   },
@@ -125,12 +104,11 @@ export const AdminSidebar = () => {
   const { adminUser, canManageUsers, canViewHR, hasRole } = useAdminAuth();
   const { data: pendingDraftsCount = 0 } = usePendingDraftsCount();
 
-  // Track which sections are open
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    crm: true,
-    hr: true,
+    leads: true,
+    team: true,
     content: true,
-    admin: true,
+    config: true,
   });
 
   const isActive = (path: string) => {
@@ -140,12 +118,10 @@ export const AdminSidebar = () => {
     return location.pathname.startsWith(path);
   };
 
-  // Check if any item in section is active
   const isSectionActive = (section: SidebarSection) => {
     return section.items.some((item) => isActive(item.path));
   };
 
-  // Auto-open section containing active route
   useEffect(() => {
     sidebarSections.forEach((section) => {
       if (isSectionActive(section) && section.title) {
@@ -200,7 +176,6 @@ export const AdminSidebar = () => {
   const renderSection = (section: SidebarSection) => {
     if (!canAccessSection(section)) return null;
 
-    // Section without title (main items)
     if (!section.title) {
       return (
         <div key={section.id} className="space-y-0.5">
@@ -225,7 +200,6 @@ export const AdminSidebar = () => {
       );
     }
 
-    // Collapsible section
     const Icon = section.icon!;
     const isOpen = openSections[section.id];
     const hasActiveItem = isSectionActive(section);
@@ -268,7 +242,6 @@ export const AdminSidebar = () => {
 
   return (
     <aside className="w-64 shrink-0 bg-slate-900 text-white min-h-screen flex flex-col">
-      {/* Header */}
       <div className="p-5 pb-4">
         <h1 className="font-display text-xl font-normal lowercase tracking-tight text-white/90">
           nrro
@@ -283,10 +256,8 @@ export const AdminSidebar = () => {
         )}
       </div>
 
-      {/* Divider */}
       <div className="h-px bg-white/[0.06] mx-4" />
 
-      {/* Navigation */}
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         <Link to="/">
           <Button
@@ -304,7 +275,6 @@ export const AdminSidebar = () => {
         {sidebarSections.map((section) => renderSection(section))}
       </nav>
 
-      {/* Footer */}
       <div className="p-4 border-t border-white/[0.06]">
         {adminUser && (
           <div className="text-sm">

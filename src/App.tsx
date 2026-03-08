@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { LandingLayout } from "@/components/layout/LandingLayout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -42,24 +42,13 @@ import { AdminBlog } from "./pages/admin/AdminBlog";
 import BlogDetail from "./pages/BlogDetail";
 import { AdminTeam } from "./pages/admin/AdminTeam";
 import { AdminUsers } from "./pages/admin/AdminUsers";
-import AdminContent from "./pages/admin/AdminContent";
-import { AdminSettings } from "./pages/admin/AdminSettings";
-import AdminCandidatos from "./pages/admin/AdminCandidatos";
 import AdminJobPositions from "./pages/admin/AdminJobPositions";
 import AdminContactLeads from "./pages/admin/AdminContactLeads";
 import AdminLandings from "./pages/admin/AdminLandings";
 import LandingDetailPage from "./pages/admin/LandingDetailPage";
 import LandingDashboard from "./pages/admin/LandingDashboard";
-import AdminLeyBeckhamLeads from "./pages/admin/AdminLeyBeckhamLeads";
-import AdminDemoRequests from "./pages/admin/AdminDemoRequests";
-import { AdminCompanySetupLeads } from "./pages/admin/AdminCompanySetupLeads";
-import AdminTechnology from "./pages/admin/AdminTechnology";
 import AdminSitemap from "./pages/admin/AdminSitemap";
 import AdminResources from "./pages/admin/AdminResources";
-import AdminProposals from "./pages/admin/AdminProposals";
-import AdminProposalTemplates from "./pages/admin/AdminProposalTemplates";
-import AdminCorporatePresentations from "./pages/admin/AdminCorporatePresentations";
-import AdminToolsHub from "./pages/admin/AdminToolsHub";
 import { AdminNews } from "./pages/admin/AdminNews";
 import { CompanySetupCalculator } from "./pages/CompanySetupCalculator";
 import { NIEServiceSpain } from "./pages/NIEServiceSpain";
@@ -68,7 +57,6 @@ import { ExpressCompanySetup } from "./pages/ExpressCompanySetup";
 import { SetupCompanySpain } from "./pages/SetupCompanySpain";
 import { DynamicLandingPage } from "./pages/DynamicLandingPage";
 import SitemapXML from "./pages/SitemapXML";
-import PresentationPreview from "./pages/PresentationPreview";
 import WhistleblowerChannel from "./pages/WhistleblowerChannel";
 import AsesoriaContable from "./pages/AsesoriaContable";
 import AsesoriaLaboral from "./pages/AsesoriaLaboral";
@@ -76,13 +64,11 @@ import AsesoriaMercantil from "./pages/AsesoriaMercantil";
 import AbogadosBarcelona from "./pages/AbogadosBarcelona";
 import EmpresaFamiliar from "./pages/EmpresaFamiliar";
 import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
-import AdminWhistleblower from "./pages/admin/AdminWhistleblower";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
 
 const queryClient = new QueryClient();
 
-// Componente para manejar redirecciones de idioma - debe estar dentro de LanguageProvider y BrowserRouter
 const LanguageRedirect = () => {
   const location = useLocation();
   const { i18n } = useTranslation();
@@ -97,7 +83,6 @@ const LanguageRedirect = () => {
     if (i18n.language !== targetLang) {
       i18n.changeLanguage(targetLang);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   return null;
@@ -203,7 +188,7 @@ const App = () => {
             <Route path="/crear-empresa-espana" element={<SetupCompanySpain />} />
             <Route path="/ca/crear-empresa-espanya" element={<SetupCompanySpain />} />
             
-            {/* Whistleblower Channel */}
+            {/* Whistleblower Channel - public legal requirement */}
             <Route path="/canal-denuncias" element={<WhistleblowerChannel />} />
 
             {/* Admin routes */}
@@ -217,8 +202,6 @@ const App = () => {
               }
             >
               <Route index element={<AdminDashboard />} />
-              <Route path="settings" element={<AdminSettings />} />
-              <Route path="content" element={<AdminContent />} />
               <Route path="landing-dashboard" element={<LandingDashboard />} />
               <Route path="landings" element={<AdminLandings />} />
               <Route path="landings/:id" element={<LandingDetailPage />} />
@@ -228,19 +211,9 @@ const App = () => {
               <Route path="news" element={<AdminNews />} />
               <Route path="team" element={<AdminTeam />} />
               <Route path="job-positions" element={<AdminJobPositions />} />
-              <Route path="candidatos" element={<AdminCandidatos />} />
               <Route path="contact-leads" element={<AdminContactLeads />} />
-              <Route path="ley-beckham-leads" element={<AdminLeyBeckhamLeads />} />
-              <Route path="demo-requests" element={<AdminDemoRequests />} />
-              <Route path="company-setup-leads" element={<AdminCompanySetupLeads />} />
-              <Route path="technology" element={<AdminTechnology />} />
               <Route path="sitemap" element={<AdminSitemap />} />
               <Route path="resources" element={<AdminResources />} />
-              <Route path="proposals" element={<AdminProposals />} />
-              <Route path="proposal-templates" element={<AdminProposalTemplates />} />
-              <Route path="presentations" element={<AdminCorporatePresentations />} />
-              <Route path="hub" element={<AdminToolsHub />} />
-              <Route path="whistleblower" element={<AdminWhistleblower />} />
               <Route path="topbar" element={<AdminTopBarSettings />} />
               <Route path="marketing-audit" element={<AdminMarketingAudit />} />
               <Route
@@ -252,9 +225,6 @@ const App = () => {
                 } 
               />
             </Route>
-
-            {/* Presentation Preview - standalone route without admin layout */}
-            <Route path="/presentation-preview/:id" element={<PresentationPreview />} />
 
             {/* Sitemap XML */}
             <Route path="/sitemap.xml" element={<SitemapXML />} />
