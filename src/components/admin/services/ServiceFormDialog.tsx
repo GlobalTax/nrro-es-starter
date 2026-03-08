@@ -854,7 +854,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                           <Card key={pilarIndex} className="p-4 border-2">
                             <div className="space-y-3">
                               <div className="flex items-center justify-between">
-                                <h4 className="font-semibold">Pilar {pilarIndex + 1}</h4>
+                                <h4 className="font-medium">Pilar {pilarIndex + 1}</h4>
                                 <Button
                                   type="button"
                                   variant="ghost"
