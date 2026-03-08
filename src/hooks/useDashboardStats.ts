@@ -14,7 +14,7 @@ interface LeadRecent {
 export interface DashboardStats {
   leadsTotal: number;
   leadsPendientes: number;
-  empleadosActivos: number;
+  
   postsPublicados: number;
   leadsRecientes: LeadRecent[];
 }
