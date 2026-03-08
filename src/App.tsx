@@ -231,6 +231,15 @@ const App = () => {
               <Route path="resources" element={<AdminResources />} />
               <Route path="topbar" element={<AdminTopBarSettings />} />
               <Route path="marketing-audit" element={<AdminMarketingAudit />} />
+              <Route path="calendar" element={<AdminPlaceholder />} />
+              <Route path="people" element={<AdminPlaceholder />} />
+              <Route path="companies" element={<AdminPlaceholder />} />
+              <Route path="tasks" element={<AdminPlaceholder />} />
+              <Route path="time-tracking" element={<AdminPlaceholder />} />
+              <Route path="reports" element={<AdminPlaceholder />} />
+              <Route path="integrations" element={<AdminPlaceholder />} />
+              <Route path="ai-assistant" element={<AdminPlaceholder />} />
+              <Route path="academy" element={<AdminPlaceholder />} />
               <Route
                 path="users"
                 element={
