@@ -63,7 +63,7 @@ export const SeoBadge = ({ hasTitle, hasDescription, isNoindex }: SeoBadgeProps)
         </TooltipTrigger>
         <TooltipContent>
           <div className="space-y-1">
-            <p className="font-semibold">{tooltip}</p>
+            <p className="font-medium">{tooltip}</p>
             <ul className="text-xs space-y-0.5 mt-2">
               <li className={hasTitle ? 'text-green-600' : 'text-red-600'}>
                 {hasTitle ? '✓' : '✗'} Meta Title

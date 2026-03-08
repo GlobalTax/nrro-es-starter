@@ -83,7 +83,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Metodología */}
             {service.metodologia && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Metodología</h2>
+                <h2 className="text-2xl font-medium mb-4">Metodología</h2>
                 <div className="bg-muted p-6 rounded-lg space-y-4">
                   <p className="text-sm text-muted-foreground">{service.metodologia.overline}</p>
                   <div>

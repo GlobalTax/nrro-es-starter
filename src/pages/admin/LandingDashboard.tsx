@@ -196,7 +196,7 @@ export const LandingDashboard = () => {
       {/* Latest Landings Table */}
       <Card className="bg-white shadow-sm border-gray-100">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">Últimas 10 Landing Pages</CardTitle>
+          <CardTitle className="text-xl font-medium">Últimas 10 Landing Pages</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

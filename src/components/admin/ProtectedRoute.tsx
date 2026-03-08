@@ -160,7 +160,7 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   if (requiredRole && !hasRole(requiredRole)) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <h1 className="text-2xl font-bold text-destructive">Insufficient Permissions</h1>
+        <h1 className="text-2xl font-medium text-destructive">Insufficient Permissions</h1>
         <p className="text-muted-foreground">You don't have the required role to access this section.</p>
       </div>
     );

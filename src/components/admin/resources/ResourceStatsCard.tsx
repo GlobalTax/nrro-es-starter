@@ -60,7 +60,7 @@ export const ResourceStatsCard = () => {
             <item.icon className={`h-4 w-4 ${item.color}`} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{item.value}</div>
+            <div className="text-2xl font-medium">{item.value}</div>
           </CardContent>
         </Card>
       ))}

@@ -96,7 +96,7 @@ export function TranslateNewsToCatalan() {
                 <div className="flex items-center gap-2">
                   <XCircle className="h-4 w-4 text-red-600" />
                   <div>
-                    <p className="text-xl font-semibold text-red-700">{results.failed}</p>
+                    <p className="text-xl font-medium text-red-700">{results.failed}</p>
                     <p className="text-xs text-red-600">Errores</p>
                   </div>
                 </div>
