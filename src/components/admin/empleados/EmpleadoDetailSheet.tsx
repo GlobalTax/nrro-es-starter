@@ -447,10 +447,26 @@ export function EmpleadoDetailSheet({
                 </div>
               ) : (
                 <div className="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center">
+                  <input
+                    ref={contratoInputRef}
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    className="hidden"
+                    onChange={handleContratoChange}
+                  />
                   <Upload className="h-8 w-8 mx-auto text-slate-400 mb-3" />
                   <p className="text-sm text-slate-600 mb-2">Arrastra el contrato aquí o</p>
-                  <Button variant="outline" size="sm">
-                    Seleccionar archivo
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={uploadingContrato}
+                    onClick={() => contratoInputRef.current?.click()}
+                  >
+                    {uploadingContrato ? (
+                      <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> Subiendo...</>
+                    ) : (
+                      'Seleccionar archivo'
+                    )}
                   </Button>
                 </div>
               )}
@@ -458,12 +474,37 @@ export function EmpleadoDetailSheet({
 
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-slate-900">Firma digital</h3>
+              <input
+                ref={firmaInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFirmaChange}
+              />
               {formData.firma_url ? (
-                <img src={formData.firma_url} className="h-16 border rounded" alt="Firma" />
+                <div className="flex items-center gap-3">
+                  <img src={formData.firma_url} className="h-16 border rounded" alt="Firma" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500"
+                    onClick={() => setFormData({ ...formData, firma_url: null })}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
               ) : (
-                <Button variant="outline" size="sm">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Subir firma
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={uploadingFirma}
+                  onClick={() => firmaInputRef.current?.click()}
+                >
+                  {uploadingFirma ? (
+                    <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> Subiendo...</>
+                  ) : (
+                    <><Upload className="h-4 w-4 mr-2" /> Subir firma</>
+                  )}
                 </Button>
               )}
             </div>
