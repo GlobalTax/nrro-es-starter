@@ -159,7 +159,7 @@ export const SitemapHistoryChart = () => {
         {/* Leyenda adicional con stats */}
         <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-border">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-medium text-primary">
               {lastPoint.totalUrls}
             </div>
             <div className="text-xs text-muted-foreground mt-1">Total URLs Actual</div>
