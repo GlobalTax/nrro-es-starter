@@ -181,7 +181,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Pendientes</p>
-                <p className="text-2xl font-semibold text-amber-600">{stats.pending}</p>
+                <p className="text-2xl font-medium text-amber-600">{stats.pending}</p>
               </div>
               <div className="p-2.5 bg-amber-100 rounded-lg">
                 <Clock className="h-5 w-5 text-amber-600" />
