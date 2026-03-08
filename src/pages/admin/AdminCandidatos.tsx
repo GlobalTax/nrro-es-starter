@@ -88,8 +88,15 @@ export default function AdminCandidatos() {
   });
 
   const { data: stats } = useCandidatoStats();
+  const { data: jobPositions } = useJobPositions();
   const updateCandidato = useUpdateCandidato();
   const deleteCandidato = useDeleteCandidato();
+
+  const getJobPositionName = (jobPositionId: string | null) => {
+    if (!jobPositionId || !jobPositions) return null;
+    const jp = jobPositions.find((p) => p.id === jobPositionId);
+    return jp?.title || null;
+  };
 
   const handleEstadoChange = async (candidatoId: string, nuevoEstado: string) => {
     await updateCandidato.mutateAsync({
