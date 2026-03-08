@@ -194,7 +194,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Respondidos</p>
-                <p className="text-2xl font-semibold text-emerald-600">{stats.responded}</p>
+                <p className="text-2xl font-medium text-emerald-600">{stats.responded}</p>
               </div>
               <div className="p-2.5 bg-emerald-100 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-emerald-600" />
