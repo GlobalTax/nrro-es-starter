@@ -222,6 +222,7 @@ export default function AdminJobPositions() {
                     <TableHead>Título</TableHead>
                     <TableHead>Departamento</TableHead>
                     <TableHead>Ubicación</TableHead>
+                    <TableHead>Candidatos</TableHead>
                     <TableHead>Estado</TableHead>
                     <TableHead>Publicado</TableHead>
                     <TableHead className="text-right">Acciones</TableHead>
@@ -240,6 +241,11 @@ export default function AdminJobPositions() {
                       </TableCell>
                       <TableCell>{position.department}</TableCell>
                       <TableCell>{position.location}</TableCell>
+                      <TableCell>
+                        <Badge variant="secondary">
+                          {candidateCounts?.[position.id] || 0}
+                        </Badge>
+                      </TableCell>
                       <TableCell>{getStatusBadge(position.status)}</TableCell>
                       <TableCell>
                         {position.published_at
