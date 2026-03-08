@@ -62,7 +62,7 @@ export const SyncProgressModal = ({
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-                  <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+                  <div className="text-2xl font-medium text-green-700 dark:text-green-400">
                     {summary.pagesAdded}
                   </div>
                   <div className="text-xs text-green-600 dark:text-green-500 mt-1">
