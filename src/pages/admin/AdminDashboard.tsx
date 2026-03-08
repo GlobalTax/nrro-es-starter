@@ -46,7 +46,7 @@ export const AdminDashboard = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-lg font-semibold text-gray-900">Dashboard</h1>
+        <h1 className="text-lg font-medium text-gray-900">Dashboard</h1>
         <p className="text-gray-500 text-[13px] mt-0.5">Panel de administración</p>
       </div>
 
