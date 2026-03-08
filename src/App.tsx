@@ -66,6 +66,7 @@ import EmpresaFamiliar from "./pages/EmpresaFamiliar";
 import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
+import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 import OrientacionGlobal from "./pages/OrientacionGlobal";
 import CompliancePenal from "./pages/CompliancePenal";
 import DueDiligence from "./pages/DueDiligence";
