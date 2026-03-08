@@ -18,7 +18,7 @@ export const AuditQuickWins = ({ quickWins }: AuditQuickWinsProps) => {
       <div className="space-y-2">
         {quickWins.map((win, idx) => (
           <div key={win.itemId} className="flex items-start gap-3 rounded-lg border border-slate-700/50 bg-slate-800/50 p-3">
-            <span className="flex items-center justify-center h-6 w-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold shrink-0">
+            <span className="flex items-center justify-center h-6 w-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium shrink-0">
               {idx + 1}
             </span>
             <div className="flex-1 min-w-0">

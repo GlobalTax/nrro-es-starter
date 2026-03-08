@@ -116,7 +116,7 @@ export const LandingHealthCheck = ({ landing }: LandingHealthCheckProps) => {
 
         {/* Lista de Checks */}
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold">Verificaciones</h4>
+          <h4 className="text-sm font-medium">Verificaciones</h4>
           <div className="space-y-2">
             {result.checks.map((check, index) => (
               <div 

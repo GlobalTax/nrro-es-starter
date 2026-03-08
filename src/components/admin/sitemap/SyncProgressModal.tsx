@@ -89,7 +89,7 @@ export const SyncProgressModal = ({
                 </div>
 
                 <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
-                  <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+                  <div className="text-2xl font-medium text-purple-700 dark:text-purple-400">
                     {summary.pagesTotal}
                   </div>
                   <div className="text-xs text-purple-600 dark:text-purple-500 mt-1">

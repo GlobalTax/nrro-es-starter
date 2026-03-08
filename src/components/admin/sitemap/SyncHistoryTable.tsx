@@ -135,7 +135,7 @@ export const SyncHistoryTable = () => {
                     </span>
                   </TableCell>
                   <TableCell className="text-right">
-                    <span className="font-semibold">{log.pages_total}</span>
+                    <span className="font-medium">{log.pages_total}</span>
                   </TableCell>
                 </TableRow>
               );

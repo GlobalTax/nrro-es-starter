@@ -214,7 +214,7 @@ export const CaseStudyPreviewModal = ({ open, onClose, caseStudy }: CaseStudyPre
             {/* Detailed Content */}
             {caseStudy.detailed_content && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Contenido Detallado</h3>
+                <h3 className="text-lg font-medium mb-4">Contenido Detallado</h3>
                 <div className="prose prose-sm max-w-none">
                   <p className="whitespace-pre-wrap">{caseStudy.detailed_content}</p>
                 </div>

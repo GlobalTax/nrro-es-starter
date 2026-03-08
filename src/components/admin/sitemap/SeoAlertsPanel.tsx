@@ -99,7 +99,7 @@ export const SeoAlertsPanel = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4">
-        <h3 className="text-lg font-semibold">Alertas SEO</h3>
+        <h3 className="text-lg font-medium">Alertas SEO</h3>
         <div className="flex gap-2">
           {criticalCount > 0 && (
             <Badge variant="destructive" className="gap-1">
