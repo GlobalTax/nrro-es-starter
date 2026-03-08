@@ -112,6 +112,68 @@ export function EmpleadoDetailSheet({
     }
   };
 
+  const handleFileUpload = async (
+    file: File,
+    folder: 'contrato' | 'firma',
+    setLoading: (v: boolean) => void,
+    fieldKey: 'contrato_url' | 'firma_url'
+  ) => {
+    if (!empleado?.id && !formData.nombre) {
+      toast.error('Guarda el empleado primero antes de subir archivos');
+      return;
+    }
+    const employeeId = empleado?.id || 'new';
+    const ext = file.name.split('.').pop() || (folder === 'firma' ? 'png' : 'pdf');
+    const path = `${employeeId}/${folder}_${Date.now()}.${ext}`;
+
+    setLoading(true);
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from('cvs')
+        .upload(path, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Since bucket is private, use signed URL (1 year)
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from('cvs')
+        .createSignedUrl(path, 60 * 60 * 24 * 365);
+
+      if (signedError) throw signedError;
+
+      setFormData((prev) => ({ ...prev, [fieldKey]: signedData.signedUrl }));
+      toast.success(`${folder === 'contrato' ? 'Contrato' : 'Firma'} subido correctamente`);
+    } catch (err: any) {
+      toast.error(`Error al subir ${folder}`, { description: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleContratoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('El archivo no puede superar 10MB');
+      return;
+    }
+    handleFileUpload(file, 'contrato', setUploadingContrato, 'contrato_url');
+  };
+
+  const handleFirmaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error('La firma debe ser una imagen (PNG, JPG)');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('La imagen no puede superar 5MB');
+      return;
+    }
+    handleFileUpload(file, 'firma', setUploadingFirma, 'firma_url');
+  };
+
   const costeTotal = (formData.salario_base || 0) + (formData.variable || 0) + (formData.bonus || 0) + (formData.coste_seg_social || 0);
 
   return (
