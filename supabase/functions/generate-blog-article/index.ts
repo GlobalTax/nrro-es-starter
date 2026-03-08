@@ -296,6 +296,7 @@ serve(async (req) => {
       prompt, 
       tone = "professional", 
       language = "both", 
+      researchContext = null,
       skipRefinement = false,
       skipImage = false
     } = await req.json();
@@ -307,9 +308,13 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     console.log("[GENERATE_BLOG] === INICIO ===", new Date().toISOString());
-    console.log("[GENERATE_BLOG] Parámetros:", { prompt: prompt.substring(0, 50), tone, language, skipRefinement, skipImage });
+    console.log("[GENERATE_BLOG] Parámetros:", { prompt: prompt.substring(0, 50), tone, language, hasResearch: !!researchContext, skipRefinement, skipImage });
 
     // ========== PASADA 1: Generación inicial (Claude + fallback) ==========
+    const researchBlock = researchContext
+      ? `\n\nINVESTIGACIÓN ACTUAL — Basa tu artículo en los siguientes datos reales e investigación reciente. Cita fuentes cuando sea apropiado y utiliza la información para dar contexto actual y relevancia al artículo:\n\n${researchContext}\n\nIMPORTANTE: No copies el contenido de las fuentes textualmente. Analiza, sintetiza y redacta con tu propio estilo profesional, aportando valor añadido y la perspectiva del despacho Navarro.`
+      : "";
+
     const systemPrompt = `Eres un redactor experto especializado en contenido legal, fiscal y corporativo para el despacho Navarro.
 
 Genera artículos profesionales, informativos y optimizados para SEO sobre temas legales, fiscales, mercantiles y laborales.
@@ -331,10 +336,11 @@ IMPORTANTE:
 - Usa voz activa en lugar de pasiva
 - Cada párrafo debe aportar valor concreto
 - Incluye datos específicos o ejemplos reales cuando sea posible
+- Si se proporciona investigación actual, úsala para fundamentar el artículo con datos reales y referencias concretas
 
 Categorías disponibles: Fiscal, Mercantil, Laboral, Corporativo, Análisis
 
-Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo inglés" : "Ambos (español e inglés)"}`;
+Idiomas: ${language === "es" ? "Solo español" : language === "en" ? "Solo inglés" : "Ambos (español e inglés)"}${researchBlock}`;
 
     const toolParameters = {
       title_es: { type: "string", description: "Título en español (50-70 caracteres)" },

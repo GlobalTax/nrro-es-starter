@@ -329,6 +329,7 @@ export type Database = {
           quality_checks: Json | null
           quality_score: number | null
           read_time: number | null
+          research_sources: Json | null
           scheduled_at: string | null
           seo_description_en: string | null
           seo_description_es: string | null
@@ -362,6 +363,7 @@ export type Database = {
           quality_checks?: Json | null
           quality_score?: number | null
           read_time?: number | null
+          research_sources?: Json | null
           scheduled_at?: string | null
           seo_description_en?: string | null
           seo_description_es?: string | null
@@ -395,6 +397,7 @@ export type Database = {
           quality_checks?: Json | null
           quality_score?: number | null
           read_time?: number | null
+          research_sources?: Json | null
           scheduled_at?: string | null
           seo_description_en?: string | null
           seo_description_es?: string | null
