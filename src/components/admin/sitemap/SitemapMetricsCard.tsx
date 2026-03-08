@@ -111,7 +111,7 @@ export const SitemapMetricsCard = () => {
       {/* Header con botones de acción */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">Métricas del Sitemap</h2>
+          <h2 className="text-2xl font-medium">Métricas del Sitemap</h2>
           <p className="text-sm text-muted-foreground mt-1">
             Estadísticas en tiempo real desde CDN
           </p>
