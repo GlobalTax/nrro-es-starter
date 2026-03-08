@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bot, Calendar, CalendarDays, CheckCircle, Clock, Play, Plus, Settings, Sparkles, Trash2, Loader2, AlertTriangle, XCircle, Activity } from "lucide-react";
+import { Bot, Calendar, CalendarDays, CheckCircle, Clock, Globe, Play, Plus, Settings, Sparkles, Trash2, Loader2, AlertTriangle, XCircle, Activity } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import {
