@@ -66,6 +66,13 @@ import EmpresaFamiliar from "./pages/EmpresaFamiliar";
 import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
+import OrientacionGlobal from "./pages/OrientacionGlobal";
+import CompliancePenal from "./pages/CompliancePenal";
+import DueDiligence from "./pages/DueDiligence";
+import ProteccionDatosRGPD from "./pages/ProteccionDatosRGPD";
+import SegundaOportunidad from "./pages/SegundaOportunidad";
+import ConstitucionSociedades from "./pages/ConstitucionSociedades";
+import SobreNavarro from "./pages/SobreNavarro";
 
 const queryClient = new QueryClient();
 
