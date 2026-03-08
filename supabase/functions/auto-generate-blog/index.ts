@@ -19,6 +19,26 @@ interface ResearchResult {
   sources: Array<{ url: string; title: string }>;
 }
 
+async function getConfiguredSources(category: string): Promise<string[]> {
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const client = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { data, error } = await client
+      .from("blog_research_sources")
+      .select("site_url")
+      .eq("category", category)
+      .eq("is_enabled", true)
+      .order("priority", { ascending: false });
+
+    if (error || !data || data.length === 0) return [];
+    return data.map((s: any) => s.site_url);
+  } catch {
+    return [];
+  }
+}
+
 async function researchTopic(topic: string, category: string): Promise<ResearchResult | null> {
   const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
   if (!FIRECRAWL_API_KEY) {
@@ -30,9 +50,22 @@ async function researchTopic(topic: string, category: string): Promise<ResearchR
     const currentYear = new Date().getFullYear();
     const categoryKeywords = CATEGORY_SEARCH_KEYWORDS[category] || [];
     const extraKeyword = categoryKeywords[Math.floor(Math.random() * categoryKeywords.length)] || "";
-    const searchQuery = `${topic} ${extraKeyword} ${currentYear}`.trim();
 
-    console.log(`[research] Firecrawl search: "${searchQuery.substring(0, 80)}..."`);
+    // Get configured sources for this category
+    const configuredSites = await getConfiguredSources(category);
+    
+    let searchQuery: string;
+    if (configuredSites.length > 0) {
+      // Use site: filters for configured sources
+      const siteFilter = configuredSites.slice(0, 5).map(s => `site:${s}`).join(" OR ");
+      searchQuery = `${topic} ${extraKeyword} ${currentYear} (${siteFilter})`.trim();
+      console.log(`[research] Using ${configuredSites.length} configured sources for ${category}`);
+    } else {
+      searchQuery = `${topic} ${extraKeyword} ${currentYear}`.trim();
+      console.log(`[research] No configured sources for ${category}, using general search`);
+    }
+
+    console.log(`[research] Firecrawl search: "${searchQuery.substring(0, 120)}..."`);
 
     const response = await fetch("https://api.firecrawl.dev/v1/search", {
       method: "POST",

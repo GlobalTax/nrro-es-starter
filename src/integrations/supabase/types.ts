@@ -424,6 +424,39 @@ export type Database = {
           },
         ]
       }
+      blog_research_sources: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          is_enabled: boolean
+          priority: number
+          site_name: string
+          site_url: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          priority?: number
+          site_name: string
+          site_url: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          priority?: number
+          site_name?: string
+          site_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_topics_queue: {
         Row: {
           category: string | null
