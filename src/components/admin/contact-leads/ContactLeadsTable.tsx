@@ -151,7 +151,17 @@ export const ContactLeadsTable = ({
                     />
                   </TableCell>
                   <TableCell className="font-medium text-foreground truncate">
-                    <span title={lead.name}>{lead.name}</span>
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="truncate" title={lead.name}>{lead.name}</span>
+                      {lead.lead_source && LEAD_SOURCE_CONFIG[lead.lead_source] && (
+                        <Badge 
+                          variant="outline" 
+                          className={cn("text-[10px] px-1.5 py-0 flex-shrink-0", LEAD_SOURCE_CONFIG[lead.lead_source].className)}
+                        >
+                          {LEAD_SOURCE_CONFIG[lead.lead_source].label}
+                        </Badge>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell className="text-muted-foreground truncate">
                     <span title={lead.company || undefined}>{lead.company || "-"}</span>
