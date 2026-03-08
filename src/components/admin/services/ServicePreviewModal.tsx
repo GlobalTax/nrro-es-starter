@@ -51,7 +51,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Features */}
             {service.features && service.features.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Features</h2>
+                <h2 className="text-2xl font-medium mb-4">Features</h2>
                 <ul className="list-disc list-inside space-y-2">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="text-foreground">{feature}</li>
