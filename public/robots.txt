@@ -19,3 +19,6 @@ Disallow: /presentation-preview/
 # Sitemaps
 Sitemap: https://nrro.es/sitemap.xml
 Sitemap: https://zntotcpagkunvkwpubqu.supabase.co/functions/v1/generate-sitemap?domain=nrro.es
+
+# LLMs
+LLMs-Txt: https://nrro.es/llms.txt
