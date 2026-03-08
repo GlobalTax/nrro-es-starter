@@ -36,8 +36,7 @@ export const useContactLeadsRealtime = () => {
           // Mostrar notificación del navegador (system-level)
           // Solo si el documento no está visible (usuario en otra pestaña/app)
           if (document.hidden && isEnabled) {
-            showNotification({
-              title: '🔔 Nuevo Contacto - NRRO',
+            showNotification('🔔 Nuevo Contacto - NRRO', {
               body: `${newLead.name}\n${newLead.subject}`,
               tag: `contact-lead-${newLead.id}`,
               data: {

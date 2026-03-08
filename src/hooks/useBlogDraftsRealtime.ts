@@ -33,8 +33,7 @@ export function useBlogDraftsRealtime() {
 
         // Browser notification if tab is inactive
         if (document.hidden && isEnabled) {
-          showNotification({
-            title: '📝 Artículo pendiente de revisión',
+          showNotification('📝 Artículo pendiente de revisión', {
             body: newPost.title_es,
             data: { url: '/admin/blog' }
           });

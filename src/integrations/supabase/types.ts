@@ -1269,6 +1269,56 @@ export type Database = {
         }
         Relationships: []
       }
+      content_research: {
+        Row: {
+          created_at: string | null
+          id: string
+          queued_topic_id: string | null
+          relevance_score: number | null
+          source_snippet: string | null
+          source_url: string | null
+          status: string | null
+          suggested_angle: string | null
+          suggested_keywords: string[] | null
+          topic: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          queued_topic_id?: string | null
+          relevance_score?: number | null
+          source_snippet?: string | null
+          source_url?: string | null
+          status?: string | null
+          suggested_angle?: string | null
+          suggested_keywords?: string[] | null
+          topic: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          queued_topic_id?: string | null
+          relevance_score?: number | null
+          source_snippet?: string | null
+          source_url?: string | null
+          status?: string | null
+          suggested_angle?: string | null
+          suggested_keywords?: string[] | null
+          topic?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_research_queued_topic_id_fkey"
+            columns: ["queued_topic_id"]
+            isOneToOne: false
+            referencedRelation: "blog_topics_queue"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       corporate_presentations: {
         Row: {
           category: string
@@ -3932,6 +3982,39 @@ export type Database = {
           last_request?: string | null
           request_count?: number | null
           window_start?: string | null
+        }
+        Relationships: []
+      }
+      research_sources: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_scraped_at: string | null
+          name: string
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_scraped_at?: string | null
+          name: string
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_scraped_at?: string | null
+          name?: string
+          updated_at?: string | null
+          url?: string
         }
         Relationships: []
       }
