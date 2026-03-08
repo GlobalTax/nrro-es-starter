@@ -29,6 +29,7 @@ export interface BlogPostResult {
   read_time: number;
   status: string;
   view_count: number;
+  research_sources: any[] | null;
 }
 
 export const useBlogSearch = (params: BlogSearchParams, language: string = 'es') => {
@@ -62,7 +63,7 @@ export const useBlogSearch = (params: BlogSearchParams, language: string = 'es')
       if (countError) throw countError;
 
       return {
-        posts: (posts || []) as BlogPostResult[],
+        posts: (posts || []) as unknown as BlogPostResult[],
         totalCount: Number(totalCount) || 0,
       };
     },
