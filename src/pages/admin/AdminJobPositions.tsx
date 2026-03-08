@@ -7,6 +7,7 @@ import {
   useJobPositions,
   useDeleteJobPosition,
   useJobPositionStats,
+  useJobPositionCandidateCounts,
 } from "@/hooks/useJobPositions";
 import {
   Select,
