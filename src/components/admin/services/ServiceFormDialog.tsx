@@ -832,7 +832,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
 
                       <div className="space-y-4 mt-6">
                         <div className="flex items-center justify-between">
-                          <Label className="text-base font-semibold">Pilares</Label>
+                          <Label className="text-base font-medium">Pilares</Label>
                           <Button
                             type="button"
                             variant="outline"
