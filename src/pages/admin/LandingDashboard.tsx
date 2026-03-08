@@ -163,7 +163,7 @@ export const LandingDashboard = () => {
         {/* Status Chart */}
         <Card className="bg-white shadow-sm border-gray-100">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">Por Estado</CardTitle>
+            <CardTitle className="text-xl font-medium">Por Estado</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
