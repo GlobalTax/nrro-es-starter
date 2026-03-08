@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCandidatos, useUpdateCandidato, useDeleteCandidato, useCandidatoStats } from "@/hooks/useCandidatos";
+import { useJobPositions } from "@/hooks/useJobPositions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
