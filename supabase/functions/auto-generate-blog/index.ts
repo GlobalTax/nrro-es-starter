@@ -530,6 +530,7 @@ serve(async (req) => {
             seo_description_es: sanitizeContent(articleData.seo_description_es),
             seo_description_en: sanitizeContent(articleData.seo_description_en),
             source_site: sanitizeSourceSite("es"),
+            research_sources: research?.sources || [],
             // New quality columns
             quality_score: articleData.quality_score || 0,
             quality_checks: articleData.quality_checks || {},
