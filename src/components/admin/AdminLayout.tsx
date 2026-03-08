@@ -50,7 +50,7 @@ export const AdminLayout = () => {
       <Suspense fallback={<SidebarFallback />}>
         <AdminSidebar />
       </Suspense>
-      <div className="flex-1 flex flex-col min-w-0 bg-gray-50/50">
+      <div className="flex-1 flex flex-col min-w-0 bg-gray-50">
         <AdminHeader />
         <main className="flex-1 p-5">
           {showBanner && (
