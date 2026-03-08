@@ -156,7 +156,7 @@ export default function AdminJobPositions() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-slate-500">{stat.title}</p>
-                    <p className="text-2xl font-semibold text-slate-900">{stat.value}</p>
+                    <p className="text-2xl font-medium text-slate-900">{stat.value}</p>
                   </div>
                   <div className={`p-2 rounded-lg ${stat.bgColor}`}>
                     <stat.icon className={`h-5 w-5 ${stat.color}`} />

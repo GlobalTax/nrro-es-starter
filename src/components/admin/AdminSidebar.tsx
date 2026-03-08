@@ -241,7 +241,7 @@ export const AdminSidebar = () => {
               </span>
             </div>
             <div className="min-w-0">
-              <p className="truncate font-medium text-gray-700 text-[12px] leading-tight">
+              <p className="truncate font-normal text-gray-700 text-[12px] leading-tight">
                 {adminUser.full_name}
               </p>
               <p className="text-[10px] text-gray-400 truncate">{adminUser.email}</p>

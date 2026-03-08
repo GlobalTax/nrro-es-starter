@@ -207,7 +207,7 @@ Equipo navarro`;
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">Esta semana</p>
-                <p className="text-2xl font-semibold text-indigo-600">{stats.thisWeek}</p>
+                <p className="text-2xl font-medium text-indigo-600">{stats.thisWeek}</p>
               </div>
               <div className="p-2.5 bg-indigo-100 rounded-lg">
                 <TrendingUp className="h-5 w-5 text-indigo-600" />

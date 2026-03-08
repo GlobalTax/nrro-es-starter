@@ -175,7 +175,7 @@ export default function AdminResources() {
               <Download className="h-4 w-4 text-indigo-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{stats?.downloads?.toLocaleString() || 0}</p>
+              <p className="text-2xl font-medium text-slate-900">{stats?.downloads?.toLocaleString() || 0}</p>
               <p className="text-xs text-slate-500">Descargas totales</p>
             </div>
           </div>

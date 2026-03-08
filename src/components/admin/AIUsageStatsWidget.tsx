@@ -92,7 +92,7 @@ export const AIUsageStatsWidget = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-semibold text-slate-900">{card.value}</div>
+              <div className="text-3xl font-medium text-slate-900">{card.value}</div>
               <p className="text-xs text-slate-400 mt-1">{card.subtitle}</p>
             </CardContent>
           </Card>

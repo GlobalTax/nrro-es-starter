@@ -61,7 +61,7 @@ export function AdminStatsCard({ label, value, icon, trend, className }: AdminSt
         <p className="text-[12px] text-gray-500 font-medium uppercase tracking-wider">{label}</p>
       </div>
       <div className="flex items-baseline gap-2">
-        <p className="text-2xl font-semibold text-gray-900">{value}</p>
+        <p className="text-2xl font-medium text-gray-900">{value}</p>
         {trend && (
           <span className={cn(
             "text-xs font-medium",

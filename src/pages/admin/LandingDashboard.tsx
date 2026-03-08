@@ -145,7 +145,7 @@ export const LandingDashboard = () => {
         {/* Category Chart */}
         <Card className="bg-white shadow-sm border-gray-100">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">Distribución por Categoría</CardTitle>
+            <CardTitle className="text-xl font-medium">Distribución por Categoría</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
