@@ -75,7 +75,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Benefits */}
             {service.benefits && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Benefits</h2>
+                <h2 className="text-2xl font-medium mb-4">Benefits</h2>
                 <p className="text-foreground whitespace-pre-wrap">{service.benefits}</p>
               </div>
             )}
