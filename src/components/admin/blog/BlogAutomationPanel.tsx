@@ -451,6 +451,10 @@ export function BlogAutomationPanel() {
         <EditorialCalendarView />
       </TabsContent>
 
+      <TabsContent value="sources">
+        <FirecrawlSourcesPanel />
+      </TabsContent>
+
       <TabsContent value="diagnostics">
         <QueueDiagnosticsPanel />
       </TabsContent>
