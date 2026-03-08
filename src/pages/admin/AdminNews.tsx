@@ -247,7 +247,7 @@ export const AdminNews = () => {
               <Bot className="h-4 w-4 text-indigo-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{aiGeneratedCount}</p>
+              <p className="text-2xl font-medium text-slate-900">{aiGeneratedCount}</p>
               <p className="text-xs text-slate-500">Generadas IA</p>
             </div>
           </div>
