@@ -63,7 +63,7 @@ export const ServicePreviewModal = ({ open, onClose, service }: ServicePreviewMo
             {/* Typical Clients */}
             {service.typical_clients && service.typical_clients.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold mb-4">Typical Clients</h2>
+                <h2 className="text-2xl font-medium mb-4">Typical Clients</h2>
                 <ul className="list-disc list-inside space-y-2">
                   {service.typical_clients.map((client, idx) => (
                     <li key={idx} className="text-foreground">{client}</li>
