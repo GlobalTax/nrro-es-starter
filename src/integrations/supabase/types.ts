@@ -5329,6 +5329,7 @@ export type Database = {
           id: string
           published_at: string
           read_time: number
+          research_sources: Json
           shared_sites: string[]
           slug: string
           slug_en: string

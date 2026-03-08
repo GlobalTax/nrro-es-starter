@@ -316,7 +316,49 @@ export const AdminBlog = () => {
                       posts.map((post: any) => (
                         <TableRow key={post.id} className="hover:bg-slate-50/50">
                           <TableCell className="font-medium text-slate-900 max-w-xs">
-                            <div className="truncate">{post.title}</div>
+                            <div className="flex items-center gap-1.5">
+                              <span className="truncate">{post.title}</span>
+                              {post.research_sources && Array.isArray(post.research_sources) && post.research_sources.length > 0 && (
+                                <Popover>
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <PopoverTrigger asChild>
+                                          <button className="flex-shrink-0 p-0.5 rounded hover:bg-accent/50 transition-colors">
+                                            <Globe className="h-3.5 w-3.5 text-primary" />
+                                          </button>
+                                        </PopoverTrigger>
+                                      </TooltipTrigger>
+                                      <TooltipContent side="top" className="text-xs">
+                                        Generado con Firecrawl
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                  <PopoverContent className="w-80 p-3" align="start">
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+                                        <Globe className="h-4 w-4 text-primary" />
+                                        Investigación Firecrawl · {post.research_sources.length} fuente{post.research_sources.length !== 1 ? 's' : ''}
+                                      </div>
+                                      <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                                        {post.research_sources.map((source: any, idx: number) => (
+                                          <a
+                                            key={idx}
+                                            href={source.url || source.source_url || '#'}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-start gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors group"
+                                          >
+                                            <ExternalLink className="h-3 w-3 mt-0.5 flex-shrink-0 opacity-50 group-hover:opacity-100" />
+                                            <span className="line-clamp-2">{source.title || source.url || source.source_url || `Fuente ${idx + 1}`}</span>
+                                          </a>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  </PopoverContent>
+                                </Popover>
+                              )}
+                            </div>
                           </TableCell>
                           <TableCell>
                             {post.category && (
