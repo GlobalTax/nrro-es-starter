@@ -60,6 +60,14 @@ export const useContactLeads = (filters?: ContactLeadFilters) => {
         query = query.eq("source_site", filters.sourceSite as any);
       }
 
+      if (filters?.leadSource && filters.leadSource !== "all") {
+        if (filters.leadSource === "contact") {
+          query = query.is("lead_source", null);
+        } else {
+          query = query.eq("lead_source", filters.leadSource);
+        }
+      }
+
       if (filters?.dateFrom) {
         query = query.gte("created_at", filters.dateFrom);
       }

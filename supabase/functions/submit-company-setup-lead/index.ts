@@ -157,6 +157,31 @@ serve(async (req) => {
 
     console.log('Lead created successfully:', lead.id, 'Priority:', priority, 'Score:', leadScore);
 
+    // Dual write to contact_leads for unified view
+    const messageParts = [
+      `País: ${body.country_origin}`,
+      `Variante: ${body.landing_variant}`,
+      body.timeline ? `Timeline: ${body.timeline}` : null,
+      body.company_stage ? `Etapa: ${body.company_stage}` : null,
+      body.estimated_revenue ? `Facturación estimada: ${body.estimated_revenue}` : null,
+      body.message ? `\nMensaje: ${body.message}` : null,
+    ].filter(Boolean).join('\n');
+
+    await supabase.from('contact_leads').insert({
+      name: body.name,
+      email: body.email,
+      phone: body.phone || null,
+      company: body.company_name || null,
+      subject: 'Solicitud constitución empresa',
+      message: messageParts,
+      lead_source: 'company_setup',
+      ip_address: ipAddress,
+      user_agent: userAgent,
+    }).then(({ error }) => {
+      if (error) console.error('[COMPANY_SETUP] Error inserting into contact_leads:', error);
+      else console.log('[COMPANY_SETUP] Dual write to contact_leads OK');
+    });
+
     // Send confirmation email to lead
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
     

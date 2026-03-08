@@ -304,6 +304,28 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('[DEMO] Request created successfully:', data.id);
 
+    // Dual write to contact_leads for unified view
+    const clMessage = [
+      restaurant_name ? `Restaurante: ${restaurant_name}` : null,
+      company ? `Empresa: ${company}` : null,
+      message ? `\nMensaje: ${message}` : null,
+    ].filter(Boolean).join('\n') || 'Solicitud de demo Orquest + KairosHR';
+
+    await supabase.from('contact_leads').insert({
+      name,
+      email: email.toLowerCase(),
+      phone: phone || null,
+      company: company || restaurant_name || null,
+      subject: 'Demo Orquest/KairosHR',
+      message: clMessage,
+      lead_source: 'demo_request',
+      ip_address: ipAddress,
+      user_agent: userAgent,
+    }).then(({ error: clError }) => {
+      if (clError) console.error('[DEMO] Error inserting into contact_leads:', clError);
+      else console.log('[DEMO] Dual write to contact_leads OK');
+    });
+
     // Log security event
     await supabase.from('security_events').insert({
       event_type: 'DEMO_REQUEST_SUBMISSION',

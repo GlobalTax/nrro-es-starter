@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
@@ -9,6 +8,7 @@ export interface ContactLeadFiltersState {
   status: string;
   serviceType: string;
   sourceSite: string;
+  leadSource: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -29,6 +29,7 @@ export const ContactLeadFilters = ({
     filters.status !== "all" || 
     filters.serviceType !== "all" ||
     filters.sourceSite !== "all" ||
+    filters.leadSource !== "all" ||
     filters.dateFrom ||
     filters.dateTo;
 
@@ -49,7 +50,7 @@ export const ContactLeadFilters = ({
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-7 gap-3">
         {/* Búsqueda */}
         <div className="md:col-span-2">
           <div className="relative">
@@ -62,6 +63,23 @@ export const ContactLeadFilters = ({
             />
           </div>
         </div>
+
+        {/* Tipo de Lead */}
+        <Select
+          value={filters.leadSource}
+          onValueChange={(value) => onFiltersChange({ ...filters, leadSource: value })}
+        >
+          <SelectTrigger className="h-9">
+            <SelectValue placeholder="Tipo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos los tipos</SelectItem>
+            <SelectItem value="contact">Contacto directo</SelectItem>
+            <SelectItem value="company_setup">Company Setup</SelectItem>
+            <SelectItem value="ley_beckham">Ley Beckham</SelectItem>
+            <SelectItem value="demo_request">Demo Request</SelectItem>
+          </SelectContent>
+        </Select>
 
         {/* Estado */}
         <Select
