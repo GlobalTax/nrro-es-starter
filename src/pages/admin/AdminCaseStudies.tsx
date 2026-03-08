@@ -202,7 +202,7 @@ export function AdminCaseStudies() {
               <FileText className="h-4 w-4 text-slate-600" />
             </div>
             <div>
-              <p className="text-2xl font-semibold text-slate-900">{allCaseStudies.length}</p>
+              <p className="text-2xl font-medium text-slate-900">{allCaseStudies.length}</p>
               <p className="text-xs text-slate-500">Total casos</p>
             </div>
           </div>
