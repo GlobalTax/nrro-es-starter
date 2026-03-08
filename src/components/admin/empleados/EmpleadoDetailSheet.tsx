@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -29,10 +29,12 @@ import {
   Trash2,
   Upload,
   Plus,
+  Loader2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface EmpleadoDetailSheetProps {
   empleado: Empleado | null;
@@ -80,6 +82,10 @@ export function EmpleadoDetailSheet({
 }: EmpleadoDetailSheetProps) {
   const [formData, setFormData] = useState<Partial<Empleado>>({});
   const [activeTab, setActiveTab] = useState('info');
+  const [uploadingContrato, setUploadingContrato] = useState(false);
+  const [uploadingFirma, setUploadingFirma] = useState(false);
+  const contratoInputRef = useRef<HTMLInputElement>(null);
+  const firmaInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch nóminas for this employee
   const { data: nominas } = useNominas({
@@ -104,6 +110,68 @@ export function EmpleadoDetailSheet({
       navigator.clipboard.writeText(formData.email);
       toast.success('Email copiado');
     }
+  };
+
+  const handleFileUpload = async (
+    file: File,
+    folder: 'contrato' | 'firma',
+    setLoading: (v: boolean) => void,
+    fieldKey: 'contrato_url' | 'firma_url'
+  ) => {
+    if (!empleado?.id && !formData.nombre) {
+      toast.error('Guarda el empleado primero antes de subir archivos');
+      return;
+    }
+    const employeeId = empleado?.id || 'new';
+    const ext = file.name.split('.').pop() || (folder === 'firma' ? 'png' : 'pdf');
+    const path = `${employeeId}/${folder}_${Date.now()}.${ext}`;
+
+    setLoading(true);
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from('cvs')
+        .upload(path, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Since bucket is private, use signed URL (1 year)
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from('cvs')
+        .createSignedUrl(path, 60 * 60 * 24 * 365);
+
+      if (signedError) throw signedError;
+
+      setFormData((prev) => ({ ...prev, [fieldKey]: signedData.signedUrl }));
+      toast.success(`${folder === 'contrato' ? 'Contrato' : 'Firma'} subido correctamente`);
+    } catch (err: any) {
+      toast.error(`Error al subir ${folder}`, { description: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleContratoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('El archivo no puede superar 10MB');
+      return;
+    }
+    handleFileUpload(file, 'contrato', setUploadingContrato, 'contrato_url');
+  };
+
+  const handleFirmaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error('La firma debe ser una imagen (PNG, JPG)');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('La imagen no puede superar 5MB');
+      return;
+    }
+    handleFileUpload(file, 'firma', setUploadingFirma, 'firma_url');
   };
 
   const costeTotal = (formData.salario_base || 0) + (formData.variable || 0) + (formData.bonus || 0) + (formData.coste_seg_social || 0);
@@ -379,10 +447,26 @@ export function EmpleadoDetailSheet({
                 </div>
               ) : (
                 <div className="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center">
+                  <input
+                    ref={contratoInputRef}
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    className="hidden"
+                    onChange={handleContratoChange}
+                  />
                   <Upload className="h-8 w-8 mx-auto text-slate-400 mb-3" />
                   <p className="text-sm text-slate-600 mb-2">Arrastra el contrato aquí o</p>
-                  <Button variant="outline" size="sm">
-                    Seleccionar archivo
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={uploadingContrato}
+                    onClick={() => contratoInputRef.current?.click()}
+                  >
+                    {uploadingContrato ? (
+                      <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> Subiendo...</>
+                    ) : (
+                      'Seleccionar archivo'
+                    )}
                   </Button>
                 </div>
               )}
@@ -390,12 +474,37 @@ export function EmpleadoDetailSheet({
 
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-slate-900">Firma digital</h3>
+              <input
+                ref={firmaInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFirmaChange}
+              />
               {formData.firma_url ? (
-                <img src={formData.firma_url} className="h-16 border rounded" alt="Firma" />
+                <div className="flex items-center gap-3">
+                  <img src={formData.firma_url} className="h-16 border rounded" alt="Firma" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500"
+                    onClick={() => setFormData({ ...formData, firma_url: null })}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
               ) : (
-                <Button variant="outline" size="sm">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Subir firma
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={uploadingFirma}
+                  onClick={() => firmaInputRef.current?.click()}
+                >
+                  {uploadingFirma ? (
+                    <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> Subiendo...</>
+                  ) : (
+                    <><Upload className="h-4 w-4 mr-2" /> Subir firma</>
+                  )}
                 </Button>
               )}
             </div>

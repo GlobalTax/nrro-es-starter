@@ -5159,6 +5159,16 @@ export type Database = {
           services: string[]
         }[]
       }
+      get_empleado_stats: {
+        Args: never
+        Returns: {
+          activos: number
+          coste_anual_total: number
+          coste_mensual_total: number
+          inactivos: number
+          total: number
+        }[]
+      }
       get_ley_beckham_stats: {
         Args: never
         Returns: {

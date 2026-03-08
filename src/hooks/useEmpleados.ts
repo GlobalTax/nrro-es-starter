@@ -102,29 +102,31 @@ export function useEmpleadoStats() {
   return useQuery({
     queryKey: ['empleados-stats'],
     queryFn: async () => {
-      const { data, error } = await supabase.from('empleados').select('*');
-      if (error) throw error;
+      // Use SQL aggregate function for performance
+      const { data: statsData, error: statsError } = await supabase.rpc('get_empleado_stats');
+      if (statsError) throw statsError;
 
-      const empleados = data || [];
-      const activos = empleados.filter((e) => e.activo);
-      const costeMensualTotal = activos.reduce(
-        (acc, e) => acc + (e.coste_total_mensual || 0),
-        0
-      );
+      const stats = statsData?.[0] || { total: 0, activos: 0, inactivos: 0, coste_mensual_total: 0, coste_anual_total: 0 };
 
-      // Group by departamento
-      const porDepartamento = activos.reduce((acc, e) => {
+      // Lightweight query for department breakdown
+      const { data: deptData, error: deptError } = await supabase
+        .from('empleados')
+        .select('departamento, activo')
+        .eq('activo', true);
+      if (deptError) throw deptError;
+
+      const porDepartamento = (deptData || []).reduce((acc, e) => {
         const dept = e.departamento || 'Sin asignar';
         acc[dept] = (acc[dept] || 0) + 1;
         return acc;
       }, {} as Record<string, number>);
 
       return {
-        total: empleados.length,
-        activos: activos.length,
-        inactivos: empleados.length - activos.length,
-        costeMensualTotal,
-        costeAnualTotal: costeMensualTotal * 12,
+        total: Number(stats.total),
+        activos: Number(stats.activos),
+        inactivos: Number(stats.inactivos),
+        costeMensualTotal: Number(stats.coste_mensual_total),
+        costeAnualTotal: Number(stats.coste_anual_total),
         porDepartamento,
       };
     },
