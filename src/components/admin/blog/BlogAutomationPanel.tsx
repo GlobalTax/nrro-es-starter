@@ -24,6 +24,7 @@ import {
 } from "@/hooks/useBlogAutomation";
 import { EditorialCalendarView } from "./EditorialCalendarView";
 import { QueueDiagnosticsPanel } from "./QueueDiagnosticsPanel";
+import { FirecrawlSourcesPanel } from "./FirecrawlSourcesPanel";
 
 const CATEGORIES = ["Fiscal", "Mercantil", "Laboral", "Corporativo"];
 const TONES = [
