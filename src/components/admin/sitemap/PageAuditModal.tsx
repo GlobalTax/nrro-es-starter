@@ -144,7 +144,7 @@ export function PageAuditModal({
                 <TabsContent value="data" className="mt-0">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-sm mb-2">Datos SEO extraídos</h4>
+                      <h4 className="font-medium text-sm mb-2">Datos SEO extraídos</h4>
                       <pre className="p-3 rounded-lg bg-muted/50 text-xs overflow-auto max-h-40">
                         {JSON.stringify(seoData, null, 2)}
                       </pre>
