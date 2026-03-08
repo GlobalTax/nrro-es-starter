@@ -77,7 +77,7 @@ export function AuditIssuesList({ issues, recommendations }: AuditIssuesListProp
       {/* Issues Section */}
       {sortedIssues.length > 0 && (
         <div className="space-y-3">
-          <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+          <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
             Problemas detectados ({sortedIssues.length})
           </h4>
           <div className="space-y-2">
