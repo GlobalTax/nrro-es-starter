@@ -12,6 +12,7 @@ export interface ContactLead {
   message: string;
   service_type: string | null;
   source_site: string | null;
+  lead_source: string | null;
   ip_address: string | null;
   user_agent: string | null;
   email_sent: boolean;
@@ -27,6 +28,7 @@ export interface ContactLeadFilters {
   status?: string;
   serviceType?: string;
   sourceSite?: string;
+  leadSource?: string;
   dateFrom?: string;
   dateTo?: string;
 }
