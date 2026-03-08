@@ -165,7 +165,7 @@ export const SitemapHistoryChart = () => {
             <div className="text-xs text-muted-foreground mt-1">Total URLs Actual</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-accent">
+            <div className="text-2xl font-medium text-accent">
               {lastPoint.urlsEs}
             </div>
             <div className="text-xs text-muted-foreground mt-1">Español</div>
