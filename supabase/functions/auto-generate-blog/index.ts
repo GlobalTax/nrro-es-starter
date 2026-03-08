@@ -6,6 +6,93 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// ========== FIRECRAWL RESEARCH ==========
+const CATEGORY_SEARCH_KEYWORDS: Record<string, string[]> = {
+  Fiscal: ["novedades fiscales España", "reforma tributaria empresas", "inspección tributaria", "impuesto sociedades cambios"],
+  Mercantil: ["gobierno corporativo empresa familiar España", "operaciones M&A España", "pactos de socios novedades", "fusiones adquisiciones"],
+  Laboral: ["reforma laboral España", "novedades derecho laboral empresas", "teletrabajo normativa", "despido colectivo jurisprudencia"],
+  Corporativo: ["compliance penal España empresas", "RGPD novedades", "ESG reporting obligaciones", "ciberseguridad legal empresas"],
+};
+
+interface ResearchResult {
+  context: string;
+  sources: Array<{ url: string; title: string }>;
+}
+
+async function researchTopic(topic: string, category: string): Promise<ResearchResult | null> {
+  const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
+  if (!FIRECRAWL_API_KEY) {
+    console.log("[research] No FIRECRAWL_API_KEY, skipping research");
+    return null;
+  }
+
+  try {
+    const currentYear = new Date().getFullYear();
+    const categoryKeywords = CATEGORY_SEARCH_KEYWORDS[category] || [];
+    const extraKeyword = categoryKeywords[Math.floor(Math.random() * categoryKeywords.length)] || "";
+    const searchQuery = `${topic} ${extraKeyword} ${currentYear}`.trim();
+
+    console.log(`[research] Firecrawl search: "${searchQuery.substring(0, 80)}..."`);
+
+    const response = await fetch("https://api.firecrawl.dev/v1/search", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${FIRECRAWL_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: searchQuery,
+        limit: 5,
+        lang: "es",
+        country: "ES",
+        scrapeOptions: { formats: ["markdown"] },
+      }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.warn(`[research] Firecrawl error ${response.status}: ${errText.substring(0, 200)}`);
+      return null;
+    }
+
+    const data = await response.json();
+    const results = data.data || [];
+
+    if (results.length === 0) {
+      console.log("[research] No results found");
+      return null;
+    }
+
+    const sources: Array<{ url: string; title: string }> = [];
+    const contextParts: string[] = [];
+
+    for (const result of results.slice(0, 5)) {
+      const title = result.title || result.url || "Sin título";
+      const url = result.url || "";
+      const markdown = result.markdown || result.description || "";
+      const snippet = markdown.substring(0, 500).trim();
+
+      if (snippet) {
+        sources.push({ url, title });
+        contextParts.push(`### Fuente: ${title}\nURL: ${url}\n${snippet}`);
+      }
+    }
+
+    if (contextParts.length === 0) {
+      console.log("[research] No usable content from results");
+      return null;
+    }
+
+    const context = contextParts.join("\n\n---\n\n");
+    console.log(`[research] ✅ Found ${sources.length} sources, context: ${context.length} chars`);
+
+    return { context, sources };
+  } catch (error) {
+    console.error("[research] Error:", error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
 // Temas predefinidos por categoría para generación automática
 const TOPIC_TEMPLATES = {
   Fiscal: [
