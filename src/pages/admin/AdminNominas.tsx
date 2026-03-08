@@ -25,11 +25,11 @@ import {
   useNominaStats,
   useNominaAnios,
   useUpdateCierreNomina,
+  useCreateCierreNomina,
   useComparativasNomina,
   CierreNomina,
 } from '@/hooks/useNominas';
 import {
-  Receipt,
   Calendar,
   TrendingUp,
   TrendingDown,
@@ -38,23 +38,15 @@ import {
   AlertTriangle,
   DollarSign,
   Download,
+  Plus,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { toast } from 'sonner';
 
 const MESES = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre',
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
 ];
 
 const ESTADOS_CIERRE = [
@@ -76,11 +68,24 @@ export default function AdminNominas() {
   const { data: comparativas } = useComparativasNomina(selectedCierre?.id || null);
 
   const updateCierre = useUpdateCierreNomina();
+  const createCierre = useCreateCierreNomina();
 
-  const handleRowClick = (cierre: CierreNomina) => {
-    setSelectedCierre(cierre);
-    setFormData(cierre);
-    setIsSheetOpen(true);
+  const handleRowClick = (cierre: CierreNomina | { id: string; mes: number; anio: number; estado: string; total_previsto: null; total_real: null; desviacion: null; observaciones: null }) => {
+    if (cierre.id.startsWith('pending')) {
+      // Create a new cierre for this month
+      createCierre.mutate(
+        { mes: cierre.mes, anio: cierre.anio, estado: 'pendiente' },
+        {
+          onSuccess: (newCierre) => {
+            toast.success(`Cierre de ${MESES[cierre.mes - 1]} creado`);
+          },
+        }
+      );
+    } else {
+      setSelectedCierre(cierre as CierreNomina);
+      setFormData(cierre);
+      setIsSheetOpen(true);
+    }
   };
 
   const handleSave = () => {
@@ -112,11 +117,8 @@ export default function AdminNominas() {
 
   const getDesviacionIcon = (desviacion: number | null) => {
     if (!desviacion) return null;
-    if (desviacion > 0) {
-      return <TrendingUp className="h-4 w-4 text-red-500" />;
-    } else if (desviacion < 0) {
-      return <TrendingDown className="h-4 w-4 text-emerald-500" />;
-    }
+    if (desviacion > 0) return <TrendingUp className="h-4 w-4 text-red-500" />;
+    if (desviacion < 0) return <TrendingDown className="h-4 w-4 text-emerald-500" />;
     return null;
   };
 
@@ -151,7 +153,7 @@ export default function AdminNominas() {
     },
   ];
 
-  // Generate all 12 months if cierres don't exist
+  // Generate all 12 months
   const allMonths = Array.from({ length: 12 }, (_, i) => i + 1);
   const cierresPorMes = allMonths.map((mes) => {
     const cierre = cierres?.find((c) => c.mes === mes);
@@ -174,7 +176,7 @@ export default function AdminNominas() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-medium text-slate-900">Nóminas</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">Nóminas</h1>
           <p className="text-slate-500 text-sm mt-0.5">
             Control de cierres mensuales y comparativas
           </p>
@@ -218,9 +220,7 @@ export default function AdminNominas() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold text-slate-900">
-                {stat.value}
-              </div>
+              <div className="text-2xl font-semibold text-slate-900">{stat.value}</div>
             </CardContent>
           </Card>
         ))}
@@ -239,18 +239,10 @@ export default function AdminNominas() {
               <TableRow className="hover:bg-transparent border-slate-100">
                 <TableHead className="text-slate-500 font-medium">Mes</TableHead>
                 <TableHead className="text-slate-500 font-medium">Estado</TableHead>
-                <TableHead className="text-slate-500 font-medium text-right">
-                  Previsto
-                </TableHead>
-                <TableHead className="text-slate-500 font-medium text-right">
-                  Real
-                </TableHead>
-                <TableHead className="text-slate-500 font-medium text-right">
-                  Desviación
-                </TableHead>
-                <TableHead className="text-slate-500 font-medium">
-                  Fecha Cierre
-                </TableHead>
+                <TableHead className="text-slate-500 font-medium text-right">Previsto</TableHead>
+                <TableHead className="text-slate-500 font-medium text-right">Real</TableHead>
+                <TableHead className="text-slate-500 font-medium text-right">Desviación</TableHead>
+                <TableHead className="text-slate-500 font-medium">Fecha Cierre</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -261,63 +253,66 @@ export default function AdminNominas() {
                   </TableCell>
                 </TableRow>
               ) : (
-                cierresPorMes.map((cierre) => (
-                  <TableRow
-                    key={cierre.id}
-                    onClick={() =>
-                      !cierre.id.startsWith('pending') && handleRowClick(cierre as CierreNomina)
-                    }
-                    className={`border-slate-100 ${
-                      cierre.id.startsWith('pending')
-                        ? 'opacity-60'
-                        : 'cursor-pointer hover:bg-slate-50'
-                    }`}
-                  >
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-slate-400" />
-                        <span className="font-medium text-slate-900">
-                          {MESES[cierre.mes - 1]}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{getEstadoBadge(cierre.estado)}</TableCell>
-                    <TableCell className="text-right text-slate-600">
-                      {formatCurrency(cierre.total_previsto)}
-                    </TableCell>
-                    <TableCell className="text-right font-medium text-slate-900">
-                      {formatCurrency(cierre.total_real)}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {getDesviacionIcon(cierre.desviacion)}
-                        <span
-                          className={
-                            cierre.desviacion && cierre.desviacion > 0
-                              ? 'text-red-600 font-medium'
-                              : cierre.desviacion && cierre.desviacion < 0
-                              ? 'text-emerald-600 font-medium'
-                              : 'text-slate-600'
-                          }
-                        >
-                          {cierre.desviacion
-                            ? `${cierre.desviacion > 0 ? '+' : ''}${formatCurrency(
-                                cierre.desviacion
-                              )}`
-                            : '-'}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-slate-500">
-                      {(cierre as CierreNomina).fecha_cierre
-                        ? format(
-                            new Date((cierre as CierreNomina).fecha_cierre!),
-                            'dd/MM/yyyy'
-                          )
-                        : '-'}
-                    </TableCell>
-                  </TableRow>
-                ))
+                cierresPorMes.map((cierre) => {
+                  const isPending = cierre.id.startsWith('pending');
+                  return (
+                    <TableRow
+                      key={cierre.id}
+                      onClick={() => handleRowClick(cierre)}
+                      className={`border-slate-100 cursor-pointer ${
+                        isPending
+                          ? 'hover:bg-blue-50/50'
+                          : 'hover:bg-slate-50'
+                      }`}
+                    >
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {isPending ? (
+                            <Plus className="h-4 w-4 text-blue-400" />
+                          ) : (
+                            <Calendar className="h-4 w-4 text-slate-400" />
+                          )}
+                          <span className={`font-medium ${isPending ? 'text-slate-500' : 'text-slate-900'}`}>
+                            {MESES[cierre.mes - 1]}
+                          </span>
+                          {isPending && (
+                            <span className="text-xs text-blue-500">(click para crear)</span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>{getEstadoBadge(cierre.estado)}</TableCell>
+                      <TableCell className="text-right text-slate-600">
+                        {formatCurrency(cierre.total_previsto)}
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-slate-900">
+                        {formatCurrency(cierre.total_real)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {getDesviacionIcon(cierre.desviacion)}
+                          <span
+                            className={
+                              cierre.desviacion && cierre.desviacion > 0
+                                ? 'text-red-600 font-medium'
+                                : cierre.desviacion && cierre.desviacion < 0
+                                ? 'text-emerald-600 font-medium'
+                                : 'text-slate-600'
+                            }
+                          >
+                            {cierre.desviacion
+                              ? `${cierre.desviacion > 0 ? '+' : ''}${formatCurrency(cierre.desviacion)}`
+                              : '-'}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-slate-500">
+                        {(cierre as CierreNomina).fecha_cierre
+                          ? format(new Date((cierre as CierreNomina).fecha_cierre!), 'dd/MM/yyyy')
+                          : '-'}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>
@@ -368,9 +363,7 @@ export default function AdminNominas() {
                 }`}
               >
                 {selectedCierre?.desviacion
-                  ? `${selectedCierre.desviacion > 0 ? '+' : ''}${formatCurrency(
-                      selectedCierre.desviacion
-                    )}`
+                  ? `${selectedCierre.desviacion > 0 ? '+' : ''}${formatCurrency(selectedCierre.desviacion)}`
                   : '-'}
               </p>
             </div>
@@ -388,9 +381,7 @@ export default function AdminNominas() {
               </SelectTrigger>
               <SelectContent>
                 {ESTADOS_CIERRE.map((e) => (
-                  <SelectItem key={e.value} value={e.value}>
-                    {e.label}
-                  </SelectItem>
+                  <SelectItem key={e.value} value={e.value}>{e.label}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -401,9 +392,7 @@ export default function AdminNominas() {
             <Label>Observaciones</Label>
             <Textarea
               value={formData.observaciones || ''}
-              onChange={(e) =>
-                setFormData({ ...formData, observaciones: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, observaciones: e.target.value })}
               rows={4}
               placeholder="Notas sobre el cierre, incidencias..."
             />
@@ -412,9 +401,7 @@ export default function AdminNominas() {
           {/* Comparativas por empleado */}
           {comparativas && comparativas.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-slate-900">
-                Comparativas por empleado
-              </h3>
+              <h3 className="text-sm font-medium text-slate-900">Comparativas por empleado</h3>
               <div className="border rounded-lg overflow-hidden">
                 <Table>
                   <TableHeader>
@@ -428,9 +415,7 @@ export default function AdminNominas() {
                   <TableBody>
                     {comparativas.map((comp: any) => (
                       <TableRow key={comp.id} className="border-slate-100">
-                        <TableCell className="text-sm">
-                          {comp.empleado?.nombre || 'N/A'}
-                        </TableCell>
+                        <TableCell className="text-sm">{comp.empleado?.nombre || 'N/A'}</TableCell>
                         <TableCell className="text-sm text-right text-slate-600">
                           {formatCurrency(comp.coste_previsto)}
                         </TableCell>
@@ -447,9 +432,7 @@ export default function AdminNominas() {
                           }`}
                         >
                           {comp.diferencia_coste
-                            ? `${comp.diferencia_coste > 0 ? '+' : ''}${formatCurrency(
-                                comp.diferencia_coste
-                              )}`
+                            ? `${comp.diferencia_coste > 0 ? '+' : ''}${formatCurrency(comp.diferencia_coste)}`
                             : '-'}
                         </TableCell>
                       </TableRow>

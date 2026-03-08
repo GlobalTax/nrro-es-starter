@@ -179,3 +179,25 @@ export const useJobPositionStats = () => {
     },
   });
 };
+
+export const useJobPositionCandidateCounts = () => {
+  return useQuery({
+    queryKey: ["job-position-candidate-counts"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("candidatos")
+        .select("job_position_id")
+        .not("job_position_id", "is", null);
+
+      if (error) throw error;
+
+      const counts: Record<string, number> = {};
+      (data || []).forEach((c) => {
+        if (c.job_position_id) {
+          counts[c.job_position_id] = (counts[c.job_position_id] || 0) + 1;
+        }
+      });
+      return counts;
+    },
+  });
+};

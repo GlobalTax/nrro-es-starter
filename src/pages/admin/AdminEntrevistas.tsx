@@ -18,16 +18,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DetailSheet } from '@/components/admin/DetailSheet';
 import {
   useEntrevistas,
   useEntrevistaStats,
+  useCreateEntrevista,
   useUpdateEntrevista,
   useDeleteEntrevista,
   Entrevista,
 } from '@/hooks/useEntrevistas';
+import { useCandidatos } from '@/hooks/useCandidatos';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Calendar,
   Clock,
@@ -39,6 +50,7 @@ import {
   AlertCircle,
   ThumbsUp,
   ThumbsDown,
+  Plus,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -62,11 +74,18 @@ export default function AdminEntrevistas() {
   const [estadoFilter, setEstadoFilter] = useState<string>('');
   const [tipoFilter, setTipoFilter] = useState<string>('');
 
-  const [selectedEntrevista, setSelectedEntrevista] = useState<Entrevista | null>(
-    null
-  );
+  const [selectedEntrevista, setSelectedEntrevista] = useState<Entrevista | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [formData, setFormData] = useState<Partial<Entrevista>>({});
+
+  // New interview dialog state
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [newFormData, setNewFormData] = useState<Partial<Entrevista>>({
+    tipo: 'videollamada',
+    ronda: 1,
+    estado: 'programada',
+    duracion_minutos: 60,
+  });
 
   const filters = {
     estado: estadoFilter || undefined,
@@ -75,7 +94,9 @@ export default function AdminEntrevistas() {
 
   const { data: entrevistas, isLoading } = useEntrevistas(filters);
   const { data: stats } = useEntrevistaStats();
+  const { data: candidatos } = useCandidatos();
 
+  const createEntrevista = useCreateEntrevista();
   const updateEntrevista = useUpdateEntrevista();
   const deleteEntrevista = useDeleteEntrevista();
 
@@ -100,6 +121,30 @@ export default function AdminEntrevistas() {
         onSuccess: () => setIsSheetOpen(false),
       });
     }
+  };
+
+  const handleCreateSubmit = async () => {
+    // Get current user as entrevistador
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    createEntrevista.mutate(
+      {
+        ...newFormData,
+        entrevistador_id: newFormData.entrevistador_id || user.id,
+      },
+      {
+        onSuccess: () => {
+          setIsCreateOpen(false);
+          setNewFormData({
+            tipo: 'videollamada',
+            ronda: 1,
+            estado: 'programada',
+            duracion_minutos: 60,
+          });
+        },
+      }
+    );
   };
 
   const getEstadoBadge = (estado: string | null) => {
@@ -145,11 +190,17 @@ export default function AdminEntrevistas() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-medium text-slate-900">Entrevistas</h1>
-        <p className="text-slate-500 text-sm mt-0.5">
-          Seguimiento de procesos de selección
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-900">Entrevistas</h1>
+          <p className="text-slate-500 text-sm mt-0.5">
+            Seguimiento de procesos de selección
+          </p>
+        </div>
+        <Button onClick={() => setIsCreateOpen(true)} className="bg-slate-900 hover:bg-slate-800 text-white">
+          <Plus className="h-4 w-4 mr-2" />
+          Nueva Entrevista
+        </Button>
       </div>
 
       {/* Stats Cards */}
@@ -216,9 +267,7 @@ export default function AdminEntrevistas() {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-slate-100">
-                <TableHead className="text-slate-500 font-medium">
-                  Fecha y Hora
-                </TableHead>
+                <TableHead className="text-slate-500 font-medium">Fecha y Hora</TableHead>
                 <TableHead className="text-slate-500 font-medium">Candidato</TableHead>
                 <TableHead className="text-slate-500 font-medium">Puesto</TableHead>
                 <TableHead className="text-slate-500 font-medium">Tipo</TableHead>
@@ -252,9 +301,7 @@ export default function AdminEntrevistas() {
                         <Calendar className="h-4 w-4 text-slate-400" />
                         <div>
                           <p className="font-medium text-slate-900">
-                            {format(new Date(entrevista.fecha_hora), 'dd MMM yyyy', {
-                              locale: es,
-                            })}
+                            {format(new Date(entrevista.fecha_hora), 'dd MMM yyyy', { locale: es })}
                           </p>
                           <p className="text-sm text-slate-500">
                             {format(new Date(entrevista.fecha_hora), 'HH:mm')}
@@ -266,9 +313,7 @@ export default function AdminEntrevistas() {
                       <p className="font-medium text-slate-900">
                         {entrevista.candidato?.nombre || 'Sin asignar'}
                       </p>
-                      <p className="text-sm text-slate-500">
-                        {entrevista.candidato?.email}
-                      </p>
+                      <p className="text-sm text-slate-500">{entrevista.candidato?.email}</p>
                     </TableCell>
                     <TableCell className="text-slate-600">
                       {entrevista.candidato?.puesto_solicitado || '-'}
@@ -292,9 +337,7 @@ export default function AdminEntrevistas() {
                       {entrevista.puntuacion ? (
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-                          <span className="font-medium text-slate-900">
-                            {entrevista.puntuacion}
-                          </span>
+                          <span className="font-medium text-slate-900">{entrevista.puntuacion}</span>
                           <span className="text-slate-400">/10</span>
                         </div>
                       ) : (
@@ -309,6 +352,114 @@ export default function AdminEntrevistas() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Create Interview Dialog */}
+      <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Nueva Entrevista</DialogTitle>
+            <DialogDescription>Programa una nueva entrevista con un candidato.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div>
+              <Label>Candidato *</Label>
+              <Select
+                value={newFormData.candidato_id || ''}
+                onValueChange={(v) => setNewFormData({ ...newFormData, candidato_id: v })}
+              >
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Seleccionar candidato" />
+                </SelectTrigger>
+                <SelectContent>
+                  {candidatos?.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.nombre} — {c.puesto_solicitado}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Fecha y hora *</Label>
+                <Input
+                  type="datetime-local"
+                  value={newFormData.fecha_hora || ''}
+                  onChange={(e) => setNewFormData({ ...newFormData, fecha_hora: e.target.value })}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label>Duración (min)</Label>
+                <Input
+                  type="number"
+                  value={newFormData.duracion_minutos || 60}
+                  onChange={(e) => setNewFormData({ ...newFormData, duracion_minutos: Number(e.target.value) })}
+                  className="mt-1"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Tipo</Label>
+                <Select
+                  value={newFormData.tipo || ''}
+                  onValueChange={(v) => setNewFormData({ ...newFormData, tipo: v })}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Seleccionar" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIPOS.map((t) => (
+                      <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Ronda</Label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={newFormData.ronda || 1}
+                  onChange={(e) => setNewFormData({ ...newFormData, ronda: Number(e.target.value) })}
+                  className="mt-1"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Ubicación</Label>
+                <Input
+                  value={newFormData.ubicacion || ''}
+                  onChange={(e) => setNewFormData({ ...newFormData, ubicacion: e.target.value })}
+                  className="mt-1"
+                  placeholder="Sala, dirección..."
+                />
+              </div>
+              <div>
+                <Label>URL reunión</Label>
+                <Input
+                  value={newFormData.meeting_url || ''}
+                  onChange={(e) => setNewFormData({ ...newFormData, meeting_url: e.target.value })}
+                  className="mt-1"
+                  placeholder="https://..."
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateOpen(false)}>Cancelar</Button>
+            <Button
+              onClick={handleCreateSubmit}
+              disabled={!newFormData.candidato_id || !newFormData.fecha_hora || createEntrevista.isPending}
+              className="bg-slate-900 hover:bg-slate-800 text-white"
+            >
+              {createEntrevista.isPending ? 'Programando...' : 'Programar entrevista'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Detail Sheet */}
       <DetailSheet
@@ -331,12 +482,8 @@ export default function AdminEntrevistas() {
                   {selectedEntrevista.candidato.nombre.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">
-                    {selectedEntrevista.candidato.nombre}
-                  </p>
-                  <p className="text-sm text-slate-500">
-                    {selectedEntrevista.candidato.puesto_solicitado}
-                  </p>
+                  <p className="font-medium text-slate-900">{selectedEntrevista.candidato.nombre}</p>
+                  <p className="text-sm text-slate-500">{selectedEntrevista.candidato.puesto_solicitado}</p>
                 </div>
               </div>
             </div>
@@ -354,9 +501,7 @@ export default function AdminEntrevistas() {
                 <Input
                   type="datetime-local"
                   value={formData.fecha_hora?.slice(0, 16) || ''}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fecha_hora: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, fecha_hora: e.target.value })}
                   className="mt-1"
                 />
               </div>
@@ -365,29 +510,19 @@ export default function AdminEntrevistas() {
                 <Input
                   type="number"
                   value={formData.duracion_minutos || ''}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      duracion_minutos: Number(e.target.value),
-                    })
-                  }
+                  onChange={(e) => setFormData({ ...formData, duracion_minutos: Number(e.target.value) })}
                   className="mt-1"
                 />
               </div>
               <div>
                 <Label>Tipo</Label>
-                <Select
-                  value={formData.tipo || ''}
-                  onValueChange={(v) => setFormData({ ...formData, tipo: v })}
-                >
+                <Select value={formData.tipo || ''} onValueChange={(v) => setFormData({ ...formData, tipo: v })}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Seleccionar" />
                   </SelectTrigger>
                   <SelectContent>
                     {TIPOS.map((t) => (
-                      <SelectItem key={t.value} value={t.value}>
-                        {t.label}
-                      </SelectItem>
+                      <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -398,9 +533,7 @@ export default function AdminEntrevistas() {
                   type="number"
                   min={1}
                   value={formData.ronda || 1}
-                  onChange={(e) =>
-                    setFormData({ ...formData, ronda: Number(e.target.value) })
-                  }
+                  onChange={(e) => setFormData({ ...formData, ronda: Number(e.target.value) })}
                   className="mt-1"
                 />
               </div>
@@ -413,9 +546,7 @@ export default function AdminEntrevistas() {
               <Label>Ubicación</Label>
               <Input
                 value={formData.ubicacion || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, ubicacion: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, ubicacion: e.target.value })}
                 className="mt-1"
                 placeholder="Sala, dirección..."
               />
@@ -424,9 +555,7 @@ export default function AdminEntrevistas() {
               <Label>URL de reunión</Label>
               <Input
                 value={formData.meeting_url || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, meeting_url: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, meeting_url: e.target.value })}
                 className="mt-1"
                 placeholder="https://..."
               />
@@ -436,18 +565,13 @@ export default function AdminEntrevistas() {
           {/* Estado */}
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-slate-900">Estado</h3>
-            <Select
-              value={formData.estado || ''}
-              onValueChange={(v) => setFormData({ ...formData, estado: v })}
-            >
+            <Select value={formData.estado || ''} onValueChange={(v) => setFormData({ ...formData, estado: v })}>
               <SelectTrigger>
                 <SelectValue placeholder="Seleccionar estado" />
               </SelectTrigger>
               <SelectContent>
                 {ESTADOS.map((e) => (
-                  <SelectItem key={e.value} value={e.value}>
-                    {e.label}
-                  </SelectItem>
+                  <SelectItem key={e.value} value={e.value}>{e.label}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -467,9 +591,7 @@ export default function AdminEntrevistas() {
                   min={1}
                   max={10}
                   value={formData.puntuacion || ''}
-                  onChange={(e) =>
-                    setFormData({ ...formData, puntuacion: Number(e.target.value) })
-                  }
+                  onChange={(e) => setFormData({ ...formData, puntuacion: Number(e.target.value) })}
                   className="mt-1"
                 />
               </div>
@@ -515,9 +637,7 @@ export default function AdminEntrevistas() {
               <Label>Notas de evaluación</Label>
               <Textarea
                 value={formData.notas_evaluacion || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, notas_evaluacion: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, notas_evaluacion: e.target.value })}
                 rows={4}
                 className="mt-1"
                 placeholder="Observaciones, puntos fuertes, áreas de mejora..."

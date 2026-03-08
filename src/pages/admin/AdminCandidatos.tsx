@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCandidatos, useUpdateCandidato, useDeleteCandidato, useCandidatoStats } from "@/hooks/useCandidatos";
+import { useJobPositions } from "@/hooks/useJobPositions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -87,8 +88,15 @@ export default function AdminCandidatos() {
   });
 
   const { data: stats } = useCandidatoStats();
+  const { data: jobPositions } = useJobPositions();
   const updateCandidato = useUpdateCandidato();
   const deleteCandidato = useDeleteCandidato();
+
+  const getJobPositionName = (jobPositionId: string | null) => {
+    if (!jobPositionId || !jobPositions) return null;
+    const jp = jobPositions.find((p) => p.id === jobPositionId);
+    return jp?.title || null;
+  };
 
   const handleEstadoChange = async (candidatoId: string, nuevoEstado: string) => {
     await updateCandidato.mutateAsync({
@@ -239,6 +247,7 @@ export default function AdminCandidatos() {
                 <TableRow>
                   <TableHead>Candidato</TableHead>
                   <TableHead>Puesto</TableHead>
+                  <TableHead>Oferta vinculada</TableHead>
                   <TableHead>Departamento</TableHead>
                   <TableHead>Estado</TableHead>
                   <TableHead>Fecha</TableHead>
@@ -248,13 +257,13 @@ export default function AdminCandidatos() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8">
+                    <TableCell colSpan={7} className="text-center py-8">
                       Cargando candidatos...
                     </TableCell>
                   </TableRow>
                 ) : candidatos.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                       No se encontraron candidatos
                     </TableCell>
                   </TableRow>
@@ -270,6 +279,15 @@ export default function AdminCandidatos() {
                         </div>
                       </TableCell>
                       <TableCell>{candidato.puesto_solicitado}</TableCell>
+                      <TableCell>
+                        {getJobPositionName(candidato.job_position_id) ? (
+                          <Badge variant="outline" className="text-xs">
+                            {getJobPositionName(candidato.job_position_id)}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">—</span>
+                        )}
+                      </TableCell>
                       <TableCell>
                         {candidato.departamento ? (
                           <Badge variant="outline">{candidato.departamento}</Badge>
