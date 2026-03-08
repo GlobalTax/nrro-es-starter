@@ -86,9 +86,9 @@
   --intranet-radius-full: 9999px;
   
   /* ============================================
-     TIPOGRAFÍA - Inter
+   TIPOGRAFÍA - General Sans
      ============================================ */
-  --intranet-font: 'Inter', system-ui, -apple-system, sans-serif;
+  --intranet-font: 'General Sans', system-ui, -apple-system, sans-serif;
   
   /* Tamaños */
   --intranet-text-xs: 12px;

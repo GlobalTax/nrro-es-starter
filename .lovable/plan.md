@@ -1,14 +1,20 @@
 
 
-## Plan: Cambiar tipografía de la intranet de Inter a General Sans
+## Instalar DataFast analytics
 
-### Cambios
+Dos cambios en `index.html`:
 
-**1. `src/styles/admin-tokens.css`** — Reemplazar `'Inter'` por `'General Sans'` en la variable `--admin-font-family`
+1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+```html
+<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+```
 
-**2. `src/components/admin/ui/admin-theme.ts`** — Cambiar `fontFamily` de `'Inter'` a `'General Sans'`
+2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
 
-**3. `index.html`** — Eliminar la importación de Google Fonts `Inter` (ya no es necesaria; General Sans se carga localmente desde `public/fonts/`)
+Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
 
-Mantenemos los mismos pesos (300 Light, 400 Regular, 500 Medium, 600 Semibold) que ya están disponibles en los archivos `@font-face` de General Sans.
+| Archivo | Cambio |
+|---|---|
+| `index.html` | Anadir script + actualizar CSP meta tag |
+| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
 
