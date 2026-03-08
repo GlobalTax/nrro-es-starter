@@ -125,6 +125,10 @@ export function BlogAutomationPanel() {
           <CalendarDays className="h-4 w-4" />
           Calendario Editorial
         </TabsTrigger>
+        <TabsTrigger value="sources" className="flex items-center gap-2">
+          <Globe className="h-4 w-4" />
+          Fuentes Firecrawl
+        </TabsTrigger>
         <TabsTrigger value="diagnostics" className="flex items-center gap-2">
           <Activity className="h-4 w-4" />
           Diagnóstico
