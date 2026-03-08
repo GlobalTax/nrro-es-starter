@@ -11,7 +11,7 @@ export const AuditQuickWins = ({ quickWins }: AuditQuickWinsProps) => {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+      <h3 className="text-lg font-medium text-white flex items-center gap-2">
         <Zap className="h-5 w-5 text-yellow-400" />
         Quick Wins — Top 10 acciones de mayor impacto
       </h3>
