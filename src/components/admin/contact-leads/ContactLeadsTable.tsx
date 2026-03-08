@@ -67,7 +67,9 @@ export const ContactLeadsTable = ({
   onViewDetail,
   onMarkResponded,
   onOpenMailto,
+  onDelete,
 }: ContactLeadsTableProps) => {
+  const [deleteTarget, setDeleteTarget] = useState<ContactLead | null>(null);
   if (isLoading) {
     return (
       <div className="p-6 space-y-4">
