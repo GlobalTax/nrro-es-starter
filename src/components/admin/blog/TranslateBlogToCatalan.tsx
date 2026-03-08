@@ -89,7 +89,7 @@ export const TranslateBlogToCatalan = () => {
                   <div className="flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                     <div>
-                      <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                      <p className="text-2xl font-medium text-yellow-600 dark:text-yellow-400">
                         {results.skipped}
                       </p>
                       <p className="text-xs text-muted-foreground">Omitidos</p>
