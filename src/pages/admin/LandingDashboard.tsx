@@ -48,7 +48,7 @@ const MetricCard = ({
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <p className="text-sm font-medium text-muted-foreground mb-2">{label}</p>
-          <p className="text-4xl font-bold text-foreground mb-1">{value}</p>
+          <p className="text-4xl font-medium text-foreground mb-1">{value}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <div className={`p-3 rounded-lg ${color}`}>
