@@ -100,7 +100,7 @@ export function PageAuditModal({
                       <p className="text-xs text-muted-foreground">Prioridad Alta</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.recommendations.length}</p>
+                      <p className="text-2xl font-medium">{audit.recommendations.length}</p>
                       <p className="text-xs text-muted-foreground">Mejoras</p>
                     </div>
                   </div>
