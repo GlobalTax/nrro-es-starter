@@ -86,7 +86,7 @@ export function TranslateNewsToCatalan() {
                 <div className="flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 text-amber-600" />
                   <div>
-                    <p className="text-xl font-semibold text-amber-700">{results.skipped}</p>
+                    <p className="text-xl font-medium text-amber-700">{results.skipped}</p>
                     <p className="text-xs text-amber-600">Omitidos</p>
                   </div>
                 </div>
