@@ -66,6 +66,13 @@ import EmpresaFamiliar from "./pages/EmpresaFamiliar";
 import { HerenciasBarcelona } from "./pages/HerenciasBarcelona";
 import AdminTopBarSettings from "./pages/admin/AdminTopBarSettings";
 import AdminMarketingAudit from "./pages/admin/AdminMarketingAudit";
+import OrientacionGlobal from "./pages/OrientacionGlobal";
+import CompliancePenal from "./pages/CompliancePenal";
+import DueDiligence from "./pages/DueDiligence";
+import ProteccionDatosRGPD from "./pages/ProteccionDatosRGPD";
+import SegundaOportunidad from "./pages/SegundaOportunidad";
+import ConstitucionSociedades from "./pages/ConstitucionSociedades";
+import SobreNavarro from "./pages/SobreNavarro";
 
 const queryClient = new QueryClient();
 
@@ -171,6 +178,13 @@ const App = () => {
             <Route path="/es/abogados-barcelona" element={<Layout><AbogadosBarcelona /></Layout>} />
             <Route path="/es/empresa-familiar" element={<Layout><EmpresaFamiliar /></Layout>} />
             <Route path="/es/abogados-herencias-barcelona" element={<Layout><HerenciasBarcelona /></Layout>} />
+            <Route path="/es/orientacion-global" element={<Layout><OrientacionGlobal /></Layout>} />
+            <Route path="/es/compliance-penal" element={<Layout><CompliancePenal /></Layout>} />
+            <Route path="/es/due-diligence" element={<Layout><DueDiligence /></Layout>} />
+            <Route path="/es/proteccion-datos-rgpd" element={<Layout><ProteccionDatosRGPD /></Layout>} />
+            <Route path="/es/segunda-oportunidad" element={<Layout><SegundaOportunidad /></Layout>} />
+            <Route path="/es/constitucion-sociedades" element={<Layout><ConstitucionSociedades /></Layout>} />
+            <Route path="/es/sobre-navarro" element={<Layout><SobreNavarro /></Layout>} />
             <Route path="/ley-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/ca/llei-beckham" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
             <Route path="/en/beckham-law" element={<LandingLayout><LeyBeckham /></LandingLayout>} />
