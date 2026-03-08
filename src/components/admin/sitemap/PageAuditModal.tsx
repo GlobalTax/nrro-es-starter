@@ -92,7 +92,7 @@ export function PageAuditModal({
                       <p className="text-xs text-muted-foreground">Errores</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-2xl font-bold">{audit.issues.filter(i => i.severity === 'warning').length}</p>
+                      <p className="text-2xl font-medium">{audit.issues.filter(i => i.severity === 'warning').length}</p>
                       <p className="text-xs text-muted-foreground">Avisos</p>
                     </div>
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
