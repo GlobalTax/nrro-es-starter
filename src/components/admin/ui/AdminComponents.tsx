@@ -26,7 +26,7 @@ export function AdminPageHeader({ title, description, actions, className }: Admi
   return (
     <div className={cn("flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5", className)}>
       <div>
-        <h1 className="text-[15px] font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-[15px] font-medium text-gray-900">{title}</h1>
         {description && (
           <p className="text-[13px] text-gray-500 mt-0.5">{description}</p>
         )}
