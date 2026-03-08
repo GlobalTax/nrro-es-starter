@@ -75,6 +75,14 @@ const serviceLandingPages = [
   { path: '/en/fast-company-registration-spain', priority: '0.8', changefreq: 'monthly' },
   // Legal
   { path: '/canal-denuncias', priority: '0.3', changefreq: 'yearly' },
+  // ES - Service specialization landings
+  { path: '/es/orientacion-global', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/compliance-penal', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/due-diligence', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/proteccion-datos-rgpd', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/segunda-oportunidad', priority: '0.7', changefreq: 'monthly' },
+  { path: '/es/constitucion-sociedades', priority: '0.8', changefreq: 'monthly' },
+  { path: '/es/sobre-navarro', priority: '0.6', changefreq: 'monthly' },
 ];
 
 function formatDate(date: string | null | undefined): string {
