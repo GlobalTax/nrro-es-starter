@@ -20,6 +20,7 @@ import {
   ScanLine,
   UserCog,
   Megaphone,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -154,16 +155,16 @@ export const AdminSidebar = () => {
           variant="ghost"
           size="sm"
           className={cn(
-            'w-full justify-start gap-2.5 h-8 transition-colors pl-9',
+            'w-full justify-start gap-2.5 h-7 transition-all pl-9 rounded-md',
             isActive(item.path)
-              ? 'bg-white/10 text-white'
-              : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
+              ? 'bg-indigo-500/[0.12] text-indigo-300 border-l-2 border-indigo-400'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'
           )}
         >
-          <item.icon className="h-3.5 w-3.5" />
-          <span className="flex-1 text-left text-[13px]">{item.label}</span>
+          <item.icon className="h-3.5 w-3.5 shrink-0" />
+          <span className="flex-1 text-left text-[12.5px]">{item.label}</span>
           {item.showDraftsBadge && pendingDraftsCount > 0 && (
-            <Badge className="ml-auto h-4 min-w-4 px-1 text-[9px] bg-indigo-500 text-white border-0">
+            <Badge className="ml-auto h-4 min-w-4 px-1 text-[9px] bg-indigo-500 text-white border-0 rounded-full">
               {pendingDraftsCount}
             </Badge>
           )}
@@ -184,14 +185,14 @@ export const AdminSidebar = () => {
                 variant="ghost"
                 size="sm"
                 className={cn(
-                  'w-full justify-start gap-2.5 h-9 transition-colors',
+                  'w-full justify-start gap-2.5 h-8 transition-all rounded-md',
                   isActive(item.path)
-                    ? 'bg-white/10 text-white'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
+                    ? 'bg-indigo-500/[0.12] text-indigo-300 border-l-2 border-indigo-400'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'
                 )}
               >
                 <item.icon className="h-4 w-4" />
-                <span className="text-sm">{item.label}</span>
+                <span className="text-[13px]">{item.label}</span>
               </Button>
             </Link>
           ))}
@@ -214,19 +215,19 @@ export const AdminSidebar = () => {
             variant="ghost"
             size="sm"
             className={cn(
-              'w-full justify-between h-8 transition-colors group',
+              'w-full justify-between h-7 transition-colors group rounded-md',
               hasActiveItem
                 ? 'text-white'
-                : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
+                : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]'
             )}
           >
             <div className="flex items-center gap-2">
-              <Icon className="h-4 w-4" />
-              <span className="text-[13px] font-medium">{section.title}</span>
+              <Icon className="h-3.5 w-3.5" />
+              <span className="text-[12px] font-semibold uppercase tracking-wider">{section.title}</span>
             </div>
             <ChevronDown
               className={cn(
-                'h-3.5 w-3.5 transition-transform duration-200',
+                'h-3 w-3 transition-transform duration-200',
                 isOpen && 'rotate-180'
               )}
             />
@@ -240,47 +241,52 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 shrink-0 bg-slate-900 text-white min-h-screen flex flex-col">
-      <div className="p-5 pb-4">
-        <h1 className="font-display text-xl font-normal lowercase tracking-tight text-white/90">
-          nrro
-        </h1>
-        <p className="text-[11px] text-slate-500 mt-0.5">Intranet</p>
-        {adminUser && (
-          <div className="mt-3">
-            <Badge className="text-[10px] bg-indigo-500/20 text-indigo-300 border-0 font-medium px-2 py-0.5">
-              {adminUser.role.replace('_', ' ').toUpperCase()}
-            </Badge>
-          </div>
-        )}
+    <aside className="w-[232px] shrink-0 bg-[#1B1F3B] text-white min-h-screen flex flex-col">
+      {/* Logo area */}
+      <div className="px-4 py-4 flex items-center gap-2.5">
+        <div className="h-7 w-7 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+          <Sparkles className="h-4 w-4 text-indigo-400" />
+        </div>
+        <div>
+          <h1 className="font-display text-[15px] font-semibold lowercase tracking-tight text-white">
+            nrro
+          </h1>
+        </div>
       </div>
 
-      <div className="h-px bg-white/[0.06] mx-4" />
+      <div className="h-px bg-white/[0.06] mx-3" />
 
-      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-2.5 py-2 space-y-0.5 overflow-y-auto">
         <Link to="/">
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-white/[0.06] h-9"
+            className="w-full justify-start text-slate-500 hover:text-slate-300 hover:bg-white/[0.04] h-7 rounded-md"
           >
-            <Home className="mr-2.5 h-4 w-4" />
-            Volver al sitio
+            <Home className="mr-2 h-3.5 w-3.5" />
+            <span className="text-[12.5px]">Volver al sitio</span>
           </Button>
         </Link>
 
-        <div className="h-px bg-white/[0.06] my-3" />
+        <div className="h-px bg-white/[0.04] my-2" />
 
         {sidebarSections.map((section) => renderSection(section))}
       </nav>
 
-      <div className="p-4 border-t border-white/[0.06]">
+      <div className="px-3 py-3 border-t border-white/[0.06]">
         {adminUser && (
-          <div className="text-sm">
-            <p className="truncate font-medium text-white/80 text-sm">
-              {adminUser.full_name}
-            </p>
-            <p className="text-[11px] text-slate-500 truncate">{adminUser.email}</p>
+          <div className="flex items-center gap-2.5">
+            <div className="h-7 w-7 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0">
+              <span className="text-[11px] font-medium text-indigo-300">
+                {adminUser.full_name?.charAt(0)?.toUpperCase()}
+              </span>
+            </div>
+            <div className="min-w-0">
+              <p className="truncate font-medium text-white/80 text-[12px] leading-tight">
+                {adminUser.full_name}
+              </p>
+              <p className="text-[10px] text-slate-500 truncate">{adminUser.email}</p>
+            </div>
           </div>
         )}
       </div>

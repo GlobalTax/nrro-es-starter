@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, Bell, BellOff } from 'lucide-react';
+import { LogOut, User, Bell, BellOff, Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUnreadContactLeads } from '@/hooks/useUnreadContactLeads';
 import { useBrowserNotifications } from '@/hooks/useBrowserNotifications';
@@ -47,13 +47,25 @@ export const AdminHeader = () => {
   };
 
   return (
-    <header className="bg-slate-50/80 backdrop-blur-sm border-b border-slate-200/60 px-6 py-3 sticky top-0 z-10">
-      <div className="flex items-center justify-end">
-        <div className="flex items-center gap-2">
+    <header className="bg-white border-b border-gray-100 px-5 py-2 sticky top-0 z-10">
+      <div className="flex items-center justify-between">
+        {/* Command palette search */}
+        <button
+          className="flex items-center gap-2 h-8 px-3 rounded-lg bg-gray-50 border border-gray-200/60 text-gray-400 hover:bg-gray-100 hover:text-gray-500 transition-colors text-[13px] w-64"
+          onClick={() => {/* TODO: open command palette */}}
+        >
+          <Search className="h-3.5 w-3.5" />
+          <span className="flex-1 text-left">Buscar...</span>
+          <kbd className="hidden sm:inline-flex h-5 items-center gap-0.5 rounded border border-gray-200 bg-white px-1.5 font-mono text-[10px] font-medium text-gray-400">
+            ⌘K
+          </kbd>
+        </button>
+
+        <div className="flex items-center gap-1.5">
           <Button 
             variant="ghost" 
             size="sm" 
-            className="relative text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+            className="relative h-8 w-8 p-0 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg"
             onClick={() => navigate('/admin/contact-leads')}
           >
             <Bell className="h-4 w-4" />
@@ -64,24 +76,28 @@ export const AdminHeader = () => {
             )}
           </Button>
 
+          <div className="h-5 w-px bg-gray-200 mx-1" />
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                className="gap-2 h-8 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg px-2"
               >
-                <div className="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center">
-                  <User className="h-3.5 w-3.5 text-slate-600" />
+                <div className="h-6 w-6 rounded-full bg-indigo-500/10 flex items-center justify-center">
+                  <span className="text-[11px] font-medium text-indigo-600">
+                    {adminUser?.full_name?.charAt(0)?.toUpperCase()}
+                  </span>
                 </div>
-                <span className="text-sm font-medium">{adminUser?.full_name}</span>
+                <span className="text-[13px] font-medium hidden sm:inline">{adminUser?.full_name}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>
                 <div>
-                  <p className="font-medium text-slate-900">{adminUser?.full_name}</p>
-                  <p className="text-xs text-slate-500">{adminUser?.email}</p>
+                  <p className="font-medium text-gray-900">{adminUser?.full_name}</p>
+                  <p className="text-xs text-gray-500">{adminUser?.email}</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -89,9 +105,9 @@ export const AdminHeader = () => {
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     {isEnabled ? (
-                      <Bell className="h-4 w-4 text-slate-500" />
+                      <Bell className="h-4 w-4 text-gray-500" />
                     ) : (
-                      <BellOff className="h-4 w-4 text-slate-400" />
+                      <BellOff className="h-4 w-4 text-gray-400" />
                     )}
                     <Label htmlFor="browser-notifications" className="cursor-pointer text-sm">
                       Notificaciones Push
@@ -119,7 +135,7 @@ export const AdminHeader = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem 
                 onClick={handleSignOut}
-                className="text-slate-600 focus:text-slate-900"
+                className="text-gray-600 focus:text-gray-900"
               >
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar sesión
