@@ -58,6 +58,28 @@ const TOPIC_TEMPLATES = {
   ],
 };
 
+// Sanitizar source_site para que coincida con el enum site_source
+function sanitizeSourceSite(val: string | null | undefined): string {
+  if (!val) return "es";
+  const lower = val.toLowerCase().trim();
+  if (["domestic", "es", "nacional"].includes(lower)) return "es";
+  if (["international", "int", "global"].includes(lower)) return "int";
+  if (lower === "audit") return "audit";
+  return "es";
+}
+
+// Sanitizar contenido para eliminar secuencias Unicode inválidas y caracteres de control
+function sanitizeContent(text: string | null | undefined): string | null {
+  if (!text) return text as null;
+  let sanitized = text;
+  // Remove malformed Unicode escape sequences
+  sanitized = sanitized.replace(/\\u[0-9a-fA-F]{0,3}(?![0-9a-fA-F])/g, "");
+  sanitized = sanitized.replace(/\\u\{[^}]*\}/g, "");
+  // Remove control characters (except newline, tab, carriage return)
+  sanitized = sanitized.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "");
+  return sanitized;
+}
+
 // Función para obtener eventos del calendario editorial próximos
 async function getUpcomingCalendarEvent(supabase: any): Promise<{
   topic: string;
@@ -388,14 +410,14 @@ serve(async (req) => {
         const { data: newPost, error: insertError } = await supabase
           .from("blog_posts")
           .insert({
-            title_es: articleData.title_es,
-            title_en: articleData.title_en,
+            title_es: sanitizeContent(articleData.title_es),
+            title_en: sanitizeContent(articleData.title_en),
             slug_es: `${slugEs}-${Date.now()}`,
             slug_en: `${slugEn}-${Date.now()}`,
-            excerpt_es: articleData.excerpt_es,
-            excerpt_en: articleData.excerpt_en,
-            content_es: articleData.content_es,
-            content_en: articleData.content_en,
+            excerpt_es: sanitizeContent(articleData.excerpt_es),
+            excerpt_en: sanitizeContent(articleData.excerpt_en),
+            content_es: sanitizeContent(articleData.content_es),
+            content_en: sanitizeContent(articleData.content_en),
             category: articleData.category || category,
             tags: articleData.tags || [],
             featured_image: articleData.featured_image_url,
@@ -405,11 +427,11 @@ serve(async (req) => {
             author_id: defaultAuthor?.id || null,
             author_name: defaultAuthor?.name || "Navarro Asesores",
             author_specialization: defaultAuthor?.specialization_es || null,
-            seo_title_es: articleData.seo_title_es,
-            seo_title_en: articleData.seo_title_en,
-            seo_description_es: articleData.seo_description_es,
-            seo_description_en: articleData.seo_description_en,
-            source_site: "es",
+            seo_title_es: sanitizeContent(articleData.seo_title_es),
+            seo_title_en: sanitizeContent(articleData.seo_title_en),
+            seo_description_es: sanitizeContent(articleData.seo_description_es),
+            seo_description_en: sanitizeContent(articleData.seo_description_en),
+            source_site: sanitizeSourceSite("es"),
             // New quality columns
             quality_score: articleData.quality_score || 0,
             quality_checks: articleData.quality_checks || {},
