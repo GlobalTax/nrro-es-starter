@@ -59,7 +59,7 @@ export const BlogStatsCard = () => {
                 <p className="text-sm font-medium text-muted-foreground">
                   {stat.label}
                 </p>
-                <p className="text-3xl font-bold mt-2">{stat.value}</p>
+                <p className="text-3xl font-medium mt-2">{stat.value}</p>
               </div>
               <stat.icon className={`h-8 w-8 ${stat.color}`} />
             </div>
