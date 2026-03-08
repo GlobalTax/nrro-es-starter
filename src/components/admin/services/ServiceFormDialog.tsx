@@ -585,7 +585,7 @@ export const ServiceFormDialog = ({ open, onClose, service }: ServiceFormDialogP
                     <Card className="p-6 border-2">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <h3 className="text-lg font-medium flex items-center gap-2">
                             🇪🇸 Versión Catalán
                           </h3>
                           <Button
