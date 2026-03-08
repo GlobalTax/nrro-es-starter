@@ -47,6 +47,7 @@ export default function AdminJobPositions() {
     statusFilter ? { status: statusFilter as 'draft' | 'published' | 'closed' } : undefined
   );
   const { data: stats } = useJobPositionStats();
+  const { data: candidateCounts } = useJobPositionCandidateCounts();
   const deletePosition = useDeleteJobPosition();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingPosition, setEditingPosition] = useState<JobPosition | null>(null);
