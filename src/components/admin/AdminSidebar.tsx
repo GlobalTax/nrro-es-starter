@@ -156,7 +156,7 @@ export const AdminSidebar = () => {
       {/* Logo */}
       <div className="px-4 py-3.5 flex items-center">
         <Link to="/admin" className="flex items-center gap-2">
-          <h1 className="text-[15px] font-semibold text-gray-900 tracking-tight">
+          <h1 className="text-[15px] font-medium text-gray-900 tracking-tight">
             nrro<span className="text-gray-400 font-normal">CRM</span>
           </h1>
         </Link>
