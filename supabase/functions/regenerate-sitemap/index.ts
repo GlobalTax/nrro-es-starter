@@ -49,40 +49,145 @@ const staticRoutes: RouteConfig[] = [
   { es: '/condiciones-contratacion', ca: '/ca/condicions-contractacio', en: '/en/terms', priority: '0.5', changefreq: 'yearly' },
 ];
 
-// Service landing pages (single-language SEO landings with real routes in App.tsx)
-const serviceLandingPages = [
-  // ES - SEO landings Barcelona
-  { path: '/es/asesoria-fiscal-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/asesoria-contable-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/asesoria-laboral-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/asesoria-mercantil-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/abogados-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/empresa-familiar', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/abogados-herencias-barcelona', priority: '0.8', changefreq: 'monthly' },
-  // ES - Company setup
-  { path: '/crear-empresa-espana', priority: '0.8', changefreq: 'monthly' },
-  // CA - Company setup
-  { path: '/ca/crear-empresa-espanya', priority: '0.7', changefreq: 'monthly' },
-  // EN - SEO landings
-  { path: '/en/tax-advisor-barcelona', priority: '0.8', changefreq: 'monthly' },
-  { path: '/en/beckham-law-spain', priority: '0.8', changefreq: 'monthly' },
-  // EN - Company setup landings
-  { path: '/set-up-company-spain', priority: '0.9', changefreq: 'monthly' },
-  { path: '/en/set-up-company-spain', priority: '0.9', changefreq: 'monthly' },
-  { path: '/en/company-setup-calculator', priority: '0.8', changefreq: 'monthly' },
-  { path: '/en/nie-spain-foreigners', priority: '0.8', changefreq: 'monthly' },
-  { path: '/en/startup-company-setup-spain', priority: '0.8', changefreq: 'monthly' },
-  { path: '/en/fast-company-registration-spain', priority: '0.8', changefreq: 'monthly' },
-  // Legal
-  { path: '/canal-denuncias', priority: '0.3', changefreq: 'yearly' },
-  // ES - Service specialization landings
-  { path: '/es/orientacion-global', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/compliance-penal', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/due-diligence', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/proteccion-datos-rgpd', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/segunda-oportunidad', priority: '0.7', changefreq: 'monthly' },
-  { path: '/es/constitucion-sociedades', priority: '0.8', changefreq: 'monthly' },
-  { path: '/es/sobre-navarro', priority: '0.6', changefreq: 'monthly' },
+// Service landing pages with hreflang groups
+// Pages in the same group are alternates of each other
+interface ServiceLandingGroup {
+  pages: Array<{ path: string; lang: string }>;
+  priority: string;
+  changefreq: string;
+}
+
+const serviceLandingGroups: ServiceLandingGroup[] = [
+  // Fiscal - ES ↔ EN
+  {
+    pages: [
+      { path: '/es/asesoria-fiscal-barcelona', lang: 'es' },
+      { path: '/en/tax-advisor-barcelona', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Contable - ES (no EN equivalent yet)
+  {
+    pages: [
+      { path: '/es/asesoria-contable-barcelona', lang: 'es' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Laboral - ES (no EN equivalent yet)
+  {
+    pages: [
+      { path: '/es/asesoria-laboral-barcelona', lang: 'es' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Mercantil - ES (no EN equivalent yet)
+  {
+    pages: [
+      { path: '/es/asesoria-mercantil-barcelona', lang: 'es' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Abogados Barcelona - ES (no EN equivalent yet)
+  {
+    pages: [
+      { path: '/es/abogados-barcelona', lang: 'es' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Empresa Familiar - ES
+  {
+    pages: [
+      { path: '/es/empresa-familiar', lang: 'es' },
+    ],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  // Herencias Barcelona - ES
+  {
+    pages: [
+      { path: '/es/abogados-herencias-barcelona', lang: 'es' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Company setup - ES ↔ CA ↔ EN
+  {
+    pages: [
+      { path: '/crear-empresa-espana', lang: 'es' },
+      { path: '/ca/crear-empresa-espanya', lang: 'ca' },
+      { path: '/en/set-up-company-spain', lang: 'en' },
+    ],
+    priority: '0.9', changefreq: 'monthly',
+  },
+  // Beckham Law EN landing
+  {
+    pages: [
+      { path: '/en/beckham-law-spain', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // EN - Company setup calculator
+  {
+    pages: [
+      { path: '/en/company-setup-calculator', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // EN - NIE Spain
+  {
+    pages: [
+      { path: '/en/nie-spain-foreigners', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // EN - Startup setup
+  {
+    pages: [
+      { path: '/en/startup-company-setup-spain', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // EN - Fast registration
+  {
+    pages: [
+      { path: '/en/fast-company-registration-spain', lang: 'en' },
+    ],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  // Canal denuncias
+  {
+    pages: [
+      { path: '/canal-denuncias', lang: 'es' },
+    ],
+    priority: '0.3', changefreq: 'yearly',
+  },
+  // ES specialization landings
+  {
+    pages: [{ path: '/es/orientacion-global', lang: 'es' }],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/compliance-penal', lang: 'es' }],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/due-diligence', lang: 'es' }],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/proteccion-datos-rgpd', lang: 'es' }],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/segunda-oportunidad', lang: 'es' }],
+    priority: '0.7', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/constitucion-sociedades', lang: 'es' }],
+    priority: '0.8', changefreq: 'monthly',
+  },
+  {
+    pages: [{ path: '/es/sobre-navarro', lang: 'es' }],
+    priority: '0.6', changefreq: 'monthly',
+  },
 ];
 
 function formatDate(date: string | null | undefined): string {
@@ -111,6 +216,18 @@ function createUrlEntry(url: SitemapUrl): string {
   return xml;
 }
 
+// Helper: build alternates array with x-default pointing to ES version
+function buildAlternates(
+  baseUrl: string,
+  langs: Array<{ lang: string; path: string }>,
+): Array<{ lang: string; href: string }> {
+  const alternates = langs.map(l => ({ lang: l.lang, href: `${baseUrl}${l.path}` }));
+  // x-default = ES version (or first available)
+  const esVersion = langs.find(l => l.lang === 'es') || langs[0];
+  alternates.push({ lang: 'x-default', href: `${baseUrl}${esVersion.path}` });
+  return alternates;
+}
+
 async function uploadSitemapToStorage(
   supabase: any, 
   xmlContent: string
@@ -120,16 +237,14 @@ async function uploadSitemapToStorage(
   
   console.log('📤 Subiendo sitemap a Storage...');
   
-  // Convertir string a Blob
   const blob = new Blob([xmlContent], { type: 'application/xml' });
   
-  // Subir a Storage (upsert = true para sobrescribir)
   const { data, error } = await supabase.storage
     .from(bucketName)
     .upload(fileName, blob, {
       contentType: 'application/xml',
-      cacheControl: '3600', // 1 hora de cache
-      upsert: true // Sobrescribir archivo existente
+      cacheControl: '3600',
+      upsert: true
     });
   
   if (error) {
@@ -137,7 +252,6 @@ async function uploadSitemapToStorage(
     throw error;
   }
   
-  // Obtener URL pública
   const { data: urlData } = supabase.storage
     .from(bucketName)
     .getPublicUrl(fileName);
@@ -148,50 +262,81 @@ async function uploadSitemapToStorage(
   return urlData.publicUrl;
 }
 
+async function saveSitemapHistory(
+  supabase: any,
+  totalUrls: number,
+  urlsEs: number,
+  urlsCa: number,
+  urlsEn: number,
+  fileSize: number,
+  generationTimeMs: number
+) {
+  try {
+    await supabase.from('sitemap_history').insert({
+      total_urls: totalUrls,
+      urls_es: urlsEs,
+      urls_ca: urlsCa,
+      urls_en: urlsEn,
+      file_size: fileSize,
+      generation_time_ms: generationTimeMs,
+    });
+  } catch (e) {
+    console.warn('⚠️ Could not save sitemap history:', e);
+  }
+}
+
 async function generateSitemap(domain: string) {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
   
   const BASE_URL = getBaseUrl(domain);
+  const startTime = Date.now();
   console.log(`🚀 Iniciando generación de sitemap para ${domain} (${BASE_URL})...`);
   
   const urls: SitemapUrl[] = [];
   const today = formatDate(new Date().toISOString());
+  let urlsEs = 0, urlsCa = 0, urlsEn = 0;
   
-  // 1. Agregar rutas estáticas
+  // 1. Static routes with x-default
   staticRoutes.forEach(route => {
-    const alternates = [
-      { lang: 'es', href: `${BASE_URL}${route.es}` },
-      { lang: 'ca', href: `${BASE_URL}${route.ca}` },
-      { lang: 'en', href: `${BASE_URL}${route.en}` }
+    const langs = [
+      { lang: 'es', path: route.es },
+      { lang: 'ca', path: route.ca },
+      { lang: 'en', path: route.en },
     ];
+    const alternates = buildAlternates(BASE_URL, langs);
     
     urls.push({ loc: `${BASE_URL}${route.es}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
     urls.push({ loc: `${BASE_URL}${route.ca}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
     urls.push({ loc: `${BASE_URL}${route.en}`, lastmod: today, changefreq: route.changefreq, priority: route.priority, alternates });
+    urlsEs++; urlsCa++; urlsEn++;
   });
   console.log(`  ✅ ${urls.length} URLs estáticas agregadas`);
   
-  // 1b. Add service landing pages (single-language, with hreflang pairs where applicable)
-  const hreflangPairs: Record<string, string> = {
-    '/es/asesoria-fiscal-barcelona': '/en/tax-advisor-barcelona',
-    '/en/tax-advisor-barcelona': '/es/asesoria-fiscal-barcelona',
-  };
-  serviceLandingPages.forEach(page => {
-    const alternates: Array<{ lang: string; href: string }> = [];
-    const pair = hreflangPairs[page.path];
-    if (pair) {
-      const lang = page.path.startsWith('/en/') ? 'en' : 'es';
-      const pairLang = lang === 'es' ? 'en' : 'es';
-      alternates.push({ lang, href: `${BASE_URL}${page.path}` });
-      alternates.push({ lang: pairLang, href: `${BASE_URL}${pair}` });
-    }
-    urls.push({ loc: `${BASE_URL}${page.path}`, lastmod: today, changefreq: page.changefreq, priority: page.priority, alternates: alternates.length > 0 ? alternates : undefined });
+  // 1b. Service landing groups with x-default
+  serviceLandingGroups.forEach(group => {
+    const hasMultipleLangs = group.pages.length > 1;
+    const alternates = hasMultipleLangs
+      ? buildAlternates(BASE_URL, group.pages.map(p => ({ lang: p.lang, path: p.path })))
+      : undefined;
+    
+    group.pages.forEach(page => {
+      urls.push({
+        loc: `${BASE_URL}${page.path}`,
+        lastmod: today,
+        changefreq: group.changefreq,
+        priority: group.priority,
+        alternates,
+      });
+      if (page.lang === 'es' || page.path.startsWith('/es/') || page.path.startsWith('/crear')) urlsEs++;
+      else if (page.lang === 'ca' || page.path.startsWith('/ca/')) urlsCa++;
+      else if (page.lang === 'en' || page.path.startsWith('/en/')) urlsEn++;
+    });
   });
-  console.log(`  ✅ ${serviceLandingPages.length} URLs de landing pages agregadas`);
+  console.log(`  ✅ Service landing pages agregadas`);
   
-  // 2. Agregar servicios dinámicos
+  // 2. Dynamic services
   const { data: services, error: servicesError } = await supabase
     .from('services')
     .select('slug_es, slug_ca, slug_en, updated_at')
@@ -204,19 +349,21 @@ async function generateSitemap(domain: string) {
       const lastmod = formatDate(service.updated_at);
       const slugCa = service.slug_ca || service.slug_es;
       const slugEn = service.slug_en || service.slug_es;
-      const alternates = [
-        { lang: 'es', href: `${BASE_URL}/servicios/${service.slug_es}` },
-        { lang: 'ca', href: `${BASE_URL}/ca/serveis/${slugCa}` },
-        { lang: 'en', href: `${BASE_URL}/en/services/${slugEn}` }
+      const langs = [
+        { lang: 'es', path: `/servicios/${service.slug_es}` },
+        { lang: 'ca', path: `/ca/serveis/${slugCa}` },
+        { lang: 'en', path: `/en/services/${slugEn}` },
       ];
+      const alternates = buildAlternates(BASE_URL, langs);
       urls.push({ loc: `${BASE_URL}/servicios/${service.slug_es}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
       urls.push({ loc: `${BASE_URL}/ca/serveis/${slugCa}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
       urls.push({ loc: `${BASE_URL}/en/services/${slugEn}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urlsEs++; urlsCa++; urlsEn++;
     });
     console.log(`  ✅ ${services.length * 3} URLs de servicios agregadas`);
   }
   
-  // 3. Agregar blog posts dinámicos (sin slug_ca - no existe en la tabla)
+  // 3. Blog posts (no slug_ca in table)
   const { data: blogPosts, error: blogError } = await supabase
     .from('blog_posts')
     .select('slug_es, slug_en, published_at, updated_at')
@@ -228,17 +375,41 @@ async function generateSitemap(domain: string) {
     blogPosts.forEach(post => {
       const lastmod = formatDate(post.updated_at || post.published_at);
       const slugEn = post.slug_en || post.slug_es;
-      const alternates = [
-        { lang: 'es', href: `${BASE_URL}/blog/${post.slug_es}` },
-        { lang: 'en', href: `${BASE_URL}/en/blog/${slugEn}` }
+      const langs = [
+        { lang: 'es', path: `/blog/${post.slug_es}` },
+        { lang: 'en', path: `/en/blog/${slugEn}` },
       ];
+      const alternates = buildAlternates(BASE_URL, langs);
       urls.push({ loc: `${BASE_URL}/blog/${post.slug_es}`, lastmod, changefreq: 'weekly', priority: '0.8', alternates });
       urls.push({ loc: `${BASE_URL}/en/blog/${slugEn}`, lastmod, changefreq: 'weekly', priority: '0.8', alternates });
+      urlsEs++; urlsEn++;
     });
     console.log(`  ✅ ${blogPosts.length * 2} URLs de blog posts agregadas`);
   }
   
-  // 4. Agregar case studies dinámicos
+  // 4. News articles
+  const { data: newsArticles, error: newsError } = await supabase
+    .from('news_articles')
+    .select('slug, published_at, updated_at')
+    .eq('is_published', true);
+  
+  if (newsError) {
+    console.error('Error al obtener news articles:', newsError);
+  } else if (newsArticles && newsArticles.length > 0) {
+    newsArticles.forEach(article => {
+      const lastmod = formatDate(article.updated_at || article.published_at);
+      urls.push({
+        loc: `${BASE_URL}/noticias/${article.slug}`,
+        lastmod,
+        changefreq: 'weekly',
+        priority: '0.7',
+      });
+      urlsEs++;
+    });
+    console.log(`  ✅ ${newsArticles.length} URLs de noticias agregadas`);
+  }
+  
+  // 5. Case studies
   const { data: caseStudies, error: casesError } = await supabase
     .from('case_studies')
     .select('slug_es, slug_ca, slug_en, published_at, updated_at')
@@ -251,19 +422,49 @@ async function generateSitemap(domain: string) {
       const lastmod = formatDate(cs.updated_at || cs.published_at);
       const slugCa = cs.slug_ca || cs.slug_es;
       const slugEn = cs.slug_en || cs.slug_es;
-      const alternates = [
-        { lang: 'es', href: `${BASE_URL}/casos-exito/${cs.slug_es}` },
-        { lang: 'ca', href: `${BASE_URL}/ca/casos-exit/${slugCa}` },
-        { lang: 'en', href: `${BASE_URL}/en/case-studies/${slugEn}` }
+      const langs = [
+        { lang: 'es', path: `/casos-exito/${cs.slug_es}` },
+        { lang: 'ca', path: `/ca/casos-exit/${slugCa}` },
+        { lang: 'en', path: `/en/case-studies/${slugEn}` },
       ];
+      const alternates = buildAlternates(BASE_URL, langs);
       urls.push({ loc: `${BASE_URL}/casos-exito/${cs.slug_es}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
       urls.push({ loc: `${BASE_URL}/ca/casos-exit/${slugCa}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
       urls.push({ loc: `${BASE_URL}/en/case-studies/${slugEn}`, lastmod, changefreq: 'monthly', priority: '0.9', alternates });
+      urlsEs++; urlsCa++; urlsEn++;
     });
     console.log(`  ✅ ${caseStudies.length * 3} URLs de case studies agregadas`);
   }
   
-  // 5. Generar XML
+  // 6. Job positions
+  const { data: jobs, error: jobsError } = await supabase
+    .from('job_positions')
+    .select('slug, slug_es, slug_ca, slug_en, updated_at, published_at')
+    .eq('status', 'published');
+  
+  if (jobsError) {
+    console.error('Error al obtener job positions:', jobsError);
+  } else if (jobs && jobs.length > 0) {
+    jobs.forEach(job => {
+      const lastmod = formatDate(job.updated_at || job.published_at);
+      const slugEs = job.slug_es || job.slug;
+      const slugCa = job.slug_ca || slugEs;
+      const slugEn = job.slug_en || slugEs;
+      const langs = [
+        { lang: 'es', path: `/carreras/${slugEs}` },
+        { lang: 'ca', path: `/ca/carreres/${slugCa}` },
+        { lang: 'en', path: `/en/careers/${slugEn}` },
+      ];
+      const alternates = buildAlternates(BASE_URL, langs);
+      urls.push({ loc: `${BASE_URL}/carreras/${slugEs}`, lastmod, changefreq: 'weekly', priority: '0.7', alternates });
+      urls.push({ loc: `${BASE_URL}/ca/carreres/${slugCa}`, lastmod, changefreq: 'weekly', priority: '0.7', alternates });
+      urls.push({ loc: `${BASE_URL}/en/careers/${slugEn}`, lastmod, changefreq: 'weekly', priority: '0.7', alternates });
+      urlsEs++; urlsCa++; urlsEn++;
+    });
+    console.log(`  ✅ ${jobs.length * 3} URLs de ofertas de empleo agregadas`);
+  }
+  
+  // Generate XML
   const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -272,7 +473,12 @@ async function generateSitemap(domain: string) {
   const xmlFooter = '\n</urlset>';
   const xmlContent = xmlHeader + xmlBody + xmlFooter;
   
-  console.log(`✅ Sitemap generado: ${urls.length} URLs`);
+  const generationTimeMs = Date.now() - startTime;
+  console.log(`✅ Sitemap generado: ${urls.length} URLs en ${generationTimeMs}ms (ES:${urlsEs} CA:${urlsCa} EN:${urlsEn})`);
+  
+  // Save history
+  await saveSitemapHistory(supabase, urls.length, urlsEs, urlsCa, urlsEn, xmlContent.length, generationTimeMs);
+  
   return xmlContent;
 }
 
@@ -282,13 +488,12 @@ Deno.serve(async (req) => {
   }
   
   try {
-    console.log('🔄 Regenerando sitemaps para ambos dominios...');
+    console.log('🔄 Regenerando sitemaps...');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // Generate and upload sitemap for nrro.es
     const xmlEs = await generateSitemap('nrro.es');
     await uploadSitemapToStorage(supabase, xmlEs);
     
