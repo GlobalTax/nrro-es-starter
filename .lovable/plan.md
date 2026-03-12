@@ -1,20 +1,20 @@
 
 
-## Instalar DataFast analytics
+## Plan: Add Ahrefs Web Analytics Script
 
-Dos cambios en `index.html`:
+The screenshot shows the Ahrefs Web Analytics installation page with the tracking snippet to add.
 
-1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
-```html
-<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
-```
+### Changes
 
-2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
+**1. Edit `index.html`**
+- Add the Ahrefs analytics script to the `<head>` section:
+  ```html
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="VouNMjijNalPNS/dBxC7Fw" async></script>
+  ```
 
-Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
+**2. Update CSP in `index.html` and `vite.config.ts`**
+- Add `https://analytics.ahrefs.com` to `script-src` and `connect-src` directives so the tracker can load and send data.
 
-| Archivo | Cambio |
-|---|---|
-| `index.html` | Anadir script + actualizar CSP meta tag |
-| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
+### Scope
+- 2 files modified (`index.html`, `vite.config.ts`)
 
