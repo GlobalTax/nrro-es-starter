@@ -1,20 +1,17 @@
 
 
-## Instalar DataFast analytics
+## Problem
 
-Dos cambios en `index.html`:
+Line 8 in `index.html` has a corrupted CSP meta tag -- the `content` attribute and closing `/>` are duplicated/triplicated on the same line, causing the raw CSP text to render visibly on the page.
 
-1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+## Fix
+
+Replace line 8 with a single, clean CSP meta tag:
+
 ```html
-<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://*.supabase.co https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com https://assets.apollo.io https://datafa.st https://analytics.ahrefs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' data: blob: https://*.supabase.co wss://*.supabase.co https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.gpteng.co https://*.lovableproject.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google.com https://*.google-analytics.com https://consent.cookiebot.com https://*.apollo.io https://datafa.st https://analytics.ahrefs.com; frame-src 'self' https://*.lovableproject.com https://consentcdn.cookiebot.com https://www.googletagmanager.com; worker-src 'self' blob:;" />
 ```
 
-2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
-
-Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
-
-| Archivo | Cambio |
-|---|---|
-| `index.html` | Anadir script + actualizar CSP meta tag |
-| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
+### Scope
+- 1 file: `index.html` (line 8 only)
 
