@@ -87,10 +87,23 @@ export const Meta = ({
       document.head.appendChild(link);
     });
 
-    // Update canonical
-    const fullCanonicalUrl = canonicalUrl 
-      ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${BASE_DOMAIN}${canonicalUrl}`)
-      : alternateUrls[language as 'es' | 'ca' | 'en'];
+    // Update canonical — always normalize to BASE_DOMAIN to prevent preview domains leaking
+    let fullCanonicalUrl: string;
+    if (canonicalUrl) {
+      if (canonicalUrl.startsWith('http')) {
+        // Extract pathname from full URL and prepend BASE_DOMAIN
+        try {
+          const pathname = new URL(canonicalUrl).pathname;
+          fullCanonicalUrl = `${BASE_DOMAIN}${pathname}`;
+        } catch {
+          fullCanonicalUrl = `${BASE_DOMAIN}${canonicalUrl}`;
+        }
+      } else {
+        fullCanonicalUrl = `${BASE_DOMAIN}${canonicalUrl}`;
+      }
+    } else {
+      fullCanonicalUrl = alternateUrls[language as 'es' | 'ca' | 'en'];
+    }
       
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!canonical) {
