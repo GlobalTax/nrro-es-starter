@@ -255,12 +255,70 @@ const routes: Record<string, RouteData> = {
   },
 };
 
-function getRouteData(path: string): RouteData {
+async function getRouteData(path: string): Promise<RouteData> {
   const normalized = path === '/' ? '/' : path.replace(/\/$/, '');
   if (routes[normalized]) return routes[normalized];
 
-  // Blog fallback
+  // Dynamic service pages: /servicios/:slug, /ca/serveis/:slug, /en/services/:slug
+  const serviceMatch = normalized.match(/^\/(servicios|ca\/serveis|en\/services)\/(.+)$/);
+  if (serviceMatch) {
+    const [, prefix, slug] = serviceMatch;
+    const lang = prefix.startsWith('ca') ? 'ca' : prefix.startsWith('en') ? 'en' : 'es';
+    const slugCol = lang === 'ca' ? 'slug_ca' : lang === 'en' ? 'slug_en' : 'slug_es';
+    
+    const { data: svc } = await supabase
+      .from('services')
+      .select('name_es, name_ca, name_en, slug_es, slug_ca, slug_en, meta_title_es, meta_title_ca, meta_title_en, meta_description_es, meta_description_ca, meta_description_en, description_es, description_ca, description_en, area_es')
+      .eq(slugCol, slug)
+      .eq('is_active', true)
+      .single();
+
+    if (svc) {
+      const name = (lang === 'ca' ? svc.name_ca : lang === 'en' ? svc.name_en : svc.name_es) || svc.name_es;
+      const title = (lang === 'ca' ? svc.meta_title_ca : lang === 'en' ? svc.meta_title_en : svc.meta_title_es) || `${name} | NRRO`;
+      const desc = (lang === 'ca' ? svc.meta_description_ca : lang === 'en' ? svc.meta_description_en : svc.meta_description_es) || `${name} — Navarro Tax & Legal, Barcelona.`;
+      
+      const hreflang: { lang: string; href: string }[] = [];
+      if (svc.slug_es) hreflang.push({ lang: 'es', href: `${BASE}/servicios/${svc.slug_es}` });
+      if (svc.slug_ca) hreflang.push({ lang: 'ca', href: `${BASE}/ca/serveis/${svc.slug_ca}` });
+      if (svc.slug_en) hreflang.push({ lang: 'en', href: `${BASE}/en/services/${svc.slug_en}` });
+
+      return {
+        title,
+        description: desc,
+        canonical: `${BASE}${normalized}`,
+        hreflang,
+        bodyContent: `<h1>${name}</h1><p>${desc}</p>`,
+      };
+    }
+  }
+
+  // Dynamic blog posts: /blog/:slug
   if (normalized.startsWith('/blog/')) {
+    const blogSlug = normalized.replace('/blog/', '');
+    const { data: post } = await supabase
+      .from('blog_posts')
+      .select('title_es, title_en, seo_title_es, seo_title_en, seo_description_es, seo_description_en, excerpt_es, slug_es, slug_en')
+      .or(`slug_es.eq.${blogSlug},slug_en.eq.${blogSlug}`)
+      .eq('status', 'published')
+      .single();
+
+    if (post) {
+      const title = post.seo_title_es || post.title_es || 'Blog — NRRO';
+      const desc = post.seo_description_es || post.excerpt_es || '';
+      const hreflang: { lang: string; href: string }[] = [];
+      if (post.slug_es) hreflang.push({ lang: 'es', href: `${BASE}/blog/${post.slug_es}` });
+      if (post.slug_en) hreflang.push({ lang: 'en', href: `${BASE}/en/blog/${post.slug_en}` });
+
+      return {
+        title: `${title} | NRRO`,
+        description: desc,
+        canonical: `${BASE}${normalized}`,
+        hreflang,
+        bodyContent: `<h1>${post.title_es || title}</h1><p>${desc}</p>`,
+      };
+    }
+    
     return {
       title: 'Blog — Navarro Tax & Legal | NRRO',
       description: 'Artículos y guías sobre fiscalidad, derecho mercantil, laboral y empresa familiar.',
@@ -269,6 +327,35 @@ function getRouteData(path: string): RouteData {
     };
   }
 
+  // Dynamic case studies: /casos-exito/:slug, /ca/casos-exit/:slug, /en/case-studies/:slug
+  const caseMatch = normalized.match(/^\/(casos-exito|ca\/casos-exit|en\/case-studies)\/(.+)$/);
+  if (caseMatch) {
+    const [, prefix, slug] = caseMatch;
+    const lang = prefix.startsWith('ca') ? 'ca' : prefix.startsWith('en') ? 'en' : 'es';
+    const slugCol = lang === 'ca' ? 'slug_ca' : lang === 'en' ? 'slug_en' : 'slug';
+    
+    const { data: cs } = await supabase
+      .from('case_studies')
+      .select('title, title_es, title_ca, title_en, meta_title_es, meta_title_ca, meta_title_en, meta_description_es, meta_description_ca, meta_description_en, slug, slug_es, slug_ca, slug_en, hero_subtitle, hero_subtitle_es')
+      .eq(slugCol, slug)
+      .eq('status', 'published')
+      .single();
+
+    if (cs) {
+      const name = (lang === 'ca' ? cs.title_ca : lang === 'en' ? cs.title_en : cs.title_es) || cs.title;
+      const title = (lang === 'ca' ? cs.meta_title_ca : lang === 'en' ? cs.meta_title_en : cs.meta_title_es) || `${name} | NRRO`;
+      const desc = (lang === 'ca' ? cs.meta_description_ca : lang === 'en' ? cs.meta_description_en : cs.meta_description_es) || cs.hero_subtitle || `Caso de éxito: ${name}`;
+
+      return {
+        title,
+        description: desc,
+        canonical: `${BASE}${normalized}`,
+        bodyContent: `<h1>${name}</h1><p>${desc}</p>`,
+      };
+    }
+  }
+
+  // Generic fallback — still uses correct canonical for the path
   return {
     title: 'NRRO | Navarro Tax & Legal — Asesoría Fiscal y Legal en Barcelona',
     description: 'Asesoría fiscal, contable, laboral y legal en Barcelona. Más de 25 años de experiencia.',
