@@ -11,11 +11,30 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     
     <!-- Canonical & Hreflang -->
-    <link rel="canonical" href="https://nrro.es/" />
-    <link rel="alternate" hreflang="es" href="https://nrro.es/" />
-    <link rel="alternate" hreflang="ca" href="https://nrro.es/ca/" />
-    <link rel="alternate" hreflang="en" href="https://nrro.es/en/" />
+    <link rel="canonical" href="https://nrro.es/" id="canonical-tag" />
+    <link rel="alternate" hreflang="es" href="https://nrro.es/" id="hreflang-es" />
+    <link rel="alternate" hreflang="ca" href="https://nrro.es/ca/" id="hreflang-ca" />
+    <link rel="alternate" hreflang="en" href="https://nrro.es/en/" id="hreflang-en" />
     <link rel="alternate" hreflang="x-default" href="https://nrro.es/" />
+    <script>
+    (function(){
+      var p=location.pathname.replace(/\/+$/,'')||'/';
+      var b='https://nrro.es';
+      var c=b+(p==='/'?'':p);
+      var d=document;
+      var cl=d.getElementById('canonical-tag');
+      if(cl)cl.href=c;
+      var og=d.querySelector('meta[property="og:url"]');
+      if(og)og.content=c;
+      var isCA=p.startsWith('/ca'),isEN=p.startsWith('/en');
+      var es=isCA?p.replace('/ca',''):isEN?p.replace('/en',''):p;
+      var ca=isCA?p:'/ca'+(p==='/'?'':p);
+      var en=isEN?p:'/en'+(p==='/'?'':p);
+      var he=d.getElementById('hreflang-es');if(he)he.href=b+es;
+      var hc=d.getElementById('hreflang-ca');if(hc)hc.href=b+ca;
+      var hn=d.getElementById('hreflang-en');if(hn)hn.href=b+en;
+    })();
+    </script>
     
     <!-- Cookiebot -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="c5f326c2-c1a3-48af-89ee-2113cd3c0399" data-blockingmode="auto" type="text/javascript"></script>
