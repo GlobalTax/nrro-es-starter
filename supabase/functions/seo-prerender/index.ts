@@ -498,7 +498,7 @@ Deno.serve(async (req: Request) => {
     const url = new URL(req.url);
     const path = url.searchParams.get('path') || '/';
     
-    const data = getRouteData(path);
+    const data = await getRouteData(path);
     const html = buildHtml(data, path);
 
     return new Response(html, {
