@@ -146,6 +146,7 @@ const Home = () => {
         description={t("index.meta.description")}
         canonicalUrl={window.location.href}
       />
+      <FAQSchema faqs={homeFaqs} />
 
       <div className="min-h-screen">
       {/* Hero Section */}
