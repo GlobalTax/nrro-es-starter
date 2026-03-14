@@ -1,15 +1,20 @@
 
 
-## Plan: Replace inline SEO script in `index.html`
+## Instalar DataFast analytics
 
-Replace lines 19–108 (the entire `<script>...</script>` block after the hreflang links) with the user-provided version. Two key changes:
+Dos cambios en `index.html`:
 
-1. **Expanded route map** — adds ~15 new routes: `/servicios/compliance-fiscal`, `/servicios/auditoria-subvenciones`, `/servicios/contratos-laborales`, `/servicios/derecho-mercantil`, `/servicios/contratos-mercantiles`, `/servicios/taxonomia-europea`, `/servicios/canal-denuncias`, `/sobre-nosotros`, `/recursos`, `/carreras`, `/condiciones-contratacion`, `/aviso-legal`, `/ca/serveis/auditoria-subvencions-autonomiques`, `/ca/serveis/auditoria-subvencions-publiques`, `/ca/serveis/auditoria-sistemes-it-cobit`, `/ca/carreres`, `/en/services/eu-taxonomy-verification`
+1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+```html
+<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
+```
 
-2. **Fixed `setMeta` function** — current version uses `attr === 'content' ? 'name' : 'property'` which is inverted logic for creating missing og: tags. New version uses `/og:|twitter:/.test(sel)` to correctly choose between `property` and `name` attributes.
+2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
 
-3. **Native UTF-8 characters** — uses literal `ó`, `í`, `é`, `ñ`, `—` instead of `\u00f3` unicode escapes, which is cleaner and avoids any double-encoding risk.
+Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
 
-### File
-- **`index.html`** — replace lines 19–108
+| Archivo | Cambio |
+|---|---|
+| `index.html` | Anadir script + actualizar CSP meta tag |
+| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
 
