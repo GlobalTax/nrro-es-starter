@@ -49,12 +49,6 @@ export default function AdminSeoDebug() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
-      const resp = await supabase.functions.invoke('prerender', {
-        body: null,
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      });
-
-      // Use fetch directly since we need query params
       const funcUrl = `https://zntotcpagkunvkwpubqu.supabase.co/functions/v1/prerender?path=${encodeURIComponent(path)}&refresh=true`;
       const response = await fetch(funcUrl, {
         headers: {
