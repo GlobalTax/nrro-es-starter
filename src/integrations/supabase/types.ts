@@ -3629,6 +3629,57 @@ export type Database = {
         }
         Relationships: []
       }
+      prerender_cache: {
+        Row: {
+          extraction_notes: Json | null
+          full_record: boolean | null
+          h1: string | null
+          h2s: Json | null
+          health: string | null
+          html_snapshot: string | null
+          internal_link_count: number | null
+          internal_links: Json | null
+          meta_description: string | null
+          path: string
+          rendered_at: string | null
+          source: string | null
+          status: string | null
+          title: string | null
+        }
+        Insert: {
+          extraction_notes?: Json | null
+          full_record?: boolean | null
+          h1?: string | null
+          h2s?: Json | null
+          health?: string | null
+          html_snapshot?: string | null
+          internal_link_count?: number | null
+          internal_links?: Json | null
+          meta_description?: string | null
+          path: string
+          rendered_at?: string | null
+          source?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Update: {
+          extraction_notes?: Json | null
+          full_record?: boolean | null
+          h1?: string | null
+          h2s?: Json | null
+          health?: string | null
+          html_snapshot?: string | null
+          internal_link_count?: number | null
+          internal_links?: Json | null
+          meta_description?: string | null
+          path?: string
+          rendered_at?: string | null
+          source?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       presentation_modules: {
         Row: {
           created_at: string | null
