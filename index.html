@@ -15,24 +15,29 @@
     <link rel="alternate" hreflang="es" href="https://nrro.es/" id="hreflang-es" />
     <link rel="alternate" hreflang="ca" href="https://nrro.es/ca/" id="hreflang-ca" />
     <link rel="alternate" hreflang="en" href="https://nrro.es/en/" id="hreflang-en" />
-    <link rel="alternate" hreflang="x-default" href="https://nrro.es/" />
+    <link rel="alternate" hreflang="x-default" href="https://nrro.es/" id="hreflang-xdefault" />
     <script>
-    (function(){
-      var p=location.pathname.replace(/\/+$/,'')||'/';
-      var b='https://nrro.es';
-      var c=b+(p==='/'?'':p);
-      var d=document;
-      var cl=d.getElementById('canonical-tag');
-      if(cl)cl.href=c;
-      var og=d.querySelector('meta[property="og:url"]');
-      if(og)og.content=c;
-      var isCA=p.startsWith('/ca'),isEN=p.startsWith('/en');
-      var es=isCA?p.replace('/ca',''):isEN?p.replace('/en',''):p;
-      var ca=isCA?p:'/ca'+(p==='/'?'':p);
-      var en=isEN?p:'/en'+(p==='/'?'':p);
-      var he=d.getElementById('hreflang-es');if(he)he.href=b+es;
-      var hc=d.getElementById('hreflang-ca');if(hc)hc.href=b+ca;
-      var hn=d.getElementById('hreflang-en');if(hn)hn.href=b+en;
+    (function() {
+      var BASE = 'https://nrro.es';
+      var raw  = window.location.pathname;
+      var path = raw === '/' ? '' : raw.replace(/\/+$/, '');
+      var canon = BASE + path;
+      var cl = document.getElementById('canonical-tag');
+      if (cl) cl.href = canon;
+      var ogurl = document.querySelector('meta[property="og:url"]');
+      if (ogurl) ogurl.content = canon;
+      var isCA = path.startsWith('/ca');
+      var isEN = path.startsWith('/en');
+      var basePath = isCA ? (path.replace(/^\/ca/, '') || '/') : isEN ? (path.replace(/^\/en/, '') || '/') : (path || '/');
+      var esHref = BASE + basePath;
+      var caHref = BASE + '/ca' + (basePath === '/' ? '' : basePath);
+      var enHref = BASE + '/en' + (basePath === '/' ? '' : basePath);
+      document.getElementById('hreflang-es').href = esHref;
+      document.getElementById('hreflang-ca').href = caHref;
+      document.getElementById('hreflang-en').href = enHref;
+      document.getElementById('hreflang-xdefault').href = esHref;
+      var ogLocale = document.querySelector('meta[property="og:locale"]');
+      if (ogLocale) ogLocale.content = isCA ? 'ca_ES' : isEN ? 'en_US' : 'es_ES';
     })();
     </script>
     
