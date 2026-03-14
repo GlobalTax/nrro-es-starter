@@ -29,6 +29,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
 import { HomeContactForm } from "@/components/home/HomeContactForm";
 import { NewsSection } from "@/components/home/NewsSection";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+
+const homeFaqs = [
+  { question: "¿Qué servicios ofrece NRRO Navarro Tax & Legal?", answer: "Ofrecemos asesoramiento fiscal, contable, laboral, legal-mercantil y servicios de M&A. También cubrimos empresa familiar, fiscalidad internacional, auditoría de subvenciones y verificación de sostenibilidad (CSRD/ESRS)." },
+  { question: "¿A quién va dirigido el servicio?", answer: "Asesoramos a empresas, autónomos, familias empresarias, fondos de inversión y grupos internacionales que operan en España, con especial foco en Cataluña." },
+  { question: "¿Dónde se encuentra NRRO?", answer: "Nuestras oficinas están en Ausiàs March 36, Principal, 08010 Barcelona, España." },
+  { question: "¿En qué idiomas trabaja el equipo?", answer: "Trabajamos en español, catalán e inglés." },
+  { question: "¿Cuántos profesionales tiene la firma?", answer: "El equipo está formado por más de 60 profesionales especializados en las distintas áreas de práctica." },
+  { question: "¿Cómo puedo contactar con NRRO?", answer: "Puede llamar al +34 93 459 36 00, escribir a info@nrro.es o rellenar el formulario de contacto en nrro.es/contacto." },
+];
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
