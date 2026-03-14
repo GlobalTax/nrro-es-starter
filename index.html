@@ -24,38 +24,38 @@
 
       // Route map: t = title, d = description
       var R = {
-        '': {t:'NRRO | Navarro Tax & Legal — Asesoría Fiscal, Contable, Laboral y Legal en Barcelona',d:'Asesoría integral en Barcelona: fiscal, contable, laboral, legal y M&A. +60 profesionales al servicio de empresas y autónomos.'},
-        '/servicios/asesoramiento-fiscal': {t:'Asesoramiento Fiscal para Empresas | NRRO Navarro Tax & Legal',d:'Asesoría fiscal integral para empresas y autónomos en Barcelona. Planificación fiscal, impuesto de sociedades, IRPF, IVA y optimización tributaria.'},
-        '/servicios/planificacion-fiscal': {t:'Planificación Fiscal | NRRO Navarro Tax & Legal',d:'Planificación fiscal estratégica para empresas y particulares. Optimización tributaria legal y personalizada en Barcelona.'},
-        '/servicios/impuesto-sociedades': {t:'Impuesto de Sociedades | NRRO Navarro Tax & Legal',d:'Gestión y presentación del Impuesto sobre Sociedades. Asesoramiento experto para optimizar la carga fiscal de tu empresa en España.'},
-        '/servicios/irpf': {t:'IRPF y Declaración de la Renta | NRRO Navarro Tax & Legal',d:'Declaración de la Renta y planificación del IRPF para empresarios, profesionales y particulares en Barcelona.'},
-        '/servicios/iva': {t:'Asesoramiento IVA | NRRO Navarro Tax & Legal',d:'Gestión del IVA, liquidaciones trimestrales y asesoramiento en operaciones nacionales e internacionales.'},
+        '': {t:'NRRO | Navarro Tax & Legal \u2014 Asesor\u00eda Fiscal, Contable, Laboral y Legal en Barcelona',d:'Asesor\u00eda integral en Barcelona: fiscal, contable, laboral, legal y M&A. +60 profesionales al servicio de empresas y aut\u00f3nomos.'},
+        '/servicios/asesoramiento-fiscal': {t:'Asesoramiento Fiscal para Empresas | NRRO Navarro Tax & Legal',d:'Asesor\u00eda fiscal integral para empresas y aut\u00f3nomos en Barcelona. Planificaci\u00f3n fiscal, impuesto de sociedades, IRPF, IVA y optimizaci\u00f3n tributaria.'},
+        '/servicios/planificacion-fiscal': {t:'Planificaci\u00f3n Fiscal | NRRO Navarro Tax & Legal',d:'Planificaci\u00f3n fiscal estrat\u00e9gica para empresas y particulares. Optimizaci\u00f3n tributaria legal y personalizada en Barcelona.'},
+        '/servicios/impuesto-sociedades': {t:'Impuesto de Sociedades | NRRO Navarro Tax & Legal',d:'Gesti\u00f3n y presentaci\u00f3n del Impuesto sobre Sociedades. Asesoramiento experto para optimizar la carga fiscal de tu empresa en Espa\u00f1a.'},
+        '/servicios/irpf': {t:'IRPF y Declaraci\u00f3n de la Renta | NRRO Navarro Tax & Legal',d:'Declaraci\u00f3n de la Renta y planificaci\u00f3n del IRPF para empresarios, profesionales y particulares en Barcelona.'},
+        '/servicios/iva': {t:'Asesoramiento IVA | NRRO Navarro Tax & Legal',d:'Gesti\u00f3n del IVA, liquidaciones trimestrales y asesoramiento en operaciones nacionales e internacionales.'},
         '/servicios/contabilidad': {t:'Contabilidad para Empresas | NRRO Navarro Tax & Legal',d:'Servicios de contabilidad externa para empresas en Barcelona. Cuentas anuales, libros contables y reporting financiero.'},
-        '/servicios/auditoria': {t:'Auditoría de Cuentas | NRRO Navarro Tax & Legal',d:'Auditoría de cuentas anuales, auditoría voluntaria y verificación de información financiera no financiera (CSRD/ESRS).'},
-        '/servicios/asesoria-laboral': {t:'Asesoría Laboral para Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento laboral integral: nóminas, contratos, ERTEs, despidos colectivos y relaciones con la Seguridad Social en Barcelona.'},
-        '/servicios/nominas': {t:'Gestión de Nóminas | NRRO Navarro Tax & Legal',d:'Externalización de nóminas para empresas. Gestión completa de nóminas, seguros sociales y trámites con la Seguridad Social.'},
-        '/servicios/ertes-despidos': {t:'ERTEs y Despidos Colectivos | NRRO Navarro Tax & Legal',d:'Asesoramiento en ERTEs, despidos colectivos e individuales. Gestión de expedientes de regulación de empleo en España.'},
-        '/servicios/reubicacion-empleados-espana': {t:'Reubicación de Empleados en España | NRRO Navarro Tax & Legal',d:'Asesoramiento en movilidad internacional y reubicación de empleados en España. Régimen fiscal de expatriados y Ley Beckham.'},
-        '/servicios/asesoria-legal': {t:'Asesoría Legal para Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento legal mercantil para empresas: constitución de sociedades, contratos mercantiles y cumplimiento normativo.'},
-        '/servicios/constituciones-sociedades': {t:'Constitución de Sociedades en España | NRRO Navarro Tax & Legal',d:'Constitución de SL, SA y otras formas societarias en España. Tramitación completa y asesoramiento en la estructura jurídica.'},
-        '/servicios/herencias-sucesiones': {t:'Herencias y Sucesiones | NRRO Navarro Tax & Legal',d:'Asesoramiento integral en herencias, sucesiones y donaciones. Planificación sucesoria y optimización del impuesto de sucesiones en Cataluña.'},
-        '/servicios/compraventa-empresas': {t:'Compraventa de Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento legal y fiscal en compraventa de empresas. Due diligence, estructuración de la operación y contratos de compraventa (SPA).'},
-        '/servicios/due-diligence': {t:'Due Diligence Legal y Fiscal | NRRO Navarro Tax & Legal',d:'Due diligence legal, fiscal y laboral para operaciones M&A. Análisis de riesgos y revisión integral de la empresa objetivo.'},
-        '/servicios/capital-riesgo': {t:'Capital Riesgo y Private Equity | NRRO Navarro Tax & Legal',d:'Asesoramiento legal y fiscal a fondos de capital riesgo y private equity. Estructuración de inversiones y desinversiones.'},
-        '/servicios/empresa-familiar': {t:'Empresa Familiar | NRRO Navarro Tax & Legal',d:'Asesoramiento integral para empresas familiares: protocolo familiar, pactos de socios, relevo generacional y planificación patrimonial.'},
-        '/servicios/csrd-esrs-verificacion': {t:'CSRD y ESRS — Verificación de Sostenibilidad | NRRO',d:'Verificación de informes de sostenibilidad según CSRD y ESRS. Auditoría de información no financiera para empresas en España.'},
-        '/abogados-herencias-barcelona': {t:'Abogados Herencias Barcelona | NRRO Navarro Tax & Legal',d:'Abogados especialistas en herencias y sucesiones en Barcelona. Tramitación de herencias, impuesto de sucesiones y planificación sucesoria.'},
-        '/canal-denuncias': {t:'Canal de Denuncias | NRRO Navarro Tax & Legal',d:'Implantación de canales de denuncia internos según la Ley 2/2023. Cumplimiento normativo y protección del informante para empresas.'},
-        '/contacto': {t:'Contacto | NRRO Navarro Tax & Legal Barcelona',d:'Contacta con NRRO Navarro Tax & Legal. Oficinas en Barcelona. Asesoría fiscal, contable, laboral y legal para empresas.'},
+        '/servicios/auditoria': {t:'Auditor\u00eda de Cuentas | NRRO Navarro Tax & Legal',d:'Auditor\u00eda de cuentas anuales, auditor\u00eda voluntaria y verificaci\u00f3n de informaci\u00f3n financiera no financiera (CSRD/ESRS).'},
+        '/servicios/asesoria-laboral': {t:'Asesor\u00eda Laboral para Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento laboral integral: n\u00f3minas, contratos, ERTEs, despidos colectivos y relaciones con la Seguridad Social en Barcelona.'},
+        '/servicios/nominas': {t:'Gesti\u00f3n de N\u00f3minas | NRRO Navarro Tax & Legal',d:'Externalizaci\u00f3n de n\u00f3minas para empresas. Gesti\u00f3n completa de n\u00f3minas, seguros sociales y tr\u00e1mites con la Seguridad Social.'},
+        '/servicios/ertes-despidos': {t:'ERTEs y Despidos Colectivos | NRRO Navarro Tax & Legal',d:'Asesoramiento en ERTEs, despidos colectivos e individuales. Gesti\u00f3n de expedientes de regulaci\u00f3n de empleo en Espa\u00f1a.'},
+        '/servicios/reubicacion-empleados-espana': {t:'Reubicaci\u00f3n de Empleados en Espa\u00f1a | NRRO Navarro Tax & Legal',d:'Asesoramiento en movilidad internacional y reubicaci\u00f3n de empleados en Espa\u00f1a. R\u00e9gimen fiscal de expatriados y Ley Beckham.'},
+        '/servicios/asesoria-legal': {t:'Asesor\u00eda Legal para Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento legal mercantil para empresas: constituci\u00f3n de sociedades, contratos mercantiles y cumplimiento normativo.'},
+        '/servicios/constituciones-sociedades': {t:'Constituci\u00f3n de Sociedades en Espa\u00f1a | NRRO Navarro Tax & Legal',d:'Constituci\u00f3n de SL, SA y otras formas societarias en Espa\u00f1a. Tramitaci\u00f3n completa y asesoramiento en la estructura jur\u00edddica.'},
+        '/servicios/herencias-sucesiones': {t:'Herencias y Sucesiones | NRRO Navarro Tax & Legal',d:'Asesoramiento integral en herencias, sucesiones y donaciones. Planificaci\u00f3n sucesoria y optimizaci\u00f3n del impuesto de sucesiones en Catalu\u00f1a.'},
+        '/servicios/compraventa-empresas': {t:'Compraventa de Empresas | NRRO Navarro Tax & Legal',d:'Asesoramiento legal y fiscal en compraventa de empresas. Due diligence, estructuraci\u00f3n de la operaci\u00f3n y contratos de compraventa (SPA).'},
+        '/servicios/due-diligence': {t:'Due Diligence Legal y Fiscal | NRRO Navarro Tax & Legal',d:'Due diligence legal, fiscal y laboral para operaciones M&A. An\u00e1lisis de riesgos y revisi\u00f3n integral de la empresa objetivo.'},
+        '/servicios/capital-riesgo': {t:'Capital Riesgo y Private Equity | NRRO Navarro Tax & Legal',d:'Asesoramiento legal y fiscal a fondos de capital riesgo y private equity. Estructuraci\u00f3n de inversiones y desinversiones.'},
+        '/servicios/empresa-familiar': {t:'Empresa Familiar | NRRO Navarro Tax & Legal',d:'Asesoramiento integral para empresas familiares: protocolo familiar, pactos de socios, relevo generacional y planificaci\u00f3n patrimonial.'},
+        '/servicios/csrd-esrs-verificacion': {t:'CSRD y ESRS \u2014 Verificaci\u00f3n de Sostenibilidad | NRRO',d:'Verificaci\u00f3n de informes de sostenibilidad seg\u00fan CSRD y ESRS. Auditor\u00eda de informaci\u00f3n no financiera para empresas en Espa\u00f1a.'},
+        '/abogados-herencias-barcelona': {t:'Abogados Herencias Barcelona | NRRO Navarro Tax & Legal',d:'Abogados especialistas en herencias y sucesiones en Barcelona. Tramitaci\u00f3n de herencias, impuesto de sucesiones y planificaci\u00f3n sucesoria.'},
+        '/canal-denuncias': {t:'Canal de Denuncias | NRRO Navarro Tax & Legal',d:'Implantaci\u00f3n de canales de denuncia internos seg\u00fan la Ley 2/2023. Cumplimiento normativo y protecci\u00f3n del informante para empresas.'},
+        '/contacto': {t:'Contacto | NRRO Navarro Tax & Legal Barcelona',d:'Contacta con NRRO Navarro Tax & Legal. Oficinas en Barcelona. Asesor\u00eda fiscal, contable, laboral y legal para empresas.'},
         '/equipo': {t:'Nuestro Equipo | NRRO Navarro Tax & Legal',d:'Conoce al equipo de +60 profesionales de NRRO Navarro Tax & Legal. Expertos en fiscal, contable, laboral, legal y M&A en Barcelona.'},
-        '/casos-exito': {t:'Casos de Éxito | NRRO Navarro Tax & Legal',d:'Casos de éxito de NRRO: operaciones M&A, planificación fiscal y asesoramiento empresarial resueltos con éxito.'},
-        '/sectores': {t:'Sectores de Especialización | NRRO Navarro Tax & Legal',d:'NRRO asesora empresas en múltiples sectores: industrial, tecnología, healthcare, retail, construcción y más desde Barcelona.'},
-        '/blog': {t:'Blog | NRRO Navarro Tax & Legal',d:'Artículos sobre fiscalidad, derecho laboral, mercantil y novedades legales para empresas y autónomos en España.'},
-        '/ca': {t:'NRRO | Navarro Tax & Legal — Assessoria Fiscal i Legal a Barcelona',d:'Assessoria integral a Barcelona: fiscal, comptable, laboral, legal i M&A. +60 professionals al servei d\'empreses i autònoms.'},
-        '/ca/serveis/assessorament-fiscal': {t:'Assessorament Fiscal per a Empreses | NRRO Navarro Tax & Legal',d:'Assessoria fiscal integral per a empreses i autònoms a Barcelona. Planificació fiscal, impost de societats, IRPF i optimització tributària.'},
-        '/ca/serveis/compravenda-d-empreses': {t:'Compravenda d\'Empreses | NRRO Navarro Tax & Legal',d:'Assessorament legal i fiscal en compravenda d\'empreses. Due diligence, estructuració de l\'operació i contractes de compravenda (SPA).'},
-        '/ca/serveis/empresa-familiar': {t:'Empresa Familiar | NRRO Navarro Tax & Legal',d:'Assessorament integral per a empreses familiars: protocol familiar, pactes de socis, relleu generacional i planificació patrimonial.'},
-        '/en': {t:'NRRO | Navarro Tax & Legal — Tax & Legal Advisory in Barcelona',d:'Full-service advisory in Barcelona: tax, accounting, employment, legal and M&A. 60+ professionals serving companies across Spain.'},
+        '/casos-exito': {t:'Casos de \u00c9xito | NRRO Navarro Tax & Legal',d:'Casos de \u00e9xito de NRRO: operaciones M&A, planificaci\u00f3n fiscal y asesoramiento empresarial resueltos con \u00e9xito.'},
+        '/sectores': {t:'Sectores de Especializaci\u00f3n | NRRO Navarro Tax & Legal',d:'NRRO asesora empresas en m\u00faltiples sectores: industrial, tecnolog\u00eda, healthcare, retail, construcci\u00f3n y m\u00e1s desde Barcelona.'},
+        '/blog': {t:'Blog | NRRO Navarro Tax & Legal',d:'Art\u00edculos sobre fiscalidad, derecho laboral, mercantil y novedades legales para empresas y aut\u00f3nomos en Espa\u00f1a.'},
+        '/ca': {t:'NRRO | Navarro Tax & Legal \u2014 Assessoria Fiscal i Legal a Barcelona',d:'Assessoria integral a Barcelona: fiscal, comptable, laboral, legal i M&A. +60 professionals al servei d\u0027empreses i aut\u00f2noms.'},
+        '/ca/serveis/assessorament-fiscal': {t:'Assessorament Fiscal per a Empreses | NRRO Navarro Tax & Legal',d:'Assessoria fiscal integral per a empreses i aut\u00f2noms a Barcelona. Planificaci\u00f3 fiscal, impost de societats, IRPF i optimitzaci\u00f3 tribut\u00e0ria.'},
+        '/ca/serveis/compravenda-d-empreses': {t:'Compravenda d\u0027Empreses | NRRO Navarro Tax & Legal',d:'Assessorament legal i fiscal en compravenda d\u0027empreses. Due diligence, estructuraci\u00f3 de l\u0027operaci\u00f3 i contractes de compravenda (SPA).'},
+        '/ca/serveis/empresa-familiar': {t:'Empresa Familiar | NRRO Navarro Tax & Legal',d:'Assessorament integral per a empreses familiars: protocol familiar, pactes de socis, relleu generacional i planificaci\u00f3 patrimonial.'},
+        '/en': {t:'NRRO | Navarro Tax & Legal \u2014 Tax & Legal Advisory in Barcelona',d:'Full-service advisory in Barcelona: tax, accounting, employment, legal and M&A. 60+ professionals serving companies across Spain.'},
         '/en/services/ma-transaction-advisory': {t:'M&A Transaction Advisory in Spain | NRRO Navarro Tax & Legal',d:'Expert M&A advisory services in Spain: buy-side, sell-side, due diligence and deal structuring for mid-market transactions.'},
         '/en/services/vendor-due-diligence': {t:'Vendor Due Diligence Spain | NRRO Navarro Tax & Legal',d:'Vendor due diligence services for company sales in Spain. Financial, legal and tax analysis to support M&A transactions.'},
         '/en/services/accounting-services-spain': {t:'Accounting Services in Spain | NRRO Navarro Tax & Legal',d:'Professional accounting services for companies in Spain. Bookkeeping, annual accounts and financial reporting in compliance with Spanish GAAP.'},
@@ -134,7 +134,7 @@
       })();
     </script>
     
-    <!-- Apollo.io Website Tracker (sin restricción GDPR) -->
+    <!-- Apollo.io Website Tracker (sin restricci\u00f3n GDPR) -->
     <script>
       (function() {
         if (!navigator.onLine || window.location.pathname.startsWith('/admin')) {
@@ -169,33 +169,33 @@
     <link rel="preload" href="/fonts/general-sans/GeneralSans-Semibold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general-sans/GeneralSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
     
-    <title>NRRO | Navarro Tax & Legal — Asesoría Fiscal y Legal en Barcelona</title>
-    <meta name="description" content="NRRO - Navarro Tax & Legal. Asesoría fiscal, contable, laboral y legal en Barcelona. Más de 25 años ayudando a empresas y familias empresarias con planificación fiscal, derecho societario y expansión internacional.">
+    <title>NRRO | Navarro Tax & Legal &#x2014; Asesor&#xED;a Fiscal y Legal en Barcelona</title>
+    <meta name="description" content="NRRO - Navarro Tax & Legal. Asesor&#xED;a fiscal, contable, laboral y legal en Barcelona. M&#xE1;s de 25 a&#xF1;os ayudando a empresas y familias empresarias con planificaci&#xF3;n fiscal, derecho societario y expansi&#xF3;n internacional.">
     <meta name="author" content="Navarro Tax & Legal" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="geo.region" content="ES-CT" />
     <meta name="geo.placename" content="Barcelona" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="NRRO — Navarro Tax & Legal" />
+    <meta property="og:site_name" content="NRRO &#x2014; Navarro Tax & Legal" />
     <meta property="og:url" content="https://nrro.es/" />
-    <meta property="og:title" content="NRRO | Navarro Tax & Legal — Asesoría Fiscal y Legal en Barcelona" />
-    <meta property="og:description" content="Asesoría fiscal, contable, laboral y legal en Barcelona. Más de 25 años de experiencia con empresas y familias empresarias." />
+    <meta property="og:title" content="NRRO | Navarro Tax & Legal &#x2014; Asesor&#xED;a Fiscal y Legal en Barcelona" />
+    <meta property="og:description" content="Asesor&#xED;a fiscal, contable, laboral y legal en Barcelona. M&#xE1;s de 25 a&#xF1;os de experiencia con empresas y familias empresarias." />
     <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/VFsaCkJPcQelq90qCBepitB6wDA2/social-images/social-1762003818234-navarro.jpg" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:locale:alternate" content="ca_ES" />
     <meta property="og:locale:alternate" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NRRO | Navarro Tax & Legal — Asesoría Fiscal y Legal en Barcelona" />
-    <meta name="twitter:description" content="Asesoría fiscal, contable, laboral y legal en Barcelona. Más de 25 años de experiencia con empresas y familias empresarias." />
+    <meta name="twitter:title" content="NRRO | Navarro Tax & Legal &#x2014; Asesor&#xED;a Fiscal y Legal en Barcelona" />
+    <meta name="twitter:description" content="Asesor&#xED;a fiscal, contable, laboral y legal en Barcelona. M&#xE1;s de 25 a&#xF1;os de experiencia con empresas y familias empresarias." />
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/VFsaCkJPcQelq90qCBepitB6wDA2/social-images/social-1762003818234-navarro.jpg" />
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="theme-color" content="#000000">
 
-    <!-- Organization Schema (static — visible to bots without JS) -->
+    <!-- Organization Schema (static) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -205,10 +205,10 @@
       "url": "https://nrro.es",
       "logo": "https://nrro.es/assets/logos/navarro-tax-legal.svg",
       "image": "https://nrro.es/assets/logos/navarro-tax-legal.svg",
-      "description": "Asesoría fiscal, contable, laboral y legal en Barcelona. Más de 25 años de experiencia con empresas y familias empresarias.",
+      "description": "Asesor\u00eda fiscal, contable, laboral y legal en Barcelona. M\u00e1s de 25 a\u00f1os de experiencia con empresas y familias empresarias.",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Ausiàs March 36, Principal",
+        "streetAddress": "Ausi\u00e0s March 36, Principal",
         "addressLocality": "Barcelona",
         "addressRegion": "Catalunya",
         "postalCode": "08010",
@@ -235,19 +235,19 @@
     }
     </script>
 
-    <!-- LegalService Schema (static — visible to bots without JS) -->
+    <!-- LegalService Schema (static) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LegalService",
-      "name": "NRRO — Navarro Tax & Legal",
+      "name": "NRRO \u2014 Navarro Tax & Legal",
       "alternateName": "NRRO",
       "url": "https://nrro.es",
       "logo": "https://nrro.es/assets/logos/navarro-tax-legal.svg",
-      "description": "Asesoría fiscal, contable, laboral y legal para empresas en Barcelona",
+      "description": "Asesor\u00eda fiscal, contable, laboral y legal para empresas en Barcelona",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Ausiàs March 36, Principal",
+        "streetAddress": "Ausi\u00e0s March 36, Principal",
         "addressLocality": "Barcelona",
         "postalCode": "08010",
         "addressRegion": "Catalunya",
@@ -266,16 +266,16 @@
         "bestRating": "5",
         "worstRating": "1"
       },
-      "priceRange": "€€",
+      "priceRange": "\u20ac\u20ac",
       "openingHours": "Mo-Fr 09:00-18:00",
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Servicios",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesoría Fiscal" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesoría Contable" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesoría Laboral" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesoría Legal y Mercantil" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesor\u00eda Fiscal" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesor\u00eda Contable" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesor\u00eda Laboral" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesor\u00eda Legal y Mercantil" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fiscalidad Internacional" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Empresa Familiar" } }
         ]
