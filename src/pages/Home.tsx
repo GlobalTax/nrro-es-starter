@@ -290,10 +290,11 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Encabezado */}
             {serviciosDestacados?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
                 {serviciosDestacados.overline}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Servicios destacados de asesoría fiscal, legal y laboral</h2>
 
             {/* Grid de servicios */}
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
