@@ -376,9 +376,10 @@ const Home = () => {
         {/* Blog Preview */}
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+          <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
             {t("home.blog.overline")}
-          </h2>
+          </p>
+          <h2 className="sr-only">Últimas publicaciones del blog de NRRO</h2>
 
             {postsLoading ? (
               <div className="grid md:grid-cols-3 gap-8">
