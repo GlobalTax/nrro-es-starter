@@ -258,9 +258,10 @@ const Home = () => {
         {/* Datos/Stats Section */}
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+            <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
               {t("home.stats.overline")}
-            </h2>
+            </p>
+            <h2 className="sr-only">Datos clave de la firma NRRO</h2>
             
             {datosLoading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
