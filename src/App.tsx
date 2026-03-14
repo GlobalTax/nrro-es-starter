@@ -232,6 +232,7 @@ const App = () => {
               <Route path="resources" element={<AdminResources />} />
               <Route path="topbar" element={<AdminTopBarSettings />} />
               <Route path="marketing-audit" element={<AdminMarketingAudit />} />
+              <Route path="seo-debug" element={<AdminSeoDebug />} />
               <Route path="calendar" element={<AdminPlaceholder />} />
               <Route path="people" element={<AdminPlaceholder />} />
               <Route path="companies" element={<AdminPlaceholder />} />
