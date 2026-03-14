@@ -29,6 +29,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import DOMPurify from "dompurify";
 import { HomeContactForm } from "@/components/home/HomeContactForm";
 import { NewsSection } from "@/components/home/NewsSection";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+
+const homeFaqs = [
+  { question: "¿Qué servicios ofrece NRRO Navarro Tax & Legal?", answer: "Ofrecemos asesoramiento fiscal, contable, laboral, legal-mercantil y servicios de M&A. También cubrimos empresa familiar, fiscalidad internacional, auditoría de subvenciones y verificación de sostenibilidad (CSRD/ESRS)." },
+  { question: "¿A quién va dirigido el servicio?", answer: "Asesoramos a empresas, autónomos, familias empresarias, fondos de inversión y grupos internacionales que operan en España, con especial foco en Cataluña." },
+  { question: "¿Dónde se encuentra NRRO?", answer: "Nuestras oficinas están en Ausiàs March 36, Principal, 08010 Barcelona, España." },
+  { question: "¿En qué idiomas trabaja el equipo?", answer: "Trabajamos en español, catalán e inglés." },
+  { question: "¿Cuántos profesionales tiene la firma?", answer: "El equipo está formado por más de 60 profesionales especializados en las distintas áreas de práctica." },
+  { question: "¿Cómo puedo contactar con NRRO?", answer: "Puede llamar al +34 93 459 36 00, escribir a info@nrro.es o rellenar el formulario de contacto en nrro.es/contacto." },
+];
 
 const Home = () => {
   const { trackCTAClick, trackPageView } = useAnalytics();
@@ -136,6 +146,7 @@ const Home = () => {
         description={t("index.meta.description")}
         canonicalUrl={window.location.href}
       />
+      <FAQSchema faqs={homeFaqs} />
 
       <div className="min-h-screen">
       {/* Hero Section */}
@@ -247,9 +258,10 @@ const Home = () => {
         {/* Datos/Stats Section */}
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+            <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
               {t("home.stats.overline")}
-            </h2>
+            </p>
+            <h2 className="sr-only">Datos clave de la firma NRRO</h2>
             
             {datosLoading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -278,10 +290,11 @@ const Home = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Encabezado */}
             {serviciosDestacados?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4">
                 {serviciosDestacados.overline}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Servicios destacados de asesoría fiscal, legal y laboral</h2>
 
             {/* Grid de servicios */}
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -305,10 +318,11 @@ const Home = () => {
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {tecnologiaContent?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
                 {tecnologiaContent.overline || t("home.technology.overline")}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Tecnología e innovación en NRRO</h2>
             
             <TechnologyShowcase />
           </div>
@@ -318,10 +332,11 @@ const Home = () => {
         <section className="bg-white py-16 md:py-20 border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {clientesContent?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
                 {clientesContent.overline || t("home.clients.overline")}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Clientes y empresas que confían en NRRO</h2>
             
             <Carousel
               opts={{
@@ -361,9 +376,10 @@ const Home = () => {
         {/* Blog Preview */}
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+          <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
             {t("home.blog.overline")}
-          </h2>
+          </p>
+          <h2 className="sr-only">Últimas publicaciones del blog de NRRO</h2>
 
             {postsLoading ? (
               <div className="grid md:grid-cols-3 gap-8">
