@@ -75,6 +75,9 @@ const staticUrls: Array<{ path: string; priority: string; changefreq: string }> 
   { path: '/ca', priority: '0.8', changefreq: 'weekly' },
   { path: '/ca/carreres', priority: '0.7', changefreq: 'weekly' },
   { path: '/en', priority: '0.8', changefreq: 'weekly' },
+
+  // Páginas para LLMs / IA
+  { path: '/llm.html', priority: '0.5', changefreq: 'monthly' },
 ];
 
 function formatDate(date: string | null | undefined): string {

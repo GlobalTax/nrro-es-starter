@@ -1,28 +1,20 @@
 
 
-## Update robots.txt with AI crawler rules
+## Instalar DataFast analytics
 
-Update `public/robots.txt` to add specific directives for AI crawlers:
+Dos cambios en `index.html`:
 
-- **GPTBot**: Allow full access (permits OpenAI's crawler)
-- **Google-Extended**: Disallow all (blocks Google's AI training crawler while keeping regular Googlebot access)
-
-### Changes
-
-**File: `public/robots.txt`**
-Replace the current content with:
-```
-User-agent: *
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-Sitemap: https://capittal.es/sitemap.xml
+1. **Anadir el script** de DataFast en el `<head>`, despues de los otros trackers (Apollo), con `defer`:
+```html
+<script defer data-website-id="dfid_nO0AVDjmkidRALtVwnkii" data-domain="nrro.es" src="https://datafa.st/js/script.js"></script>
 ```
 
-The existing Sitemap directive is preserved at the bottom per standard convention.
+2. **Actualizar CSP** para permitir `https://datafa.st` en `script-src` y `connect-src`.
+
+Tambien actualizar la CSP en `vite.config.ts` (cabeceras del dev server) para consistencia.
+
+| Archivo | Cambio |
+|---|---|
+| `index.html` | Anadir script + actualizar CSP meta tag |
+| `vite.config.ts` | Anadir `https://datafa.st` a CSP headers |
 
