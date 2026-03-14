@@ -332,10 +332,11 @@ const Home = () => {
         <section className="bg-white py-16 md:py-20 border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {clientesContent?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
                 {clientesContent.overline || t("home.clients.overline")}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Clientes y empresas que confían en NRRO</h2>
             
             <Carousel
               opts={{
