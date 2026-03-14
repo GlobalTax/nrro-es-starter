@@ -318,10 +318,11 @@ const Home = () => {
         <section className="bg-neutral-50 py-20 md:py-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {tecnologiaContent?.overline && (
-              <h2 className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-12 text-center">
+              <p className="font-mono font-light text-xs md:text-sm tracking-wide uppercase text-foreground/70 mb-4 text-center">
                 {tecnologiaContent.overline || t("home.technology.overline")}
-              </h2>
+              </p>
             )}
+            <h2 className="sr-only">Tecnología e innovación en NRRO</h2>
             
             <TechnologyShowcase />
           </div>
